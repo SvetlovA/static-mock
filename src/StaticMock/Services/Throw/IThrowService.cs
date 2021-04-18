@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace StaticMock.Services
+namespace StaticMock.Services.Throw
 {
-    public interface IMockService
+    internal interface IThrowService
     {
-        void Returns(object value);
         void Throws(Type exceptionType);
         void Throws<TException>() where TException : Exception, new();
     }
