@@ -2,23 +2,23 @@
 using System.Reflection;
 using StaticMock.Helpers;
 
-namespace StaticMock.Services.Return
+namespace StaticMock.Services.Return.Reference
 {
-    internal class ReturnReferenceMockService : IReturnReferenceMockService
+    internal class ReferenceReturnMockService : IReferenceReturnMockService
     {
-        private static object _injectedReturnValue;
+        private static object _injectionValue;
 
         private readonly MethodInfo _originalMethodInfo;
 
-        public ReturnReferenceMockService(MethodInfo originalMethodInfo)
+        public ReferenceReturnMockService(MethodInfo originalMethodInfo)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
         }
 
         public void Returns(object value)
         {
-            _injectedReturnValue = value;
-            Func<object> injectionMethod = () => _injectedReturnValue;
+            _injectionValue = value;
+            Func<object> injectionMethod = () => _injectionValue;
 
             CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
         }

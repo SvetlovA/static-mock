@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using StaticMock.Services.Return;
+using StaticMock.Services.Return.Reference;
+using StaticMock.Services.Return.Value;
 using StaticMock.Services.Throw;
 
 namespace StaticMock.Services
@@ -14,21 +15,22 @@ namespace StaticMock.Services
             _originalMethodInfo = originalMethod ?? throw new ArgumentNullException(nameof(originalMethod));
         }
 
-        public void Returns(object value)
+        public void Returns<TValue>(TValue value)
         {
             if (_originalMethodInfo.ReturnType == typeof(void))
             {
                 throw new Exception("Original method must be function with return");
             }
 
-            if (value.GetType().IsValueType)
+            if (typeof(TValue).IsValueType)
             {
-                throw new Exception(
-                    $"This method can work only with reference types, use Generic implementation of {nameof(Returns)} method");
+                var valueReturnService = new ValueReturnMockService<TValue>(_originalMethodInfo);
+                valueReturnService.Returns(value);
+                return;
             }
 
-            var returnService = new ReturnReferenceMockService(_originalMethodInfo);
-            returnService.Returns(value);
+            var referenceReturnService = new ReferenceReturnMockService(_originalMethodInfo);
+            referenceReturnService.Returns(value);
         }
 
         public void Throws(Type exceptionType)

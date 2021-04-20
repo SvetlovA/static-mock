@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using StaticMock.Services;
-using StaticMock.Services.Generic;
 
 namespace StaticMock
 {
@@ -29,7 +28,7 @@ namespace StaticMock
             return new MockService(methodToReplace);
         }
 
-        public static IMockService<TValue> Setup<TValue>(Expression<Func<TValue>> methodGetExpression) where TValue : unmanaged
+        public static IMockService Setup<TValue>(Expression<Func<TValue>> methodGetExpression)
         {
             if (methodGetExpression == null)
             {
@@ -43,7 +42,7 @@ namespace StaticMock
             }
 
             
-            return new MockService<TValue>(((MethodCallExpression) methodExpression).Method);
+            return new MockService(((MethodCallExpression) methodExpression).Method);
         }
     }
 }

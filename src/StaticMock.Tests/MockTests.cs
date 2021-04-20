@@ -36,20 +36,20 @@ namespace StaticMock.Tests
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [Test]
-        public async Task TestSetupWithTestMethodReturn1WithoutParametersAsync()
-        {
-            var originalResult = await TestStaticClass.TestMethodReturn1WithoutParametersAsync();
-            var expectedResult = 2;
+        //[Test]
+        //public async Task TestSetupWithTestMethodReturn1WithoutParametersAsync()
+        //{
+        //    var originalResult = await TestStaticClass.TestMethodReturn1WithoutParametersAsync();
+        //    var expectedResult = 2;
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturn1WithoutParametersAsync))
-                .Returns(expectedResult);
+        //    Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturn1WithoutParametersAsync))
+        //        .Returns(expectedResult);
 
-            var actualResult = await TestStaticClass.TestMethodReturn1WithoutParametersAsync();
+        //    var actualResult = await TestStaticClass.TestMethodReturn1WithoutParametersAsync();
 
-            Assert.AreNotEqual(originalResult, actualResult);
-            Assert.AreEqual(expectedResult, actualResult);
-        }
+        //    Assert.AreNotEqual(originalResult, actualResult);
+        //    Assert.AreEqual(expectedResult, actualResult);
+        //}
 
         [Test]
         public void TestSetupWithTestMethodReturnInstanceObject()

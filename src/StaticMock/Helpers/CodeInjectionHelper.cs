@@ -21,43 +21,55 @@ namespace StaticMock.Helpers
             RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
             RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
 
-            if (IntPtr.Size == 4)
-            {
-                var inj = (int*)methodToInject.MethodHandle.Value.ToPointer() + 2;
-                var tar = (int*)methodToReplace.MethodHandle.Value.ToPointer() + 2;
-#if DEBUG
-                Console.WriteLine("\nVersion x86 Debug\n");
+            // R11 is volatile.
 
-                var injInst = (byte*)*inj;
-                var tarInst = (byte*)*tar;
+            //TODO: sort out what happens
+            var sitePtr = (byte*)methodToReplace.MethodHandle.GetFunctionPointer().ToPointer();
 
-                var injSrc = (int*)(injInst + 1);
-                var tarSrc = (int*)(tarInst + 1);
+            *sitePtr = 0x49; // mov r11, target
+            *(sitePtr + 1) = 0xBB;
+            *((ulong*)(sitePtr + 2)) = (ulong)methodToInject.MethodHandle.GetFunctionPointer().ToInt64();
+            *(sitePtr + 10) = 0x41; // jmp r11
+            *(sitePtr + 11) = 0xFF;
+            *(sitePtr + 12) = 0xE3;
 
-                *tarSrc = (int)injInst + 5 + *injSrc - ((int)tarInst + 5);
-#else
-                    Console.WriteLine("\nVersion x86 Release\n");
-                    *tar = *inj;
-#endif
-            }
-            else
-            {
-                var inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
-                var tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
-#if DEBUG
-                Console.WriteLine("\nVersion x64 Debug\n");
-                var injInst = (byte*)*inj;
-                var tarInst = (byte*)*tar;
+//            if (IntPtr.Size == 4)
+//            {
+//                var inj = (int*)methodToInject.MethodHandle.Value.ToPointer() + 2;
+//                var tar = (int*)methodToReplace.MethodHandle.Value.ToPointer() + 2;
+//#if DEBUG
+//                Console.WriteLine("\nVersion x86 Debug\n");
 
-                var injSrc = (int*)(injInst + 1);
-                var tarSrc = (int*)(tarInst + 1);
+//                var injInst = (byte*)*inj;
+//                var tarInst = (byte*)*tar;
 
-                *tarSrc = (int)injInst + 5 + *injSrc - ((int)tarInst + 5);
-#else
-                    Console.WriteLine("\nVersion x64 Release\n");
-                    *tar = *inj;
-#endif
-            }
+//                var injSrc = (int*)(injInst + 1);
+//                var tarSrc = (int*)(tarInst + 1);
+
+//                *tarSrc = (int)injInst + 5 + *injSrc - ((int)tarInst + 5);
+//#else
+//                                Console.WriteLine("\nVersion x86 Release\n");
+//                                *tar = *inj;
+//#endif
+//            }
+//            else
+//            {
+//                var inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
+//                var tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
+//#if DEBUG
+//                Console.WriteLine("\nVersion x64 Debug\n");
+//                var injInst = (byte*)*inj;
+//                var tarInst = (byte*)*tar;
+
+//                var injSrc = (int*)(injInst + 1);
+//                var tarSrc = (int*)(tarInst + 1);
+
+//                *tarSrc = (int)injInst + 5 + *injSrc - ((int)tarInst + 5);
+//#else
+//                                Console.WriteLine("\nVersion x64 Release\n");
+//                                *tar = *inj;
+//#endif
+//            }
         }
     }
 }
