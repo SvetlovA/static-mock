@@ -1,7 +1,9 @@
-﻿namespace StaticMock.Services.Return.Value
+﻿using StaticMock.Services.Injection;
+
+namespace StaticMock.Services.Return.Value
 {
     internal interface IValueReturnMockService<in TValue>
     {
-        void Returns(TValue value);
+        IReturnable Returns(TValue value);
     }
 }

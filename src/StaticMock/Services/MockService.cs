@@ -9,10 +9,12 @@ namespace StaticMock.Services
     internal class MockService : IMockService
     {
         private readonly MethodInfo _originalMethodInfo;
+        private readonly Action _action;
 
-        public MockService(MethodInfo originalMethod)
+        public MockService(MethodInfo originalMethod, Action action)
         {
             _originalMethodInfo = originalMethod ?? throw new ArgumentNullException(nameof(originalMethod));
+            _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public void Returns<TValue>(TValue value)
@@ -25,12 +27,18 @@ namespace StaticMock.Services
             if (typeof(TValue).IsValueType)
             {
                 var valueReturnService = new ValueReturnMockService<TValue>(_originalMethodInfo);
-                valueReturnService.Returns(value);
+                using (valueReturnService.Returns(value))
+                {
+                    _action();
+                }
                 return;
             }
 
             var referenceReturnService = new ReferenceReturnMockService(_originalMethodInfo);
-            referenceReturnService.Returns(value);
+            using (referenceReturnService.Returns(value))
+            {
+                _action();
+            }
         }
 
         public void Throws(Type exceptionType)

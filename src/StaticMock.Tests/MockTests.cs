@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace StaticMock.Tests
 {
@@ -12,13 +11,17 @@ namespace StaticMock.Tests
             var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturn1WithoutParameters))
+            Mock.Setup(
+                    typeof(TestStaticClass),
+                    nameof(TestStaticClass.TestMethodReturn1WithoutParameters),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
                 .Returns(expectedResult);
-
-            var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-
-            Assert.AreNotEqual(originalResult, actualResult);
-            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
@@ -27,13 +30,17 @@ namespace StaticMock.Tests
             var originalResult = TestStaticClass.TestMethodReturnParameter(10);
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnParameter))
+            Mock.Setup(
+                    typeof(TestStaticClass),
+                    nameof(TestStaticClass.TestMethodReturnParameter),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.TestMethodReturnParameter(10);
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
                 .Returns(expectedResult);
-
-            var actualResult = TestStaticClass.TestMethodReturnParameter(10);
-
-            Assert.AreNotEqual(originalResult, actualResult);
-            Assert.AreEqual(expectedResult, actualResult);
         }
 
         //[Test]
@@ -61,13 +68,17 @@ namespace StaticMock.Tests
                 ObjectProperty = new object()
             };
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnInstanceObject))
+            Mock.Setup(
+                    typeof(TestStaticClass),
+                    nameof(TestStaticClass.TestMethodReturnInstanceObject),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.TestMethodReturnInstanceObject();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
                 .Returns(expectedResult);
-
-            var actualResult = TestStaticClass.TestMethodReturnInstanceObject();
-
-            Assert.AreNotEqual(originalResult, actualResult);
-            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
@@ -76,13 +87,16 @@ namespace StaticMock.Tests
             var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();
             var expectedResult = 2;
 
-            Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters())
+            Mock.Setup(
+                    () => TestStaticClass.TestMethodReturn1WithoutParameters(),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
                 .Returns(expectedResult);
-
-            var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-
-            Assert.AreNotEqual(originalResult, actualResult);
-            Assert.AreEqual(expectedResult, actualResult);
         }
     }
 }

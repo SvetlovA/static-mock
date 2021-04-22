@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using StaticMock.Helpers;
 
 namespace StaticMock.Services.Throw
 {
@@ -31,13 +30,15 @@ namespace StaticMock.Services.Throw
             _injectedException = Activator.CreateInstance(exceptionType);
 
             Action injectionMethod = () => throw (Exception) _injectedException;
-            CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
+            //TODO: Use New InjectionService
+            //CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
         }
 
         public void Throws<TException>() where TException : Exception, new()
         {
             Action injectionMethod = () => throw new TException();
-            CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
+            //TODO: Use New InjectionService
+            //CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
         }
     }
 }

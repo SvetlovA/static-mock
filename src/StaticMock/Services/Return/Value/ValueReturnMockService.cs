@@ -1,26 +1,33 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Reflection;
-using StaticMock.Helpers;
+using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Return.Value
 {
     internal class ValueReturnMockService<TValue> : IValueReturnMockService<TValue>
     {
         private static TValue _injectionValue;
+        private static readonly ConcurrentDictionary<MethodInfo, TValue> InjectionValuesByMethod = new ConcurrentDictionary<MethodInfo, TValue>();
 
         private readonly MethodInfo _originalMethodInfo;
+        private readonly IInjectionService _injectionService;
 
         public ValueReturnMockService(MethodInfo originalMethodInfo)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
+            _injectionService = new InjectionServiceX64(originalMethodInfo);
         }
 
-        public void Returns(TValue value)
+        public IReturnable Returns(TValue value)
         {
-            _injectionValue = value;
-            Func<TValue> injectionMethod = () => _injectionValue;
+            InjectionValuesByMethod[_originalMethodInfo] = value;
+            _injectionValue = InjectionValuesByMethod[_originalMethodInfo];
+            Func<TValue> injectionMethod = InjectionMethod;
 
-            CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
+            return _injectionService.Inject(injectionMethod.Method);
         }
+
+        private static TValue InjectionMethod() => _injectionValue;
     }
 }

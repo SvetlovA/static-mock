@@ -6,7 +6,7 @@ namespace StaticMock
 {
     public static class Mock
     {
-        public static IMockService Setup(Type type, string methodName)
+        public static IMockService Setup(Type type, string methodName, Action action)
         {
             if (type == null)
             {
@@ -18,6 +18,11 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(methodName));
             }
 
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             var methodToReplace = type.GetMethod(methodName);
 
             if (methodToReplace == null)
@@ -25,14 +30,19 @@ namespace StaticMock
                 throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
             }
 
-            return new MockService(methodToReplace);
+            return new MockService(methodToReplace, action);
         }
 
-        public static IMockService Setup<TValue>(Expression<Func<TValue>> methodGetExpression)
+        public static IMockService Setup<TValue>(Expression<Func<TValue>> methodGetExpression, Action action)
         {
             if (methodGetExpression == null)
             {
                 throw new ArgumentNullException(nameof(methodGetExpression));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
             }
 
             var methodExpression = methodGetExpression.Body;
@@ -41,8 +51,7 @@ namespace StaticMock
                 throw new Exception("Get expression not contains method to setup");
             }
 
-            
-            return new MockService(((MethodCallExpression) methodExpression).Method);
+            return new MockService(((MethodCallExpression) methodExpression).Method, action);
         }
     }
 }
