@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Throw
 {
@@ -8,14 +9,15 @@ namespace StaticMock.Services.Throw
         private static object _injectedException;
 
         private readonly MethodInfo _originalMethodInfo;
+        private readonly IInjectionServiceFactory _injectionServiceFactory;
 
-        public ThrowService(MethodInfo originalMethodInfo)
+        public ThrowService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
+            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
         }
 
-
-        public void Throws(Type exceptionType)
+        public IReturnable Throws(Type exceptionType)
         {
             if (exceptionType == null)
             {
@@ -30,15 +32,17 @@ namespace StaticMock.Services.Throw
             _injectedException = Activator.CreateInstance(exceptionType);
 
             Action injectionMethod = () => throw (Exception) _injectedException;
-            //TODO: Use New InjectionService
-            //CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
+
+            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
+            return injectionService.Inject(injectionMethod.Method);
         }
 
-        public void Throws<TException>() where TException : Exception, new()
+        public IReturnable Throws<TException>() where TException : Exception, new()
         {
             Action injectionMethod = () => throw new TException();
-            //TODO: Use New InjectionService
-            //CodeInjectionHelper.Inject(_originalMethodInfo, injectionMethod.Method);
+
+            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
+            return injectionService.Inject(injectionMethod.Method);
         }
     }
 }

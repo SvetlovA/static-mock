@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using StaticMock.Services.Injection.Entities;
 
-namespace StaticMock.Services.Injection
+namespace StaticMock.Services.Injection.Implementation
 {
     internal class InjectionServiceX64 : IInjectionService
     {
@@ -30,7 +30,7 @@ namespace StaticMock.Services.Injection
 
             SaveMethodMemoryInfo(methodPtr);
 
-            *methodPtr = 0x49;
+            *methodPtr = 0x49; // mov r11, target
             *(methodPtr + 1) = 0xBB;
             *(ulong*)(methodPtr + 2) = (ulong)methodToInject.MethodHandle.GetFunctionPointer().ToInt64();
             *(methodPtr + 10) = 0x41;

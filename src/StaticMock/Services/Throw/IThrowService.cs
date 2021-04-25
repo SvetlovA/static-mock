@@ -1,10 +1,11 @@
 ﻿using System;
+using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Throw
 {
     internal interface IThrowService
     {
-        void Throws(Type exceptionType);
-        void Throws<TException>() where TException : Exception, new();
+        IReturnable Throws(Type exceptionType);
+        IReturnable Throws<TException>() where TException : Exception, new();
     }
 }

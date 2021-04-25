@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using StaticMock.Services.Injection.Entities;
 
-namespace StaticMock.Services.Injection
+namespace StaticMock.Services.Injection.Implementation
 {
     internal class InjectionServiceX32 : IInjectionService
     {

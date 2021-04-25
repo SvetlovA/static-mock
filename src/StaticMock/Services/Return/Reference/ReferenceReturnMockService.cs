@@ -11,12 +11,12 @@ namespace StaticMock.Services.Return.Reference
         private static readonly ConcurrentDictionary<MethodInfo, object> InjectionValuesByMethod = new ConcurrentDictionary<MethodInfo, object>();
 
         private readonly MethodInfo _originalMethodInfo;
-        private readonly IInjectionService _injectionService;
+        private readonly IInjectionServiceFactory _injectionServiceFactory;
 
-        public ReferenceReturnMockService(MethodInfo originalMethodInfo)
+        public ReferenceReturnMockService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
-            _injectionService = new InjectionServiceX64(_originalMethodInfo);
+            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
         }
 
         public IReturnable Returns(object value)
@@ -25,7 +25,8 @@ namespace StaticMock.Services.Return.Reference
             _injectionValue = InjectionValuesByMethod[_originalMethodInfo];
             Func<object> injectionMethod = InjectionMethod;
 
-            return _injectionService.Inject(injectionMethod.Method);
+            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
+            return injectionService.Inject(injectionMethod.Method);
         }
 
         private static object InjectionMethod() => _injectionValue;

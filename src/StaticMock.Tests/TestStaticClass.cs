@@ -35,5 +35,8 @@ namespace StaticMock.Tests
             x = 1;
             return 1;
         }
+
+        public static void TestVoidMethodWithoutParameters()
+        { }
     }
 }

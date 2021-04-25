@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using StaticMock.Services;
+using StaticMock.Services.Injection.Implementation;
 
 namespace StaticMock
 {
@@ -30,7 +31,7 @@ namespace StaticMock
                 throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
             }
 
-            return new MockService(methodToReplace, action);
+            return new MockService(new InjectionServiceFactory(), methodToReplace, action);
         }
 
         public static IMockService Setup<TValue>(Expression<Func<TValue>> methodGetExpression, Action action)
@@ -51,7 +52,28 @@ namespace StaticMock
                 throw new Exception("Get expression not contains method to setup");
             }
 
-            return new MockService(((MethodCallExpression) methodExpression).Method, action);
+            return new MockService(new InjectionServiceFactory(), ((MethodCallExpression) methodExpression).Method, action);
+        }
+
+        public static IVoidMockService Setup(Expression<Action> methodGetExpression, Action action)
+        {
+            if (methodGetExpression == null)
+            {
+                throw new ArgumentNullException(nameof(methodGetExpression));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var methodExpression = methodGetExpression.Body;
+            if (methodExpression.NodeType != ExpressionType.Call)
+            {
+                throw new Exception("Get expression not contains method to setup");
+            }
+
+            return new MockService(new InjectionServiceFactory(), ((MethodCallExpression) methodExpression).Method, action);
         }
     }
 }
