@@ -21,7 +21,7 @@ namespace StaticMock.Tests.ThrowsTests
         {
             Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParameters(), () =>
                 {
-                    Assert.Throws<Exception>(TestStaticClass.TestVoidMethodWithoutParameters);
+                    Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithoutParameters());
                 })
                 .Throws(typeof(Exception));
         }
