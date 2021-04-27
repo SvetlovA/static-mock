@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
     <PackageTags>mock, moq, static, static mock, static moq</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Copyright />
+    <Copyright>Copyright (c) 2021 Artem Svetlov</Copyright>
     <Version>1.0.0</Version>
   </PropertyGroup>
 
