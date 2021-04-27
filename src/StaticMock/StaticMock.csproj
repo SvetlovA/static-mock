@@ -6,7 +6,7 @@
     <PackageId>SMock</PackageId>
     <Authors>SvetlovA</Authors>
     <Product>SMock</Product>
-    <Description>SMock is opensource lib for mocking static methods.</Description>
+    <Description>SMock is opensource lib for mocking static and instance methods.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/SvetlovA/static-mock</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>

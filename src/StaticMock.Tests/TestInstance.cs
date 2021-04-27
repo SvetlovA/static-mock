@@ -7,6 +7,16 @@ namespace StaticMock.Tests
         public int IntProperty { get; set; }
         public object ObjectProperty { get; set; }
 
+        public int TestMethodReturn1WithoutParameters()
+        {
+            return 1;
+        }
+
+        public void TestVoidMethodWithoutParametersThrowsException()
+        {
+            throw new Exception("Test exception");
+        }
+
         public bool Equals(TestInstance other)
         {
             if (ReferenceEquals(null, other)) return false;

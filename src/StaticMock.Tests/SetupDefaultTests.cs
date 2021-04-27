@@ -56,5 +56,16 @@ namespace StaticMock.Tests
                 TestStaticClass.TestMethodReturn1WithoutParameters();
             }));
         }
+
+        [Test]
+        public void TestGenericSetupDefaultInstanceMethod()
+        {
+            var testInstance = new TestInstance();
+
+            Mock.SetupDefault(() => testInstance.TestVoidMethodWithoutParametersThrowsException(), () =>
+            {
+                testInstance.TestVoidMethodWithoutParametersThrowsException();
+            });
+        }
     }
 }

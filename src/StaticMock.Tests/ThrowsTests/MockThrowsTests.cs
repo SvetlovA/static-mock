@@ -45,5 +45,16 @@ namespace StaticMock.Tests.ThrowsTests
                 })
                 .Throws(typeof(ArgumentNullException));
         }
+
+        [Test]
+        public void TestInstanceMethodThrows()
+        {
+            var testInstance = new TestInstance();
+
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), () =>
+            {
+                Assert.Throws<Exception>(() => testInstance.TestMethodReturn1WithoutParameters());
+            }).Throws<Exception>();
+        }
     }
 }

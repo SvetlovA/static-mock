@@ -105,5 +105,19 @@ namespace StaticMock.Tests.ReturnsTests
                     })
                 .Returns(expectedResult);
         }
+
+        [Test]
+        public void TestInstanceMethodReturns()
+        {
+            var testInstance = new TestInstance();
+            Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+            var expectedResult = 2;
+
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), () =>
+            {
+                var actualResult = testInstance.TestMethodReturn1WithoutParameters();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
     }
 }
