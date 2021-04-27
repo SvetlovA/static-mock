@@ -42,8 +42,6 @@ namespace StaticMock.Services.Injection.Implementation
 
         public unsafe void Return()
         {
-            //RuntimeHelpers.PrepareMethod(_method.MethodHandle);
-
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
             *methodPtr = _x64MethodMemoryInfo.Byte1;

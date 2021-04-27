@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StaticMock.Tests
 {
@@ -37,6 +39,14 @@ namespace StaticMock.Tests
         }
 
         public static void TestVoidMethodWithoutParameters()
+        { }
+
+        public static void TestVoidMethodWithoutParametersThrowsException()
+        {
+            throw new Exception("Test exception");
+        }
+
+        public static void TestVoidMethodWithParameters(int parameter)
         { }
     }
 }

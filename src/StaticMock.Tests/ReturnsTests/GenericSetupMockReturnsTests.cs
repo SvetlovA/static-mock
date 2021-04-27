@@ -5,7 +5,7 @@ namespace StaticMock.Tests.ReturnsTests
     [TestFixture]
     public class GenericSetupMockReturnsTests
     {
-                [Test]
+        [Test]
         public void TestGenericSetupReturnsWithTestMethodReturn1WithoutParameters()
         {
             var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();

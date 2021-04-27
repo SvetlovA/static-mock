@@ -42,8 +42,6 @@ namespace StaticMock.Services.Injection.Implementation
 
         public unsafe void Return()
         {
-            //RuntimeHelpers.PrepareMethod(_method.MethodHandle);
-
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
             *methodPtr = _x32MethodMemoryInfo.Byte1;
@@ -64,9 +62,9 @@ namespace StaticMock.Services.Injection.Implementation
             _x32MethodMemoryInfo.Byte1 = *methodPtr;
             _x32MethodMemoryInfo.Byte2 = *(methodPtr + 1);
             _x32MethodMemoryInfo.MethodMemoryValue = *(uint*) (methodPtr + 2);
-            _x32MethodMemoryInfo.Byte1AfterMethod = *(methodPtr + 10);
-            _x32MethodMemoryInfo.Byte2AfterMethod = *(methodPtr + 11);
-            _x32MethodMemoryInfo.Byte3AfterMethod = *(methodPtr + 12);
+            _x32MethodMemoryInfo.Byte1AfterMethod = *(methodPtr + 6);
+            _x32MethodMemoryInfo.Byte2AfterMethod = *(methodPtr + 7);
+            _x32MethodMemoryInfo.Byte3AfterMethod = *(methodPtr + 8);
         }
     }
 }

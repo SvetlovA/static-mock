@@ -6,7 +6,7 @@ namespace StaticMock.Services.Throw
 {
     internal class ThrowService : IThrowService
     {
-        private static object _injectedException;
+        private static Exception _injectedException;
 
         private readonly MethodInfo _originalMethodInfo;
         private readonly IInjectionServiceFactory _injectionServiceFactory;
@@ -24,14 +24,14 @@ namespace StaticMock.Services.Throw
                 throw new ArgumentNullException(nameof(exceptionType));
             }
 
-            if (exceptionType.IsSubclassOf(typeof(Exception)))
+            _injectedException = Activator.CreateInstance(exceptionType) as Exception;
+
+            if (_injectedException == null)
             {
                 throw new Exception($"{exceptionType.FullName} is not an Exception");
             }
 
-            _injectedException = Activator.CreateInstance(exceptionType);
-
-            Action injectionMethod = () => throw (Exception) _injectedException;
+            Action injectionMethod = () => throw _injectedException;
 
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
             return injectionService.Inject(injectionMethod.Method);
@@ -39,7 +39,9 @@ namespace StaticMock.Services.Throw
 
         public IReturnable Throws<TException>() where TException : Exception, new()
         {
-            Action injectionMethod = () => throw new TException();
+            _injectedException = new TException();
+
+            Action injectionMethod = () => throw _injectedException;
 
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
             return injectionService.Inject(injectionMethod.Method);

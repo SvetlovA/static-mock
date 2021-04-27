@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace StaticMock.Tests.ThrowsTests
 {
     [TestFixture]
-    public class MockThrowsTests
+    public class GenericMockThrowsTests
     {
         [Test]
         public void TestThrowsTestMethodReturn1WithoutParameters()
@@ -13,7 +13,7 @@ namespace StaticMock.Tests.ThrowsTests
                 {
                     Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters());
                 })
-                .Throws(typeof(Exception));
+                .Throws<Exception>();
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace StaticMock.Tests.ThrowsTests
                 {
                     Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithoutParameters());
                 })
-                .Throws(typeof(Exception));
+                .Throws<Exception>();
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace StaticMock.Tests.ThrowsTests
                 {
                     Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithParameters(1));
                 })
-                .Throws(typeof(Exception));
+                .Throws<Exception>();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace StaticMock.Tests.ThrowsTests
                 {
                     Assert.Throws<ArgumentNullException>(() => TestStaticClass.TestVoidMethodWithoutParameters());
                 })
-                .Throws(typeof(ArgumentNullException));
+                .Throws<ArgumentNullException>();
         }
     }
 }

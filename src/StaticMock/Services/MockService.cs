@@ -61,5 +61,14 @@ namespace StaticMock.Services
                 _action();
             }
         }
+
+        private void DefaultSetup()
+        {
+            Action defaultMethodInjection = () => { };
+
+            using var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
+            injectionService.Inject(defaultMethodInjection.Method);
+            _action();
+        }
     }
 }
