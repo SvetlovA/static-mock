@@ -15,11 +15,6 @@ namespace StaticMock.Tests
             return parameter;
         }
 
-        public static async Task<int> TestMethodReturn1WithoutParametersAsync()
-        {
-            return await Task.FromResult(1);
-        }
-
         public static TestInstance TestMethodReturnReferenceObject()
         {
             return new();
@@ -47,5 +42,40 @@ namespace StaticMock.Tests
 
         public static void TestVoidMethodWithParameters(int parameter)
         { }
+
+        public static Task TestMethodReturnTask()
+        {
+            return Task.CompletedTask;
+        }
+
+        public static async Task TestMethodReturnTaskAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        public static async void TestVoidMethodReturnTaskAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        public static async Task<int> TestMethodReturnTaskWithoutParametersAsync()
+        {
+            return await Task.FromResult(1);
+        }
+
+        public static Task<int> TestMethodReturnTaskWithoutParameters()
+        {
+            return Task.FromResult(1);
+        }
+
+        public static async Task TestMethodThrowsExceptionAsync()
+        {
+            throw new Exception("Test exception");
+        }
+
+        public static Task TestMethodThrowsException()
+        {
+            throw new Exception("Test exception");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace StaticMock.Tests
 {
@@ -15,6 +16,31 @@ namespace StaticMock.Tests
         public void TestVoidMethodWithoutParametersThrowsException()
         {
             throw new Exception("Test exception");
+        }
+
+        public Task TestMethodReturnTask()
+        {
+            return Task.CompletedTask;
+        }
+
+        public async Task TestMethodReturnTaskAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        public async void TestVoidMethodReturnTaskAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        public async Task<int> TestMethodReturnTaskWithoutParametersAsync()
+        {
+            return await Task.FromResult(1);
+        }
+
+        public Task<int> TestMethodReturnTaskWithoutParameters()
+        {
+            return Task.FromResult(1);
         }
 
         public bool Equals(TestInstance other)

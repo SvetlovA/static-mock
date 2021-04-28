@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace StaticMock.Tests.ReturnsTests
 {
@@ -112,6 +113,64 @@ namespace StaticMock.Tests.ReturnsTests
             Mock.Setup(() => testInstance.TestMethodReturn1WithoutParameters(), () =>
             {
                 var actualResult = testInstance.TestMethodReturn1WithoutParameters();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public async Task TestGenericSetupReturnsMethodsReturnTask()
+        {
+            var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParameters();
+            Assert.AreEqual(1, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParameters(), async () =>
+            {
+                var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParameters();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public async Task TestGenericSetupReturnsMethodsReturnTaskAsync()
+        {
+            var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+            Assert.AreEqual(1, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParametersAsync(), async () =>
+            {
+                var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public async Task TestGenericSetupInstanceReturnsMethodsReturnTask()
+        {
+            var instance = new TestInstance();
+            var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
+            Assert.AreEqual(1, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParameters(), async () =>
+            {
+                var actualResult = instance.TestMethodReturnTaskWithoutParameters();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public async Task TestGenericSetupInstanceReturnsMethodsReturnTaskAsync()
+        {
+            var instance = new TestInstance();
+            var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
+            Assert.AreEqual(1, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), async () =>
+            {
+                var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
                 Assert.AreEqual(expectedResult, actualResult);
             }).Returns(expectedResult);
         }

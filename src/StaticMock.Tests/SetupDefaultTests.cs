@@ -67,5 +67,41 @@ namespace StaticMock.Tests
                 testInstance.TestVoidMethodWithoutParametersThrowsException();
             });
         }
+
+        [Test]
+        public void TestGenericSetupDefaultTestMethodThrowsExceptionAsyncNegative()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticClass.TestMethodThrowsExceptionAsync(), () =>
+            {
+                TestStaticClass.TestMethodThrowsExceptionAsync();
+            }));
+        }
+
+        [Test]
+        public void TestGenericSetupDefaultTestMethodThrowsExceptionNegative()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticClass.TestMethodThrowsException(), () =>
+            {
+                TestStaticClass.TestMethodThrowsException();
+            }));
+        }
+
+        [Test]
+        public void TestSetupDefaultTestMethodThrowsExceptionAsyncNegative()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodThrowsExceptionAsync), () =>
+            {
+                TestStaticClass.TestMethodThrowsExceptionAsync();
+            }));
+        }
+
+        [Test]
+        public void TestSetupDefaultTestMethodThrowsExceptionNegative()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodThrowsException), () =>
+            {
+                TestStaticClass.TestMethodThrowsException();
+            }));
+        }
     }
 }

@@ -56,5 +56,105 @@ namespace StaticMock.Tests.ThrowsTests
                 Assert.Throws<Exception>(() => testInstance.TestMethodReturn1WithoutParameters());
             }).Throws<Exception>();
         }
+
+        [Test]
+        public void TestGenericThrowsTestMethodReturnTask()
+        {
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTask(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => TestStaticClass.TestMethodReturnTask());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsTestMethodReturnTaskAsync()
+        {
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskAsync(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => TestStaticClass.TestMethodReturnTaskAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsTestVoidMethodReturnTaskAsync()
+        {
+            Mock.Setup(() => TestStaticClass.TestVoidMethodReturnTaskAsync(), () =>
+            {
+                Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodReturnTaskAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsTestMethodReturnTaskWithoutParametersAsync()
+        {
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParametersAsync(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => TestStaticClass.TestMethodReturnTaskWithoutParametersAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsTestMethodReturnTaskWithoutParameters()
+        {
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParameters(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => TestStaticClass.TestMethodReturnTaskWithoutParameters());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsInstanceTestMethodReturnTask()
+        {
+            var instance = new TestInstance();
+
+            Mock.Setup(() => instance.TestMethodReturnTask(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTask());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsInstanceTestMethodReturnTaskAsync()
+        {
+            var instance = new TestInstance();
+
+            Mock.Setup(() => instance.TestMethodReturnTaskAsync(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsInstanceTestVoidMethodReturnTaskAsync()
+        {
+            var instance = new TestInstance();
+
+            Mock.Setup(() => instance.TestVoidMethodReturnTaskAsync(), () =>
+            {
+                Assert.Throws<Exception>(() => instance.TestVoidMethodReturnTaskAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsInstanceTestMethodReturnTaskWithoutParametersAsync()
+        {
+            var instance = new TestInstance();
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParametersAsync());
+            });
+        }
+
+        [Test]
+        public void TestGenericThrowsInstanceTestMethodReturnTaskWithoutParameters()
+        {
+            var instance = new TestInstance();
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParameters(), () =>
+            {
+                Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
+            });
+        }
     }
 }
