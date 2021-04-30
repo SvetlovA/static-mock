@@ -39,5 +39,7 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     return expectedResult;
 });
 ```
+
+[Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).
