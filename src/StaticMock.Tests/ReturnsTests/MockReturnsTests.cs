@@ -122,7 +122,7 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
-        public async Task TestGenericSetupReturnsMethodsReturnTask()
+        public async Task TestSetupReturnsMethodsReturnTask()
         {
             var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParameters();
             Assert.AreEqual(1, originalResult);
@@ -136,7 +136,7 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
-        public async Task TestGenericSetupReturnsMethodsReturnTaskAsync()
+        public async Task TestSetupReturnsMethodsReturnTaskAsync()
         {
             var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(1, originalResult);
@@ -150,7 +150,7 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
-        public async Task TestGenericSetupInstanceReturnsMethodsReturnTask()
+        public async Task TestSetupInstanceReturnsMethodsReturnTask()
         {
             var instance = new TestInstance();
             var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
@@ -165,7 +165,7 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
-        public async Task TestGenericSetupInstanceReturnsMethodsReturnTaskAsync()
+        public async Task TestSetupInstanceReturnsMethodsReturnTaskAsync()
         {
             var instance = new TestInstance();
             var originalResult = await instance.TestMethodReturnTaskWithoutParameters();

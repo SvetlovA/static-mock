@@ -27,5 +27,17 @@ Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
     StaticClass.VoidMethodToMock(); // This method do nothing
 });
 ```
+### Callback
+```cs
+Mock.Setup(() => StaticClass.MethodToMock(), () =>
+{
+    var actualResult = StaticClass.MethodToMock();
+    Assert.AreNotEqual(originalResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
+}).Callback(() =>
+{
+    return expectedResult;
+});
+```
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).

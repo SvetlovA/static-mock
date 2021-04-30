@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace StaticMock.Services
+namespace StaticMock.Services.Mock
 {
-    public interface IVoidMockService
+    public interface IMockService
     {
         void Throws(Type exceptionType);
         void Throws<TException>() where TException : Exception, new();

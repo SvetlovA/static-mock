@@ -1,8 +1,8 @@
 ﻿using StaticMock.Services.Injection;
 
-namespace StaticMock.Services.Return.Reference
+namespace StaticMock.Services.Returns.Reference
 {
-    internal interface IReferenceReturnMockService
+    internal interface IReferenceReturnsMockService
     {
         IReturnable Returns(object value);
     }

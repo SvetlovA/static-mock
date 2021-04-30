@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Reflection;
 using StaticMock.Services.Injection;
 
-namespace StaticMock.Services.Return.Value
+namespace StaticMock.Services.Returns.Value
 {
-    internal class ValueReturnMockService<TValue> : IValueReturnMockService<TValue>
+    internal class ValueReturnsMockService<TValue> : IValueReturnsMockService<TValue>
     {
         private static TValue _injectionValue;
-        private static readonly ConcurrentDictionary<MethodInfo, TValue> InjectionValuesByMethod = new ConcurrentDictionary<MethodInfo, TValue>();
 
         private readonly MethodInfo _originalMethodInfo;
         private readonly IInjectionServiceFactory _injectionServiceFactory;
 
-        public ValueReturnMockService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
+        public ValueReturnsMockService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
@@ -21,8 +19,7 @@ namespace StaticMock.Services.Return.Value
 
         public IReturnable Returns(TValue value)
         {
-            InjectionValuesByMethod[_originalMethodInfo] = value;
-            _injectionValue = InjectionValuesByMethod[_originalMethodInfo];
+            _injectionValue = value;
             Func<TValue> injectionMethod = InjectionMethod;
 
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);

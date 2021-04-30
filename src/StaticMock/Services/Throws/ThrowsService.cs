@@ -2,16 +2,16 @@
 using System.Reflection;
 using StaticMock.Services.Injection;
 
-namespace StaticMock.Services.Throw
+namespace StaticMock.Services.Throws
 {
-    internal class ThrowService : IThrowService
+    internal class ThrowsService : IThrowsService
     {
         private static Exception _injectedException;
 
         private readonly MethodInfo _originalMethodInfo;
         private readonly IInjectionServiceFactory _injectionServiceFactory;
 
-        public ThrowService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
+        public ThrowsService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
@@ -33,8 +33,7 @@ namespace StaticMock.Services.Throw
 
             Action injectionMethod = () => throw _injectedException;
 
-            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
-            return injectionService.Inject(injectionMethod.Method);
+            return Inject(injectionMethod.Method);
         }
 
         public IReturnable Throws<TException>() where TException : Exception, new()
@@ -43,8 +42,13 @@ namespace StaticMock.Services.Throw
 
             Action injectionMethod = () => throw _injectedException;
 
+            return Inject(injectionMethod.Method);
+        }
+
+        private IReturnable Inject(MethodBase methodToInject)
+        {
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
-            return injectionService.Inject(injectionMethod.Method);
+            return injectionService.Inject(methodToInject);
         }
     }
 }
