@@ -77,5 +77,8 @@ namespace StaticMock.Tests
         {
             throw new Exception("Test exception");
         }
+
+        public static int StaticIntProperty { get; set; }
+        public static object StaticObjectProperty { get; set; }
     }
 }

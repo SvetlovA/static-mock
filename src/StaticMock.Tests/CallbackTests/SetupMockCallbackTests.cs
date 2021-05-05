@@ -106,5 +106,61 @@ namespace StaticMock.Tests.CallbackTests
                 return await Task.FromResult(2);
             });
         }
+
+        [Test]
+        public void TestCallbackStaticIntProperty()
+        {
+            var originalValue = TestStaticClass.StaticIntProperty;
+            Assert.AreEqual(default(int), originalValue);
+            var expectedResult = 2;
+
+            Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticIntProperty), () =>
+            {
+                var actualResult = TestStaticClass.StaticIntProperty;
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Callback(() => expectedResult);
+        }
+
+        [Test]
+        public void TestCallbackStaticObjectProperty()
+        {
+            var originalValue = TestStaticClass.StaticObjectProperty;
+            Assert.AreEqual(default, originalValue);
+            var expectedResult = new TestInstance();
+
+            Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticObjectProperty), () =>
+            {
+                var actualResult = TestStaticClass.StaticObjectProperty;
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Callback(() => expectedResult);
+        }
+
+        [Test]
+        public void TestCallbackStaticIntPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.IntProperty;
+            Assert.AreEqual(default(int), originalValue);
+
+            Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
+            {
+                var actualResult = instance.IntProperty;
+                Assert.AreEqual(2, actualResult);
+            }).Callback(() => 2);
+        }
+
+        [Test]
+        public void TestCallbackStaticObjectPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.ObjectProperty;
+            Assert.AreEqual(default, originalValue);
+
+            Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
+            {
+                var actualResult = instance.ObjectProperty;
+                Assert.AreEqual(typeof(int), actualResult);
+            }).Callback(() => typeof(int));
+        }
     }
 }

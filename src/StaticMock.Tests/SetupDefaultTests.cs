@@ -103,5 +103,45 @@ namespace StaticMock.Tests
                 TestStaticClass.TestMethodThrowsException();
             }));
         }
+
+        [Test]
+        public void TestSetupDefaultStaticIntPropertyThrowsException()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.StaticIntProperty), () =>
+            {
+                var actualResult = TestStaticClass.StaticIntProperty;
+            }));
+        }
+
+        [Test]
+        public void TestSetupDefaultStaticObjectPropertyThrowsException()
+        {
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.StaticObjectProperty), () =>
+            {
+                var actualResult = TestStaticClass.StaticObjectProperty;
+            }));
+        }
+
+        [Test]
+        public void TestSetupDefaultInstanceIntPropertyThrowsException()
+        {
+            var instance = new TestInstance();
+
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
+            {
+                var actualResult = instance.IntProperty;
+            }));
+        }
+
+        [Test]
+        public void TestSetupDefaultInstanceObjectPropertyThrowsException()
+        {
+            var instance = new TestInstance();
+
+            Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
+            {
+                var actualResult = instance.ObjectProperty;
+            }));
+        }
     }
 }

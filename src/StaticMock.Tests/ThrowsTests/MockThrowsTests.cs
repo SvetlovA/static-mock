@@ -156,5 +156,67 @@ namespace StaticMock.Tests.ThrowsTests
                 Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
             });
         }
+
+        [Test]
+        public void TestThrowsStaticIntProperty()
+        {
+            var originalValue = TestStaticClass.StaticIntProperty;
+            Assert.AreEqual(default(int), originalValue);
+
+            Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticIntProperty), () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var actualResult = TestStaticClass.StaticIntProperty;
+                });
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestThrowsStaticObjectProperty()
+        {
+            var originalValue = TestStaticClass.StaticObjectProperty;
+            Assert.AreEqual(default, originalValue);
+
+            Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticObjectProperty), () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var actualResult = TestStaticClass.StaticObjectProperty;
+                });
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestThrowsStaticIntPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.IntProperty;
+            Assert.AreEqual(default(int), originalValue);
+
+            Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var actualResult = instance.IntProperty;
+                });
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestThrowsStaticObjectPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.ObjectProperty;
+            Assert.AreEqual(default, originalValue);
+
+            Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var actualResult = instance.ObjectProperty;
+                });
+            }).Throws<Exception>();
+        }
     }
 }

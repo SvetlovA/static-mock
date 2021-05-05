@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using StaticMock.Helpers;
 using StaticMock.Services.Injection.Implementation;
 using StaticMock.Services.Mock;
@@ -30,9 +31,41 @@ namespace StaticMock
 
             if (methodToReplace == null)
             {
-                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
+                throw new Exception($"Can't find method {methodName} of type {type.FullName}");
             }
 
+            if (methodToReplace.ReturnType == typeof(void))
+            {
+                throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
+            }
+
+            return new FuncMockService<object>(new InjectionServiceFactory(), methodToReplace, action);
+        }
+
+        public static IFuncMockService SetupProperty(Type type, string propertyName, Action action)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException(nameof(propertyName));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var propertyInfo = type.GetProperty(propertyName);
+            if (propertyInfo == null)
+            {
+                throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
+            }
+
+            var methodToReplace = propertyInfo.GetMethod;
             if (methodToReplace.ReturnType == typeof(void))
             {
                 throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
@@ -112,12 +145,24 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
+            MethodInfo originalMethodInfo = null;
+
+            if (methodGetExpression.Body is MemberExpression {Member: PropertyInfo propertyInfo})
             {
-                throw new Exception("Get expression not contains method to setup");
+                originalMethodInfo = propertyInfo.GetMethod;
             }
 
-            return new FuncMockService<TReturnValue>(new InjectionServiceFactory(), methodExpression.Method, action);
+            if (methodGetExpression.Body is MethodCallExpression methodExpression)
+            {
+                originalMethodInfo = methodExpression.Method;
+            }
+
+            if (originalMethodInfo == null)
+            {
+                throw new Exception("Get expression not contains method nor property to setup");
+            }
+
+            return new FuncMockService<TReturnValue>(new InjectionServiceFactory(), originalMethodInfo, action);
         }
 
         public static IVoidMockService Setup(Expression<Action> methodGetExpression, Action action)

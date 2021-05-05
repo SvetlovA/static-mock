@@ -174,5 +174,61 @@ namespace StaticMock.Tests.ReturnsTests
                 Assert.AreEqual(expectedResult, actualResult);
             }).Returns(Task.FromResult(expectedResult));
         }
+
+        [Test]
+        public void TestReturnsStaticIntProperty()
+        {
+            var originalValue = TestStaticClass.StaticIntProperty;
+            Assert.AreEqual(default(int), originalValue);
+            var expectedResult = 2;
+
+            Mock.Setup(() => TestStaticClass.StaticIntProperty, () =>
+            {
+                var actualResult = TestStaticClass.StaticIntProperty;
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public void TestReturnsStaticObjectProperty()
+        {
+            var originalValue = TestStaticClass.StaticObjectProperty;
+            Assert.AreEqual(default, originalValue);
+            var expectedResult = new TestInstance();
+
+            Mock.Setup(() => TestStaticClass.StaticObjectProperty, () =>
+            {
+                var actualResult = TestStaticClass.StaticObjectProperty;
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(expectedResult);
+        }
+
+        [Test]
+        public void TestReturnsStaticIntPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.IntProperty;
+            Assert.AreEqual(default(int), originalValue);
+
+            Mock.Setup(() => instance.IntProperty, () =>
+            {
+                var actualResult = instance.IntProperty;
+                Assert.AreEqual(2, actualResult);
+            }).Returns(2);
+        }
+
+        [Test]
+        public void TestReturnsStaticObjectPropertyInstance()
+        {
+            var instance = new TestInstance();
+            var originalValue = instance.ObjectProperty;
+            Assert.AreEqual(default, originalValue);
+
+            Mock.Setup(() => instance.ObjectProperty, () =>
+            {
+                var actualResult = instance.ObjectProperty;
+                Assert.AreEqual(typeof(int), actualResult);
+            }).Returns(typeof(int));
+        }
     }
 }
