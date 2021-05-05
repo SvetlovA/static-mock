@@ -6,14 +6,14 @@
     <PackageId>SMock</PackageId>
     <Authors>SvetlovA</Authors>
     <Product>SMock</Product>
-    <Description>SMock is opensource lib for mocking static and instance methods.</Description>
+    <Description>SMock is opensource lib for mocking static and instance methods and properties.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/SvetlovA/static-mock</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
     <PackageTags>mock moq static unit test tests smock</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>Copyright (c) 2021 Artem Svetlov</Copyright>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

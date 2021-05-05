@@ -1,5 +1,5 @@
 # SMock
-SMock is opensource lib for mocking static and instance methods.
+SMock is opensource lib for mocking static and instance methods and properties.
 # Installation
 Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/)
 # Getting Started
