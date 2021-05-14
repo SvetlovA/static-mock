@@ -28,15 +28,15 @@ namespace StaticMock.Tests.ReturnsTests
         [Test]
         public void TestReturnsWithTestMethodReturnParameter()
         {
-            var originalResult = TestStaticClass.TestMethodReturnParameter(10);
+            var originalResult = TestStaticClass.TestMethodReturnWithParameter(10);
             var expectedResult = 2;
 
             Mock.Setup(
                     typeof(TestStaticClass),
-                    nameof(TestStaticClass.TestMethodReturnParameter),
+                    nameof(TestStaticClass.TestMethodReturnWithParameter),
                     () =>
                     {
-                        var actualResult = TestStaticClass.TestMethodReturnParameter(10);
+                        var actualResult = TestStaticClass.TestMethodReturnWithParameter(10);
 
                         Assert.AreNotEqual(originalResult, actualResult);
                         Assert.AreEqual(expectedResult, actualResult);

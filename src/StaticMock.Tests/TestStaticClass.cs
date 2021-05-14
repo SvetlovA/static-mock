@@ -10,7 +10,7 @@ namespace StaticMock.Tests
             return 1;
         }
 
-        public static int TestMethodReturnParameter(int parameter)
+        public static int TestMethodReturnWithParameter(int parameter)
         {
             return parameter;
         }
