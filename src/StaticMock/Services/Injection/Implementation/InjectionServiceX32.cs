@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using StaticMock.Services.Injection.Entities;
 
 namespace StaticMock.Services.Injection.Implementation
@@ -23,16 +22,13 @@ namespace StaticMock.Services.Injection.Implementation
                 throw new ArgumentNullException(nameof(methodToInject));
             }
 
-            RuntimeHelpers.PrepareMethod(_method.MethodHandle);
-            RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
-
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
             SaveMethodMemoryInfo(methodPtr);
 
             *methodPtr = 0x49;
             *(methodPtr + 1) = 0xBB;
-            *(uint*)(methodPtr + 2) = (uint)methodToInject.MethodHandle.GetFunctionPointer().ToInt64();
+            *(uint*)(methodPtr + 2) = (uint)methodToInject.MethodHandle.GetFunctionPointer().ToInt32();
             *(methodPtr + 6) = 0x41;
             *(methodPtr + 7) = 0xFF;
             *(methodPtr + 8) = 0xE3;
