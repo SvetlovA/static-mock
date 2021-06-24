@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Reflection;
+using StaticMock.Services.Common;
 using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Throws
 {
     internal class ThrowsService : IThrowsService
     {
-        private static Exception _injectedException;
+        private static readonly ConcurrentDictionary<object, Exception> PreviousInjectionExceptions = new ConcurrentDictionary<object, Exception>();
+        private static Exception _injectionException;
 
         private readonly MethodInfo _originalMethodInfo;
         private readonly IInjectionServiceFactory _injectionServiceFactory;
@@ -24,23 +27,25 @@ namespace StaticMock.Services.Throws
                 throw new ArgumentNullException(nameof(exceptionType));
             }
 
-            _injectedException = Activator.CreateInstance(exceptionType) as Exception;
+            PreviousInjectionExceptions[this] = _injectionException;
+            _injectionException = Activator.CreateInstance(exceptionType) as Exception;
 
-            if (_injectedException == null)
+            if (_injectionException == null)
             {
                 throw new Exception($"{exceptionType.FullName} is not an Exception");
             }
 
-            Action injectionMethod = () => throw _injectedException;
+            Action injectionMethod = () => throw _injectionException;
 
             return Inject(injectionMethod.Method);
         }
 
         public IReturnable Throws<TException>() where TException : Exception, new()
         {
-            _injectedException = new TException();
+            PreviousInjectionExceptions[this] = _injectionException;
+            _injectionException = new TException();
 
-            Action injectionMethod = () => throw _injectedException;
+            Action injectionMethod = () => throw _injectionException;
 
             return Inject(injectionMethod.Method);
         }
@@ -49,6 +54,22 @@ namespace StaticMock.Services.Throws
         {
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
             return injectionService.Inject(methodToInject);
+        }
+
+        public void Dispose()
+        {
+            Return();
+        }
+
+        public void Return()
+        {
+            if (PreviousInjectionExceptions.TryRemove(this, out var previousInjectionException))
+            {
+                _injectionException = previousInjectionException;
+                return;
+            }
+
+            throw new Exception($"{nameof(ThrowsService)} previous injection value isn't exists");
         }
     }
 }

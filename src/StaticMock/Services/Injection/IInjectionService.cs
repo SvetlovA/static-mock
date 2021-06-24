@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using StaticMock.Services.Common;
 
 namespace StaticMock.Services.Injection
 {

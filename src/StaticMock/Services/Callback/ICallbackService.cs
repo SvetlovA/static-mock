@@ -1,4 +1,5 @@
 ﻿using System;
+using StaticMock.Services.Common;
 using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Callback

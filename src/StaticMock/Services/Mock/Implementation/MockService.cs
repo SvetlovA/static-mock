@@ -21,7 +21,7 @@ namespace StaticMock.Services.Mock.Implementation
 
         public void Throws(Type exceptionType)
         {
-            var throwService = new ThrowsService(_originalMethodInfo, _injectionServiceFactory);
+            using var throwService = new ThrowsService(_originalMethodInfo, _injectionServiceFactory);
             using (throwService.Throws(exceptionType))
             {
                 _action();
@@ -30,7 +30,7 @@ namespace StaticMock.Services.Mock.Implementation
 
         public void Throws<TException>() where TException : Exception, new()
         {
-            var throwService = new ThrowsService(_originalMethodInfo, _injectionServiceFactory);
+            using var throwService = new ThrowsService(_originalMethodInfo, _injectionServiceFactory);
             using (throwService.Throws<TException>())
             {
                 _action();

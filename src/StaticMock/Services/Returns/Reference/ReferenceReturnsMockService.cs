@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Reflection;
+using StaticMock.Services.Common;
 using StaticMock.Services.Injection;
 
 namespace StaticMock.Services.Returns.Reference
 {
     internal class ReferenceReturnsMockService : IReferenceReturnsMockService
     {
+        private static readonly ConcurrentDictionary<object, object> PreviousInjectionValues = new ConcurrentDictionary<object, object>();
         private static object _injectionValue;
 
         private readonly MethodInfo _originalMethodInfo;
@@ -19,13 +22,29 @@ namespace StaticMock.Services.Returns.Reference
 
         public IReturnable Returns(object value)
         {
+            PreviousInjectionValues[this] = _injectionValue;
             _injectionValue = value;
-            Func<object> injectionMethod = InjectionMethod;
+
+            Func<object> injectionMethod = () => _injectionValue;
 
             var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
             return injectionService.Inject(injectionMethod.Method);
         }
 
-        private static object InjectionMethod() => _injectionValue;
+        public void Dispose()
+        {
+            Return();
+        }
+
+        public void Return()
+        {
+            if (PreviousInjectionValues.TryRemove(this, out var previousInjectionValue))
+            {
+                _injectionValue = previousInjectionValue;
+                return;
+            }
+
+            throw new Exception($"{nameof(ReferenceReturnsMockService)} previous injection value isn't exists");
+        }
     }
 }

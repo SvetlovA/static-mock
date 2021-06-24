@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using StaticMock.Services.Common;
 using StaticMock.Services.Injection.Entities;
 
 namespace StaticMock.Services.Injection.Implementation
@@ -26,9 +27,12 @@ namespace StaticMock.Services.Injection.Implementation
 
             SaveMethodMemoryInfo(methodPtr);
 
+            // mov r11, proc address
             *methodPtr = 0x49;
             *(methodPtr + 1) = 0xBB;
+            // injected function address
             *(uint*)(methodPtr + 2) = (uint)methodToInject.MethodHandle.GetFunctionPointer().ToInt32();
+            // jmp r11, proc address
             *(methodPtr + 6) = 0x41;
             *(methodPtr + 7) = 0xFF;
             *(methodPtr + 8) = 0xE3;

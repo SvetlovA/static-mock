@@ -49,15 +49,16 @@ namespace StaticMock.Services.Mock.Implementation
         {
             if (typeof(TValue).IsValueType)
             {
-                var valueReturnService = new ValueReturnsMockService<TValue>(_originalMethodInfo, _injectionServiceFactory);
+                using var valueReturnService = new ValueReturnsMockService<TValue>(_originalMethodInfo, _injectionServiceFactory);
                 using (valueReturnService.Returns(value))
                 {
                     _action();
                 }
+
                 return;
             }
 
-            var referenceReturnService = new ReferenceReturnsMockService(_originalMethodInfo, _injectionServiceFactory);
+            using var referenceReturnService = new ReferenceReturnsMockService(_originalMethodInfo, _injectionServiceFactory);
             using (referenceReturnService.Returns(value))
             {
                 _action();

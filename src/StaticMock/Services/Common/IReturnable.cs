@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StaticMock.Services.Injection
+namespace StaticMock.Services.Common
 {
     internal interface IReturnable : IDisposable
     {
