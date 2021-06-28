@@ -71,11 +71,27 @@ namespace StaticMock.Tests
             {
                 Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
                 {
-                    var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                    Assert.AreEqual(expectedParentResult, actualParentResult);
                     var actualChildResult = TestStaticClass.TestMethodReturnWithParameter(2);
                     Assert.AreEqual(expectedChildResult, actualChildResult);
+                    var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+                    Assert.AreEqual(expectedParentResult, actualParentResult);
                 }).Returns(expectedChildResult);
+            }).Returns(expectedParentResult);
+        }
+
+        [Test]
+        public void TestNestedInChildReturnThrowsMockWithDifferentFunctions()
+        {
+            const int expectedParentResult = 2;
+
+            Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+            {
+                Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
+                {
+                    var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+                    Assert.AreEqual(expectedParentResult, actualParentResult);
+                    Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
+                }).Throws<Exception>();
             }).Returns(expectedParentResult);
         }
 

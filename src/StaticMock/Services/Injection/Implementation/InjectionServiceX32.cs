@@ -7,7 +7,7 @@ namespace StaticMock.Services.Injection.Implementation
 {
     internal class InjectionServiceX32 : IInjectionService
     {
-        private MethodMemoryInfo<uint> _x32MethodMemoryInfo;
+        private MethodMemoryInfoX32 _methodMemoryInfoX32;
 
         private readonly MethodBase _method;
 
@@ -27,15 +27,12 @@ namespace StaticMock.Services.Injection.Implementation
 
             SaveMethodMemoryInfo(methodPtr);
 
-            // mov r11, proc address
-            *methodPtr = 0x49;
-            *(methodPtr + 1) = 0xBB;
-            // injected function address
-            *(uint*)(methodPtr + 2) = (uint)methodToInject.MethodHandle.GetFunctionPointer().ToInt32();
-            // jmp r11, proc address
-            *(methodPtr + 6) = 0x41;
-            *(methodPtr + 7) = 0xFF;
-            *(methodPtr + 8) = 0xE3;
+            //push replacementSite
+            *methodPtr = 0x68;
+            *(uint*) (methodPtr + 1) = (uint) methodToInject.MethodHandle.GetFunctionPointer().ToInt32();
+
+            //ret
+            *(methodPtr + 5) = 0xC3;
 
             return this;
         }
@@ -44,12 +41,9 @@ namespace StaticMock.Services.Injection.Implementation
         {
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
-            *methodPtr = _x32MethodMemoryInfo.Byte1;
-            *(methodPtr + 1) = _x32MethodMemoryInfo.Byte2;
-            *(uint*) (methodPtr + 2) = _x32MethodMemoryInfo.MethodMemoryValue;
-            *(methodPtr + 6) = _x32MethodMemoryInfo.Byte1AfterMethod;
-            *(methodPtr + 7) = _x32MethodMemoryInfo.Byte2AfterMethod;
-            *(methodPtr + 8) = _x32MethodMemoryInfo.Byte3AfterMethod;
+            *methodPtr = _methodMemoryInfoX32.Byte1;
+            *(uint*) (methodPtr + 2) = _methodMemoryInfoX32.MethodMemoryValue;
+            *(methodPtr + 5) = _methodMemoryInfoX32.Byte1AfterMethod;
         }
 
         public void Dispose()
@@ -59,12 +53,9 @@ namespace StaticMock.Services.Injection.Implementation
 
         private unsafe void SaveMethodMemoryInfo(byte* methodPtr)
         {
-            _x32MethodMemoryInfo.Byte1 = *methodPtr;
-            _x32MethodMemoryInfo.Byte2 = *(methodPtr + 1);
-            _x32MethodMemoryInfo.MethodMemoryValue = *(uint*) (methodPtr + 2);
-            _x32MethodMemoryInfo.Byte1AfterMethod = *(methodPtr + 6);
-            _x32MethodMemoryInfo.Byte2AfterMethod = *(methodPtr + 7);
-            _x32MethodMemoryInfo.Byte3AfterMethod = *(methodPtr + 8);
+            _methodMemoryInfoX32.Byte1 = *methodPtr;
+            _methodMemoryInfoX32.MethodMemoryValue = *(uint*) (methodPtr + 2);
+            _methodMemoryInfoX32.Byte1AfterMethod = *(methodPtr + 5);
         }
     }
 }

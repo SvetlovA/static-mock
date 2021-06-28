@@ -7,7 +7,7 @@ namespace StaticMock.Services.Injection.Implementation
 {
     internal class InjectionServiceX64 : IInjectionService
     {
-        private MethodMemoryInfo<ulong> _x64MethodMemoryInfo;
+        private MethodMemoryInfoX64 _methodMemoryInfoX64;
 
         private readonly MethodBase _method;
 
@@ -27,12 +27,11 @@ namespace StaticMock.Services.Injection.Implementation
 
             SaveMethodMemoryInfo(methodPtr);
 
-            // mov r11, proc address
+            // mov r11, replacement
             *methodPtr = 0x49;
             *(methodPtr + 1) = 0xBB;
-            // injected function address
             *(ulong*)(methodPtr + 2) = (ulong)methodToInject.MethodHandle.GetFunctionPointer().ToInt64();
-            // jmp r11, proc address
+            // jmp r11
             *(methodPtr + 10) = 0x41;
             *(methodPtr + 11) = 0xFF;
             *(methodPtr + 12) = 0xE3;
@@ -44,12 +43,12 @@ namespace StaticMock.Services.Injection.Implementation
         {
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
-            *methodPtr = _x64MethodMemoryInfo.Byte1;
-            *(methodPtr + 1) = _x64MethodMemoryInfo.Byte2;
-            *(ulong*) (methodPtr + 2) = _x64MethodMemoryInfo.MethodMemoryValue;
-            *(methodPtr + 10) = _x64MethodMemoryInfo.Byte1AfterMethod;
-            *(methodPtr + 11) = _x64MethodMemoryInfo.Byte2AfterMethod;
-            *(methodPtr + 12) = _x64MethodMemoryInfo.Byte3AfterMethod;
+            *methodPtr = _methodMemoryInfoX64.Byte1;
+            *(methodPtr + 1) = _methodMemoryInfoX64.Byte2;
+            *(ulong*) (methodPtr + 2) = _methodMemoryInfoX64.MethodMemoryValue;
+            *(methodPtr + 10) = _methodMemoryInfoX64.Byte1AfterMethod;
+            *(methodPtr + 11) = _methodMemoryInfoX64.Byte2AfterMethod;
+            *(methodPtr + 12) = _methodMemoryInfoX64.Byte3AfterMethod;
         }
 
         public void Dispose()
@@ -59,12 +58,12 @@ namespace StaticMock.Services.Injection.Implementation
 
         private unsafe void SaveMethodMemoryInfo(byte* methodPtr)
         {
-            _x64MethodMemoryInfo.Byte1 = *methodPtr;
-            _x64MethodMemoryInfo.Byte2 = *(methodPtr + 1);
-            _x64MethodMemoryInfo.MethodMemoryValue = *(ulong*) (methodPtr + 2);
-            _x64MethodMemoryInfo.Byte1AfterMethod = *(methodPtr + 10);
-            _x64MethodMemoryInfo.Byte2AfterMethod = *(methodPtr + 11);
-            _x64MethodMemoryInfo.Byte3AfterMethod = *(methodPtr + 12);
+            _methodMemoryInfoX64.Byte1 = *methodPtr;
+            _methodMemoryInfoX64.Byte2 = *(methodPtr + 1);
+            _methodMemoryInfoX64.MethodMemoryValue = *(ulong*) (methodPtr + 2);
+            _methodMemoryInfoX64.Byte1AfterMethod = *(methodPtr + 10);
+            _methodMemoryInfoX64.Byte2AfterMethod = *(methodPtr + 11);
+            _methodMemoryInfoX64.Byte3AfterMethod = *(methodPtr + 12);
         }
     }
 }
