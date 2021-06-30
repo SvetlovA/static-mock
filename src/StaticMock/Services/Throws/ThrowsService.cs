@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Reflection;
 using StaticMock.Services.Common;
-using StaticMock.Services.Injection;
+using StaticMock.Services.Hook;
 
 namespace StaticMock.Services.Throws
 {
     internal class ThrowsService : IThrowsService
     {
-        private static readonly ConcurrentDictionary<object, Exception> PreviousInjectionExceptions = new ConcurrentDictionary<object, Exception>();
-        private static Exception _injectionException;
-
         private readonly MethodInfo _originalMethodInfo;
-        private readonly IInjectionServiceFactory _injectionServiceFactory;
+        private readonly IHookServiceFactory _hookServiceFactory;
+        private readonly IHookBuilder _hookBuilder;
 
-        public ThrowsService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
+        public ThrowsService(MethodInfo originalMethodInfo, IHookServiceFactory hookServiceFactory, IHookBuilder hookBuilder)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
-            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
+            _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
+            _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
         }
 
         public IReturnable Throws(Type exceptionType)
@@ -27,49 +25,29 @@ namespace StaticMock.Services.Throws
                 throw new ArgumentNullException(nameof(exceptionType));
             }
 
-            PreviousInjectionExceptions[this] = _injectionException;
-            _injectionException = Activator.CreateInstance(exceptionType) as Exception;
+            var hookException = Activator.CreateInstance(exceptionType) as Exception;
 
-            if (_injectionException == null)
+            if (hookException == null)
             {
                 throw new Exception($"{exceptionType.FullName} is not an Exception");
             }
 
-            Action injectionMethod = () => throw _injectionException;
+            var hook = _hookBuilder.CreateThrowsHook(hookException);
 
-            return Inject(injectionMethod.Method);
+            return Inject(hook);
         }
 
         public IReturnable Throws<TException>() where TException : Exception, new()
         {
-            PreviousInjectionExceptions[this] = _injectionException;
-            _injectionException = new TException();
+            var hook = _hookBuilder.CreateThrowsHook(new TException());
 
-            Action injectionMethod = () => throw _injectionException;
-
-            return Inject(injectionMethod.Method);
+            return Inject(hook);
         }
 
         private IReturnable Inject(MethodBase methodToInject)
         {
-            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
-            return injectionService.Inject(methodToInject);
-        }
-
-        public void Dispose()
-        {
-            Return();
-        }
-
-        public void Return()
-        {
-            if (PreviousInjectionExceptions.TryRemove(this, out var previousInjectionException))
-            {
-                _injectionException = previousInjectionException;
-                return;
-            }
-
-            throw new Exception($"{nameof(ThrowsService)} previous injection value isn't exists");
+            var injectionService = _hookServiceFactory.CreateHookService(_originalMethodInfo);
+            return injectionService.Hook(methodToInject);
         }
     }
 }

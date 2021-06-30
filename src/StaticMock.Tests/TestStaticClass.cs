@@ -10,11 +10,6 @@ namespace StaticMock.Tests
             return 1;
         }
 
-        public static int TestMethodReturnWithParameter(int parameter)
-        {
-            return parameter;
-        }
-
         public static TestInstance TestMethodReturnReferenceObject()
         {
             return new();
@@ -76,6 +71,11 @@ namespace StaticMock.Tests
         public static Task TestMethodThrowsException()
         {
             throw new Exception("Test exception");
+        }
+
+        public static int TestMethodReturnWithParameter(int parameter)
+        {
+            return parameter;
         }
 
         public static int StaticIntProperty { get; set; }

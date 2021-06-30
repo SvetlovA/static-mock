@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Helpers;
-using StaticMock.Services.Injection.Implementation;
+using StaticMock.Services.Hook.Implementation;
 using StaticMock.Services.Mock;
 using StaticMock.Services.Mock.Implementation;
 
@@ -39,7 +39,7 @@ namespace StaticMock
                 throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
             }
 
-            return new FuncMockService<object>(new InjectionServiceFactory(), methodToReplace, action);
+            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
         }
 
         public static IFuncMockService SetupProperty(Type type, string propertyName, Action action)
@@ -71,7 +71,7 @@ namespace StaticMock
                 throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
             }
 
-            return new FuncMockService<object>(new InjectionServiceFactory(), methodToReplace, action);
+            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
         }
 
         public static IVoidMockService SetupVoid(Type type, string methodName, Action action)
@@ -98,7 +98,7 @@ namespace StaticMock
                 throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
             }
 
-            return new VoidMockService(new InjectionServiceFactory(), methodToReplace, action);
+            return new VoidMockService(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
         }
 
         public static void SetupDefault(Type type, string methodName, Action action)
@@ -162,7 +162,7 @@ namespace StaticMock
                 throw new Exception("Get expression not contains method nor property to setup");
             }
 
-            return new FuncMockService<TReturnValue>(new InjectionServiceFactory(), originalMethodInfo, action);
+            return new FuncMockService<TReturnValue>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
         public static IVoidMockService Setup(Expression<Action> methodGetExpression, Action action)
@@ -182,7 +182,7 @@ namespace StaticMock
                 throw new Exception("Get expression not contains method to setup");
             }
 
-            return new VoidMockService(new InjectionServiceFactory(), methodExpression.Method, action);
+            return new VoidMockService(new HookServiceFactory(), new HookBuilder(), methodExpression.Method, action);
         }
 
         public static void SetupDefault(Expression<Action> methodGetExpression, Action action)

@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Reflection;
 using StaticMock.Services.Common;
-using StaticMock.Services.Injection.Entities;
+using StaticMock.Services.Hook.Entities;
 
-namespace StaticMock.Services.Injection.Implementation
+namespace StaticMock.Services.Hook.Implementation
 {
-    internal class InjectionServiceX32 : IInjectionService
+    internal class HookServiceX32 : IHookService
     {
         private MethodMemoryInfoX32 _methodMemoryInfoX32;
 
         private readonly MethodBase _method;
 
-        public InjectionServiceX32(MethodBase method)
+        public HookServiceX32(MethodBase method)
         {
             _method = method ?? throw new ArgumentNullException(nameof(method));
         }
 
-        public unsafe IReturnable Inject(MethodBase methodToInject)
+        public unsafe IReturnable Hook(MethodBase hookMethod)
         {
-            if (methodToInject == null)
+            if (hookMethod == null)
             {
-                throw new ArgumentNullException(nameof(methodToInject));
+                throw new ArgumentNullException(nameof(hookMethod));
             }
 
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
@@ -29,7 +29,7 @@ namespace StaticMock.Services.Injection.Implementation
 
             //push replacementSite
             *methodPtr = 0x68;
-            *(uint*) (methodPtr + 1) = (uint) methodToInject.MethodHandle.GetFunctionPointer().ToInt32();
+            *(uint*) (methodPtr + 1) = (uint) hookMethod.MethodHandle.GetFunctionPointer().ToInt32();
 
             //ret
             *(methodPtr + 5) = 0xC3;

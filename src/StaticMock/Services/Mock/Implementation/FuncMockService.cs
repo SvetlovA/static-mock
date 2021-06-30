@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Reflection;
 using StaticMock.Services.Callback;
-using StaticMock.Services.Injection;
-using StaticMock.Services.Returns.Reference;
-using StaticMock.Services.Returns.Value;
+using StaticMock.Services.Hook;
+using StaticMock.Services.Returns;
 
 namespace StaticMock.Services.Mock.Implementation
 {
     internal class FuncMockService<TReturn> : MockService, IFuncMockService, IFuncMockService<TReturn>
     {
-        private readonly IInjectionServiceFactory _injectionServiceFactory;
+        private readonly IHookServiceFactory _hookServiceFactory;
+        private readonly IHookBuilder _hookBuilder;
         private readonly MethodInfo _originalMethodInfo;
         private readonly Action _action;
 
-        public FuncMockService(IInjectionServiceFactory injectionServiceFactory, MethodInfo originalMethodInfo, Action action)
-            : base(injectionServiceFactory, originalMethodInfo, action)
+        public FuncMockService(IHookServiceFactory hookServiceFactory, IHookBuilder hookBuilder, MethodInfo originalMethodInfo, Action action)
+            : base(hookServiceFactory, hookBuilder, originalMethodInfo, action)
         {
-            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
+            _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
+            _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _action = action ?? throw new ArgumentNullException(nameof(action));
         }
@@ -38,7 +39,7 @@ namespace StaticMock.Services.Mock.Implementation
                 throw new ArgumentNullException(nameof(callback));
             }
 
-            var callbackService = new CallbackService(_originalMethodInfo, _injectionServiceFactory);
+            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory);
             using (callbackService.Callback(callback))
             {
                 _action();
@@ -47,19 +48,8 @@ namespace StaticMock.Services.Mock.Implementation
 
         public void Returns<TValue>(TValue value)
         {
-            if (typeof(TValue).IsValueType)
-            {
-                using var valueReturnService = new ValueReturnsMockService<TValue>(_originalMethodInfo, _injectionServiceFactory);
-                using (valueReturnService.Returns(value))
-                {
-                    _action();
-                }
-
-                return;
-            }
-
-            using var referenceReturnService = new ReferenceReturnsMockService(_originalMethodInfo, _injectionServiceFactory);
-            using (referenceReturnService.Returns(value))
+            var valueReturnService = new ReturnsMockService<TValue>(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
+            using (valueReturnService.Returns(value))
             {
                 _action();
             }

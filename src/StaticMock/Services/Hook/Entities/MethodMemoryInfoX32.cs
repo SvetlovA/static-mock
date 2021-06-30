@@ -1,4 +1,4 @@
-﻿namespace StaticMock.Services.Injection.Entities
+﻿namespace StaticMock.Services.Hook.Entities
 {
     public struct MethodMemoryInfoX32
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using StaticMock.Services.Callback;
-using StaticMock.Services.Injection;
+using StaticMock.Services.Hook;
 
 namespace StaticMock.Services.Mock.Implementation
 {
@@ -9,12 +9,12 @@ namespace StaticMock.Services.Mock.Implementation
     {
         private readonly MethodInfo _originalMethodInfo;
         private readonly Action _action;
-        private readonly IInjectionServiceFactory _injectionServiceFactory;
+        private readonly IHookServiceFactory _hookServiceFactory;
 
-        public VoidMockService(IInjectionServiceFactory injectionServiceFactory, MethodInfo originalMethodInfo, Action action)
-            : base(injectionServiceFactory, originalMethodInfo, action)
+        public VoidMockService(IHookServiceFactory hookServiceFactory, IHookBuilder hookBuilder, MethodInfo originalMethodInfo, Action action)
+            : base(hookServiceFactory, hookBuilder, originalMethodInfo, action)
         {
-            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
+            _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _action = action ?? throw new ArgumentNullException(nameof(action));
         }
@@ -26,7 +26,7 @@ namespace StaticMock.Services.Mock.Implementation
                 throw new ArgumentNullException(nameof(callback));
             }
 
-            var callbackService = new CallbackService(_originalMethodInfo, _injectionServiceFactory);
+            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory);
             using (callbackService.Callback(callback))
             {
                 _action();
