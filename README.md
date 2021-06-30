@@ -39,11 +39,8 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     return expectedResult;
 });
 ```
-
-# Known Issues
-* **System.AccessViolationException:**
-    This exception most often occurs if tou use x64 platform in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other or try to use x32 platform for your test project compilation.
-
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
+# Known Issues
+* **System.AccessViolationException:** This exception most often occurs if you use x64 platform in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other or try to use x32 platform for your test project compilation.
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).
