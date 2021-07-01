@@ -42,7 +42,7 @@ namespace StaticMock.Services.Hook.Implementation
             var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
 
             *methodPtr = _methodMemoryInfoX32.Byte1;
-            *(uint*) (methodPtr + 2) = _methodMemoryInfoX32.MethodMemoryValue;
+            *(uint*) (methodPtr + 1) = _methodMemoryInfoX32.MethodMemoryValue;
             *(methodPtr + 5) = _methodMemoryInfoX32.Byte1AfterMethod;
         }
 
@@ -54,7 +54,7 @@ namespace StaticMock.Services.Hook.Implementation
         private unsafe void SaveMethodMemoryInfo(byte* methodPtr)
         {
             _methodMemoryInfoX32.Byte1 = *methodPtr;
-            _methodMemoryInfoX32.MethodMemoryValue = *(uint*) (methodPtr + 2);
+            _methodMemoryInfoX32.MethodMemoryValue = *(uint*) (methodPtr + 1);
             _methodMemoryInfoX32.Byte1AfterMethod = *(methodPtr + 5);
         }
     }
