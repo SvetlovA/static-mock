@@ -5,7 +5,8 @@ namespace StaticMock.Tests.CallbackTests
 {
     [TestFixture]
     public class SetupMockCallbackTests
-    {        [Test]
+    {
+        [Test]
         public void TestFuncCallback()
         {
             var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();

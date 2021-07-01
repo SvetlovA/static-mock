@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using StaticMock.Services.Injection.Implementation;
+using StaticMock.Services.Hook.Implementation;
 
 namespace StaticMock.Helpers
 {
@@ -19,9 +19,9 @@ namespace StaticMock.Helpers
             }
 
             Action injectionMethod = () => { };
-            var injectionServiceFactory = new InjectionServiceFactory();
-            using var injectionService = injectionServiceFactory.CreateInjectionService(methodToReplace);
-            injectionService.Inject(injectionMethod.Method);
+            var injectionServiceFactory = new HookServiceFactory();
+            using var injectionService = injectionServiceFactory.CreateHookService(methodToReplace);
+            injectionService.Hook(injectionMethod.Method);
             action();
         }
     }

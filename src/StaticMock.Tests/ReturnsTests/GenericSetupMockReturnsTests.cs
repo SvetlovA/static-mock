@@ -25,6 +25,29 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
+        public void TestGenericSetupReturnsWithTestMethodReturn1WithoutParametersAfterCheck()
+        {
+            var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+            var expectedResult = 2;
+
+            Assert.AreEqual(1, originalResult);
+
+            Mock.Setup(
+                    () => TestStaticClass.TestMethodReturn1WithoutParameters(),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
+                .Returns(expectedResult);
+
+            var afterMockActualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+            Assert.AreEqual(1, afterMockActualResult);
+        }
+
+        [Test]
         public void TestGenericSetupReturnsWithTestMethodReturnParameter()
         {
             var originalResult = TestStaticClass.TestMethodReturnWithParameter(10);

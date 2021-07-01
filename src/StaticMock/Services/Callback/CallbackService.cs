@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Reflection;
-using StaticMock.Services.Injection;
+using StaticMock.Services.Common;
+using StaticMock.Services.Hook;
 
 namespace StaticMock.Services.Callback
 {
     internal class CallbackService : ICallbackService
     {
         private readonly MethodInfo _originalMethodInfo;
-        private readonly IInjectionServiceFactory _injectionServiceFactory;
+        private readonly IHookServiceFactory _hookServiceFactory;
 
-        public CallbackService(MethodInfo originalMethodInfo, IInjectionServiceFactory injectionServiceFactory)
+        public CallbackService(MethodInfo originalMethodInfo, IHookServiceFactory hookServiceFactory)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
-            _injectionServiceFactory = injectionServiceFactory ?? throw new ArgumentNullException(nameof(injectionServiceFactory));
+            _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
         }
 
         public IReturnable Callback(Action callback)
@@ -37,8 +38,8 @@ namespace StaticMock.Services.Callback
 
         private IReturnable Inject(MethodBase methodInfoToInject)
         {
-            var injectionService = _injectionServiceFactory.CreateInjectionService(_originalMethodInfo);
-            return injectionService.Inject(methodInfoToInject);
+            var injectionService = _hookServiceFactory.CreateHookService(_originalMethodInfo);
+            return injectionService.Hook(methodInfoToInject);
         }
     }
 }
