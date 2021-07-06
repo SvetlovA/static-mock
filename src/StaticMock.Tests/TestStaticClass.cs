@@ -80,5 +80,13 @@ namespace StaticMock.Tests
 
         public static int StaticIntProperty { get; set; }
         public static object StaticObjectProperty { get; set; }
+
+        private static int PrivateStaticIntProperty { get; set; }
+        private static object PrivateStaticObjectProperty { get; set; }
+
+        private static int TestPrivateStaticMethodReturn1WithoutParameters()
+        {
+            return 1;
+        }
     }
 }

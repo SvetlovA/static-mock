@@ -27,7 +27,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName);
+            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
             if (methodToReplace == null)
             {
@@ -59,7 +59,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var propertyInfo = type.GetProperty(propertyName);
+            var propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance| BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             if (propertyInfo == null)
             {
                 throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
@@ -91,7 +91,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName);
+            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
             if (methodToReplace == null)
             {
@@ -118,7 +118,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName);
+            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
             if (methodToReplace == null)
             {
