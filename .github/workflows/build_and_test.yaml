@@ -19,7 +19,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal src
+      run: dotnet test --no-build --configuration Release --verbosity normal src
   buildAndTestWindows:
     runs-on: windows-latest
     steps:
@@ -33,7 +33,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal src
+      run: dotnet test --no-build --configuration Release --verbosity normal src
   buildAndTestMac:
     runs-on: macos-latest
     steps:
@@ -47,4 +47,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal src
+      run: dotnet test --no-build --configuration Release --verbosity normal src
