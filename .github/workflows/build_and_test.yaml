@@ -17,7 +17,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore src
+      run: dotnet build --configuration Release --no-restore src
     - name: Test
       run: dotnet test --no-build --verbosity normal src
   buildAndTestWindows:
@@ -31,7 +31,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore src
+      run: dotnet build --configuration Release --no-restore src
     - name: Test
       run: dotnet test --no-build --verbosity normal src
   buildAndTestMac:
@@ -42,11 +42,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Go to solution directory
-      run: cd /home/runner/work/static-mock/static-mock
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore src
+      run: dotnet build --configuration Release --no-restore src
     - name: Test
       run: dotnet test --no-build --verbosity normal src
