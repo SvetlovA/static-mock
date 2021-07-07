@@ -15,11 +15,11 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal src
   buildAndTestWindows:
     runs-on: windows-latest
     steps:
@@ -29,11 +29,11 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal src
   buildAndTestMac:
     runs-on: macos-latest
     steps:
@@ -42,9 +42,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - name: Go to solution directory
+      run: cd /home/runner/work/static-mock/static-mock
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore src
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal src
