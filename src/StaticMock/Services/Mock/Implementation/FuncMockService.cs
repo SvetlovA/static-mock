@@ -48,8 +48,8 @@ namespace StaticMock.Services.Mock.Implementation
 
         public void Returns<TValue>(TValue value)
         {
-            var valueReturnService = new ReturnsMockService<TValue>(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
-            using (valueReturnService.Returns(value))
+            var returnService = new ReturnsMockService<TValue>(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
+            using (returnService.Returns(value))
             {
                 _action();
             }

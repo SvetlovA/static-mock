@@ -132,7 +132,7 @@ namespace StaticMock.Tests.ReturnsTests
             {
                 var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParameters();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Returns(expectedResult);
+            }).Returns(Task.FromResult(expectedResult));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace StaticMock.Tests.ReturnsTests
             {
                 var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Returns(expectedResult);
+            }).Returns(Task.FromResult(expectedResult));
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace StaticMock.Tests.ReturnsTests
             {
                 var actualResult = await instance.TestMethodReturnTaskWithoutParameters();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Returns(expectedResult);
+            }).Returns(Task.FromResult(expectedResult));
         }
 
         [Test]
@@ -176,7 +176,7 @@ namespace StaticMock.Tests.ReturnsTests
             {
                 var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Returns(expectedResult);
+            }).Returns(Task.FromResult(expectedResult));
         }
 
         [Test]
