@@ -2,15 +2,16 @@
 
 namespace StaticMock.Services.Mock
 {
-    public interface IFuncMockService<TReturn> : IMockService
+    public interface IFuncMockService<in TReturnValue> : IMockService
     {
-        void Callback(Func<TReturn> callback);
-        void Returns(TReturn value);
+        void Callback(Func<TReturnValue> callback);
+        void Returns(TReturnValue value);
     }
 
     public interface IFuncMockService : IMockService
     {
         void Callback<TReturnValue>(Func<TReturnValue> callback);
-        void Returns<TValue>(TValue value);
+        void Returns<TReturnValue>(TReturnValue value);
+        void ReturnsAsync<TReturnValue>(TReturnValue value);
     }
 }
