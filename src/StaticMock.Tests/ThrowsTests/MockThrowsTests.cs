@@ -226,7 +226,7 @@ namespace StaticMock.Tests.ThrowsTests
             var testInstance = new TestInstance();
             Type type = testInstance.GetType();
             MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic | BindingFlags.Instance);
-            Mock.Setup(typeof(TestInstance), methodInfo.Name, () =>
+            Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 try
                 {
@@ -246,7 +246,7 @@ namespace StaticMock.Tests.ThrowsTests
             PropertyInfo propertyInfo = type.GetProperty("PrivateIntProperty", BindingFlags.NonPublic | BindingFlags.Instance);
             MethodInfo mothodInfo = propertyInfo.GetMethod;
 
-            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 try
                 {
@@ -269,7 +269,7 @@ namespace StaticMock.Tests.ThrowsTests
             PropertyInfo propertyInfo = type.GetProperty("PrivateObjectProperty", BindingFlags.NonPublic | BindingFlags.Instance);
             MethodInfo mothodInfo = propertyInfo.GetMethod;
 
-            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 try
                 {
@@ -287,7 +287,7 @@ namespace StaticMock.Tests.ThrowsTests
 
             Type type = typeof(TestStaticClass);
             MethodInfo methodInfo = type.GetMethod("TestPrivateStaticMethodReturn1WithoutParameters", BindingFlags.Static | BindingFlags.NonPublic);
-            Mock.Setup(type,methodInfo.Name, () =>
+            Mock.Setup(type,methodInfo.Name, BindingFlags.Static | BindingFlags.NonPublic, () =>
             {
                 try
                 {
@@ -310,7 +310,7 @@ namespace StaticMock.Tests.ThrowsTests
             var originalValue = mothodInfo.Invoke(type,new object[] { });
             Assert.AreEqual(default(int), originalValue);
 
-            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
             {
                 try
                 {
@@ -332,7 +332,7 @@ namespace StaticMock.Tests.ThrowsTests
             var originalValue = mothodInfo.Invoke(type, new object[] { });
             Assert.AreEqual(default, originalValue);
 
-            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
             {
                 try
                 {

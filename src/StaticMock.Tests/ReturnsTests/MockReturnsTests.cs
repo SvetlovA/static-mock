@@ -246,7 +246,7 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(1, methodInfo.Invoke(testInstance,new object[] { }));
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestInstance), methodInfo.Name, () =>
+            Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 var actualResult = methodInfo.Invoke(testInstance, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);
@@ -264,7 +264,7 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(default(int), originalValue);
             var expectedResult = 2;
 
-            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);
@@ -283,7 +283,7 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(default, originalValue);
             var expectedResult = new TestInstance();
 
-            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
             {
                 var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);
@@ -303,6 +303,7 @@ namespace StaticMock.Tests.ReturnsTests
             Mock.Setup(
                     typeof(TestStaticClass),
                     methodInfo.Name,
+                    BindingFlags.Static | BindingFlags.NonPublic,
                     () =>
                     {
                         var actualResult = methodInfo.Invoke(type, new object[] { });
@@ -323,7 +324,7 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(default(int), originalValue);
             var expectedResult = 2;
 
-            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
             {
                 var actualResult = mothodInfo.Invoke(type, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);
@@ -340,7 +341,7 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(default, originalValue);
             var expectedResult = new TestInstance();
 
-            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, () =>
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
             {
                 var actualResult = mothodInfo.Invoke(type, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);

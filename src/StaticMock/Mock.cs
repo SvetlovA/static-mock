@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Reflection;
-using StaticMock.Helpers;
+﻿using StaticMock.Helpers;
 using StaticMock.Services.Hook.Implementation;
 using StaticMock.Services.Mock;
 using StaticMock.Services.Mock.Implementation;
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace StaticMock
 {
@@ -27,7 +27,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            var methodToReplace = type.GetMethod(methodName);
 
             if (methodToReplace == null)
             {
@@ -59,7 +59,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance| BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            var propertyInfo = type.GetProperty(propertyName);
             if (propertyInfo == null)
             {
                 throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
@@ -91,7 +91,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            var methodToReplace = type.GetMethod(methodName);
 
             if (methodToReplace == null)
             {
@@ -118,7 +118,166 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var methodToReplace = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            var methodToReplace = type.GetMethod(methodName);
+
+            if (methodToReplace == null)
+            {
+                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
+            }
+
+            if (methodToReplace.ReturnType != typeof(void))
+            {
+                throw new Exception("Default setup supported only for void methods");
+            }
+
+            MockHelper.SetupDefault(methodToReplace, action);
+        }
+
+        public static IFuncMockService Setup(Type type, string methodName, BindingFlags bindingFlags, Action action)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (methodName == null)
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
+
+            string[] values = bindingFlags.ToString().Split(new[] { ", " }, StringSplitOptions.None);
+            foreach (string value in values)
+            {
+                if (!Enum.IsDefined(typeof(BindingFlags), value))
+                {
+                    throw new ArgumentException(nameof(bindingFlags));
+                }
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var methodToReplace = type.GetMethod(methodName, bindingFlags);
+
+            if (methodToReplace == null)
+            {
+                throw new Exception($"Can't find method {methodName} of type {type.FullName}");
+            }
+
+            if (methodToReplace.ReturnType == typeof(void))
+            {
+                throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
+            }
+
+            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
+        }
+
+        public static IFuncMockService SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException(nameof(propertyName));
+            }
+
+            string[] values = bindingFlags.ToString().Split(new[] { ", " }, StringSplitOptions.None);
+            foreach (string value in values)
+            {
+                if (!Enum.IsDefined(typeof(BindingFlags), value))
+                {
+                    throw new ArgumentException(nameof(bindingFlags));
+                }
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var propertyInfo = type.GetProperty(propertyName, bindingFlags);
+            if (propertyInfo == null)
+            {
+                throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
+            }
+
+            var methodToReplace = propertyInfo.GetMethod;
+            if (methodToReplace.ReturnType == typeof(void))
+            {
+                throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
+            }
+
+            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
+        }
+
+        public static IVoidMockService SetupVoid(Type type, string methodName, BindingFlags bindingFlags, Action action)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (methodName == null)
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
+
+            string[] values = bindingFlags.ToString().Split(new[] { ", " }, StringSplitOptions.None);
+            foreach (string value in values)
+            {
+                if (!Enum.IsDefined(typeof(BindingFlags), value))
+                {
+                    throw new ArgumentException(nameof(bindingFlags));
+                }
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var methodToReplace = type.GetMethod(methodName, bindingFlags);
+
+            if (methodToReplace == null)
+            {
+                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
+            }
+
+            return new VoidMockService(new HookServiceFactory(), new HookBuilder(), methodToReplace, action);
+        }
+
+        public static void SetupDefault(Type type, string methodName, BindingFlags bindingFlags, Action action)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (methodName == null)
+            {
+                throw new ArgumentNullException(nameof(methodName));
+            }
+
+            string[] values = bindingFlags.ToString().Split(new[] { ", " }, StringSplitOptions.None);
+            foreach (string value in values)
+            {
+                if (!Enum.IsDefined(typeof(BindingFlags), value))
+                {
+                    throw new ArgumentException(nameof(bindingFlags));
+                }
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var methodToReplace = type.GetMethod(methodName, bindingFlags);
 
             if (methodToReplace == null)
             {
@@ -147,7 +306,7 @@ namespace StaticMock
 
             MethodInfo originalMethodInfo = null;
 
-            if (methodGetExpression.Body is MemberExpression {Member: PropertyInfo propertyInfo})
+            if (methodGetExpression.Body is MemberExpression { Member: PropertyInfo propertyInfo })
             {
                 originalMethodInfo = propertyInfo.GetMethod;
             }
