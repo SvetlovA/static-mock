@@ -10,6 +10,7 @@ namespace StaticMock.Services.Mock.Implementation
         private readonly MethodInfo _originalMethodInfo;
         private readonly Action _action;
         private readonly IHookServiceFactory _hookServiceFactory;
+        private readonly IHookBuilder _hookBuilder;
 
         public VoidMockService(IHookServiceFactory hookServiceFactory, IHookBuilder hookBuilder, MethodInfo originalMethodInfo, Action action)
             : base(hookServiceFactory, hookBuilder, originalMethodInfo, action)
@@ -17,6 +18,7 @@ namespace StaticMock.Services.Mock.Implementation
             _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _action = action ?? throw new ArgumentNullException(nameof(action));
+            _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
         }
 
         public void Callback(Action callback)
@@ -26,7 +28,7 @@ namespace StaticMock.Services.Mock.Implementation
                 throw new ArgumentNullException(nameof(callback));
             }
 
-            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory);
+            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
             using (callbackService.Callback(callback))
             {
                 _action();

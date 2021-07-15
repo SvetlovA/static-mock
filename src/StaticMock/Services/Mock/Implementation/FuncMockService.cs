@@ -39,7 +39,7 @@ namespace StaticMock.Services.Mock.Implementation
                 throw new ArgumentNullException(nameof(callback));
             }
 
-            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory);
+            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
             using (callbackService.Callback(callback))
             {
                 _action();

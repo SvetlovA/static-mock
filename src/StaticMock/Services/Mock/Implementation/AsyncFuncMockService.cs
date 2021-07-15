@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using StaticMock.Services.Callback;
 using StaticMock.Services.Hook;
 using StaticMock.Services.Returns;
 
@@ -26,6 +27,15 @@ namespace StaticMock.Services.Mock.Implementation
         {
             var returnService = new ReturnsMockService<TReturnValue>(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
             using (returnService.ReturnsAsync(value))
+            {
+                _action();
+            }
+        }
+
+        public void CallbackAsync(Func<TReturnValue> callback)
+        {
+            var callbackService = new CallbackService(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
+            using (callbackService.CallbackAsync(callback))
             {
                 _action();
             }

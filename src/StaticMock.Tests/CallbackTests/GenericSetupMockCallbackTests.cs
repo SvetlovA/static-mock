@@ -39,7 +39,7 @@ namespace StaticMock.Tests.CallbackTests
         }
 
         [Test]
-        public async Task TestCallbackAsync()
+        public async Task TestCallbackReturnTaskAsync()
         {
             var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
             var expectedResult = 2;
@@ -50,10 +50,37 @@ namespace StaticMock.Tests.CallbackTests
             {
                 var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Callback(async () =>
+            }).Callback(async () => await Task.FromResult(2));
+        }
+
+        [Test]
+        public async Task TestCallbackReturnTask()
+        {
+            var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+            var expectedResult = 2;
+
+            Assert.AreNotEqual(expectedResult, originalResult);
+
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParametersAsync(), async () =>
             {
-                return await Task.FromResult(2);
-            });
+                var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Callback(() => Task.FromResult(2));
+        }
+
+        [Test]
+        public async Task TestCallbackAsyncReturnTask()
+        {
+            var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+            var expectedResult = 2;
+
+            Assert.AreNotEqual(expectedResult, originalResult);
+
+            Mock.Setup(() => TestStaticClass.TestMethodReturnTaskWithoutParametersAsync(), async () =>
+            {
+                var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).CallbackAsync(() => 2);
         }
 
         [Test]
@@ -90,7 +117,7 @@ namespace StaticMock.Tests.CallbackTests
         }
 
         [Test]
-        public async Task TestCallbackInstanceAsync()
+        public async Task TestCallbackInstanceReturnTaskAsync()
         {
             var instance = new TestInstance();
             var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
@@ -102,10 +129,39 @@ namespace StaticMock.Tests.CallbackTests
             {
                 var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
                 Assert.AreEqual(expectedResult, actualResult);
-            }).Callback(async () =>
+            }).Callback(async () => await Task.FromResult(2));
+        }
+
+        [Test]
+        public async Task TestCallbackInstanceReturnTask()
+        {
+            var instance = new TestInstance();
+            var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+            var expectedResult = 2;
+
+            Assert.AreNotEqual(expectedResult, originalResult);
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), async () =>
             {
-                return await Task.FromResult(2);
-            });
+                var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Callback(() => Task.FromResult(2));
+        }
+
+        [Test]
+        public async Task TestCallbackAsyncInstanceReturnTask()
+        {
+            var instance = new TestInstance();
+            var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+            var expectedResult = 2;
+
+            Assert.AreNotEqual(expectedResult, originalResult);
+
+            Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), async () =>
+            {
+                var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+                Assert.AreEqual(expectedResult, actualResult);
+            }).CallbackAsync(() => 2);
         }
 
         [Test]

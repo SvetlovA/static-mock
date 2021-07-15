@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using StaticMock.Services.Common;
 using StaticMock.Services.Hook;
 
@@ -9,11 +10,13 @@ namespace StaticMock.Services.Callback
     {
         private readonly MethodInfo _originalMethodInfo;
         private readonly IHookServiceFactory _hookServiceFactory;
+        private readonly IHookBuilder _hookBuilder;
 
-        public CallbackService(MethodInfo originalMethodInfo, IHookServiceFactory hookServiceFactory)
+        public CallbackService(MethodInfo originalMethodInfo, IHookServiceFactory hookServiceFactory, IHookBuilder hookBuilder)
         {
             _originalMethodInfo = originalMethodInfo ?? throw new ArgumentNullException(nameof(originalMethodInfo));
             _hookServiceFactory = hookServiceFactory ?? throw new ArgumentNullException(nameof(hookServiceFactory));
+            _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
         }
 
         public IReturnable Callback(Action callback)
@@ -26,7 +29,7 @@ namespace StaticMock.Services.Callback
             return Inject(callback.Method);
         }
 
-        public IReturnable Callback<TReturn>(Func<TReturn> callback)
+        public IReturnable Callback<TReturnValue>(Func<TReturnValue> callback)
         {
             if (callback == null)
             {
@@ -34,6 +37,17 @@ namespace StaticMock.Services.Callback
             }
 
             return Inject(callback.Method);
+        }
+
+        public IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback)
+        {
+            if (callback == null)
+            {
+                throw new ArgumentNullException(nameof(callback));
+            }
+
+            var hook = _hookBuilder.CreateReturnHook(Task.FromResult(callback()));
+            return Inject(hook);
         }
 
         private IReturnable Inject(MethodBase methodInfoToInject)
