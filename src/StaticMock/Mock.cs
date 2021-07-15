@@ -12,149 +12,26 @@ namespace StaticMock
     public static class Mock
     {
         public static IFuncMockService Setup(Type type, string methodName, Action action) =>
-            SetupInternal(type, methodName, action);
+            SetupMockHelper.SetupInternal(type, methodName, action);
         public static IFuncMockService Setup(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupInternal(type, methodName, action, bindingFlags);
+            SetupMockHelper.SetupInternal(type, methodName, action, bindingFlags);
 
         public static IFuncMockService SetupProperty(Type type, string propertyName, Action action) =>
-            SetupPropertyInternal(type, propertyName, action);
+            SetupMockHelper.SetupPropertyInternal(type, propertyName, action);
 
         public static IFuncMockService SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action) =>
-            SetupPropertyInternal(type, propertyName, action, bindingFlags);
+            SetupMockHelper.SetupPropertyInternal(type, propertyName, action, bindingFlags);
         public static IVoidMockService SetupVoid(Type type, string methodName, Action action) =>
-            SetupVoidInternal(type, methodName, action);
+            SetupMockHelper.SetupVoidInternal(type, methodName, action);
 
         public static IVoidMockService SetupVoid(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupVoidInternal(type, methodName, action, bindingFlags);
+            SetupMockHelper.SetupVoidInternal(type, methodName, action, bindingFlags);
 
         public static void SetupDefault(Type type, string methodName, Action action) =>
-            SetupDefaultInternal(type, methodName, action);
+            SetupMockHelper.SetupDefaultInternal(type, methodName, action);
 
         public static void SetupDefault(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupDefaultInternal(type, methodName, action, bindingFlags);
-
-        private static IFuncMockService SetupInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (methodName == null)
-            {
-                throw new ArgumentNullException(nameof(methodName));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find method {methodName} of type {type.FullName}");
-            }
-
-            if (originalMethodInfo.ReturnType == typeof(void))
-            {
-                throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
-            }
-
-            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
-        }
-
-        private static IFuncMockService SetupPropertyInternal(Type type, string propertyName, Action action, BindingFlags? bindingFlags = null)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException(nameof(propertyName));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            var originalPropertyInfo = bindingFlags.HasValue ? type.GetProperty(propertyName, bindingFlags.Value) : type.GetProperty(propertyName);
-            if (originalPropertyInfo == null)
-            {
-                throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
-            }
-
-            var originalMethodInfo = originalPropertyInfo.GetMethod;
-            if (originalMethodInfo.ReturnType == typeof(void))
-            {
-                throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(SetupVoid)} setup");
-            }
-
-            return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
-        }
-
-        private static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (methodName == null)
-            {
-                throw new ArgumentNullException(nameof(methodName));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
-            }
-
-            return new VoidMockService(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
-        }
-
-        private static void SetupDefaultInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
-        {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (methodName == null)
-            {
-                throw new ArgumentNullException(nameof(methodName));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
-            }
-
-            if (originalMethodInfo.ReturnType != typeof(void))
-            {
-                throw new Exception("Default setup supported only for void methods");
-            }
-
-            MockHelper.SetupDefault(originalMethodInfo, action);
-        }
+            SetupMockHelper.SetupDefaultInternal(type, methodName, action, bindingFlags);
 
         public static IFuncMockService<TReturnValue> Setup<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action action)
         {
@@ -163,7 +40,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = MockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
+            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
             return new FuncMockService<TReturnValue>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
@@ -174,7 +51,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = MockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
+            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
             return new AsyncFuncMockService<TReturnValue>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
@@ -221,7 +98,7 @@ namespace StaticMock
                 throw new Exception("Default setup supported only for void methods");
             }
 
-            MockHelper.SetupDefault(methodExpression.Method, action);
+            SetupMockHelper.SetupDefault(methodExpression.Method, action);
         }
     }
 }
