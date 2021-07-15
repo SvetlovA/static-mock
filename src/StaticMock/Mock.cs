@@ -1,16 +1,39 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using StaticMock.Helpers;
 using StaticMock.Services.Hook.Implementation;
 using StaticMock.Services.Mock;
 using StaticMock.Services.Mock.Implementation;
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace StaticMock
 {
     public static class Mock
     {
-        public static IFuncMockService Setup(Type type, string methodName, Action action)
+        public static IFuncMockService Setup(Type type, string methodName, Action action) =>
+            SetupInternal(type, methodName, action);
+        public static IFuncMockService Setup(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
+            SetupInternal(type, methodName, action, bindingFlags);
+
+        public static IFuncMockService SetupProperty(Type type, string propertyName, Action action) =>
+            SetupPropertyInternal(type, propertyName, action);
+
+        public static IFuncMockService SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action) =>
+            SetupPropertyInternal(type, propertyName, action, bindingFlags);
+        public static IVoidMockService SetupVoid(Type type, string methodName, Action action) =>
+            SetupVoidInternal(type, methodName, action);
+
+        public static IVoidMockService SetupVoid(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
+            SetupVoidInternal(type, methodName, action, bindingFlags);
+
+        public static void SetupDefault(Type type, string methodName, Action action) =>
+            SetupDefaultInternal(type, methodName, action);
+
+        public static void SetupDefault(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
+            SetupDefaultInternal(type, methodName, action, bindingFlags);
+
+        private static IFuncMockService SetupInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
         {
             if (type == null)
             {
@@ -27,7 +50,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = type.GetMethod(methodName);
+            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
 
             if (originalMethodInfo == null)
             {
@@ -42,7 +65,7 @@ namespace StaticMock
             return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
-        public static IFuncMockService SetupProperty(Type type, string propertyName, Action action)
+        private static IFuncMockService SetupPropertyInternal(Type type, string propertyName, Action action, BindingFlags? bindingFlags = null)
         {
             if (type == null)
             {
@@ -59,7 +82,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalPropertyInfo = type.GetProperty(propertyName);
+            var originalPropertyInfo = bindingFlags.HasValue ? type.GetProperty(propertyName, bindingFlags.Value) : type.GetProperty(propertyName);
             if (originalPropertyInfo == null)
             {
                 throw new Exception($"Can't find property {propertyName} of type {type.FullName}");
@@ -74,7 +97,7 @@ namespace StaticMock
             return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
-        public static IVoidMockService SetupVoid(Type type, string methodName, Action action)
+        private static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
         {
             if (type == null)
             {
@@ -91,7 +114,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = type.GetMethod(methodName);
+            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
 
             if (originalMethodInfo == null)
             {
@@ -101,7 +124,7 @@ namespace StaticMock
             return new VoidMockService(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
-        public static void SetupDefault(Type type, string methodName, Action action)
+        private static void SetupDefaultInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
         {
             if (type == null)
             {
@@ -118,7 +141,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = type.GetMethod(methodName);
+            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
 
             if (originalMethodInfo == null)
             {

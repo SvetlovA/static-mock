@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace StaticMock.Tests.ThrowsTests
@@ -218,5 +219,131 @@ namespace StaticMock.Tests.ThrowsTests
                 });
             }).Throws<Exception>();
         }
+
+        [Test]
+        public void TestInstanceThrowsPrivateMethodReturn1WithoutParameters()
+        {
+            var testInstance = new TestInstance();
+            Type type = testInstance.GetType();
+            MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic | BindingFlags.Instance);
+            Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+            {
+                try
+                {
+                    var actualResult = methodInfo.Invoke(testInstance, new object[] { });
+                }catch(Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                }
+            }).Throws(typeof(Exception));
+        }
+
+        [Test]
+        public void TestThrowsPrivateIntProperty()
+        {
+            var testInstance = new TestInstance();
+            Type type = testInstance.GetType();
+            PropertyInfo propertyInfo = type.GetProperty("PrivateIntProperty", BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo mothodInfo = propertyInfo.GetMethod;
+
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+            {
+                try
+                {
+                    var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
+                }catch(Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                }
+                
+                
+            }).Throws(typeof(Exception));
+        }
+
+        [Test]
+        public void TestThrowsPrivateObjectProperty()
+        {
+
+            var testInstance = new TestInstance();
+            Type type = testInstance.GetType();
+            PropertyInfo propertyInfo = type.GetProperty("PrivateObjectProperty", BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo mothodInfo = propertyInfo.GetMethod;
+
+            Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+            {
+                try
+                {
+                    var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
+                }catch(Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                } 
+            }).Throws(typeof(Exception));
+        }
+
+        [Test]
+        public void TestThrowsTestPrivateMethodReturn1WithoutParameters()
+        {
+
+            Type type = typeof(TestStaticClass);
+            MethodInfo methodInfo = type.GetMethod("TestPrivateStaticMethodReturn1WithoutParameters", BindingFlags.Static | BindingFlags.NonPublic);
+            Mock.Setup(type,methodInfo.Name, BindingFlags.Static | BindingFlags.NonPublic, () =>
+            {
+                try
+                {
+                    int result = (int)methodInfo.Invoke(type, new object[] { });
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                }
+                
+            }).Throws(typeof(Exception));
+        }
+
+        [Test]
+        public void TestThrowsPrivateStaticIntProperty()
+        {
+            Type type = typeof(TestStaticClass);
+            PropertyInfo propertyInfo = type.GetProperty("PrivateStaticIntProperty", BindingFlags.NonPublic | BindingFlags.Static);
+            MethodInfo mothodInfo = propertyInfo.GetMethod;
+            var originalValue = mothodInfo.Invoke(type,new object[] { });
+            Assert.AreEqual(default(int), originalValue);
+
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
+            {
+                try
+                {
+                    var actualResult = (int)mothodInfo.Invoke(type, new object[] { });
+                }
+                catch(Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                }
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestThrowsPrivateStaticObjectProperty()
+        {
+            Type type = typeof(TestStaticClass);
+            PropertyInfo propertyInfo = type.GetProperty("PrivateStaticObjectProperty", BindingFlags.NonPublic | BindingFlags.Static);
+            MethodInfo mothodInfo = propertyInfo.GetMethod;
+            var originalValue = mothodInfo.Invoke(type, new object[] { });
+            Assert.AreEqual(default, originalValue);
+
+            Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
+            {
+                try
+                {
+                    var actualResult = (int)mothodInfo.Invoke(type, new object[] { });
+                }
+                catch (Exception e)
+                {
+                    Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+                }
+            }).Throws<Exception>();
+        }
+
     }
 }

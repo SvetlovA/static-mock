@@ -62,5 +62,14 @@ namespace StaticMock.Tests
         {
             return HashCode.Combine(IntProperty, ObjectProperty);
         }
+
+        private int PrivateIntProperty { get; set; }
+        private object PrivateObjectProperty { get; set; }
+
+        private int TestPrivateMethodReturn1WithoutParameters()
+        {
+            return 1;
+        }
+
     }
 }
