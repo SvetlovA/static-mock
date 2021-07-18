@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using StaticMock.Services.Common;
 using StaticMock.Services.Hook;
 
@@ -18,7 +19,11 @@ namespace StaticMock.Services.Returns
             _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
         }
 
-        public IReturnable Returns(TValue value)
+        public IReturnable Returns(TValue value) => InternalReturns(value);
+
+        public IReturnable ReturnsAsync(TValue value) => InternalReturns(Task.FromResult(value));
+
+        private IReturnable InternalReturns<TInternalValue>(TInternalValue value)
         {
             var hook = _hookBuilder.CreateReturnHook(value);
 
