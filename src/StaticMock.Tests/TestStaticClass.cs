@@ -10,6 +10,11 @@ namespace StaticMock.Tests
             return 1;
         }
 
+        public static TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
+        {
+            return default;
+        }
+
         public static TestInstance TestMethodReturnReferenceObject()
         {
             return new();
