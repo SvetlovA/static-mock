@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using StaticMock.Entities;
 using StaticMock.Services.Hook.Implementation;
 using StaticMock.Services.Mock;
 using StaticMock.Services.Mock.Implementation;
@@ -28,7 +29,7 @@ namespace StaticMock.Helpers
             action();
         }
 
-        public static MethodInfo ValidateAndGetOriginalMethod<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression)
+        public static MethodInfo ValidateAndGetOriginalMethodInfo<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression)
         {
             if (methodGetExpression == null)
             {
@@ -55,7 +56,7 @@ namespace StaticMock.Helpers
             return originalMethodInfo;
         }
 
-        public static IFuncMockService SetupInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
+        public static IFuncMockService SetupInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
         {
             if (type == null)
             {
@@ -72,12 +73,7 @@ namespace StaticMock.Helpers
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find method {methodName} of type {type.FullName}");
-            }
+            var originalMethodInfo = ValidateAndGetOriginalMethodInfo(type, methodName, setupProperties);
 
             if (originalMethodInfo.ReturnType == typeof(void))
             {
@@ -119,7 +115,7 @@ namespace StaticMock.Helpers
             return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
-        public static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
+        public static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
         {
             if (type == null)
             {
@@ -136,17 +132,12 @@ namespace StaticMock.Helpers
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
-            }
+            var originalMethodInfo = ValidateAndGetOriginalMethodInfo(type, methodName, setupProperties);
 
             return new VoidMockService(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
-        public static void SetupDefaultInternal(Type type, string methodName, Action action, BindingFlags? bindingFlags = null)
+        public static void SetupDefaultInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
         {
             if (type == null)
             {
@@ -163,12 +154,7 @@ namespace StaticMock.Helpers
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
-
-            if (originalMethodInfo == null)
-            {
-                throw new Exception($"Can't find methodGetExpression {methodName} of type {type.FullName}");
-            }
+            var originalMethodInfo = ValidateAndGetOriginalMethodInfo(type, methodName, setupProperties);
 
             if (originalMethodInfo.ReturnType != typeof(void))
             {
@@ -176,6 +162,41 @@ namespace StaticMock.Helpers
             }
 
             SetupDefault(originalMethodInfo, action);
+        }
+
+
+        private static MethodInfo ValidateAndGetOriginalMethodInfo(Type type, string methodName, SetupProperties setupProperties)
+        {
+            var bindingFlags = setupProperties?.BindingFlags;
+            var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
+
+            if (originalMethodInfo == null)
+            {
+                throw new Exception($"Can't find method {methodName} of type {type.FullName}");
+            }
+
+            if (!originalMethodInfo.IsGenericMethodDefinition)
+            {
+                return originalMethodInfo;
+            }
+
+            var genericTypes = setupProperties?.GenericTypes;
+
+            if (genericTypes == null)
+            {
+                throw new ArgumentNullException(nameof(SetupProperties.GenericTypes));
+            }
+
+            var genericArguments = originalMethodInfo.GetGenericArguments();
+            if (genericTypes.Length != genericArguments.Length)
+            {
+                throw new Exception(
+                    $"Length and order of {nameof(SetupProperties.GenericTypes)} must be like count and order of generics in setup method");
+            }
+
+            originalMethodInfo = originalMethodInfo.MakeGenericMethod(genericTypes);
+
+            return originalMethodInfo;
         }
     }
 }

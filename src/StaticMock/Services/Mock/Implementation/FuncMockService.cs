@@ -49,14 +49,7 @@ namespace StaticMock.Services.Mock.Implementation
 
         public void Returns<TReturnValue>(TReturnValue value)
         {
-            var originalMethodInfo = _originalMethodInfo;
-            if (_originalMethodInfo.IsGenericMethodDefinition)
-            {
-                var genericArgumentsCount = _originalMethodInfo.GetGenericArguments().Length;
-                originalMethodInfo = _originalMethodInfo.MakeGenericMethod(Enumerable.Repeat(typeof(object), genericArgumentsCount).ToArray());
-            }
-
-            var returnService = new ReturnsMockService<TReturnValue>(originalMethodInfo, _hookServiceFactory, _hookBuilder);
+            var returnService = new ReturnsMockService<TReturnValue>(_originalMethodInfo, _hookServiceFactory, _hookBuilder);
             using (returnService.Returns(value))
             {
                 _action();

@@ -218,5 +218,36 @@ namespace StaticMock.Tests.ThrowsTests
                 });
             }).Throws<Exception>();
         }
+
+        [Test]
+        public void TestGenericSetupThrowsWithGenericTestMethodReturn1WithoutParameters()
+        {
+            var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(
+                    () => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>(),
+                    () =>
+                    {
+                        Assert.Throws<Exception>(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>());
+                    })
+                .Throws<Exception>();
+        }
+
+        [Test]
+        public void TestGenericSetupThrowsWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(
+                    () => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>(),
+                    () =>
+                    {
+                        Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
+                    })
+                .Throws<Exception>();
+        }
     }
 }

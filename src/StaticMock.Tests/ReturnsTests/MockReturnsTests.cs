@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using StaticMock.Entities;
 
 namespace StaticMock.Tests.ReturnsTests
 {
@@ -413,10 +414,29 @@ namespace StaticMock.Tests.ReturnsTests
             Assert.AreEqual(0, originalResult);
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters),
+            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
                     () =>
                     {
                         var actualResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
+                .Returns(expectedResult);
+        }
+
+        [Test]
+        public void TestSetupReturnsWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                    () =>
+                    {
+                        var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
 
                         Assert.AreNotEqual(originalResult, actualResult);
                         Assert.AreEqual(expectedResult, actualResult);

@@ -219,5 +219,42 @@ namespace StaticMock.Tests.CallbackTests
                 Assert.AreEqual(typeof(int), actualResult);
             }).Callback(() => typeof(int));
         }
+
+        [Test]
+        public void TestGenericSetupCallbackWithGenericTestMethodReturn1WithoutParameters()
+        {
+            var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(
+                    () => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>(),
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(2, actualResult);
+                    })
+                .Callback(() => 2);
+        }
+
+        [Test]
+        public void TestGenericSetupCallbackWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(
+                    () => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>(),
+                    () =>
+                    {
+                        var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(2, actualResult);
+                    })
+                .Callback(() => 2);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using StaticMock.Entities;
 
 namespace StaticMock.Tests.CallbackTests
 {
@@ -275,6 +276,41 @@ namespace StaticMock.Tests.CallbackTests
                 var actualResult = mothodInfo.Invoke(type, new object[] { });
                 Assert.AreEqual(expectedResult, actualResult);
             }).Callback(()=> { return new TestInstance(); });
+        }
+
+        [Test]
+        public void TestSetupCallbackWithGenericTestMethodReturn1WithoutParameters()
+        {
+            var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                    () =>
+                    {
+                        var actualResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(2, actualResult);
+                    })
+                .Callback(() => 2);
+        }
+
+        [Test]
+        public void TestSetupCallbackWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                    () =>
+                    {
+                        var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(2, actualResult);
+                    })
+                .Callback(() => 2);
         }
     }
 }

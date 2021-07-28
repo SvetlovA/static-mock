@@ -330,5 +330,25 @@ namespace StaticMock.Tests.ReturnsTests
                     })
                 .Returns(expectedResult);
         }
+
+        [Test]
+        public void TestGenericSetupReturnsWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(
+                    () => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>(),
+                    () =>
+                    {
+                        var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(expectedResult, actualResult);
+                    })
+                .Returns(expectedResult);
+        }
     }
 }

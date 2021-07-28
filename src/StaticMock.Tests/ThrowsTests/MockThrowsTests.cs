@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using NUnit.Framework;
+using StaticMock.Entities;
 
 namespace StaticMock.Tests.ThrowsTests
 {
@@ -345,5 +346,33 @@ namespace StaticMock.Tests.ThrowsTests
             }).Throws<Exception>();
         }
 
+        [Test]
+        public void TestSetupThrowsWithGenericTestMethodReturn1WithoutParameters()
+        {
+            var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                    () =>
+                    {
+                        Assert.Throws<Exception>(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>());
+                    })
+                .Throws<Exception>();
+        }
+
+        [Test]
+        public void TestSetupThrowsWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                    () =>
+                    {
+                        Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
+                    })
+                .Throws<Exception>();
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace StaticMock.Tests
             return 1;
         }
 
+        public TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
+        {
+            return default;
+        }
+
         public void TestVoidMethodWithoutParametersThrowsException()
         {
             throw new Exception("Test exception");
@@ -70,6 +75,5 @@ namespace StaticMock.Tests
         {
             return 1;
         }
-
     }
 }
