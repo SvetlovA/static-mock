@@ -2,6 +2,7 @@
 using System.Reflection;
 using NUnit.Framework;
 using StaticMock.Entities;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests.ThrowsTests
 {
@@ -347,7 +348,7 @@ namespace StaticMock.Tests.ThrowsTests
         }
 
         [Test]
-        public void TestSetupThrowsWithGenericTestMethodReturn1WithoutParameters()
+        public void TestSetupThrowsWithGenericTestMethodReturnDefaultWithoutParameters()
         {
             var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
             Assert.AreEqual(0, originalResult);
@@ -356,12 +357,11 @@ namespace StaticMock.Tests.ThrowsTests
                     () =>
                     {
                         Assert.Throws<Exception>(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>());
-                    })
-                .Throws<Exception>();
+                    }).Throws<Exception>();
         }
 
         [Test]
-        public void TestSetupThrowsWithGenericTestMethodReturn1WithoutParametersInstance()
+        public void TestSetupThrowsWithGenericTestMethodReturnDefaultWithoutParametersInstance()
         {
             var testInstance = new TestInstance();
             var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
@@ -371,8 +371,21 @@ namespace StaticMock.Tests.ThrowsTests
                     () =>
                     {
                         Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
-                    })
-                .Throws<Exception>();
+                    }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestSetupThrowsWithGenericTestMethodReturn1WithoutParametersInstance()
+        {
+            var testInstance = new TestGenericInstance<int>();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+                () =>
+                {
+                    Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters());
+                }).Throws<Exception>();
         }
     }
 }

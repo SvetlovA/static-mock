@@ -1,4 +1,4 @@
-﻿namespace StaticMock.Tests
+﻿namespace StaticMock.Tests.TestEntities
 {
     public class TestGenericInstance<TEntity>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace StaticMock.Tests
+namespace StaticMock.Tests.TestEntities
 {
     public class TestInstance : IEquatable<TestInstance>
     {

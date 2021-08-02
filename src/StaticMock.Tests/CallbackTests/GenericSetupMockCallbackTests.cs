@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests.CallbackTests
 {
@@ -221,7 +222,7 @@ namespace StaticMock.Tests.CallbackTests
         }
 
         [Test]
-        public void TestGenericSetupCallbackWithGenericTestMethodReturn1WithoutParameters()
+        public void TestGenericSetupCallbackWithGenericTestMethodReturnDefaultWithoutParameters()
         {
             var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
             Assert.AreEqual(0, originalResult);
@@ -239,7 +240,7 @@ namespace StaticMock.Tests.CallbackTests
         }
 
         [Test]
-        public void TestGenericSetupCallbackWithGenericTestMethodReturn1WithoutParametersInstance()
+        public void TestGenericSetupCallbackWithGenericTestMethodReturnDefaultWithoutParametersInstance()
         {
             var testInstance = new TestInstance();
             var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
@@ -250,6 +251,25 @@ namespace StaticMock.Tests.CallbackTests
                     () =>
                     {
                         var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+
+                        Assert.AreNotEqual(originalResult, actualResult);
+                        Assert.AreEqual(2, actualResult);
+                    })
+                .Callback(() => 2);
+        }
+
+        [Test]
+        public void TestGenericSetupCallbackWithGenericTestInstanceReturnDefaultWithoutParameters()
+        {
+            var testInstance = new TestGenericInstance<int>();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(
+                    () => testInstance.GenericTestMethodReturnDefaultWithoutParameters(),
+                    () =>
+                    {
+                        var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
 
                         Assert.AreNotEqual(originalResult, actualResult);
                         Assert.AreEqual(2, actualResult);

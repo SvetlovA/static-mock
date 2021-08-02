@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using StaticMock.Entities;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests.ReturnsTests
 {
@@ -301,8 +302,8 @@ namespace StaticMock.Tests.ReturnsTests
         {
             var testInstance = new TestInstance();
             Type type = testInstance.GetType();
-            MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic|BindingFlags.Instance);
-            Assert.AreEqual(1, methodInfo.Invoke(testInstance,new object[] { }));
+            MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.AreEqual(1, methodInfo.Invoke(testInstance, new object[] { }));
             var expectedResult = 2;
 
             Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
@@ -377,9 +378,9 @@ namespace StaticMock.Tests.ReturnsTests
         public void TestReturnsPrivateStaticIntProperty()
         {
             Type type = typeof(TestStaticClass);
-            PropertyInfo propertyInfo = type.GetProperty("PrivateStaticIntProperty",BindingFlags.NonPublic|BindingFlags.Static);
+            PropertyInfo propertyInfo = type.GetProperty("PrivateStaticIntProperty", BindingFlags.NonPublic | BindingFlags.Static);
             MethodInfo mothodInfo = propertyInfo.GetMethod;
-            var originalValue = mothodInfo.Invoke(type,new object[] { });
+            var originalValue = mothodInfo.Invoke(type, new object[] { });
             Assert.AreEqual(default(int), originalValue);
             var expectedResult = 2;
 
@@ -408,40 +409,56 @@ namespace StaticMock.Tests.ReturnsTests
         }
 
         [Test]
-        public void TestSetupReturnsWithGenericTestMethodReturn1WithoutParameters()
+        public void TestSetupReturnsWithGenericTestMethodReturnDefaultWithoutParameters()
         {
             var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
             Assert.AreEqual(0, originalResult);
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+            Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
                     () =>
                     {
                         var actualResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
 
                         Assert.AreNotEqual(originalResult, actualResult);
                         Assert.AreEqual(expectedResult, actualResult);
-                    })
-                .Returns(expectedResult);
+                    }).Returns(expectedResult);
         }
 
         [Test]
-        public void TestSetupReturnsWithGenericTestMethodReturn1WithoutParametersInstance()
+        public void TestSetupReturnsWithGenericTestMethodReturnDefaultWithoutParametersInstance()
         {
             var testInstance = new TestInstance();
             var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
             Assert.AreEqual(0, originalResult);
             var expectedResult = 2;
 
-            Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+            Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
                     () =>
                     {
                         var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
 
                         Assert.AreNotEqual(originalResult, actualResult);
                         Assert.AreEqual(expectedResult, actualResult);
-                    })
-                .Returns(expectedResult);
+                    }).Returns(expectedResult);
+        }
+
+        [Test]
+        public void TestSetupReturnsWithGenericTestInstanceReturnDefaultWithoutParameters()
+        {
+            var testInstance = new TestGenericInstance<int>();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
+            Assert.AreEqual(0, originalResult);
+            var expectedResult = 2;
+
+            Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
+                () =>
+                {
+                    var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
+
+                    Assert.AreNotEqual(originalResult, actualResult);
+                    Assert.AreEqual(expectedResult, actualResult);
+                }).Returns(expectedResult);
         }
     }
 }

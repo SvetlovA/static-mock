@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests
 {
