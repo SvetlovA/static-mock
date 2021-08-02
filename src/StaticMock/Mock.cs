@@ -6,6 +6,7 @@ using StaticMock.Services.Mock.Implementation;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using StaticMock.Entities;
 
 namespace StaticMock
 {
@@ -14,24 +15,37 @@ namespace StaticMock
         public static IFuncMockService Setup(Type type, string methodName, Action action) =>
             SetupMockHelper.SetupInternal(type, methodName, action);
         public static IFuncMockService Setup(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupMockHelper.SetupInternal(type, methodName, action, bindingFlags);
+            SetupMockHelper.SetupInternal(type, methodName, action, new SetupProperties
+            {
+                BindingFlags = bindingFlags
+            });
+        public static IFuncMockService Setup(Type type, string methodName, SetupProperties setupProperties, Action action) =>
+            SetupMockHelper.SetupInternal(type, methodName, action, setupProperties);
 
         public static IFuncMockService SetupProperty(Type type, string propertyName, Action action) =>
             SetupMockHelper.SetupPropertyInternal(type, propertyName, action);
-
         public static IFuncMockService SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action) =>
             SetupMockHelper.SetupPropertyInternal(type, propertyName, action, bindingFlags);
+
         public static IVoidMockService SetupVoid(Type type, string methodName, Action action) =>
             SetupMockHelper.SetupVoidInternal(type, methodName, action);
-
         public static IVoidMockService SetupVoid(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupMockHelper.SetupVoidInternal(type, methodName, action, bindingFlags);
+            SetupMockHelper.SetupVoidInternal(type, methodName, action, new SetupProperties
+            {
+                BindingFlags = bindingFlags
+            });
+        public static IVoidMockService SetupVoid(Type type, string methodName, SetupProperties setupProperties, Action action) =>
+            SetupMockHelper.SetupVoidInternal(type, methodName, action, setupProperties);
 
         public static void SetupDefault(Type type, string methodName, Action action) =>
             SetupMockHelper.SetupDefaultInternal(type, methodName, action);
-
         public static void SetupDefault(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
-            SetupMockHelper.SetupDefaultInternal(type, methodName, action, bindingFlags);
+            SetupMockHelper.SetupDefaultInternal(type, methodName, action, new SetupProperties
+            {
+                BindingFlags = bindingFlags
+            });
+        public static void SetupDefault(Type type, string methodName, SetupProperties setupProperties, Action action) =>
+            SetupMockHelper.SetupDefaultInternal(type, methodName, action, setupProperties);
 
         public static IFuncMockService<TReturnValue> Setup<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action action)
         {
@@ -40,7 +54,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
+            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethodInfo(methodGetExpression);
             return new FuncMockService<TReturnValue>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 
@@ -51,7 +65,7 @@ namespace StaticMock
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethod(methodGetExpression);
+            var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethodInfo(methodGetExpression);
             return new AsyncFuncMockService<TReturnValue>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
         }
 

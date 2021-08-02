@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace StaticMock.Tests
+namespace StaticMock.Tests.TestEntities
 {
     public class TestInstance : IEquatable<TestInstance>
     {
@@ -11,6 +11,11 @@ namespace StaticMock.Tests
         public int TestMethodReturn1WithoutParameters()
         {
             return 1;
+        }
+
+        public TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
+        {
+            return default;
         }
 
         public void TestVoidMethodWithoutParametersThrowsException()
@@ -70,6 +75,5 @@ namespace StaticMock.Tests
         {
             return 1;
         }
-
     }
 }

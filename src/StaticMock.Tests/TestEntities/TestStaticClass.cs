@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace StaticMock.Tests
+namespace StaticMock.Tests.TestEntities
 {
     public static class TestStaticClass
     {
         public static int TestMethodReturn1WithoutParameters()
         {
             return 1;
+        }
+
+        public static TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
+        {
+            return default;
         }
 
         public static TestInstance TestMethodReturnReferenceObject()

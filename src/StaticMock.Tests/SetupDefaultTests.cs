@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using NUnit.Framework;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests
 {

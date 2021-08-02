@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests.ThrowsTests
 {
@@ -216,6 +217,44 @@ namespace StaticMock.Tests.ThrowsTests
                 {
                     var actualResult = instance.ObjectProperty;
                 });
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestGenericSetupThrowsWithGenericTestMethodReturnDefaultWithoutParameters()
+        {
+            var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>(), () =>
+            {
+                Assert.Throws<Exception>(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>());
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestGenericSetupThrowsWithGenericTestMethodReturnDefaultWithoutParametersInstance()
+        {
+            var testInstance = new TestInstance();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>(), () =>
+            {
+                Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
+            }).Throws<Exception>();
+        }
+
+        [Test]
+        public void TestGenericSetupThrowsWithGenericTestInstanceReturnDefaultWithoutParameters()
+        {
+            var testInstance = new TestGenericInstance<int>();
+            var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
+            Assert.AreEqual(0, originalResult);
+
+            Mock.Setup(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters(), () =>
+            {
+                Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters());
             }).Throws<Exception>();
         }
     }
