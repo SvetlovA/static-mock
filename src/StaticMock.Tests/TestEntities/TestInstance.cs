@@ -1,79 +1,75 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿namespace StaticMock.Tests.TestEntities;
 
-namespace StaticMock.Tests.TestEntities
+public class TestInstance : IEquatable<TestInstance>
 {
-    public class TestInstance : IEquatable<TestInstance>
+    public int IntProperty { get; set; }
+    public object ObjectProperty { get; set; }
+
+    public int TestMethodReturn1WithoutParameters()
     {
-        public int IntProperty { get; set; }
-        public object ObjectProperty { get; set; }
+        return 1;
+    }
 
-        public int TestMethodReturn1WithoutParameters()
-        {
-            return 1;
-        }
+    public TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
+    {
+        return default;
+    }
 
-        public TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
-        {
-            return default;
-        }
+    public void TestVoidMethodWithoutParametersThrowsException()
+    {
+        throw new Exception("Test exception");
+    }
 
-        public void TestVoidMethodWithoutParametersThrowsException()
-        {
-            throw new Exception("Test exception");
-        }
+    public Task TestMethodReturnTask()
+    {
+        return Task.CompletedTask;
+    }
 
-        public Task TestMethodReturnTask()
-        {
-            return Task.CompletedTask;
-        }
+    public async Task TestMethodReturnTaskAsync()
+    {
+        await Task.CompletedTask;
+    }
 
-        public async Task TestMethodReturnTaskAsync()
-        {
-            await Task.CompletedTask;
-        }
+    public async void TestVoidMethodReturnTaskAsync()
+    {
+        await Task.CompletedTask;
+    }
 
-        public async void TestVoidMethodReturnTaskAsync()
-        {
-            await Task.CompletedTask;
-        }
+    public async Task<int> TestMethodReturnTaskWithoutParametersAsync()
+    {
+        return await Task.FromResult(1);
+    }
 
-        public async Task<int> TestMethodReturnTaskWithoutParametersAsync()
-        {
-            return await Task.FromResult(1);
-        }
+    public Task<int> TestMethodReturnTaskWithoutParameters()
+    {
+        return Task.FromResult(1);
+    }
 
-        public Task<int> TestMethodReturnTaskWithoutParameters()
-        {
-            return Task.FromResult(1);
-        }
+    public bool Equals(TestInstance other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return IntProperty == other.IntProperty && Equals(ObjectProperty, other.ObjectProperty);
+    }
 
-        public bool Equals(TestInstance other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return IntProperty == other.IntProperty && Equals(ObjectProperty, other.ObjectProperty);
-        }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((TestInstance) obj);
+    }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((TestInstance) obj);
-        }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(IntProperty, ObjectProperty);
+    }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(IntProperty, ObjectProperty);
-        }
+    private int PrivateIntProperty { get; set; }
+    private object PrivateObjectProperty { get; set; }
 
-        private int PrivateIntProperty { get; set; }
-        private object PrivateObjectProperty { get; set; }
-
-        private int TestPrivateMethodReturn1WithoutParameters()
-        {
-            return 1;
-        }
+    private int TestPrivateMethodReturn1WithoutParameters()
+    {
+        return 1;
     }
 }

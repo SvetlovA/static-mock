@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 
-namespace StaticMock.Services.Hook
+namespace StaticMock.Services.Hook;
+
+internal interface IHookServiceFactory
 {
-    internal interface IHookServiceFactory
-    {
-        IHookService CreateHookService(MethodBase originalMethod);
-    }
+    IHookService CreateHookService(MethodBase originalMethod);
 }

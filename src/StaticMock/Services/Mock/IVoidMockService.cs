@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace StaticMock.Services.Mock;
 
-namespace StaticMock.Services.Mock
+public interface IVoidMockService : IMockService
 {
-    public interface IVoidMockService : IMockService
-    {
-        void Callback(Action callback);
-    }
+    void Callback(Action callback);
 }

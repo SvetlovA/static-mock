@@ -1,12 +1,10 @@
-﻿using System;
-using StaticMock.Services.Common;
+﻿using StaticMock.Services.Common;
 
-namespace StaticMock.Services.Callback
+namespace StaticMock.Services.Callback;
+
+internal interface ICallbackService
 {
-    internal interface ICallbackService
-    {
-        IReturnable Callback(Action callback);
-        IReturnable Callback<TReturnValue>(Func<TReturnValue> callback);
-        IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback);
-    }
+    IReturnable Callback(Action callback);
+    IReturnable Callback<TReturnValue>(Func<TReturnValue> callback);
+    IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback);
 }

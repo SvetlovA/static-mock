@@ -1,11 +1,9 @@
-﻿using System;
-using StaticMock.Services.Common;
+﻿using StaticMock.Services.Common;
 
-namespace StaticMock.Services.Throws
+namespace StaticMock.Services.Throws;
+
+internal interface IThrowsService
 {
-    internal interface IThrowsService
-    {
-        IReturnable Throws(Type exceptionType);
-        IReturnable Throws<TException>() where TException : Exception, new();
-    }
+    IReturnable Throws(Type exceptionType);
+    IReturnable Throws<TException>() where TException : Exception, new();
 }

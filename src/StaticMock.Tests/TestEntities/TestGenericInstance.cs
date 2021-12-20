@@ -1,10 +1,9 @@
-﻿namespace StaticMock.Tests.TestEntities
+﻿namespace StaticMock.Tests.TestEntities;
+
+public class TestGenericInstance<TEntity>
 {
-    public class TestGenericInstance<TEntity>
+    public TEntity GenericTestMethodReturnDefaultWithoutParameters()
     {
-        public TEntity GenericTestMethodReturnDefaultWithoutParameters()
-        {
-            return default;
-        }
+        return default;
     }
 }

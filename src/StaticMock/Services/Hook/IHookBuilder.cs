@@ -1,11 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace StaticMock.Services.Hook
+namespace StaticMock.Services.Hook;
+
+internal interface IHookBuilder
 {
-    internal interface IHookBuilder
-    {
-        MethodInfo CreateReturnHook<TReturn>(TReturn value);
-        MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new();
-    }
+    MethodInfo CreateReturnHook<TReturn>(TReturn value);
+    MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new();
 }
