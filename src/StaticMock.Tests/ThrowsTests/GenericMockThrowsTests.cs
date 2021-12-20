@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using StaticMock.Tests.TestEntities;
 using StaticMock.Tests.ThrowsTests.Entities;
 

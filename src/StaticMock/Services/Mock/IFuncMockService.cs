@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StaticMock.Services.Mock;
+﻿namespace StaticMock.Services.Mock;
 
 public interface IFuncMockService<in TReturnValue> : IMockService
 {

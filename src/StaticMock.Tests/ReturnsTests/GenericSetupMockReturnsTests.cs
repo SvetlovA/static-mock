@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using StaticMock.Tests.TestEntities;
 
 namespace StaticMock.Tests.ReturnsTests;

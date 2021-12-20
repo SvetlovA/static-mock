@@ -1,5 +1,4 @@
-﻿using System;
-using StaticMock.Services.Common;
+﻿using StaticMock.Services.Common;
 
 namespace StaticMock.Services.Throws;
 
