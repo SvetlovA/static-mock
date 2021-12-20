@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using StaticMock.Entities;
 using StaticMock.Tests.TestEntities;
+using StaticMock.Tests.ThrowsTests.Entities;
 
 namespace StaticMock.Tests.ThrowsTests;
 
@@ -14,8 +15,7 @@ public class MockThrowsTests
         Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters());
-            })
-            .Throws(typeof(Exception));
+            }).Throws(typeof(Exception));
     }
 
     [Test]
@@ -24,8 +24,7 @@ public class MockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParameters(), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithoutParameters());
-            })
-            .Throws(typeof(Exception));
+            }).Throws(typeof(Exception));
     }
 
     [Test]
@@ -34,8 +33,7 @@ public class MockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithParameters(1), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithParameters(1));
-            })
-            .Throws(typeof(Exception));
+            }).Throws(typeof(Exception));
     }
 
     [Test]
@@ -44,8 +42,7 @@ public class MockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParameters(), () =>
             {
                 Assert.Throws<ArgumentNullException>(() => TestStaticClass.TestVoidMethodWithoutParameters());
-            })
-            .Throws(typeof(ArgumentNullException));
+            }).Throws(typeof(ArgumentNullException));
     }
 
     [Test]
@@ -232,7 +229,8 @@ public class MockThrowsTests
             try
             {
                 var actualResult = methodInfo.Invoke(testInstance, new object[] { });
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
             }
@@ -252,12 +250,13 @@ public class MockThrowsTests
             try
             {
                 var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
             }
-                
-                
+
+
         }).Throws(typeof(Exception));
     }
 
@@ -275,10 +274,11 @@ public class MockThrowsTests
             try
             {
                 var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
-            } 
+            }
         }).Throws(typeof(Exception));
     }
 
@@ -288,18 +288,18 @@ public class MockThrowsTests
 
         Type type = typeof(TestStaticClass);
         MethodInfo methodInfo = type.GetMethod("TestPrivateStaticMethodReturn1WithoutParameters", BindingFlags.Static | BindingFlags.NonPublic);
-        Mock.Setup(type,methodInfo.Name, BindingFlags.Static | BindingFlags.NonPublic, () =>
-        {
-            try
-            {
-                int result = (int)methodInfo.Invoke(type, new object[] { });
-            }
-            catch (Exception e)
-            {
-                Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
-            }
-                
-        }).Throws(typeof(Exception));
+        Mock.Setup(type, methodInfo.Name, BindingFlags.Static | BindingFlags.NonPublic, () =>
+         {
+             try
+             {
+                 int result = (int)methodInfo.Invoke(type, new object[] { });
+             }
+             catch (Exception e)
+             {
+                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
+             }
+
+         }).Throws(typeof(Exception));
     }
 
     [Test]
@@ -308,7 +308,7 @@ public class MockThrowsTests
         Type type = typeof(TestStaticClass);
         PropertyInfo propertyInfo = type.GetProperty("PrivateStaticIntProperty", BindingFlags.NonPublic | BindingFlags.Static);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
-        var originalValue = mothodInfo.Invoke(type,new object[] { });
+        var originalValue = mothodInfo.Invoke(type, new object[] { });
         Assert.AreEqual(default(int), originalValue);
 
         Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
@@ -317,7 +317,7 @@ public class MockThrowsTests
             {
                 var actualResult = (int)mothodInfo.Invoke(type, new object[] { });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
             }
@@ -352,7 +352,7 @@ public class MockThrowsTests
         var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
         Assert.AreEqual(0, originalResult);
 
-        Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+        Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
             () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>());
@@ -366,7 +366,7 @@ public class MockThrowsTests
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
         Assert.AreEqual(0, originalResult);
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
             () =>
             {
                 Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
@@ -380,10 +380,30 @@ public class MockThrowsTests
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
         Assert.AreEqual(0, originalResult);
 
-        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new []{ typeof(int) } },
+        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
             () =>
             {
                 Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters());
             }).Throws<Exception>();
+    }
+
+    [Test]
+    public void TestThrowsParameterLessCustomExceptionTestMethodReturn1WithoutParameters()
+    {
+        const string message = "testExceptionMessage";
+        Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+            {
+                Assert.Throws<CustomExceptionWithoutDefaultConstructor>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
+            }).Throws(typeof(CustomExceptionWithoutDefaultConstructor), message);
+    }
+
+    [Test]
+    public void TestThrowsExceptionWithMessageTestMethodReturn1WithoutParameters()
+    {
+        const string message = "testExceptionMessage";
+        Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+        {
+            Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
+        }).Throws(typeof(Exception), message);
     }
 }

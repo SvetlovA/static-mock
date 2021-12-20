@@ -35,7 +35,7 @@ internal static class SetupMockHelper
             throw new ArgumentNullException(nameof(methodGetExpression));
         }
 
-        MethodInfo originalMethodInfo = null;
+        MethodInfo? originalMethodInfo = null;
 
         if (methodGetExpression.Body is MemberExpression {Member: PropertyInfo propertyInfo})
         {
@@ -55,7 +55,7 @@ internal static class SetupMockHelper
         return originalMethodInfo;
     }
 
-    public static IFuncMockService SetupInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
+    public static IFuncMockService SetupInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         if (type == null)
         {
@@ -114,7 +114,7 @@ internal static class SetupMockHelper
         return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
     }
 
-    public static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
+    public static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         if (type == null)
         {
@@ -136,7 +136,7 @@ internal static class SetupMockHelper
         return new VoidMockService(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
     }
 
-    public static void SetupDefaultInternal(Type type, string methodName, Action action, SetupProperties setupProperties = null)
+    public static void SetupDefaultInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         if (type == null)
         {
@@ -164,7 +164,7 @@ internal static class SetupMockHelper
     }
 
 
-    private static MethodInfo ValidateAndGetOriginalMethodInfo(Type type, string methodName, SetupProperties setupProperties)
+    private static MethodInfo ValidateAndGetOriginalMethodInfo(Type type, string methodName, SetupProperties? setupProperties)
     {
         var bindingFlags = setupProperties?.BindingFlags;
         var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);

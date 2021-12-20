@@ -4,6 +4,6 @@ namespace StaticMock.Services.Throws;
 
 internal interface IThrowsService
 {
-    IReturnable Throws(Type exceptionType);
+    IReturnable Throws(Type exceptionType, object[] constructorArgs);
     IReturnable Throws<TException>() where TException : Exception, new();
 }
