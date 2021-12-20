@@ -12,5 +12,5 @@ public class SetupProperties
     /// <summary>
     /// Generic types to set for generic method. Length and order must be like count and order of generics in method.
     /// </summary>
-    public Type[] GenericTypes { get; set; }
+    public Type[]? GenericTypes { get; set; }
 }

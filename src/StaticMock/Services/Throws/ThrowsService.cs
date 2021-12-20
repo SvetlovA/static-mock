@@ -17,14 +17,23 @@ internal class ThrowsService : IThrowsService
         _hookBuilder = hookBuilder ?? throw new ArgumentNullException(nameof(hookBuilder));
     }
 
-    public IReturnable Throws(Type exceptionType)
+    public IReturnable Throws(Type exceptionType, params object[]? constructorArgs) => ThrowsInternal(exceptionType, constructorArgs);
+
+    public IReturnable Throws<TException>() where TException : Exception, new()
+    {
+        var hook = _hookBuilder.CreateThrowsHook(new TException());
+
+        return Inject(hook);
+    }
+
+    private IReturnable ThrowsInternal(Type exceptionType, object[]? constructorArgs)
     {
         if (exceptionType == null)
         {
             throw new ArgumentNullException(nameof(exceptionType));
         }
 
-        var hookException = Activator.CreateInstance(exceptionType) as Exception;
+        var hookException = Activator.CreateInstance(exceptionType, constructorArgs) as Exception;
 
         if (hookException == null)
         {
@@ -32,13 +41,6 @@ internal class ThrowsService : IThrowsService
         }
 
         var hook = _hookBuilder.CreateThrowsHook(hookException);
-
-        return Inject(hook);
-    }
-
-    public IReturnable Throws<TException>() where TException : Exception, new()
-    {
-        var hook = _hookBuilder.CreateThrowsHook(new TException());
 
         return Inject(hook);
     }

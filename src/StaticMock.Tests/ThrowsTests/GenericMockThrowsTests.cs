@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using StaticMock.Tests.TestEntities;
+using StaticMock.Tests.ThrowsTests.Entities;
 
 namespace StaticMock.Tests.ThrowsTests;
 
@@ -12,8 +13,7 @@ public class GenericMockThrowsTests
         Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters());
-            })
-            .Throws<Exception>();
+            }).Throws<Exception>();
     }
 
     [Test]
@@ -22,8 +22,7 @@ public class GenericMockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParameters(), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithoutParameters());
-            })
-            .Throws<Exception>();
+            }).Throws<Exception>();
     }
 
     [Test]
@@ -32,8 +31,7 @@ public class GenericMockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithParameters(1), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithParameters(1));
-            })
-            .Throws<Exception>();
+            }).Throws<Exception>();
     }
 
     [Test]
@@ -42,8 +40,7 @@ public class GenericMockThrowsTests
         Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParameters(), () =>
             {
                 Assert.Throws<ArgumentNullException>(() => TestStaticClass.TestVoidMethodWithoutParameters());
-            })
-            .Throws<ArgumentNullException>();
+            }).Throws<ArgumentNullException>();
     }
 
     [Test]
@@ -255,5 +252,25 @@ public class GenericMockThrowsTests
         {
             Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters());
         }).Throws<Exception>();
+    }
+
+    [Test]
+    public void TestThrowsParameterLessCustomExceptionTestMethodReturn1WithoutParameters()
+    {
+        const string message = "testExceptionMessage";
+        Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+            {
+                Assert.Throws<CustomExceptionWithoutDefaultConstructor>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
+            }).Throws<CustomExceptionWithoutDefaultConstructor>(new object[] { message });
+    }
+
+    [Test]
+    public void TestThrowsExceptionWithMessageTestMethodReturn1WithoutParameters()
+    {
+        const string message = "testExceptionMessage";
+        Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+        {
+            Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
+        }).Throws<Exception>(new object[] { message });
     }
 }
