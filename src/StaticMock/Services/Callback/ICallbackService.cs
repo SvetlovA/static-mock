@@ -1,4 +1,5 @@
-﻿using StaticMock.Services.Common;
+﻿using System;
+using StaticMock.Services.Common;
 
 namespace StaticMock.Services.Callback;
 

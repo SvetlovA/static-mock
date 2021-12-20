@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Services.Mock;
+﻿using System;
+
+namespace StaticMock.Services.Mock;
 
 public interface IVoidMockService : IMockService
 {

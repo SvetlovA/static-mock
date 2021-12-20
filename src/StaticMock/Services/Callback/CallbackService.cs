@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using StaticMock.Services.Common;
 using StaticMock.Services.Hook;
 

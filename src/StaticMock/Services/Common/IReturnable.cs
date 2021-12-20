@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Services.Common;
+﻿using System;
+
+namespace StaticMock.Services.Common;
 
 internal interface IReturnable : IDisposable
 {

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using StaticMock.Services.Callback;
 using StaticMock.Services.Hook;
 using StaticMock.Services.Returns;

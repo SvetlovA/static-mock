@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Tests.ThrowsTests.Entities;
+﻿using System;
+
+namespace StaticMock.Tests.ThrowsTests.Entities;
 
 internal class CustomExceptionWithoutDefaultConstructor : Exception
 {

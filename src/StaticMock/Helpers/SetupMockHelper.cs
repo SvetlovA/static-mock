@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Entities;
 using StaticMock.Services.Hook.Implementation;

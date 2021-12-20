@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using NUnit.Framework;
 using StaticMock.Entities;
 using StaticMock.Tests.TestEntities;

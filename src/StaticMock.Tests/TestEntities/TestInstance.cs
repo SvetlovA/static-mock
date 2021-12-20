@@ -1,4 +1,7 @@
-﻿namespace StaticMock.Tests.TestEntities;
+﻿using System;
+using System.Threading.Tasks;
+
+namespace StaticMock.Tests.TestEntities;
 
 public class TestInstance : IEquatable<TestInstance>
 {

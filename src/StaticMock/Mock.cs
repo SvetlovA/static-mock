@@ -1,9 +1,11 @@
-﻿using StaticMock.Helpers;
+﻿using System;
+using StaticMock.Helpers;
 using StaticMock.Services.Hook.Implementation;
 using StaticMock.Services.Mock;
 using StaticMock.Services.Mock.Implementation;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using StaticMock.Entities;
 
 namespace StaticMock;
