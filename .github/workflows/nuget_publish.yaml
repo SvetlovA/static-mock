@@ -19,4 +19,4 @@ jobs:
       - name: Pack
         run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj
       - name: Push
-        run: dotnet nuget push packages/*.nupkg -k ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push packages/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
