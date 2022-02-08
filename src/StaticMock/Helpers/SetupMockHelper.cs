@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Entities;
-using StaticMock.Services.Hook.Implementation;
-using StaticMock.Services.Mock;
-using StaticMock.Services.Mock.Implementation;
+using StaticMock.Hooks.Implementation;
+using StaticMock.Mocks;
+using StaticMock.Mocks.Implementation;
 
 namespace StaticMock.Helpers;
 
@@ -22,9 +22,9 @@ internal static class SetupMockHelper
         }
 
         Action injectionMethod = () => { };
-        var injectionServiceFactory = new HookServiceFactory();
+        var injectionServiceFactory = new HookManagerFactory();
         using var injectionService = injectionServiceFactory.CreateHookService(methodToReplace);
-        injectionService.Hook(injectionMethod.Method);
+        injectionService.ApplyHook(injectionMethod.Method);
         action();
     }
 
@@ -55,7 +55,7 @@ internal static class SetupMockHelper
         return originalMethodInfo;
     }
 
-    public static IFuncMockService SetupInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IFuncMock SetupInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         if (type == null)
         {
@@ -79,10 +79,10 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
         }
 
-        return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
+        return new FuncMock<object>(new HookManagerFactory(), originalMethodInfo, action);
     }
 
-    public static IFuncMockService SetupPropertyInternal(Type type, string propertyName, Action action, BindingFlags? bindingFlags = null)
+    public static IFuncMock SetupPropertyInternal(Type type, string propertyName, Action action, BindingFlags? bindingFlags = null)
     {
         if (type == null)
         {
@@ -111,10 +111,10 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
         }
 
-        return new FuncMockService<object>(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
+        return new FuncMock<object>(new HookManagerFactory(), originalMethodInfo, action);
     }
 
-    public static IVoidMockService SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IVoidMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         if (type == null)
         {
@@ -133,7 +133,7 @@ internal static class SetupMockHelper
 
         var originalMethodInfo = ValidateAndGetOriginalMethodInfo(type, methodName, setupProperties);
 
-        return new VoidMockService(new HookServiceFactory(), new HookBuilder(), originalMethodInfo, action);
+        return new VoidMock(new HookManagerFactory(), originalMethodInfo, action);
     }
 
     public static void SetupDefaultInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
