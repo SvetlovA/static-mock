@@ -15,9 +15,10 @@ internal static class HookBuilder
         var hookType = hookModule.DefineType("ReturnHookType", TypeAttributes.Public);
         var hookField = hookType.DefineField("ReturnHookField", typeof(TReturn), FieldAttributes.Private | FieldAttributes.Static);
         var hookMethod = hookType.DefineMethod("ReturnHookMethod", MethodAttributes.Public | MethodAttributes.Static,
-            typeof(TReturn), Array.Empty<Type>());
+            typeof(TReturn), new [] { typeof(int) });
         var hookMethodIl = hookMethod.GetILGenerator();
 
+        hookMethodIl.EmitWriteLine("Test");
         hookMethodIl.Emit(OpCodes.Ldsfld, hookField);
         hookMethodIl.Emit(OpCodes.Ret);
 
@@ -37,8 +38,7 @@ internal static class HookBuilder
         var hookModule = hookAssembly.DefineDynamicModule("ExceptionHookModule");
         var hookType = hookModule.DefineType("ExceptionHookType", TypeAttributes.Public);
         var hookField = hookType.DefineField("ExceptionHookField", typeof(TException), FieldAttributes.Private | FieldAttributes.Static);
-        var hookMethod = hookType.DefineMethod("ExceptionHookMethod", MethodAttributes.Public | MethodAttributes.Static,
-            typeof(TException), Array.Empty<Type>());
+        var hookMethod = hookType.DefineMethod("ExceptionHookMethod", MethodAttributes.Public | MethodAttributes.Static);
         var hookMethodIl = hookMethod.GetILGenerator();
 
         hookMethodIl.Emit(OpCodes.Ldsfld, hookField);
