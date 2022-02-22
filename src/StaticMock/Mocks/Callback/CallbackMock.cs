@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using StaticMock.Hooks;
+using StaticMock.Hooks.Entities;
 using StaticMock.Hooks.Helpers;
 
 namespace StaticMock.Mocks.Callback;
@@ -8,11 +9,16 @@ internal class CallbackMock : ICallbackMock
 {
     private readonly MethodInfo _originalMethodInfo;
     private readonly IHookManagerFactory _hookManagerFactory;
+    private readonly HookParameter[] _hookParameters;
 
-    public CallbackMock(MethodInfo originalMethodInfo, IHookManagerFactory hookManagerFactory)
+    public CallbackMock(
+        MethodInfo originalMethodInfo,
+        IHookManagerFactory hookManagerFactory,
+        HookParameter[] hookParameters)
     {
         _originalMethodInfo = originalMethodInfo;
         _hookManagerFactory = hookManagerFactory;
+        _hookParameters = hookParameters;
     }
 
     public IReturnable Callback(Action callback)
@@ -42,7 +48,7 @@ internal class CallbackMock : ICallbackMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        var hook = HookBuilder.CreateReturnHook(Task.FromResult(callback()));
+        var hook = HookBuilder.CreateReturnHook(Task.FromResult(callback()), _hookParameters);
         return Inject(hook);
     }
 

@@ -50,58 +50,40 @@ public static class Mock
 
     public static IFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethodInfo(methodGetExpression);
-        return new FuncMock<TReturnValue>(new HookManagerFactory(), originalMethodInfo, action);
+        var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
+        return new FuncMock<TReturnValue>(
+            mockSetupProperties.OriginalMethodInfo,
+            new HookManagerFactory(),
+            mockSetupProperties.HookParameters,
+            action);
     }
 
     public static IAsyncFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>> methodGetExpression, Action action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
-        var originalMethodInfo = SetupMockHelper.ValidateAndGetOriginalMethodInfo(methodGetExpression);
-        return new AsyncFuncMock<TReturnValue>(new HookManagerFactory(), originalMethodInfo, action);
+        var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
+        return new AsyncFuncMock<TReturnValue>(
+            mockSetupProperties.OriginalMethodInfo,
+            new HookManagerFactory(),
+            mockSetupProperties.HookParameters,
+            action);
     }
 
     public static IVoidMock Setup(Expression<Action> methodGetExpression, Action action)
     {
-        if (methodGetExpression == null)
-        {
-            throw new ArgumentNullException(nameof(methodGetExpression));
-        }
-
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
         if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
         {
             throw new Exception("Get expression not contains method to setup");
         }
 
-        return new VoidMock(new HookManagerFactory(), methodExpression.Method, action);
+        return new VoidMock(
+            methodExpression.Method,
+            new HookManagerFactory(),
+            SetupMockHelper.GetHookParameters(methodExpression).ToArray(),
+            action);
     }
 
     public static void SetupDefault(Expression<Action> methodGetExpression, Action action)
     {
-        if (methodGetExpression == null)
-        {
-            throw new ArgumentNullException(nameof(methodGetExpression));
-        }
-
-        if (action == null)
-        {
-            throw new ArgumentNullException(nameof(action));
-        }
-
         if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
         {
             throw new Exception("Get expression not contains method to setup");

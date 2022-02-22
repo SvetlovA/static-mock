@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using StaticMock.Hooks;
+using StaticMock.Hooks.Entities;
 using StaticMock.Mocks.Callback;
 using StaticMock.Mocks.Returns;
 
@@ -7,15 +8,21 @@ namespace StaticMock.Mocks.Implementation;
 
 internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 {
-    private readonly IHookManagerFactory _hookManagerFactory;
     private readonly MethodInfo _originalMethodInfo;
+    private readonly IHookManagerFactory _hookManagerFactory;
+    private readonly HookParameter[] _hookParameters;
     private readonly Action _action;
 
-    public FuncMock(IHookManagerFactory hookManagerFactory, MethodInfo originalMethodInfo, Action action)
+    public FuncMock(
+        MethodInfo originalMethodInfo,
+        IHookManagerFactory hookManagerFactory,
+        HookParameter[] hookParameters,
+        Action action)
         : base(hookManagerFactory, originalMethodInfo, action)
     {
-        _hookManagerFactory = hookManagerFactory;
         _originalMethodInfo = originalMethodInfo;
+        _hookManagerFactory = hookManagerFactory;
+        _hookParameters = hookParameters;
         _action = action;
     }
 
@@ -36,7 +43,7 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
             throw new ArgumentNullException(nameof(callback));
         }
 
-        var callbackService = new CallbackMock(_originalMethodInfo, _hookManagerFactory);
+        var callbackService = new CallbackMock(_originalMethodInfo, _hookManagerFactory, _hookParameters);
         using (callbackService.Callback(callback))
         {
             _action();
@@ -45,7 +52,7 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TReturnValue>(TReturnValue value)
     {
-        var returnService = new ReturnsMock<TReturnValue>(_originalMethodInfo, _hookManagerFactory);
+        var returnService = new ReturnsMock<TReturnValue>(_originalMethodInfo, _hookManagerFactory, _hookParameters);
         using (returnService.Returns(value))
         {
             _action();
@@ -54,7 +61,7 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void ReturnsAsync<TReturnValue>(TReturnValue value)
     {
-        var returnService = new ReturnsMock<TReturnValue>(_originalMethodInfo, _hookManagerFactory);
+        var returnService = new ReturnsMock<TReturnValue>(_originalMethodInfo, _hookManagerFactory, _hookParameters);
         using (returnService.ReturnsAsync(value))
         {
             _action();

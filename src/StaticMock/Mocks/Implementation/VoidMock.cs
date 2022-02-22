@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using StaticMock.Hooks;
+using StaticMock.Hooks.Entities;
 using StaticMock.Mocks.Callback;
 
 namespace StaticMock.Mocks.Implementation;
@@ -7,14 +8,20 @@ namespace StaticMock.Mocks.Implementation;
 internal class VoidMock : Mock, IVoidMock
 {
     private readonly MethodInfo _originalMethodInfo;
-    private readonly Action _action;
     private readonly IHookManagerFactory _hookManagerFactory;
+    private readonly HookParameter[] _hookParameters;
+    private readonly Action _action;
 
-    public VoidMock(IHookManagerFactory hookManagerFactory, MethodInfo originalMethodInfo, Action action)
+    public VoidMock(
+        MethodInfo originalMethodInfo,
+        IHookManagerFactory hookManagerFactory,
+        HookParameter[] hookParameters,
+        Action action)
         : base(hookManagerFactory, originalMethodInfo, action)
     {
-        _hookManagerFactory = hookManagerFactory;
         _originalMethodInfo = originalMethodInfo;
+        _hookManagerFactory = hookManagerFactory;
+        _hookParameters = hookParameters;
         _action = action;
     }
 
@@ -25,7 +32,7 @@ internal class VoidMock : Mock, IVoidMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        var callbackService = new CallbackMock(_originalMethodInfo, _hookManagerFactory);
+        var callbackService = new CallbackMock(_originalMethodInfo, _hookManagerFactory, _hookParameters);
         using (callbackService.Callback(callback))
         {
             _action();
