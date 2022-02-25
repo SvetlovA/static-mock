@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using System.Reflection.Emit;
-using StaticMock.Hooks.Entities;
+using StaticMock.Entities.Context;
 
 namespace StaticMock.Hooks.Helpers;
 
 internal static class HookBuilder
 {
-    public static MethodInfo CreateReturnHook<TReturn>(TReturn value, HookParameter[] parameterHooks)
+    public static MethodInfo CreateReturnHook<TReturn>(TReturn value, IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
         {
@@ -16,20 +16,20 @@ internal static class HookBuilder
         var hookType = hookModule.DefineType("ReturnHookType", TypeAttributes.Public);
         var hookStaticField = hookType.DefineField("ReturnHookStaticField", typeof(TReturn), FieldAttributes.Private | FieldAttributes.Static);
         var hookMethod = hookType.DefineMethod("ReturnHookMethod", MethodAttributes.Public | MethodAttributes.Static,
-            typeof(TReturn), parameterHooks.Select(x => x.Type).ToArray());
+            typeof(TReturn), itParameterExpressions.Select(x => x.ParameterType).ToArray());
         var hookMethodIl = hookMethod.GetILGenerator();
 
-        for (var i = 0; i < parameterHooks.Length; i++)
+        for (var i = 0; i < itParameterExpressions.Count; i++)
         {
-            var localVariable = hookMethodIl.DeclareLocal(parameterHooks[i].Type);
+            var localVariable = hookMethodIl.DeclareLocal(itParameterExpressions[i].ParameterType);
             hookMethodIl.Emit(OpCodes.Ldarg, i);
             hookMethodIl.Emit(OpCodes.Stloc, localVariable);
             hookMethodIl.EmitWriteLine($"Local variable value {localVariable}");
-            var parameterHook = parameterHooks[i].Hook;
-            if (parameterHook != null)
+            var parameterExpression = itParameterExpressions[i].ParameterExpression;
+            if (parameterExpression != null)
             {
                 hookMethodIl.Emit(OpCodes.Ldarg, i);
-                hookMethodIl.Emit(OpCodes.Call, parameterHook);
+                hookMethodIl.Emit(OpCodes.Call, parameterExpression.Compile().Method);
             }
         }
 

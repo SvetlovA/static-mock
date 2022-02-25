@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Entities;
+using StaticMock.Entities.Context;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
 using StaticMock.Mocks.Implementation;
@@ -54,7 +55,7 @@ public static class Mock
         return new FuncMock<TReturnValue>(
             mockSetupProperties.OriginalMethodInfo,
             new HookManagerFactory(),
-            mockSetupProperties.HookParameters,
+            mockSetupProperties.SetupContextState,
             action);
     }
 
@@ -64,7 +65,7 @@ public static class Mock
         return new AsyncFuncMock<TReturnValue>(
             mockSetupProperties.OriginalMethodInfo,
             new HookManagerFactory(),
-            mockSetupProperties.HookParameters,
+            mockSetupProperties.SetupContextState,
             action);
     }
 
@@ -78,7 +79,7 @@ public static class Mock
         return new VoidMock(
             methodExpression.Method,
             new HookManagerFactory(),
-            SetupMockHelper.GetHookParameters(methodExpression).ToArray(),
+            new SetupContext().State,
             action);
     }
 
