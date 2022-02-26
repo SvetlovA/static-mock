@@ -2,7 +2,7 @@
 
 namespace StaticMock.Entities.Context;
 
-internal class ItParameterExpression
+public class ItParameterExpression
 {
     public Type ParameterType { get; set; } = null!;
     public LambdaExpression? ParameterExpression { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Globalization;
+using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
@@ -25,7 +26,7 @@ internal static class SetupMockHelper
         MethodInfo? originalMethodInfo = null;
         var setupContext = new SetupContext();
 
-        if (methodGetExpression.Body is MemberExpression {Member: PropertyInfo propertyInfo})
+        if (methodGetExpression.Body is MemberExpression { Member: PropertyInfo propertyInfo })
         {
             originalMethodInfo = propertyInfo.GetMethod;
         }
@@ -66,6 +67,20 @@ internal static class SetupMockHelper
             originalMethodInfo = methodExpression.Method;
             foreach (var methodExpressionArgument in methodExpression.Arguments.OfType<MethodCallExpression>())
             {
+                var argumentMethod = methodExpressionArgument.Method;
+                if (argumentMethod.DeclaringType == typeof(It))
+                {
+                    argumentMethod.Invoke(
+                        setupContext.It,
+                        BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Public,
+                        null,
+                        methodExpressionArgument.Arguments
+                            .Cast<UnaryExpression>()
+                            .Select(x => x.Operand)
+                            .Cast<Expression<Func<TReturnValue, bool>>>()
+                            .ToArray(),
+                        CultureInfo.InvariantCulture);
+                }
             }
         }
 

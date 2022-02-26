@@ -1,6 +1,6 @@
 ﻿namespace StaticMock.Entities.Context;
 
-internal class SetupContextState
+public class SetupContextState
 {
-    public List<ItParameterExpression> ItParameterExpressions => new List<ItParameterExpression>();
+    public List<ItParameterExpression> ItParameterExpressions { get; set; } = new();
 }

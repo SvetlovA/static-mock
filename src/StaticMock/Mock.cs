@@ -69,6 +69,26 @@ public static class Mock
             action);
     }
 
+    public static IFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>> methodGetExpression, Action action)
+    {
+        var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
+        return new FuncMock<TReturnValue>(
+            mockSetupProperties.OriginalMethodInfo,
+            new HookManagerFactory(),
+            mockSetupProperties.SetupContextState,
+            action);
+    }
+
+    public static IAsyncFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>> methodGetExpression, Action action)
+    {
+        var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
+        return new AsyncFuncMock<TReturnValue>(
+            mockSetupProperties.OriginalMethodInfo,
+            new HookManagerFactory(),
+            mockSetupProperties.SetupContextState,
+            action);
+    }
+
     public static IVoidMock Setup(Expression<Action> methodGetExpression, Action action)
     {
         if (!(methodGetExpression.Body is MethodCallExpression methodExpression))

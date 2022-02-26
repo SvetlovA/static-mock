@@ -2,7 +2,7 @@
 
 namespace StaticMock.Entities.Context;
 
-internal class It
+public class It
 {
     private readonly SetupContextState _setupContextState;
 
@@ -19,6 +19,7 @@ internal class It
         var conditionExpression = Expression.IfThen(
             Expression.Not(predicate.Body),
             Expression.Throw(Expression.Constant(new Exception($"Condition {predicate} failed"))));
+
         _setupContextState.ItParameterExpressions.Add(new ItParameterExpression
         {
             ParameterType = predicateParameterExpression.Type,

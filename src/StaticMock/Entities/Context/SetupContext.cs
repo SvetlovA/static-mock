@@ -1,8 +1,8 @@
 ﻿namespace StaticMock.Entities.Context;
 
-internal class SetupContext
+public class SetupContext
 {
-    public SetupContextState State = new();
+    internal SetupContextState State = new();
 
     public It It => new(State);
 }
