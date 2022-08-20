@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using StaticMock.Entities.Context;
 using StaticMock.Hooks;
-using StaticMock.Hooks.Entities;
 using StaticMock.Mocks.Callback;
 using StaticMock.Mocks.Returns;
 

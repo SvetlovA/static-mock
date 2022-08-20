@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using StaticMock.Entities.Context;
 using StaticMock.Hooks;
 using StaticMock.Hooks.Helpers;
 
@@ -8,18 +9,24 @@ internal class ThrowsMock : IThrowsMock
 {
     private readonly MethodInfo _originalMethodInfo;
     private readonly IHookManagerFactory _hookManagerFactory;
+    private readonly SetupContextState _setupContextState;
 
-    public ThrowsMock(MethodInfo originalMethodInfo, IHookManagerFactory hookManagerFactory)
+    public ThrowsMock(
+        MethodInfo originalMethodInfo,
+        IHookManagerFactory hookManagerFactory,
+        SetupContextState setupContextState)
     {
         _originalMethodInfo = originalMethodInfo;
         _hookManagerFactory = hookManagerFactory;
+        _setupContextState = setupContextState;
     }
 
-    public IReturnable Throws(Type exceptionType, params object[]? constructorArgs) => ThrowsInternal(exceptionType, constructorArgs);
+    public IReturnable Throws(Type exceptionType, params object[]? constructorArgs) =>
+        ThrowsInternal(exceptionType, constructorArgs);
 
     public IReturnable Throws<TException>() where TException : Exception, new()
     {
-        var hook = HookBuilder.CreateThrowsHook(new TException());
+        var hook = HookBuilder.CreateThrowsHook(new TException(), _setupContextState.ItParameterExpressions);
 
         return Inject(hook);
     }
@@ -38,7 +45,7 @@ internal class ThrowsMock : IThrowsMock
             throw new Exception($"{exceptionType.FullName} is not an Exception");
         }
 
-        var hook = HookBuilder.CreateThrowsHook(hookException);
+        var hook = HookBuilder.CreateThrowsHook(hookException, _setupContextState.ItParameterExpressions);
 
         return Inject(hook);
     }

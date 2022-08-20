@@ -27,26 +27,18 @@ internal static class HookBuilder
             typeof(TReturn),
             itParameterExpressions.Select(x => x.ParameterType).ToArray());
 
-        var hookMethodIl = hookMethod.GetILGenerator();
-
-        SetupIlExpressionCall(hookMethodIl, hookType, itParameterExpressions);
-
-        hookMethodIl.Emit(OpCodes.Ldsfld, hookStaticField);
-        hookMethodIl.Emit(OpCodes.Ret);
-
-        var type = hookType.CreateType();
-        var hookFieldInfo = type.GetField(hookStaticField.Name, BindingFlags.Static | BindingFlags.NonPublic) ??
-                    throw new Exception($"{hookStaticField.Name} not found in type {hookType.Name}");
-
-        hookFieldInfo.SetValue(null, value);
-
-        SetupExpressionCallImplementation(type, itParameterExpressions);
-
-        return type.GetMethod(hookMethod.Name, BindingFlags.Static | BindingFlags.Public) ??
-               throw new Exception($"{hookMethod.Name} not found in type {hookType.Name}");
+        return GetHookedMethod(
+            hookType,
+            hookMethod,
+            hookStaticField,
+            OpCodes.Ret,
+            value,
+            itParameterExpressions);
     }
 
-    public static MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new()
+    public static MethodInfo CreateThrowsHook<TException>(
+        TException exception,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) where TException : Exception, new()
     {
         var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
         {
@@ -63,19 +55,41 @@ internal static class HookBuilder
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ExceptionHookMethodName,
-            MethodAttributes.Public | MethodAttributes.Static);
+            MethodAttributes.Public | MethodAttributes.Static,
+            typeof(void),
+            itParameterExpressions.Select(x => x.ParameterType).ToArray());
 
+        return GetHookedMethod(
+            hookType,
+            hookMethod,
+            hookStaticField,
+            OpCodes.Throw,
+            exception,
+            itParameterExpressions);
+    }
+
+    private static MethodInfo GetHookedMethod<THookValue>(
+        TypeBuilder hookType,
+        MethodBuilder hookMethod,
+        FieldInfo hookStaticField,
+        OpCode endingOpCode,
+        THookValue hookValue,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    {
         var hookMethodIl = hookMethod.GetILGenerator();
 
+        SetupIlExpressionCall(hookMethodIl, hookType, itParameterExpressions);
+
         hookMethodIl.Emit(OpCodes.Ldsfld, hookStaticField);
-        hookMethodIl.Emit(OpCodes.Throw);
-        hookMethodIl.Emit(OpCodes.Ret);
+        hookMethodIl.Emit(endingOpCode);
 
         var type = hookType.CreateType();
-        var field = type.GetField(hookStaticField.Name, BindingFlags.Static | BindingFlags.NonPublic) ??
-                    throw new Exception($"{hookStaticField.Name} not found in type {hookType.Name}");
+        var hookFieldInfo = type.GetField(hookStaticField.Name, BindingFlags.Static | BindingFlags.NonPublic) ??
+                            throw new Exception($"{hookStaticField.Name} not found in type {hookType.Name}");
 
-        field.SetValue(null, exception);
+        hookFieldInfo.SetValue(null, hookValue);
+
+        SetupExpressionCallImplementation(type, itParameterExpressions);
 
         return type.GetMethod(hookMethod.Name, BindingFlags.Static | BindingFlags.Public) ??
                throw new Exception($"{hookMethod.Name} not found in type {hookType.Name}");

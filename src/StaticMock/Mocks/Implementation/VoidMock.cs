@@ -17,7 +17,7 @@ internal class VoidMock : Mock, IVoidMock
         IHookManagerFactory hookManagerFactory,
         SetupContextState setupContextState,
         Action action)
-        : base(hookManagerFactory, originalMethodInfo, action)
+        : base(hookManagerFactory, originalMethodInfo, setupContextState, action)
     {
         _originalMethodInfo = originalMethodInfo;
         _hookManagerFactory = hookManagerFactory;

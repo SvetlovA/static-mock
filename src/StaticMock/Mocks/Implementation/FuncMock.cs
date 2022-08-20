@@ -18,7 +18,7 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
         IHookManagerFactory hookManagerFactory,
         SetupContextState setupContextState,
         Action action)
-        : base(hookManagerFactory, originalMethodInfo, action)
+        : base(hookManagerFactory, originalMethodInfo, setupContextState, action)
     {
         _originalMethodInfo = originalMethodInfo;
         _hookManagerFactory = hookManagerFactory;
