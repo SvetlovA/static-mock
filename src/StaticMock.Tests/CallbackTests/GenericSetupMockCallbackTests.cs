@@ -25,6 +25,15 @@ public class GenericSetupMockCallbackTests
     }
 
     [Test]
+    public void TestFuncCallbackThrows()
+    {
+        Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
+        {
+            Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters());
+        }).Callback(() => throw new Exception());
+    }
+
+    [Test]
     public void TestActionCallback()
     {
         static void DoSomething() { }
@@ -36,6 +45,15 @@ public class GenericSetupMockCallbackTests
         {
             DoSomething();
         });
+    }
+
+    [Test]
+    public void TestActionCallbackThrows()
+    {
+        Mock.Setup(() => TestStaticClass.TestVoidMethodWithoutParametersThrowsException(), () =>
+        {
+            Assert.Throws<Exception>(() => TestStaticClass.TestVoidMethodWithoutParametersThrowsException());
+        }).Callback(() => throw new Exception());
     }
 
     [Test]
@@ -162,6 +180,21 @@ public class GenericSetupMockCallbackTests
             var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);
         }).CallbackAsync(() => 2);
+    }
+
+    [Test]
+    public async Task TestCallbackAsyncInstanceThrows()
+    {
+        var instance = new TestInstance();
+        var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+        var expectedResult = 2;
+
+        Assert.AreNotEqual(expectedResult, originalResult);
+
+        Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), async () =>
+        {
+            Assert.ThrowsAsync<Exception>(async () => await instance.TestMethodReturnTaskWithoutParametersAsync());
+        }).CallbackAsync(() => throw new Exception());
     }
 
     [Test]

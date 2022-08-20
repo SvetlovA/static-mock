@@ -21,7 +21,8 @@ internal static class SetupMockHelper
         action();
     }
 
-    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression)
+    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
+        Expression<Func<TReturnValue>> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
         var setupContext = new SetupContext();
@@ -34,10 +35,11 @@ internal static class SetupMockHelper
         if (methodGetExpression.Body is MethodCallExpression methodExpression)
         {
             originalMethodInfo = methodExpression.Method;
-            setupContext.State.ItParameterExpressions.AddRange(methodExpression.Arguments.Select(x => new ItParameterExpression
-            {
-                ParameterType = x.Type
-            }));
+            setupContext.State.ItParameterExpressions.AddRange(
+                methodExpression.Arguments.Select(x => new ItParameterExpression
+                {
+                    ParameterType = x.Type
+                }));
         }
 
         if (originalMethodInfo == null)
@@ -52,7 +54,8 @@ internal static class SetupMockHelper
         };
     }
 
-    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(Expression<Func<SetupContext, TReturnValue>> methodGetExpression)
+    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
+        Expression<Func<SetupContext, TReturnValue>> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
         var setupContext = new SetupContext();
