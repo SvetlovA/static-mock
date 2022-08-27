@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
     <PackageTags>mock moq static unit test tests smock</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright (c) 2021 Artem Svetlov</Copyright>
-    <Version>1.7.0</Version>
+    <Copyright>Copyright (c) 2022 Artem Svetlov</Copyright>
+    <Version>1.7.1</Version>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
