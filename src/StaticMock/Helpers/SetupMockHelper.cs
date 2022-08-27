@@ -4,6 +4,7 @@ using System.Reflection;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
 using StaticMock.Helpers.Entities;
+using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
 using StaticMock.Mocks.Implementation;
@@ -15,8 +16,8 @@ internal static class SetupMockHelper
     public static void SetupDefault(MethodBase methodToReplace, Action action)
     {
         var injectionMethod = () => { };
-        var injectionServiceFactory = new HookManagerFactory();
-        using var injectionService = injectionServiceFactory.CreateHookService(methodToReplace);
+        var injectionServiceFactory = new HookManagerFactory(methodToReplace);
+        using var injectionService = injectionServiceFactory.CreateHookManager();
         injectionService.ApplyHook(injectionMethod.Method);
         action();
     }
@@ -80,7 +81,6 @@ internal static class SetupMockHelper
                         methodExpressionArgument.Arguments
                             .Cast<UnaryExpression>()
                             .Select(x => x.Operand)
-                            .Cast<Expression<Func<TReturnValue, bool>>>()
                             .ToArray(),
                         CultureInfo.InvariantCulture);
                 }
@@ -108,10 +108,11 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
         }
 
+        var context = new SetupContext();
+
         return new FuncMock<object>(
-            originalMethodInfo,
-            new HookManagerFactory(),
-            new SetupContext().State,
+            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -129,10 +130,11 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
         }
 
+        var context = new SetupContext();
+
         return new FuncMock<object>(
-            originalMethodInfo,
-            new HookManagerFactory(),
-            new SetupContext().State,
+            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -140,10 +142,11 @@ internal static class SetupMockHelper
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
+        var context = new SetupContext();
+
         return new VoidMock(
-            originalMethodInfo,
-            new HookManagerFactory(),
-            new SetupContext().State,
+            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
     }
 

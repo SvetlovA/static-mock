@@ -1,27 +1,23 @@
-﻿using System.Reflection;
-using StaticMock.Entities.Context;
-using StaticMock.Hooks;
+﻿using StaticMock.Hooks;
+using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Callback;
 
 namespace StaticMock.Mocks.Implementation;
 
 internal class VoidMock : Mock, IVoidMock
 {
-    private readonly MethodInfo _originalMethodInfo;
-    private readonly IHookManagerFactory _hookManagerFactory;
-    private readonly SetupContextState _setupContextState;
+    private readonly IHookBuilder _hookBuilder;
+    private readonly IHookManager _hookManager;
     private readonly Action _action;
 
     public VoidMock(
-        MethodInfo originalMethodInfo,
-        IHookManagerFactory hookManagerFactory,
-        SetupContextState setupContextState,
+        IHookBuilder hookBuilder,
+        IHookManager hookManager,
         Action action)
-        : base(hookManagerFactory, originalMethodInfo, setupContextState, action)
+        : base(hookBuilder, hookManager, action)
     {
-        _originalMethodInfo = originalMethodInfo;
-        _hookManagerFactory = hookManagerFactory;
-        _setupContextState = setupContextState;
+        _hookBuilder = hookBuilder;
+        _hookManager = hookManager;
         _action = action;
     }
 
@@ -32,7 +28,7 @@ internal class VoidMock : Mock, IVoidMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        var callbackService = new CallbackMock(_originalMethodInfo, _hookManagerFactory, _setupContextState);
+        var callbackService = new CallbackMock(_hookBuilder, _hookManager);
         using (callbackService.Callback(callback))
         {
             _action();

@@ -1,24 +1,19 @@
-﻿using System.Reflection;
-using StaticMock.Entities.Context;
-using StaticMock.Hooks;
-using StaticMock.Hooks.Helpers;
+﻿using StaticMock.Hooks;
+using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Returns;
 
 internal class ReturnsMock<TValue> : IReturnsMock<TValue>
 {
-    private readonly MethodInfo _originalMethodInfo;
-    private readonly IHookManagerFactory _hookManagerFactory;
-    private readonly SetupContextState _setupContextState;
+    private readonly IHookBuilder _hookBuilder;
+    private readonly IHookManager _hookManager;
 
     public ReturnsMock(
-        MethodInfo originalMethodInfo,
-        IHookManagerFactory hookManagerFactory,
-        SetupContextState setupContextState)
+        IHookBuilder hookBuilder,
+        IHookManager hookManager)
     {
-        _originalMethodInfo = originalMethodInfo;
-        _hookManagerFactory = hookManagerFactory;
-        _setupContextState = setupContextState;
+        _hookBuilder = hookBuilder;
+        _hookManager = hookManager;
     }
 
     public IReturnable Returns(TValue value) => InternalReturns(value);
@@ -27,9 +22,8 @@ internal class ReturnsMock<TValue> : IReturnsMock<TValue>
 
     private IReturnable InternalReturns<TInternalValue>(TInternalValue value)
     {
-        var hook = HookBuilder.CreateReturnHook(value, _setupContextState.ItParameterExpressions);
+        var hook = _hookBuilder.CreateReturnHook(value);
 
-        var hookManager = _hookManagerFactory.CreateHookService(_originalMethodInfo);
-        return hookManager.ApplyHook(hook);
+        return _hookManager.ApplyHook(hook);
     }
 }

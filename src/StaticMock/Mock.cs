@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
+using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
 using StaticMock.Mocks.Implementation;
@@ -53,9 +54,9 @@ public static class Mock
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
         return new FuncMock<TReturnValue>(
-            mockSetupProperties.OriginalMethodInfo,
-            new HookManagerFactory(),
-            mockSetupProperties.SetupContextState,
+            new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
+                mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -63,9 +64,9 @@ public static class Mock
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
         return new AsyncFuncMock<TReturnValue>(
-            mockSetupProperties.OriginalMethodInfo,
-            new HookManagerFactory(),
-            mockSetupProperties.SetupContextState,
+            new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
+                mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -73,9 +74,9 @@ public static class Mock
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
         return new FuncMock<TReturnValue>(
-            mockSetupProperties.OriginalMethodInfo,
-            new HookManagerFactory(),
-            mockSetupProperties.SetupContextState,
+            new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
+                mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -83,9 +84,9 @@ public static class Mock
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
         return new AsyncFuncMock<TReturnValue>(
-            mockSetupProperties.OriginalMethodInfo,
-            new HookManagerFactory(),
-            mockSetupProperties.SetupContextState,
+            new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
+                mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
@@ -96,10 +97,11 @@ public static class Mock
             throw new Exception("Get expression not contains method to setup");
         }
 
+        var context = new SetupContext();
+
         return new VoidMock(
-            methodExpression.Method,
-            new HookManagerFactory(),
-            new SetupContext().State,
+            new HookBuilderFactory(methodExpression.Method, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(methodExpression.Method).CreateHookManager(),
             action);
     }
 

@@ -10,6 +10,16 @@ public class TestInstance : IEquatable<TestInstance>
         return 1;
     }
 
+    public int TestMethodReturnWithParameter(int parameter)
+    {
+        return parameter;
+    }
+
+    public int TestMethodReturnWithParameters(int parameter, int[] arrayParameter)
+    {
+        return parameter;
+    }
+
     public TEntity GenericTestMethodReturnDefaultWithoutParameters<TEntity>()
     {
         return default;

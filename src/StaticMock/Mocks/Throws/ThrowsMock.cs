@@ -1,24 +1,19 @@
-﻿using System.Reflection;
-using StaticMock.Entities.Context;
-using StaticMock.Hooks;
-using StaticMock.Hooks.Helpers;
+﻿using StaticMock.Hooks;
+using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Throws;
 
 internal class ThrowsMock : IThrowsMock
 {
-    private readonly MethodInfo _originalMethodInfo;
-    private readonly IHookManagerFactory _hookManagerFactory;
-    private readonly SetupContextState _setupContextState;
+    private readonly IHookBuilder _hookBuilder;
+    private readonly IHookManager _hookManager;
 
     public ThrowsMock(
-        MethodInfo originalMethodInfo,
-        IHookManagerFactory hookManagerFactory,
-        SetupContextState setupContextState)
+        IHookBuilder hookBuilder,
+        IHookManager hookManager)
     {
-        _originalMethodInfo = originalMethodInfo;
-        _hookManagerFactory = hookManagerFactory;
-        _setupContextState = setupContextState;
+        _hookBuilder = hookBuilder;
+        _hookManager = hookManager;
     }
 
     public IReturnable Throws(Type exceptionType, params object[]? constructorArgs) =>
@@ -26,9 +21,9 @@ internal class ThrowsMock : IThrowsMock
 
     public IReturnable Throws<TException>() where TException : Exception, new()
     {
-        var hook = HookBuilder.CreateThrowsHook(new TException(), _setupContextState.ItParameterExpressions);
+        var hook = _hookBuilder.CreateThrowsHook(new TException());
 
-        return Inject(hook);
+        return _hookManager.ApplyHook(hook);
     }
 
     private IReturnable ThrowsInternal(Type exceptionType, object[]? constructorArgs)
@@ -45,14 +40,8 @@ internal class ThrowsMock : IThrowsMock
             throw new Exception($"{exceptionType.FullName} is not an Exception");
         }
 
-        var hook = HookBuilder.CreateThrowsHook(hookException, _setupContextState.ItParameterExpressions);
+        var hook = _hookBuilder.CreateThrowsHook(hookException);
 
-        return Inject(hook);
-    }
-
-    private IReturnable Inject(MethodBase methodToInject)
-    {
-        var hookManager = _hookManagerFactory.CreateHookService(_originalMethodInfo);
-        return hookManager.ApplyHook(methodToInject);
+        return _hookManager.ApplyHook(hook);
     }
 }

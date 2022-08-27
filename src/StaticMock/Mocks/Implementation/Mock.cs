@@ -1,26 +1,22 @@
-﻿using System.Reflection;
-using StaticMock.Entities.Context;
-using StaticMock.Hooks;
+﻿using StaticMock.Hooks;
+using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Throws;
 
 namespace StaticMock.Mocks.Implementation;
 
 internal class Mock : IMock
 {
-    private readonly MethodInfo _originalMethodInfo;
+    private readonly IHookBuilder _hookBuilder;
+    private readonly IHookManager _hookManager;
     private readonly Action _action;
-    private readonly IHookManagerFactory _hookManagerFactory;
-    private readonly SetupContextState _setupContextState;
 
     public Mock(
-        IHookManagerFactory hookManagerFactory,
-        MethodInfo originalMethodInfo,
-        SetupContextState setupContextState,
+        IHookBuilder hookBuilder,
+        IHookManager hookManager,
         Action action)
     {
-        _hookManagerFactory = hookManagerFactory;
-        _originalMethodInfo = originalMethodInfo;
-        _setupContextState = setupContextState;
+        _hookBuilder = hookBuilder;
+        _hookManager = hookManager;
         _action = action;
     }
 
@@ -39,7 +35,7 @@ internal class Mock : IMock
 
     public void Throws<TException>() where TException : Exception, new()
     {
-        var throwService = new ThrowsMock(_originalMethodInfo, _hookManagerFactory, _setupContextState);
+        var throwService = new ThrowsMock(_hookBuilder, _hookManager);
         using (throwService.Throws<TException>())
         {
             _action();
@@ -59,7 +55,7 @@ internal class Mock : IMock
 
     private void ThrowsInternal(Type exceptionType, object[]? constructorArgs)
     {
-        var throwService = new ThrowsMock(_originalMethodInfo, _hookManagerFactory, _setupContextState);
+        var throwService = new ThrowsMock(_hookBuilder, _hookManager);
         using (throwService.Throws(exceptionType, constructorArgs))
         {
             _action();

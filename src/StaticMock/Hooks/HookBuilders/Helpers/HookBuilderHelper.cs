@@ -1,13 +1,48 @@
 ﻿using System.Reflection;
 using System.Reflection.Emit;
 using StaticMock.Entities.Context;
+using StaticMock.Hooks.HookBuilders.Entities;
 
-namespace StaticMock.Hooks.Helpers;
+namespace StaticMock.Hooks.HookBuilders.Helpers;
 
-internal static class HookBuilder
+internal static class HookBuilderHelper
 {
+    public static MethodInfo CreateVoidHook(
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    {
+        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
+        {
+            Name = DynamicTypeNames.VoidHookAssemblyName
+        }, AssemblyBuilderAccess.Run);
+
+        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.VoidHookModuleName);
+        var hookType = hookModule.DefineType(DynamicTypeNames.VoidHookTypeName, TypeAttributes.Public);
+
+        var hookMethod = hookType.DefineMethod(
+            DynamicTypeNames.VoidHookMethodName,
+            GetMethodAttributes(hookMethodType),
+            typeof(void),
+            itParameterExpressions.Select(x => x.ParameterType).ToArray());
+
+        var hookMethodIl = hookMethod.GetILGenerator();
+
+        SetupIlExpressionCall(hookMethodIl, hookType, hookMethodType, itParameterExpressions);
+
+        hookMethodIl.Emit(OpCodes.Ret);
+
+        var type = hookType.CreateType();
+
+        SetupExpressionCallImplementation(type, itParameterExpressions);
+
+        return type.GetMethod(hookMethod.Name, GetBindingFlags(hookMethodType)) ??
+               throw new Exception($"{hookMethod.Name} not found in type {hookType.Name}");
+    }
+
     public static MethodInfo CreateReturnHook<TReturn>(
-        TReturn value, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+        TReturn value,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
         {
@@ -23,7 +58,7 @@ internal static class HookBuilder
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ReturnHookMethodName,
-            MethodAttributes.Public | MethodAttributes.Static,
+            GetMethodAttributes(hookMethodType),
             typeof(TReturn),
             itParameterExpressions.Select(x => x.ParameterType).ToArray());
 
@@ -33,11 +68,13 @@ internal static class HookBuilder
             hookStaticField,
             OpCodes.Ret,
             value,
+            hookMethodType,
             itParameterExpressions);
     }
 
     public static MethodInfo CreateThrowsHook<TException>(
         TException exception,
+        HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) where TException : Exception, new()
     {
         var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
@@ -55,7 +92,7 @@ internal static class HookBuilder
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ExceptionHookMethodName,
-            MethodAttributes.Public | MethodAttributes.Static,
+            GetMethodAttributes(hookMethodType),
             typeof(void),
             itParameterExpressions.Select(x => x.ParameterType).ToArray());
 
@@ -65,6 +102,7 @@ internal static class HookBuilder
             hookStaticField,
             OpCodes.Throw,
             exception,
+            hookMethodType,
             itParameterExpressions);
     }
 
@@ -74,11 +112,12 @@ internal static class HookBuilder
         FieldInfo hookStaticField,
         OpCode endingOpCode,
         THookValue hookValue,
+        HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         var hookMethodIl = hookMethod.GetILGenerator();
 
-        SetupIlExpressionCall(hookMethodIl, hookType, itParameterExpressions);
+        SetupIlExpressionCall(hookMethodIl, hookType, hookMethodType, itParameterExpressions);
 
         hookMethodIl.Emit(OpCodes.Ldsfld, hookStaticField);
         hookMethodIl.Emit(endingOpCode);
@@ -91,12 +130,15 @@ internal static class HookBuilder
 
         SetupExpressionCallImplementation(type, itParameterExpressions);
 
-        return type.GetMethod(hookMethod.Name, BindingFlags.Static | BindingFlags.Public) ??
+        return type.GetMethod(hookMethod.Name, GetBindingFlags(hookMethodType)) ??
                throw new Exception($"{hookMethod.Name} not found in type {hookType.Name}");
     }
 
     private static void SetupIlExpressionCall(
-        ILGenerator hookMethodIl, TypeBuilder hookType, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+        ILGenerator hookMethodIl,
+        TypeBuilder hookType,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         for (var i = 0; i < itParameterExpressions.Count; i++)
         {
@@ -110,7 +152,9 @@ internal static class HookBuilder
                     FieldAttributes.Private | FieldAttributes.Static);
 
                 hookMethodIl.Emit(OpCodes.Ldsfld, expressionStaticFiled);
-                hookMethodIl.Emit(OpCodes.Ldarg, i);
+                hookMethodIl.Emit(
+                    OpCodes.Ldarg,
+                    hookMethodType == HookMethodType.Static ? i : i + 1);
                 hookMethodIl.Emit(OpCodes.Callvirt, parameterExpression.Type.GetMethod("Invoke"));
             }
         }
@@ -134,5 +178,42 @@ internal static class HookBuilder
                 expressionFieldInfo.SetValue(null, parameterExpression.Compile());
             }
         }
+    }
+
+    private static MethodAttributes GetMethodAttributes(HookMethodType hookMethodType)
+    {
+        var methodAttributes = MethodAttributes.Public;
+
+        switch (hookMethodType)
+        {
+            case HookMethodType.Static:
+                methodAttributes |= MethodAttributes.Static;
+                break;
+            case HookMethodType.Instance:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType, $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}");
+        }
+
+        return methodAttributes;
+    }
+
+    private static BindingFlags GetBindingFlags(HookMethodType hookMethodType)
+    {
+        var bindingFlags = BindingFlags.Public;
+
+        switch (hookMethodType)
+        {
+            case HookMethodType.Static:
+                bindingFlags |= BindingFlags.Static;
+                break;
+            case HookMethodType.Instance:
+                bindingFlags |= BindingFlags.Instance;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType, $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}");
+        }
+
+        return bindingFlags;
     }
 }

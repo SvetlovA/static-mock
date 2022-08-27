@@ -80,6 +80,11 @@ public static class TestStaticClass
         return parameter;
     }
 
+    public static int TestMethodReturnWithParameters(int parameter, int[] arrayParameter)
+    {
+        return parameter;
+    }
+
     public static int StaticIntProperty { get; set; }
     public static object StaticObjectProperty { get; set; }
 

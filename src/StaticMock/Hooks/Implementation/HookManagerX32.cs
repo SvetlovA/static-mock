@@ -7,11 +7,11 @@ internal class HookManagerX32 : IHookManager
 {
     private MethodMemoryInfoX32 _methodMemoryInfoX32;
 
-    private readonly MethodBase _method;
+    private readonly MethodBase _originalMethod;
 
     public HookManagerX32(MethodBase method)
     {
-        _method = method ?? throw new ArgumentNullException(nameof(method));
+        _originalMethod = method ?? throw new ArgumentNullException(nameof(method));
     }
 
     public unsafe IReturnable ApplyHook(MethodBase hookMethod)
@@ -21,7 +21,7 @@ internal class HookManagerX32 : IHookManager
             throw new ArgumentNullException(nameof(hookMethod));
         }
 
-        var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
+        var methodPtr = (byte*) _originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
 
         SaveMethodMemoryInfo(methodPtr);
 
@@ -37,7 +37,7 @@ internal class HookManagerX32 : IHookManager
 
     public unsafe void Return()
     {
-        var methodPtr = (byte*) _method.MethodHandle.GetFunctionPointer().ToPointer();
+        var methodPtr = (byte*) _originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
 
         *methodPtr = _methodMemoryInfoX32.Byte1;
         *(uint*) (methodPtr + 1) = _methodMemoryInfoX32.MethodMemoryValue;

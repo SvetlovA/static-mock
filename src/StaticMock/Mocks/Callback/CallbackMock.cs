@@ -1,24 +1,18 @@
 ﻿using System.Reflection;
-using StaticMock.Entities.Context;
 using StaticMock.Hooks;
-using StaticMock.Hooks.Helpers;
+using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Callback;
 
 internal class CallbackMock : ICallbackMock
 {
-    private readonly MethodInfo _originalMethodInfo;
-    private readonly IHookManagerFactory _hookManagerFactory;
-    private readonly SetupContextState _setupContextState;
+    private readonly IHookBuilder _hookBuilder;
+    private readonly IHookManager _hookManager;
 
-    public CallbackMock(
-        MethodInfo originalMethodInfo,
-        IHookManagerFactory hookManagerFactory,
-        SetupContextState setupContextState)
+    public CallbackMock(IHookBuilder hookBuilder, IHookManager hookManager)
     {
-        _originalMethodInfo = originalMethodInfo;
-        _hookManagerFactory = hookManagerFactory;
-        _setupContextState = setupContextState;
+        _hookBuilder = hookBuilder;
+        _hookManager = hookManager;
     }
 
     public IReturnable Callback(Action callback)
@@ -28,7 +22,19 @@ internal class CallbackMock : ICallbackMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        return Inject(callback.Method);
+        MethodBase hookMethod;
+        try
+        {
+            callback();
+            hookMethod = _hookBuilder.CreateVoidHook();
+        }
+        catch (Exception ex)
+        {
+            hookMethod = _hookBuilder.CreateThrowsHook(ex);
+
+        }
+
+        return _hookManager.ApplyHook(hookMethod);
     }
 
     public IReturnable Callback<TReturnValue>(Func<TReturnValue> callback)
@@ -38,7 +44,17 @@ internal class CallbackMock : ICallbackMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        return Inject(callback.Method);
+        MethodBase hookMethod;
+        try
+        {
+            hookMethod = _hookBuilder.CreateReturnHook(callback());
+        }
+        catch (Exception ex)
+        {
+            hookMethod = _hookBuilder.CreateThrowsHook(ex);
+        }
+
+        return _hookManager.ApplyHook(hookMethod);
     }
 
     public IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback)
@@ -48,13 +64,16 @@ internal class CallbackMock : ICallbackMock
             throw new ArgumentNullException(nameof(callback));
         }
 
-        var hook = HookBuilder.CreateReturnHook(Task.FromResult(callback()), _setupContextState.ItParameterExpressions);
-        return Inject(hook);
-    }
+        MethodBase hookMethod;
+        try
+        {
+            hookMethod = _hookBuilder.CreateReturnHook(Task.FromResult(callback()));
+        }
+        catch (Exception ex)
+        {
+            hookMethod = _hookBuilder.CreateThrowsHook(ex);
+        }
 
-    private IReturnable Inject(MethodBase methodInfoToInject)
-    {
-        var hookManager = _hookManagerFactory.CreateHookService(_originalMethodInfo);
-        return hookManager.ApplyHook(methodInfoToInject);
+        return _hookManager.ApplyHook(hookMethod);
     }
 }
