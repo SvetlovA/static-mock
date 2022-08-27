@@ -6,9 +6,9 @@ Download and install the package from [NuGet](https://www.nuget.org/packages/SMo
 ## Code Examples
 ### Returns
 ```cs
-Mock.Setup(() => StaticClass.MethodToMock(), () =>
+Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
-    var actualResult = StaticClass.MethodToMock();
+    var actualResult = StaticClass.MethodToMock(1);
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
 }).Returns(expectedResult);
