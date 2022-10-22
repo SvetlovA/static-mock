@@ -18,6 +18,13 @@ internal class ReturnsMock<TValue> : IReturnsMock<TValue>
 
     public IReturnable Returns(TValue value) => InternalReturns(value);
 
+    public IReturnable Returns<TArg>(Func<TArg, TValue> getValue)
+    {
+        var hook = _hookBuilder.CreateReturnHook(getValue);
+
+        return _hookManager.ApplyHook(hook);
+    }
+
     public IReturnable ReturnsAsync(TValue value) => InternalReturns(Task.FromResult(value));
 
     private IReturnable InternalReturns<TInternalValue>(TInternalValue value)

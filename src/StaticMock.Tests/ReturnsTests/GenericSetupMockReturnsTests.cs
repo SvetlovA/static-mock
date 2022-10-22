@@ -361,4 +361,26 @@ public class GenericSetupMockReturnsTests
             Assert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
+
+    [Test]
+    public void TestGenericSetupReturnsWithTestMethodReturnParameterFunc()
+    {
+        var originalResult = TestStaticClass.TestMethodReturnWithParameter(10);
+        var expectedResult = originalResult / 2;
+
+        Assert.AreEqual(10, originalResult);
+
+        Mock.Setup(
+                () => TestStaticClass.TestMethodReturnWithParameter(10),
+                () =>
+                {
+                    var actualResult = TestStaticClass.TestMethodReturnWithParameter(10);
+
+                    Assert.AreNotEqual(originalResult, actualResult);
+                    Assert.AreEqual(expectedResult, actualResult);
+                })
+            .Returns<int>(argument => argument / 2);
+
+        Assert.AreEqual(10, originalResult);
+    }
 }

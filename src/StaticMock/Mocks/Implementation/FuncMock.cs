@@ -32,6 +32,21 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
         Returns<TReturn>(value);
     }
 
+    public void Returns<TArg>(Func<TArg, TReturn> getValue)
+    {
+        if (getValue == null)
+        {
+            throw new ArgumentNullException(nameof(getValue));
+        }
+
+        var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
+
+        using (returnMock.Returns(getValue))
+        {
+            _action();
+        }
+    }
+
     public void Callback<TReturnValue>(Func<TReturnValue> callback)
     {
         if (callback == null)
