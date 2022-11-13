@@ -80,6 +80,46 @@ public static class TestStaticClass
         return parameter;
     }
 
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8, Func<int, int> parameter9)
+    {
+        return parameter1;
+    }
+
     public static int TestMethodReturnWithParameters(int parameter, int[] arrayParameter)
     {
         return parameter;
