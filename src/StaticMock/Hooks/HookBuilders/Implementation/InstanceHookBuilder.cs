@@ -22,15 +22,59 @@ internal class InstanceHookBuilder : IHookBuilder
     public MethodInfo CreateReturnHook<TReturn>(TReturn value) =>
         HookBuilderHelper.CreateReturnHook(value, HookMethodType.Instance, _itParameterExpressions);
 
-    public MethodInfo CreateReturnHook<TArg, TReturn>(Func<TArg, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TReturn>(Func<TArg1, TArg2, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TReturn>(Func<TArg1, TArg2, TArg3, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
-    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue) => CreateReturnHookInternal<TReturn>(getValue);
+    public MethodInfo CreateReturnHook<TArg, TReturn>(Func<TArg, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TReturn>(Func<TArg1, TArg2, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TReturn>(Func<TArg1, TArg2, TArg3, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
 
     public MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new() =>
         HookBuilderHelper.CreateThrowsHook(exception, HookMethodType.Instance, _itParameterExpressions);
