@@ -43,14 +43,14 @@ public class SetupMockCallbackTests
     [Test]
     public async Task TestCallbackAsync()
     {
-        var originalResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+        var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
         var expectedResult = 2;
 
         Assert.AreNotEqual(expectedResult, originalResult);
 
-        Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnTaskWithoutParametersAsync), async () =>
+        Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync), async () =>
         {
-            var actualResult = await TestStaticClass.TestMethodReturnTaskWithoutParametersAsync();
+            var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);
         }).Callback(async () =>
         {

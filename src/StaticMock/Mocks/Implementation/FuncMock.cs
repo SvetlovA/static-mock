@@ -34,11 +34,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg>(Func<TArg, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -49,11 +44,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2>(Func<TArg1, TArg2, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -64,11 +54,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -79,11 +64,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4>(Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -94,11 +74,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4, TArg5>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -109,11 +84,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -124,11 +94,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -139,11 +104,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))
@@ -154,11 +114,6 @@ internal class FuncMock<TReturn> : Mock, IFuncMock, IFuncMock<TReturn>
 
     public void Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue)
     {
-        if (getValue == null)
-        {
-            throw new ArgumentNullException(nameof(getValue));
-        }
-
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
 
         using (returnMock.Returns(getValue))

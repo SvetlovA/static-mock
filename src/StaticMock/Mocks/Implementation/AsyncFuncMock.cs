@@ -31,6 +31,87 @@ internal class AsyncFuncMock<TReturnValue> : FuncMock<Task<TReturnValue>>, IAsyn
         }
     }
 
+    public void ReturnsAsync<TArg>(Func<TArg, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2>(Func<TArg1, TArg2, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4>(Func<TArg1, TArg2, TArg3, TArg4, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
+    public void ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
     public void CallbackAsync(Func<TReturnValue> callback)
     {
         var callbackService = new CallbackMock(_hookBuilder, _hookManager);

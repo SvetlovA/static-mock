@@ -76,46 +76,25 @@ internal static class HookBuilderHelper
         MethodInfo originalMethodInfo,
         object getValue,
         HookMethodType hookMethodType,
-        IReadOnlyList<ItParameterExpression> itParameterExpressions)
-    {
-        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
-        {
-            Name = DynamicTypeNames.ReturnHookAssemblyName
-        }, AssemblyBuilderAccess.Run);
-
-        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.ReturnHookModuleName);
-        var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
-        var hookStaticField = hookType.DefineField(
-            DynamicTypeNames.ReturnHookStaticFieldName,
-            getValue.GetType(),
-            FieldAttributes.Private | FieldAttributes.Static);
-
-        var hookMethodParameterTypes = originalMethodInfo.GetParameters().Select(x => x.ParameterType).ToArray();
-
-        var hookMethod = hookType.DefineMethod(
-            DynamicTypeNames.ReturnHookMethodName,
-            GetMethodAttributes(hookMethodType),
-            typeof(TReturn),
-            hookMethodParameterTypes);
-
-        return GetHookedMethod(
-            hookType,
-            hookMethod,
-            hookStaticField,
-            OpCodes.Ret,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
+        CreateReturnHook(
+            originalMethodInfo,
             getValue,
             hookMethodType,
             itParameterExpressions,
-            il =>
-            {
-                for (var i = 0; i < hookMethodParameterTypes.Length; i++)
-                {
-                    il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
-                }
+            typeof(TReturn));
 
-                il.Emit(OpCodes.Callvirt, getValue.GetType().GetMethod("Invoke"));
-            });
-    }
+    public static MethodInfo CreateReturnAsyncHook<TReturn>(
+        MethodInfo originalMethodInfo,
+        object getValue,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
+        CreateReturnHook(
+            originalMethodInfo,
+            getValue,
+            hookMethodType,
+            itParameterExpressions,
+            typeof(Task<TReturn>));
 
     public static MethodInfo CreateThrowsHook<TException>(
         TException exception,
@@ -149,6 +128,52 @@ internal static class HookBuilderHelper
             exception,
             hookMethodType,
             itParameterExpressions);
+    }
+
+    private static MethodInfo CreateReturnHook(
+        MethodBase originalMethodInfo,
+        object getValue,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions,
+        Type hookReturnType)
+    {
+        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
+        {
+            Name = DynamicTypeNames.ReturnHookAssemblyName
+        }, AssemblyBuilderAccess.Run);
+
+        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.ReturnHookModuleName);
+        var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
+        var hookStaticField = hookType.DefineField(
+            DynamicTypeNames.ReturnHookStaticFieldName,
+            getValue.GetType(),
+            FieldAttributes.Private | FieldAttributes.Static);
+
+        var hookMethodParameterTypes = originalMethodInfo.GetParameters().Select(x => x.ParameterType).ToArray();
+
+        var hookMethod = hookType.DefineMethod(
+            DynamicTypeNames.ReturnHookMethodName,
+            GetMethodAttributes(hookMethodType),
+            hookReturnType,
+            hookMethodParameterTypes);
+
+        return GetHookedMethod(
+            hookType,
+            hookMethod,
+            hookStaticField,
+            OpCodes.Ret,
+            getValue,
+            hookMethodType,
+            itParameterExpressions,
+            il =>
+            {
+                for (var i = 0; i < hookMethodParameterTypes.Length; i++)
+                {
+                    il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
+                }
+
+                il.Emit(OpCodes.Callvirt, getValue.GetType().GetMethod("Invoke"));
+            });
     }
 
     private static MethodInfo GetHookedMethod<THookValue>(
