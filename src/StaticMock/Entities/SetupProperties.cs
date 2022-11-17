@@ -13,4 +13,9 @@ public class SetupProperties
     /// Generic types to set for generic method. Length and order must be like count and order of generics in method.
     /// </summary>
     public Type[]? GenericTypes { get; set; }
+
+    /// <summary>
+    /// Types of mocking method parameters.
+    /// </summary>
+    public Type[]? MethodParametersTypes { get; set; }
 }

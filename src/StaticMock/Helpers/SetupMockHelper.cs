@@ -13,6 +13,8 @@ namespace StaticMock.Helpers;
 
 internal static class SetupMockHelper
 {
+    private const BindingFlags DefaultMethodBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
+
     public static void SetupDefault(MethodBase methodToReplace, Action action)
     {
         var injectionMethod = () => { };
@@ -110,7 +112,7 @@ internal static class SetupMockHelper
 
         var context = new SetupContext();
 
-        return new FuncMock<object>(
+        return new FuncMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
@@ -132,7 +134,7 @@ internal static class SetupMockHelper
 
         var context = new SetupContext();
 
-        return new FuncMock<object>(
+        return new FuncMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
@@ -165,8 +167,13 @@ internal static class SetupMockHelper
 
     private static MethodInfo GetOriginalMethodInfo(Type type, string methodName, SetupProperties? setupProperties)
     {
-        var bindingFlags = setupProperties?.BindingFlags;
-        var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
+        var originalMethodInfo = type.GetMethod(
+            methodName,
+            setupProperties?.BindingFlags ?? DefaultMethodBindingFlags,
+            null,
+            CallingConventions.Any,
+            setupProperties?.MethodParametersTypes ?? Array.Empty<Type>(),
+            null) ?? type.GetMethod(methodName);
 
         if (originalMethodInfo == null)
         {
