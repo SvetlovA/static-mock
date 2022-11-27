@@ -402,6 +402,26 @@ public class MockReturnsTests
     }
 
     [Test]
+    public void TestGenericSetupReturnsWithTestMethodReturnWithoutParameterFunc()
+    {
+        var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+        const int expectedResult = 2;
+
+        Mock.Setup(
+                typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturn1WithoutParameters),
+                () =>
+                {
+                    var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+
+                    Assert.AreNotEqual(originalResult, actualResult);
+                    Assert.AreEqual(expectedResult, actualResult);
+                })
+            .Returns(() => 2);
+
+        Assert.AreEqual(1, originalResult);
+    }
+
+    [Test]
     public void TestSetupReturnsWithTestMethodReturnParameterFunc()
     {
         const int parameter1 = 10;
@@ -968,7 +988,7 @@ public class MockReturnsTests
     }
 
     [Test]
-    public void TestGenericSetupReturnsWithTestMethodReturnParameterTypeMismatchFunc()
+    public void TestSetupReturnsWithTestMethodReturnParameterTypeMismatchFunc()
     {
         const int parameter1 = 10;
         const string parameter2 = "parameter2";
@@ -1031,5 +1051,33 @@ public class MockReturnsTests
             });
 
         Assert.AreEqual(parameter1, originalResult);
+    }
+
+    [Test]
+    public void TestSetupReturnsWithTestMethodReturnTypeMismatchFunc()
+    {
+        const int parameter1 = 10;
+        const string parameter2 = "parameter2";
+
+        var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+        var expectedResult = originalResult / 2;
+
+        Assert.AreEqual(parameter1, originalResult);
+
+        var setup = Mock.Setup(
+            typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
+            new SetupProperties
+            {
+                MethodParametersTypes = new []{ typeof(int), typeof(string) }
+            },
+            () =>
+            {
+                var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+
+                Assert.AreNotEqual(originalResult, actualResult);
+                Assert.AreEqual(expectedResult, actualResult);
+            });
+
+        Assert.Throws<Exception>(() => setup.Returns<int, string, string>((argument1, argument2) => string.Empty));
     }
 }

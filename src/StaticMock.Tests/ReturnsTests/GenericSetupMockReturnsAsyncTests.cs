@@ -65,6 +65,26 @@ public class GenericSetupMockReturnsAsyncTests
     }
 
     [Test]
+    public async Task TestGenericSetupReturnsWithTestMethodReturnWithoutParameterFuncAsync()
+    {
+        var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
+        const int expectedResult = 2;
+
+        Mock.Setup(
+                () => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync(),
+                async () =>
+                {
+                    var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
+
+                    Assert.AreNotEqual(originalResult, actualResult);
+                    Assert.AreEqual(expectedResult, actualResult);
+                })
+            .ReturnsAsync(() => 2);
+
+        Assert.AreEqual(1, originalResult);
+    }
+
+    [Test]
     public async Task TestGenericSetupReturnsWithTestMethodReturnParameterFuncAsync()
     {
         const int parameter1 = 10;

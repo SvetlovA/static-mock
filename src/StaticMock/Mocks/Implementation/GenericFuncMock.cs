@@ -40,6 +40,16 @@ internal class GenericFuncMock<TReturn> : Mock, IGenericFuncMock<TReturn>
         }
     }
 
+    public void Returns(Func<TReturn> getValue)
+    {
+        var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);
+
+        using (returnMock.Returns(getValue))
+        {
+            _action();
+        }
+    }
+
     public void Returns<TArg>(Func<TArg, TReturn> getValue)
     {
         var returnMock = new ReturnsMock<TReturn>(_hookBuilder, _hookManager);

@@ -22,6 +22,12 @@ internal class InstanceHookBuilder : IHookBuilder
     public MethodInfo CreateReturnHook<TReturn>(TReturn value) =>
         HookBuilderHelper.CreateReturnHook(value, HookMethodType.Instance, _itParameterExpressions);
 
+    public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
     public MethodInfo CreateReturnHook<TArg, TReturn>(Func<TArg, TReturn> getValue)
     {
         HookValidationHelper.Validate(_originalMethodInfo, getValue);
@@ -74,6 +80,12 @@ internal class InstanceHookBuilder : IHookBuilder
     {
         HookValidationHelper.Validate(_originalMethodInfo, getValue);
         return CreateReturnHookInternal<TReturn>(getValue);
+    }
+
+    public MethodInfo CreateReturnAsyncHook<TReturn>(Func<TReturn> getValue)
+    {
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
+        return CreateReturnAsyncHookInternal<TReturn>(getValue);
     }
 
     public MethodInfo CreateReturnAsyncHook<TArg, TReturn>(Func<TArg, TReturn> getValue)

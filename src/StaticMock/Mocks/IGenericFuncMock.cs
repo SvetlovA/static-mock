@@ -3,7 +3,9 @@
 public interface IGenericFuncMock<in TReturnValue> : IMock
 {
     void Callback(Func<TReturnValue> callback);
+
     void Returns(TReturnValue value);
+    void Returns(Func<TReturnValue> getValue);
     void Returns<TArg>(Func<TArg, TReturnValue> getValue);
     void Returns<TArg1, TArg2>(Func<TArg1, TArg2, TReturnValue> getValue);
     void Returns<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturnValue> getValue);

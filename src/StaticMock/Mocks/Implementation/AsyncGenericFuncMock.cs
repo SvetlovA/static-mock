@@ -31,6 +31,15 @@ internal class AsyncGenericFuncMock<TReturnValue> : GenericFuncMock<Task<TReturn
         }
     }
 
+    public void ReturnsAsync(Func<TReturnValue> getValue)
+    {
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(getValue))
+        {
+            _action();
+        }
+    }
+
     public void ReturnsAsync<TArg>(Func<TArg, TReturnValue> getValue)
     {
         var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);

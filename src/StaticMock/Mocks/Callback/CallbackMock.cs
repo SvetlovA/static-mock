@@ -17,11 +17,6 @@ internal class CallbackMock : ICallbackMock
 
     public IReturnable Callback(Action callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
-
         MethodBase hookMethod;
         try
         {
@@ -39,11 +34,6 @@ internal class CallbackMock : ICallbackMock
 
     public IReturnable Callback<TReturnValue>(Func<TReturnValue> callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
-
         MethodBase hookMethod;
         try
         {
@@ -59,11 +49,6 @@ internal class CallbackMock : ICallbackMock
 
     public IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
-
         MethodBase hookMethod;
         try
         {

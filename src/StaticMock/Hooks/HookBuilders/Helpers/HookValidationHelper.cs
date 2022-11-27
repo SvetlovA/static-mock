@@ -4,12 +4,22 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
 {
     internal static class HookValidationHelper
     {
+        public static void Validate<TReturn>(MethodInfo originalMethodInfo, Func<TReturn> getValue)
+        {
+            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
+            var hookMethodParameters = getValue.Method.GetParameters();
+
+            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
+        }
+
         public static void Validate<TArg, TReturn>(MethodInfo originalMethodInfo, Func<TArg, TReturn> getValue)
         {
             var originalMethodInfoParameters = originalMethodInfo.GetParameters();
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TReturn> getValue)
@@ -18,6 +28,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TReturn> getValue)
@@ -26,6 +37,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue)
@@ -34,6 +46,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue)
@@ -42,6 +55,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue)
@@ -50,6 +64,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue)
@@ -58,6 +73,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue)
@@ -66,6 +82,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue)
@@ -74,6 +91,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             var hookMethodParameters = getValue.Method.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
+            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
         private static void ValidateParameters(IReadOnlyList<ParameterInfo> originalMethodParameters, IReadOnlyList<ParameterInfo> hookMethodParameters)
@@ -94,6 +112,27 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
                     throw new Exception(
                         $"Parameters type mismatch. {i + 1} original parameter type is {originalParameterType} and {i + 1} hook parameter type is {hookParameterType}");
                 }
+            }
+        }
+
+        private static void ValidateReturnType(Type originalMethodReturnType, Type hookReturnType)
+        {
+            if (originalMethodReturnType.IsGenericType &&
+                originalMethodReturnType.GetGenericTypeDefinition() == typeof(Task<>) &&
+                (!hookReturnType.IsGenericType ||
+                hookReturnType.GetGenericTypeDefinition() != typeof(Task<>)))
+            {
+                var genericArgumentType = originalMethodReturnType.GetGenericArguments().Single();
+                if (genericArgumentType != hookReturnType)
+                {
+                    throw new Exception(
+                        $"Return types mismatch. Original generic return type is {genericArgumentType}. Hook return type is {hookReturnType}");
+                }
+            }
+            else if (originalMethodReturnType != hookReturnType)
+            {
+                throw new Exception(
+                    $"Return types mismatch. Original return type is {originalMethodReturnType}. Hook return type is {hookReturnType}");
             }
         }
     }

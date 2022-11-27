@@ -3,6 +3,7 @@
 public interface IAsyncGenericFuncMock<TReturnValue> : IGenericFuncMock<Task<TReturnValue>>
 {
     void ReturnsAsync(TReturnValue value);
+    void ReturnsAsync(Func<TReturnValue> getValue);
     void ReturnsAsync<TArg>(Func<TArg, TReturnValue> getValue);
     void ReturnsAsync<TArg1, TArg2>(Func<TArg1, TArg2, TReturnValue> getValue);
     void ReturnsAsync<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturnValue> getValue);
