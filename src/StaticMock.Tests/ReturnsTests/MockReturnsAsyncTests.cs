@@ -5,7 +5,6 @@ using StaticMock.Tests.TestEntities;
 namespace StaticMock.Tests.ReturnsTests;
 
 [TestFixture]
-[Ignore("Async throws exception on all tests run")]
 public class MockReturnsAsyncTests
 {
     [Test]
@@ -55,7 +54,7 @@ public class MockReturnsAsyncTests
     public async Task TestSetupInstanceReturnsAsyncMethodsReturnTaskAsync()
     {
         var instance = new TestInstance();
-        var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
+        var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 

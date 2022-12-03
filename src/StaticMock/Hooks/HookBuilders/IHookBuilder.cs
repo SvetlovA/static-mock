@@ -18,6 +18,7 @@ internal interface IHookBuilder
     MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue);
     MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue);
 
+    MethodInfo CreateReturnAsyncHook<TReturn>(TReturn value);
     MethodInfo CreateReturnAsyncHook<TReturn>(Func<TReturn> getValue);
     MethodInfo CreateReturnAsyncHook<TArg, TReturn>(Func<TArg, TReturn> getValue);
     MethodInfo CreateReturnAsyncHook<TArg1, TArg2, TReturn>(Func<TArg1, TArg2, TReturn> getValue);

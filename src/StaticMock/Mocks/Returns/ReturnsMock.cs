@@ -14,7 +14,12 @@ internal class ReturnsMock<TValue> : IReturnsMock<TValue>
         _hookManager = hookManager;
     }
 
-    public IReturnable Returns(TValue value) => ReturnsInternal(value);
+    public IReturnable Returns(TValue value)
+    {
+        var hook = _hookBuilder.CreateReturnHook(value);
+
+        return _hookManager.ApplyHook(hook);
+    }
 
     public IReturnable Returns(Func<TValue> getValue)
     {
@@ -86,11 +91,16 @@ internal class ReturnsMock<TValue> : IReturnsMock<TValue>
         return _hookManager.ApplyHook(hook);
     }
 
-    public IReturnable ReturnsAsync(TValue value) => ReturnsInternal(Task.FromResult(value));
+    public IReturnable ReturnsAsync(TValue value)
+    {
+        var hook = _hookBuilder.CreateReturnAsyncHook(value);
+
+        return _hookManager.ApplyHook(hook);
+    }
 
     public IReturnable ReturnsAsync(Func<TValue> getValue)
     {
-        var hook = _hookBuilder.CreateReturnHook(getValue);
+        var hook = _hookBuilder.CreateReturnAsyncHook(getValue);
 
         return _hookManager.ApplyHook(hook);
     }
@@ -154,13 +164,6 @@ internal class ReturnsMock<TValue> : IReturnsMock<TValue>
     public IReturnable ReturnsAsync<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TValue> getValue)
     {
         var hook = _hookBuilder.CreateReturnAsyncHook(getValue);
-
-        return _hookManager.ApplyHook(hook);
-    }
-
-    private IReturnable ReturnsInternal<TInternalValue>(TInternalValue value)
-    {
-        var hook = _hookBuilder.CreateReturnHook(value);
 
         return _hookManager.ApplyHook(hook);
     }

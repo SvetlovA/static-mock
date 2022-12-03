@@ -82,6 +82,9 @@ internal class StaticHookBuilder : IHookBuilder
         return CreateReturnHookInternal<TReturn>(getValue);
     }
 
+    public MethodInfo CreateReturnAsyncHook<TReturn>(TReturn value) =>
+        HookBuilderHelper.CreateReturnAsyncHook(value, HookMethodType.Static, _itParameterExpressions);
+
     public MethodInfo CreateReturnAsyncHook<TReturn>(Func<TReturn> getValue)
     {
         HookValidationHelper.Validate(_originalMethodInfo, getValue);

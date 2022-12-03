@@ -4,7 +4,6 @@ using StaticMock.Tests.TestEntities;
 namespace StaticMock.Tests.ReturnsTests;
 
 [TestFixture]
-[Ignore("Async throws exception on all tests run")]
 public class GenericSetupMockReturnsAsyncTests
 {
     [Test]

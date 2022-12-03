@@ -42,35 +42,22 @@ internal static class HookBuilderHelper
     public static MethodInfo CreateReturnHook<TReturn>(
         TReturn value,
         HookMethodType hookMethodType,
-        IReadOnlyList<ItParameterExpression> itParameterExpressions)
-    {
-        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
-        {
-            Name = DynamicTypeNames.ReturnHookAssemblyName
-        }, AssemblyBuilderAccess.Run);
-
-        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.ReturnHookModuleName);
-        var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
-        var hookStaticField = hookType.DefineField(
-            DynamicTypeNames.ReturnHookStaticFieldName,
-            typeof(TReturn),
-            FieldAttributes.Private | FieldAttributes.Static);
-
-        var hookMethod = hookType.DefineMethod(
-            DynamicTypeNames.ReturnHookMethodName,
-            GetMethodAttributes(hookMethodType),
-            typeof(TReturn),
-            itParameterExpressions.Select(x => x.ParameterType).ToArray());
-
-        return GetHookedMethod(
-            hookType,
-            hookMethod,
-            hookStaticField,
-            OpCodes.Ret,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
+        CreateReturnHook(
             value,
             hookMethodType,
-            itParameterExpressions);
-    }
+            itParameterExpressions,
+            typeof(TReturn));
+
+    public static MethodInfo CreateReturnAsyncHook<TReturn>(
+        TReturn value,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
+        CreateReturnHook(
+            Task.FromResult(value),
+            hookMethodType,
+            itParameterExpressions,
+            typeof(Task<TReturn>));
 
     public static MethodInfo CreateReturnHook<TReturn>(
         MethodInfo originalMethodInfo,
@@ -126,6 +113,40 @@ internal static class HookBuilderHelper
             hookStaticField,
             OpCodes.Throw,
             exception,
+            hookMethodType,
+            itParameterExpressions);
+    }
+
+    private static MethodInfo CreateReturnHook(
+        object value,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions,
+        Type hookReturnType)
+    {
+        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
+        {
+            Name = DynamicTypeNames.ReturnHookAssemblyName
+        }, AssemblyBuilderAccess.Run);
+
+        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.ReturnHookModuleName);
+        var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
+        var hookStaticField = hookType.DefineField(
+            DynamicTypeNames.ReturnHookStaticFieldName,
+            hookReturnType,
+            FieldAttributes.Private | FieldAttributes.Static);
+
+        var hookMethod = hookType.DefineMethod(
+            DynamicTypeNames.ReturnHookMethodName,
+            GetMethodAttributes(hookMethodType),
+            hookReturnType,
+            itParameterExpressions.Select(x => x.ParameterType).ToArray());
+
+        return GetHookedMethod(
+            hookType,
+            hookMethod,
+            hookStaticField,
+            OpCodes.Ret,
+            value,
             hookMethodType,
             itParameterExpressions);
     }
