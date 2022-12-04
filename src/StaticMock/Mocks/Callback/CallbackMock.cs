@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using StaticMock.Hooks;
+﻿using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Callback;
@@ -15,49 +14,9 @@ internal class CallbackMock : ICallbackMock
         _hookManager = hookManager;
     }
 
-    public IReturnable Callback(Action callback)
+    public IReturnable Callback(Action action)
     {
-        MethodBase hookMethod;
-        try
-        {
-            callback();
-            hookMethod = _hookBuilder.CreateVoidHook();
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-
-        }
-
-        return _hookManager.ApplyHook(hookMethod);
-    }
-
-    public IReturnable Callback<TReturnValue>(Func<TReturnValue> callback)
-    {
-        MethodBase hookMethod;
-        try
-        {
-            hookMethod = _hookBuilder.CreateReturnHook(callback());
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-        }
-
-        return _hookManager.ApplyHook(hookMethod);
-    }
-
-    public IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback)
-    {
-        MethodBase hookMethod;
-        try
-        {
-            hookMethod = _hookBuilder.CreateReturnHook(Task.FromResult(callback()));
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-        }
+        var hookMethod = _hookBuilder.CreateVoidHook(action);
 
         return _hookManager.ApplyHook(hookMethod);
     }

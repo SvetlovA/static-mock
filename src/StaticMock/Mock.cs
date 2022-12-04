@@ -50,40 +50,40 @@ public static class Mock
     public static void SetupDefault(Type type, string methodName, SetupProperties setupProperties, Action action) =>
         SetupMockHelper.SetupDefaultInternal(type, methodName, action, setupProperties);
 
-    public static IGenericFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action action)
+    public static IFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action action)
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
-        return new GenericFuncMock<TReturnValue>(
+        return new FuncMock<TReturnValue>(
             new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
                 mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
-    public static IAsyncGenericFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>> methodGetExpression, Action action)
+    public static IAsyncFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>> methodGetExpression, Action action)
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
-        return new AsyncGenericFuncMock<TReturnValue>(
+        return new AsyncFuncMock<TReturnValue>(
             new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
                 mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
-    public static IGenericFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>> methodGetExpression, Action action)
+    public static IFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>> methodGetExpression, Action action)
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
-        return new GenericFuncMock<TReturnValue>(
+        return new FuncMock<TReturnValue>(
             new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
                 mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 
-    public static IAsyncGenericFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>> methodGetExpression, Action action)
+    public static IAsyncFuncMock<TReturnValue> Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>> methodGetExpression, Action action)
     {
         var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
-        return new AsyncGenericFuncMock<TReturnValue>(
+        return new AsyncFuncMock<TReturnValue>(
             new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo,
                 mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),

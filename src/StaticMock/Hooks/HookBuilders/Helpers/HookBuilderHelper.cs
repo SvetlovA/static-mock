@@ -7,38 +7,6 @@ namespace StaticMock.Hooks.HookBuilders.Helpers;
 
 internal static class HookBuilderHelper
 {
-    public static MethodInfo CreateVoidHook(
-        HookMethodType hookMethodType,
-        IReadOnlyList<ItParameterExpression> itParameterExpressions)
-    {
-        var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
-        {
-            Name = DynamicTypeNames.VoidHookAssemblyName
-        }, AssemblyBuilderAccess.Run);
-
-        var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.VoidHookModuleName);
-        var hookType = hookModule.DefineType(DynamicTypeNames.VoidHookTypeName, TypeAttributes.Public);
-
-        var hookMethod = hookType.DefineMethod(
-            DynamicTypeNames.VoidHookMethodName,
-            GetMethodAttributes(hookMethodType),
-            typeof(void),
-            itParameterExpressions.Select(x => x.ParameterType).ToArray());
-
-        var hookMethodIl = hookMethod.GetILGenerator();
-
-        SetupIlExpressionCall(hookMethodIl, hookType, hookMethodType, itParameterExpressions);
-
-        hookMethodIl.Emit(OpCodes.Ret);
-
-        var type = hookType.CreateType();
-
-        SetupExpressionCallImplementation(type, itParameterExpressions);
-
-        return type.GetMethod(hookMethod.Name, GetBindingFlags(hookMethodType)) ??
-               throw new Exception($"{hookMethod.Name} not found in type {hookType.Name}");
-    }
-
     public static MethodInfo CreateReturnHook<TReturn>(
         TReturn value,
         HookMethodType hookMethodType,
@@ -70,18 +38,6 @@ internal static class HookBuilderHelper
             hookMethodType,
             itParameterExpressions,
             typeof(TReturn));
-
-    public static MethodInfo CreateReturnAsyncHook<TReturn>(
-        MethodInfo originalMethodInfo,
-        object getValue,
-        HookMethodType hookMethodType,
-        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateReturnHook(
-            originalMethodInfo,
-            getValue,
-            hookMethodType,
-            itParameterExpressions,
-            typeof(Task<TReturn>));
 
     public static MethodInfo CreateThrowsHook<TException>(
         TException exception,
@@ -151,7 +107,7 @@ internal static class HookBuilderHelper
             itParameterExpressions);
     }
 
-    private static MethodInfo CreateReturnHook(
+    public static MethodInfo CreateReturnHook(
         MethodBase originalMethodInfo,
         object getValue,
         HookMethodType hookMethodType,

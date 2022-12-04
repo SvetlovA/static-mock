@@ -1,16 +1,16 @@
 ﻿using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
-using StaticMock.Mocks.Callback;
+using StaticMock.Mocks.Returns;
 
 namespace StaticMock.Mocks.Implementation;
 
-internal class VoidMock : Mock, IVoidMock
+internal class AsyncFuncMock<TReturnValue> : FuncMock<Task<TReturnValue>>, IAsyncFuncMock<TReturnValue>
 {
     private readonly IHookBuilder _hookBuilder;
     private readonly IHookManager _hookManager;
     private readonly Action _action;
 
-    public VoidMock(
+    public AsyncFuncMock(
         IHookBuilder hookBuilder,
         IHookManager hookManager,
         Action action)
@@ -21,10 +21,10 @@ internal class VoidMock : Mock, IVoidMock
         _action = action;
     }
 
-    public void Callback(Action callback)
+    public void ReturnsAsync(TReturnValue value)
     {
-        var callbackService = new CallbackMock(_hookBuilder, _hookManager);
-        using (callbackService.Callback(callback))
+        var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
+        using (returnService.ReturnsAsync(value))
         {
             _action();
         }

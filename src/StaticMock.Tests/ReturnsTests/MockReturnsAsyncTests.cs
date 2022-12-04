@@ -80,7 +80,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync(() => 2);
+            .Returns(() => Task.FromResult(2));
 
         Assert.AreEqual(1, originalResult);
     }
@@ -103,10 +103,10 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, int>(argument =>
+            .Returns<int, Task<int>>(argument =>
             {
                 Assert.AreEqual(parameter1, argument);
-                return argument / 2;
+                return Task.FromResult(argument / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -139,11 +139,11 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, int>((argument1, argument2) =>
+            .Returns<int, string, Task<int>>(async (argument1, argument2) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
-                return argument1 / 2;
+                return await Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -179,12 +179,12 @@ public class MockReturnsAsyncTests
                 Assert.AreNotEqual(originalResult, actualResult);
                 Assert.AreEqual(expectedResult, actualResult);
             })
-            .ReturnsAsync<int, string, double, int>((argument1, argument2, argument3) =>
+            .Returns<int, string, double, Task<int>>((argument1, argument2, argument3) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
                 Assert.AreEqual(parameter3, argument3);
-                return argument1 / 2;
+                return Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -231,7 +231,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], int>((
+            .Returns<int, string, double, int[], Task<int>>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -241,7 +241,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter2, argument2);
                 Assert.AreEqual(parameter3, argument3);
                 Assert.AreEqual(parameter4, argument4);
-                return argument1 / 2;
+                return await Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -292,7 +292,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], string[], int>((
+            .Returns<int, string, double, int[], string[], Task<int>>((
                 argument1,
                 argument2,
                 argument3,
@@ -304,7 +304,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter3, argument3);
                 Assert.AreEqual(parameter4, argument4);
                 Assert.AreEqual(parameter5, argument5);
-                return argument1 / 2;
+                return Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -359,7 +359,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], string[], char, int>((
+            .Returns<int, string, double, int[], string[], char, Task<int>>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -373,7 +373,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter4, argument4);
                 Assert.AreEqual(parameter5, argument5);
                 Assert.AreEqual(parameter6, argument6);
-                return argument1 / 2;
+                return await Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -432,7 +432,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], string[], char, bool, int>((
+            .Returns<int, string, double, int[], string[], char, bool, Task<int>>((
                 argument1,
                 argument2,
                 argument3,
@@ -449,7 +449,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter6, argument6);
                 Assert.AreEqual(parameter7, argument7);
 
-                return argument1 / 2;
+                return Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -512,7 +512,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], string[], char, bool, TestInstance, int>((
+            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Task<int>>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -531,7 +531,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
 
-                return argument1 / 2;
+                return await Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
@@ -598,7 +598,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .ReturnsAsync<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>, int>((
+            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>, Task<int>>((
                 argument1,
                 argument2,
                 argument3,
@@ -618,7 +618,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
                 Assert.AreEqual(parameter9, argument9);
-                return argument1 / 2;
+                return Task.FromResult(argument1 / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
