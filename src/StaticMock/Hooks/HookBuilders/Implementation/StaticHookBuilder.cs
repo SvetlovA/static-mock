@@ -29,7 +29,7 @@ internal class StaticHookBuilder : IHookBuilder
 
     public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
     {
-        HookValidationHelper.ValidateReturnType(_originalMethodInfo.ReturnType, getValue.Method.ReturnType);
+        HookValidationHelper.Validate(_originalMethodInfo, getValue);
         return CreateReturnHookInternal<TReturn>(getValue);
     }
 

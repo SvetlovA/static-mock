@@ -94,7 +94,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
         }
 
-        public static void ValidateParameters(IReadOnlyList<ParameterInfo> originalMethodParameters, IReadOnlyList<ParameterInfo> hookMethodParameters)
+        private static void ValidateParameters(IReadOnlyList<ParameterInfo> originalMethodParameters, IReadOnlyList<ParameterInfo> hookMethodParameters)
         {
             if (originalMethodParameters.Count != hookMethodParameters.Count)
             {
@@ -115,7 +115,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             }
         }
 
-        public static void ValidateReturnType(Type originalMethodReturnType, Type hookReturnType)
+        private static void ValidateReturnType(Type originalMethodReturnType, Type hookReturnType)
         {
             if (originalMethodReturnType.IsGenericType &&
                 originalMethodReturnType.GetGenericTypeDefinition() == typeof(Task<>) &&
