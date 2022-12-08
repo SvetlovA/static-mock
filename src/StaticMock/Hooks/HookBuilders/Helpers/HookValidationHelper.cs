@@ -4,94 +4,13 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
 {
     internal static class HookValidationHelper
     {
-        public static void Validate<TReturn>(MethodInfo originalMethodInfo, Func<TReturn> getValue)
+        public static void Validate(MethodInfo originalMethodInfo, MethodInfo hookedMethodInfo)
         {
             var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
+            var hookMethodParameters = hookedMethodInfo.GetParameters();
 
             ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg, TReturn>(MethodInfo originalMethodInfo, Func<TArg, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
-        }
-
-        public static void Validate<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(MethodInfo originalMethodInfo, Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue)
-        {
-            var originalMethodInfoParameters = originalMethodInfo.GetParameters();
-            var hookMethodParameters = getValue.Method.GetParameters();
-
-            ValidateParameters(originalMethodInfoParameters, hookMethodParameters);
-            ValidateReturnType(originalMethodInfo.ReturnType, typeof(TReturn));
+            ValidateReturnType(originalMethodInfo.ReturnType, hookedMethodInfo.ReturnType);
         }
 
         private static void ValidateParameters(IReadOnlyList<ParameterInfo> originalMethodParameters, IReadOnlyList<ParameterInfo> hookMethodParameters)

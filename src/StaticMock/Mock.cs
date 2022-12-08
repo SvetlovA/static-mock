@@ -28,15 +28,15 @@ public static class Mock
     public static IFuncMock SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action) =>
         SetupMockHelper.SetupPropertyInternal(type, propertyName, action, bindingFlags);
 
-    public static IVoidMock SetupVoid(Type type, string methodName, Action action) => SetupMockHelper.SetupVoidInternal(type, methodName, action);
+    public static IActionMock SetupAction(Type type, string methodName, Action action) => SetupMockHelper.SetupVoidInternal(type, methodName, action);
 
-    public static IVoidMock SetupVoid(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
+    public static IActionMock SetupAction(Type type, string methodName, BindingFlags bindingFlags, Action action) =>
         SetupMockHelper.SetupVoidInternal(type, methodName, action, new SetupProperties
         {
             BindingFlags = bindingFlags
         });
 
-    public static IVoidMock SetupVoid(Type type, string methodName, SetupProperties setupProperties, Action action) =>
+    public static IActionMock SetupAction(Type type, string methodName, SetupProperties setupProperties, Action action) =>
         SetupMockHelper.SetupVoidInternal(type, methodName, action, setupProperties);
 
     public static void SetupDefault(Type type, string methodName, Action action) => SetupMockHelper.SetupDefaultInternal(type, methodName, action);
@@ -90,7 +90,7 @@ public static class Mock
             action);
     }
 
-    public static IVoidMock Setup(Expression<Action> methodGetExpression, Action action)
+    public static IActionMock Setup(Expression<Action> methodGetExpression, Action action)
     {
         if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
         {
@@ -99,9 +99,19 @@ public static class Mock
 
         var context = new SetupContext();
 
-        return new VoidMock(
+        return new ActionMock(
             new HookBuilderFactory(methodExpression.Method, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(methodExpression.Method).CreateHookManager(),
+            action);
+    }
+
+    public static IActionMock Setup(Expression<Action<SetupContext>> methodGetExpression, Action action)
+    {
+        var mockSetupProperties = SetupMockHelper.GetMockSetupProperties(methodGetExpression);
+
+        return new ActionMock(
+            new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, mockSetupProperties.SetupContextState.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(mockSetupProperties.OriginalMethodInfo).CreateHookManager(),
             action);
     }
 

@@ -37,7 +37,34 @@ public static class TestStaticClass
         throw new Exception("Test exception");
     }
 
+    public static void TestVoidMethodWithParameter(int parameter)
+    { }
+
     public static void TestVoidMethodWithParameters(int parameter)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8, Func<int, int> parameter9)
     { }
 
     public static int TestMethodReturnWithParameter(int parameter)

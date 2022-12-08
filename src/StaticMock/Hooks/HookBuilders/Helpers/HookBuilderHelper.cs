@@ -7,11 +7,23 @@ namespace StaticMock.Hooks.HookBuilders.Helpers;
 
 internal static class HookBuilderHelper
 {
+    public static MethodInfo CreateCallbackHook(
+        MethodInfo originalMethodInfo,
+        object callback,
+        HookMethodType hookMethodType,
+        IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
+        CreateHook(
+            originalMethodInfo,
+            callback,
+            hookMethodType,
+            itParameterExpressions,
+            typeof(void));
+
     public static MethodInfo CreateReturnHook<TReturn>(
         TReturn value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateReturnHook(
+        CreateHook(
             value,
             hookMethodType,
             itParameterExpressions,
@@ -21,7 +33,7 @@ internal static class HookBuilderHelper
         TReturn value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateReturnHook(
+        CreateHook(
             Task.FromResult(value),
             hookMethodType,
             itParameterExpressions,
@@ -32,7 +44,7 @@ internal static class HookBuilderHelper
         object getValue,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateReturnHook(
+        CreateHook(
             originalMethodInfo,
             getValue,
             hookMethodType,
@@ -73,7 +85,7 @@ internal static class HookBuilderHelper
             itParameterExpressions);
     }
 
-    private static MethodInfo CreateReturnHook(
+    private static MethodInfo CreateHook(
         object value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
@@ -107,7 +119,7 @@ internal static class HookBuilderHelper
             itParameterExpressions);
     }
 
-    public static MethodInfo CreateReturnHook(
+    private static MethodInfo CreateHook(
         MethodBase originalMethodInfo,
         object getValue,
         HookMethodType hookMethodType,

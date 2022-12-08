@@ -15,7 +15,7 @@ public class SetupTests
     [Test]
     public void TestSetupVoid()
     {
-        Mock.SetupVoid(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters), () => { });
+        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameter), () => { });
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class SetupTests
     [Test]
     public void TestSetupNegativeVoid()
     {
-        Assert.Throws<Exception>(() => Mock.Setup(typeof(TestStaticClass),  nameof(TestStaticClass.TestVoidMethodWithParameters), () => { }));
+        Assert.Throws<Exception>(() => Mock.Setup(typeof(TestStaticClass),  nameof(TestStaticClass.TestVoidMethodWithParameter), () => { }));
     }
 
     [Test]

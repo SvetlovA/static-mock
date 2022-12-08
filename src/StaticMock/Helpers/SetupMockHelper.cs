@@ -57,8 +57,8 @@ internal static class SetupMockHelper
         };
     }
 
-    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
-        Expression<Func<SetupContext, TReturnValue>> methodGetExpression)
+    public static MockSetupProperties GetMockSetupProperties<TDelegate>(
+        Expression<TDelegate> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
         var setupContext = new SetupContext();
@@ -107,7 +107,7 @@ internal static class SetupMockHelper
 
         if (originalMethodInfo.ReturnType == typeof(void))
         {
-            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
+            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
         var context = new SetupContext();
@@ -129,7 +129,7 @@ internal static class SetupMockHelper
         var originalMethodInfo = originalPropertyInfo.GetMethod;
         if (originalMethodInfo.ReturnType == typeof(void))
         {
-            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
+            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
         var context = new SetupContext();
@@ -140,13 +140,13 @@ internal static class SetupMockHelper
             action);
     }
 
-    public static IVoidMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IActionMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
         var context = new SetupContext();
 
-        return new VoidMock(
+        return new ActionMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);

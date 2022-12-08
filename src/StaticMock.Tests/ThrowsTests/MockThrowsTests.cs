@@ -77,7 +77,7 @@ public class MockThrowsTests
     [Test]
     public void TestGenericThrowsTestVoidMethodReturnTaskAsync()
     {
-        Mock.SetupVoid(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestVoidMethodReturnTaskAsync), () =>
+        Mock.SetupAction(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestVoidMethodReturnTaskAsync), () =>
         {
             Assert.Throws<Exception>(() => TestStaticAsyncClass.TestVoidMethodReturnTaskAsync());
         });
@@ -128,7 +128,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.SetupVoid(typeof(TestInstance), nameof(TestInstance.TestVoidMethodReturnTaskAsync), () =>
+        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodReturnTaskAsync), () =>
         {
             Assert.Throws<Exception>(() => instance.TestVoidMethodReturnTaskAsync());
         });
