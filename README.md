@@ -12,6 +12,27 @@ Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
 }).Returns(expectedResult);
+
+Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
+{
+    var actualResult = StaticClass.MethodToMock(1);
+    Assert.AreNotEqual(originalResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
+}).Returns(() => expectedResult);
+
+Mock.Setup(context => StaticClass.MethodToMock(context.It.Is<int>(x => x == 1)), () =>
+{
+    var actualResult = StaticClass.MethodToMock(1);
+    Assert.AreNotEqual(originalResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
+}).Returns<int>(argument => argument);
+
+Mock.Setup(context => StaticClass.MethodToMockAsync(context.It.IsAny<int>()), async () =>
+{
+    var actualResult = await StaticClass.MethodToMockAsync(1);
+    Assert.AreNotEqual(originalResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
+}).Returns<int>(async argument => await Task.FromResult(argument));
 ```
 ### Throws
 ```cs
@@ -34,10 +55,14 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     var actualResult = StaticClass.MethodToMock();
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
-}).Callback(() =>
+}).Callback(() => DoSomething());
+
+Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
-    return expectedResult;
-});
+    var actualResult = StaticClass.MethodToMock(1);
+    Assert.AreNotEqual(originalResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
+}).Callback<int>(arument => DoSomething(argument));
 ```
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
 # Known Issues

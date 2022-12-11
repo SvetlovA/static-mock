@@ -547,7 +547,7 @@ public class GenericSetupMockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>>((
+            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -558,6 +558,8 @@ public class GenericSetupMockReturnsAsyncTests
                 argument8,
                 argument9) =>
             {
+                await Task.CompletedTask;
+
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
                 Assert.AreEqual(parameter3, argument3);
@@ -567,7 +569,7 @@ public class GenericSetupMockReturnsAsyncTests
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
                 Assert.AreEqual(parameter9, argument9);
-                return Task.FromResult(argument1 / 2);
+                return argument1 / 2;
             });
 
         Assert.AreEqual(parameter1, originalResult);

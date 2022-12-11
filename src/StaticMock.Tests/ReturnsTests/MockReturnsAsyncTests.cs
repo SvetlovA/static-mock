@@ -103,10 +103,11 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, Task<int>>(argument =>
+            .Returns<int, Task<int>>(async argument =>
             {
+                await Task.CompletedTask;
                 Assert.AreEqual(parameter1, argument);
-                return Task.FromResult(argument / 2);
+                return argument / 2;
             });
 
         Assert.AreEqual(parameter1, originalResult);
