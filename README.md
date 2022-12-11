@@ -55,14 +55,20 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     var actualResult = StaticClass.MethodToMock();
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
-}).Callback(() => DoSomething());
+}).Callback(() =>
+{
+    DoSomething();
+});
 
 Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
     var actualResult = StaticClass.MethodToMock(1);
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
-}).Callback<int>(arument => DoSomething(argument));
+}).Callback<int>(arument =>
+{
+    DoSomething(argument);
+});
 ```
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
 # Known Issues
