@@ -34,7 +34,7 @@ namespace StaticMock.Hooks.HookBuilders.Helpers
             }
         }
 
-        private static void ValidateReturnType(Type originalMethodReturnType, Type hookReturnType)
+        public static void ValidateReturnType(Type originalMethodReturnType, Type hookReturnType)
         {
             if (originalMethodReturnType.IsGenericType &&
                 originalMethodReturnType.GetGenericTypeDefinition() == typeof(Task<>) &&

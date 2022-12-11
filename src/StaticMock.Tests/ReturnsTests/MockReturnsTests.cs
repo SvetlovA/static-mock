@@ -1080,4 +1080,39 @@ public class MockReturnsTests
 
         Assert.Throws<Exception>(() => setup.Returns<int, string, string>((argument1, argument2) => string.Empty));
     }
+
+    [Test]
+    public void TestGenericSetupReturnsWithoutArgumentsWithTestMethodReturnParameters()
+    {
+        const int parameter1 = 10;
+        const string parameter2 = "parameter2";
+
+        var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+        var expectedResult = originalResult / 2;
+        var executed = false;
+
+        Assert.AreEqual(parameter1, originalResult);
+
+        Mock.Setup(
+            typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
+            new SetupProperties
+            {
+                MethodParametersTypes = new []{ typeof(int), typeof(string) }
+            },
+            () =>
+            {
+                var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+
+                Assert.AreNotEqual(originalResult, actualResult);
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+            return originalResult / 2;
+        });
+
+        Assert.IsTrue(executed);
+        Assert.AreEqual(parameter1, originalResult);
+    }
 }

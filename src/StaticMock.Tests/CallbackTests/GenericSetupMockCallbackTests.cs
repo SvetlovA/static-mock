@@ -387,4 +387,27 @@ public class GenericSetupMockCallbackTests
 
         Assert.Throws<Exception>(() => setup.Callback<string, string>((argument1, argument2) => {}));
     }
+
+    [Test]
+    public void TestGenericSetupVoidWithoutArgumentsWithTestMethodReturnParameters()
+    {
+        const int parameter1 = 10;
+        const string parameter2 = "parameter2";
+
+        TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
+        var executed = false;
+
+        Mock.Setup(
+            context => TestStaticClass.TestVoidMethodWithParameters(context.It.IsAny<int>(), context.It.IsAny<string>()),
+            () =>
+            {
+                TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
+            }).Callback(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+        });
+
+        Assert.IsTrue(executed);
+    }
 }

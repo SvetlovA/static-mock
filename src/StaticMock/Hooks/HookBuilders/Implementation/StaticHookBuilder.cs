@@ -18,7 +18,7 @@ internal class StaticHookBuilder : IHookBuilder
 
     public MethodInfo CreateCallbackHook(Action callback)
     {
-        HookValidationHelper.Validate(_originalMethodInfo, callback.Method);
+        HookValidationHelper.ValidateReturnType(_originalMethodInfo.ReturnType, callback.Method.ReturnType);
         return CreateCallbackHookInternal(callback);
     }
 
@@ -81,7 +81,7 @@ internal class StaticHookBuilder : IHookBuilder
 
     public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
     {
-        HookValidationHelper.Validate(_originalMethodInfo, getValue.Method);
+        HookValidationHelper.ValidateReturnType(_originalMethodInfo.ReturnType, getValue.Method.ReturnType);
         return CreateReturnHookInternal<TReturn>(getValue);
     }
 

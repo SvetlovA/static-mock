@@ -866,7 +866,7 @@ public class GenericSetupMockReturnsTests
     }
 
     [Test]
-    public void TestGenericSetupReturnsWithTestMethodReturnParameterTypeMismatchFunc()
+    public void TestGenericSetupReturnsWithTestMethodParameterCountMismatchFunc()
     {
         const int parameter1 = 10;
         const string parameter2 = "parameter2";
@@ -916,6 +916,37 @@ public class GenericSetupMockReturnsTests
                 return Task.FromResult(argument1 / 2);
             });
 
+        Assert.AreEqual(parameter1, originalResult);
+    }
+
+    [Test]
+    public void TestGenericSetupReturnsWithoutArgumentsWithTestMethodReturnParameters()
+    {
+        const int parameter1 = 10;
+        const string parameter2 = "parameter2";
+
+        var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+        var expectedResult = originalResult / 2;
+        var executed = false;
+
+        Assert.AreEqual(parameter1, originalResult);
+
+        Mock.Setup(
+            context => TestStaticClass.TestMethodReturnWithParameters(context.It.IsAny<int>(), context.It.IsAny<string>()),
+            () =>
+            {
+                var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
+
+                Assert.AreNotEqual(originalResult, actualResult);
+                Assert.AreEqual(expectedResult, actualResult);
+            }).Returns(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+            return originalResult / 2;
+        });
+
+        Assert.IsTrue(executed);
         Assert.AreEqual(parameter1, originalResult);
     }
 }

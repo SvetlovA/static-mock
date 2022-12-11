@@ -121,7 +121,7 @@ internal static class HookBuilderHelper
 
     private static MethodInfo CreateHook(
         MethodBase originalMethodInfo,
-        object getValue,
+        object executable,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
         Type hookReturnType)
@@ -135,7 +135,7 @@ internal static class HookBuilderHelper
         var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
         var hookStaticField = hookType.DefineField(
             DynamicTypeNames.ReturnHookStaticFieldName,
-            getValue.GetType(),
+            executable.GetType(),
             FieldAttributes.Private | FieldAttributes.Static);
 
         var hookMethodParameterTypes = originalMethodInfo.GetParameters().Select(x => x.ParameterType).ToArray();
@@ -151,17 +151,28 @@ internal static class HookBuilderHelper
             hookMethod,
             hookStaticField,
             OpCodes.Ret,
-            getValue,
+            executable,
             hookMethodType,
             itParameterExpressions,
             il =>
             {
-                for (var i = 0; i < hookMethodParameterTypes.Length; i++)
+                var executableType = executable.GetType();
+
+                if (executableType.IsGenericType)
                 {
-                    il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
+                    executableType = executableType.GetGenericTypeDefinition();
                 }
 
-                il.Emit(OpCodes.Callvirt, getValue.GetType().GetMethod("Invoke"));
+
+                if (executableType != typeof(Action) && executableType != typeof(Func<>))
+                {
+                    for (var i = 0; i < hookMethodParameterTypes.Length; i++)
+                    {
+                        il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
+                    }
+                }
+
+                il.Emit(OpCodes.Callvirt, executable.GetType().GetMethod("Invoke"));
             });
     }
 
@@ -181,7 +192,6 @@ internal static class HookBuilderHelper
 
         hookMethodIl.Emit(OpCodes.Ldsfld, hookStaticField);
         setupHookIl?.Invoke(hookMethodIl);
-
         hookMethodIl.Emit(endingOpCode);
 
         var type = hookType.CreateType();
