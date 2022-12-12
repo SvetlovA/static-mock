@@ -25,7 +25,7 @@ jobs:
   githubPublish:
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: pack-drop
       - name: Prepare
@@ -35,7 +35,7 @@ jobs:
   nugetPublish:
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: pack-drop
       - name: Push
