@@ -1,0 +1,24 @@
+name: publish to github
+on:
+  workflow_dispatch:
+jobs:
+  publish:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore src
+      - name: Build
+        run: dotnet build --configuration Release --no-restore src
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal src
+      - name: Pack
+        run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj
+      - name: Prepare
+        run: dotnet nuget add source --username SvetlovA --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/SvetlovA/index.json"
+      - name: Push
+        run: dotnet nuget push packages/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}  --source "github"
