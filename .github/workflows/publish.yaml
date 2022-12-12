@@ -1,0 +1,42 @@
+name: publish
+on:
+  workflow_dispatch:
+jobs:
+  pack:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore src
+      - name: Build
+        run: dotnet build --configuration Release --no-restore src
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal src
+      - name: Pack
+        run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pack-drop
+          path: packages/*.nupkg
+  githubPublish:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: pack-drop
+      - name: Prepare
+        run: dotnet nuget add source --username SvetlovA --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/SvetlovA/index.json"
+      - name: Push
+        run: dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}  --source "github"
+  nugetPublish:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: pack-drop
+      - name: Push
+        run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
