@@ -86,7 +86,7 @@ internal static class HookBuilderHelper
     }
 
     private static MethodInfo CreateHook(
-        object value,
+        object? value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
         Type hookReturnType)

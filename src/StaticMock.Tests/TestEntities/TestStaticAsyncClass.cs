@@ -29,6 +29,7 @@ internal static class TestStaticAsyncClass
 
     public static async Task TestMethodThrowsExceptionAsync()
     {
+        await Task.CompletedTask;
         throw new Exception("Test exception");
     }
 
