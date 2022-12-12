@@ -18,7 +18,7 @@ jobs:
         run: dotnet test --no-build --configuration Release --verbosity normal src
       - name: Pack
         run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: pack-drop
           path: packages/*.nupkg
