@@ -37,47 +37,79 @@ public static class TestStaticClass
         throw new Exception("Test exception");
     }
 
+    public static void TestVoidMethodWithParameter(int parameter)
+    { }
+
     public static void TestVoidMethodWithParameters(int parameter)
     { }
 
-    public static Task TestMethodReturnTask()
-    {
-        return Task.CompletedTask;
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2)
+    { }
 
-    public static async Task TestMethodReturnTaskAsync()
-    {
-        await Task.CompletedTask;
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3)
+    { }
 
-    public static async void TestVoidMethodReturnTaskAsync()
-    {
-        await Task.CompletedTask;
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4)
+    { }
 
-    public static async Task<int> TestMethodReturnTaskWithoutParametersAsync()
-    {
-        return await Task.FromResult(1);
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5)
+    { }
 
-    public static Task<int> TestMethodReturnTaskWithoutParameters()
-    {
-        return Task.FromResult(1);
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6)
+    { }
 
-    public static async Task TestMethodThrowsExceptionAsync()
-    {
-        throw new Exception("Test exception");
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7)
+    { }
 
-    public static Task TestMethodThrowsException()
-    {
-        throw new Exception("Test exception");
-    }
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8)
+    { }
+
+    public static void TestVoidMethodWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8, Func<int, int> parameter9)
+    { }
 
     public static int TestMethodReturnWithParameter(int parameter)
     {
         return parameter;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8)
+    {
+        return parameter1;
+    }
+
+    public static int TestMethodReturnWithParameters(int parameter1, string parameter2, double parameter3, int[] parameter4, string[] parameter5, char parameter6, bool parameter7, TestInstance parameter8, Func<int, int> parameter9)
+    {
+        return parameter1;
     }
 
     public static int TestMethodReturnWithParameters(int parameter, int[] arrayParameter)

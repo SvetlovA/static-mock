@@ -5,22 +5,22 @@ namespace StaticMock.Hooks.HookBuilders.Implementation;
 
 internal class HookBuilderFactory : IHookBuilderFactory
 {
-    private readonly MethodBase _originalMethod;
+    private readonly MethodInfo _originalMethodInfo;
     private readonly IReadOnlyList<ItParameterExpression> _itParameterExpressions;
 
-    public HookBuilderFactory(MethodBase originalMethod, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    public HookBuilderFactory(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
-        _originalMethod = originalMethod;
+        _originalMethodInfo = originalMethodInfo;
         _itParameterExpressions = itParameterExpressions;
     }
 
     public IHookBuilder CreateHookBuilder()
     {
-        if (_originalMethod.IsStatic)
+        if (_originalMethodInfo.IsStatic)
         {
-            return new StaticHookBuilder(_itParameterExpressions);
+            return new StaticHookBuilder(_originalMethodInfo, _itParameterExpressions);
         }
 
-        return new InstanceHookBuilder(_itParameterExpressions);
+        return new InstanceHookBuilder(_originalMethodInfo, _itParameterExpressions);
     }
 }

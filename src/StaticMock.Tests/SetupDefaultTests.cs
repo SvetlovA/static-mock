@@ -71,36 +71,36 @@ public class SetupDefaultTests
     [Test]
     public void TestGenericSetupDefaultTestMethodThrowsExceptionAsyncNegative()
     {
-        Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticClass.TestMethodThrowsExceptionAsync(), () =>
+        Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticAsyncClass.TestMethodThrowsExceptionAsync(), () =>
         {
-            TestStaticClass.TestMethodThrowsExceptionAsync();
+            TestStaticAsyncClass.TestMethodThrowsExceptionAsync();
         }));
     }
 
     [Test]
     public void TestGenericSetupDefaultTestMethodThrowsExceptionNegative()
     {
-        Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticClass.TestMethodThrowsException(), () =>
+        Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticAsyncClass.TestMethodThrowsException(), () =>
         {
-            TestStaticClass.TestMethodThrowsException();
+            TestStaticAsyncClass.TestMethodThrowsException();
         }));
     }
 
     [Test]
     public void TestSetupDefaultTestMethodThrowsExceptionAsyncNegative()
     {
-        Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodThrowsExceptionAsync), () =>
+        Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodThrowsExceptionAsync), () =>
         {
-            TestStaticClass.TestMethodThrowsExceptionAsync();
+            TestStaticAsyncClass.TestMethodThrowsExceptionAsync();
         }));
     }
 
     [Test]
     public void TestSetupDefaultTestMethodThrowsExceptionNegative()
     {
-        Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodThrowsException), () =>
+        Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodThrowsException), () =>
         {
-            TestStaticClass.TestMethodThrowsException();
+            TestStaticAsyncClass.TestMethodThrowsException();
         }));
     }
 

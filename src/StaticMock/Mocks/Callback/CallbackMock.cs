@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using StaticMock.Hooks;
+﻿using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Callback;
@@ -17,62 +16,70 @@ internal class CallbackMock : ICallbackMock
 
     public IReturnable Callback(Action callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
-
-        MethodBase hookMethod;
-        try
-        {
-            callback();
-            hookMethod = _hookBuilder.CreateVoidHook();
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-
-        }
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
 
         return _hookManager.ApplyHook(hookMethod);
     }
 
-    public IReturnable Callback<TReturnValue>(Func<TReturnValue> callback)
+    public IReturnable Callback<TArg>(Action<TArg> callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
-
-        MethodBase hookMethod;
-        try
-        {
-            hookMethod = _hookBuilder.CreateReturnHook(callback());
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-        }
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
 
         return _hookManager.ApplyHook(hookMethod);
     }
 
-    public IReturnable CallbackAsync<TReturnValue>(Func<TReturnValue> callback)
+    public IReturnable Callback<TArg1, TArg2>(Action<TArg1, TArg2> callback)
     {
-        if (callback == null)
-        {
-            throw new ArgumentNullException(nameof(callback));
-        }
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
 
-        MethodBase hookMethod;
-        try
-        {
-            hookMethod = _hookBuilder.CreateReturnHook(Task.FromResult(callback()));
-        }
-        catch (Exception ex)
-        {
-            hookMethod = _hookBuilder.CreateThrowsHook(ex);
-        }
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3>(Action<TArg1, TArg2, TArg3> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4>(Action<TArg1, TArg2, TArg3, TArg4> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4, TArg5>(Action<TArg1, TArg2, TArg3, TArg4, TArg5> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
+
+        return _hookManager.ApplyHook(hookMethod);
+    }
+
+    public IReturnable Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9> callback)
+    {
+        var hookMethod = _hookBuilder.CreateCallbackHook(callback);
 
         return _hookManager.ApplyHook(hookMethod);
     }

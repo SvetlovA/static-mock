@@ -26,7 +26,7 @@ public class SetupWithContextTests
         Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
-        }).Returns(default);
+        }).Returns(default(int));
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -65,7 +65,7 @@ public class SetupWithContextTests
             context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)), () =>
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameters(2, new []{ 0 }));
-        }).Returns(default);
+        }).Returns(default(int));
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -92,7 +92,7 @@ public class SetupWithContextTests
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Callback(() => expectedValue);
+        }).Returns<int>(_ => expectedValue);
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -103,7 +103,7 @@ public class SetupWithContextTests
         Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
-        }).Callback(() => default);
+        }).Returns<int>(_ => default);
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -116,7 +116,7 @@ public class SetupWithContextTests
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Callback(() => expectedValue);
+        }).Returns<int>(_ => expectedValue);
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -131,7 +131,7 @@ public class SetupWithContextTests
         {
             var actualValue = instance.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Callback(() => expectedValue);
+        }).Returns<int>(_ => expectedValue);
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 
@@ -143,7 +143,7 @@ public class SetupWithContextTests
         Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
         {
             Assert.Throws<Exception>(() => instance.TestMethodReturnWithParameter(2));
-        }).Callback(() => default);
+        }).Returns<int>(_ => default);
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 
@@ -157,7 +157,7 @@ public class SetupWithContextTests
         {
             var actualValue = instance.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Callback(() => expectedValue);
+        }).Returns<int>(_ => expectedValue);
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 

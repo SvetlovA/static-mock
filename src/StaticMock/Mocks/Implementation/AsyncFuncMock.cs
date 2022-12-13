@@ -1,6 +1,5 @@
 ﻿using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
-using StaticMock.Mocks.Callback;
 using StaticMock.Mocks.Returns;
 
 namespace StaticMock.Mocks.Implementation;
@@ -26,15 +25,6 @@ internal class AsyncFuncMock<TReturnValue> : FuncMock<Task<TReturnValue>>, IAsyn
     {
         var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
         using (returnService.ReturnsAsync(value))
-        {
-            _action();
-        }
-    }
-
-    public void CallbackAsync(Func<TReturnValue> callback)
-    {
-        var callbackService = new CallbackMock(_hookBuilder, _hookManager);
-        using (callbackService.CallbackAsync(callback))
         {
             _action();
         }

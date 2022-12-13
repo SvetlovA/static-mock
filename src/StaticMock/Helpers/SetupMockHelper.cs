@@ -13,6 +13,8 @@ namespace StaticMock.Helpers;
 
 internal static class SetupMockHelper
 {
+    private const BindingFlags DefaultMethodBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
+
     public static void SetupDefault(MethodBase methodToReplace, Action action)
     {
         var injectionMethod = () => { };
@@ -55,8 +57,8 @@ internal static class SetupMockHelper
         };
     }
 
-    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
-        Expression<Func<SetupContext, TReturnValue>> methodGetExpression)
+    public static MockSetupProperties GetMockSetupProperties<TDelegate>(
+        Expression<TDelegate> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
         var setupContext = new SetupContext();
@@ -105,12 +107,12 @@ internal static class SetupMockHelper
 
         if (originalMethodInfo.ReturnType == typeof(void))
         {
-            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
+            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
         var context = new SetupContext();
 
-        return new FuncMock<object>(
+        return new FuncMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
@@ -127,24 +129,24 @@ internal static class SetupMockHelper
         var originalMethodInfo = originalPropertyInfo.GetMethod;
         if (originalMethodInfo.ReturnType == typeof(void))
         {
-            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupVoid)} setup");
+            throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
         var context = new SetupContext();
 
-        return new FuncMock<object>(
+        return new FuncMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
     }
 
-    public static IVoidMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IActionMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
         var context = new SetupContext();
 
-        return new VoidMock(
+        return new ActionMock(
             new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
             new HookManagerFactory(originalMethodInfo).CreateHookManager(),
             action);
@@ -165,8 +167,13 @@ internal static class SetupMockHelper
 
     private static MethodInfo GetOriginalMethodInfo(Type type, string methodName, SetupProperties? setupProperties)
     {
-        var bindingFlags = setupProperties?.BindingFlags;
-        var originalMethodInfo = bindingFlags.HasValue ? type.GetMethod(methodName, bindingFlags.Value) : type.GetMethod(methodName);
+        var originalMethodInfo = type.GetMethod(
+            methodName,
+            setupProperties?.BindingFlags ?? DefaultMethodBindingFlags,
+            null,
+            CallingConventions.Any,
+            setupProperties?.MethodParametersTypes ?? Array.Empty<Type>(),
+            null) ?? type.GetMethod(methodName);
 
         if (originalMethodInfo == null)
         {

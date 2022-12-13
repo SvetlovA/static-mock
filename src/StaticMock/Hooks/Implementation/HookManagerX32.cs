@@ -9,9 +9,9 @@ internal class HookManagerX32 : IHookManager
 
     private readonly MethodBase _originalMethod;
 
-    public HookManagerX32(MethodBase method)
+    public HookManagerX32(MethodBase originalMethod)
     {
-        _originalMethod = method ?? throw new ArgumentNullException(nameof(method));
+        _originalMethod = originalMethod ?? throw new ArgumentNullException(nameof(originalMethod));
     }
 
     public unsafe IReturnable ApplyHook(MethodBase hookMethod)

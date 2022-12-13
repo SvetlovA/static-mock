@@ -171,7 +171,7 @@ public class NestedMockingTests
                 Assert.AreEqual(expectedChildResult, actualChildResult);
                 var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
                 Assert.AreEqual(expectedParentResult, actualParentResult);
-            }).Callback(() => expectedChildResult);
-        }).Callback(() => expectedParentResult);
+            }).Returns<int>(x => expectedChildResult);
+        }).Returns(() => expectedParentResult);
     }
 }
