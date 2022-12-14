@@ -24,6 +24,7 @@ jobs:
           path: packages/*.nupkg
   githubPublish:
       runs-on: ubuntu-latest
+      needs: pack
       steps:
       - uses: actions/download-artifact@v3
         with:
@@ -34,6 +35,7 @@ jobs:
         run: dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}  --source "github"
   nugetPublish:
       runs-on: ubuntu-latest
+      needs: pack
       steps:
       - uses: actions/download-artifact@v3
         with:
