@@ -65,7 +65,7 @@ Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
     var actualResult = StaticClass.MethodToMock(1);
     Assert.AreNotEqual(originalResult, actualResult);
     Assert.AreEqual(expectedResult, actualResult);
-}).Callback<int>(arument =>
+}).Callback<int>(argument =>
 {
     DoSomething(argument);
 });
