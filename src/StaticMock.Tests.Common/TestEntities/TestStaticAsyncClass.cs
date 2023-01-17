@@ -1,6 +1,9 @@
-﻿namespace StaticMock.Tests.TestEntities;
+﻿using System;
+using System.Threading.Tasks;
 
-internal static class TestStaticAsyncClass
+namespace StaticMock.Tests.Common.TestEntities;
+
+public static class TestStaticAsyncClass
 {
     public static Task TestMethodReturnTask()
     {

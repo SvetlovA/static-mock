@@ -1,4 +1,7 @@
-﻿namespace StaticMock.Tests.TestEntities;
+﻿using System;
+using System.Threading.Tasks;
+
+namespace StaticMock.Tests.Common.TestEntities;
 
 public class TestInstance : IEquatable<TestInstance>
 {
@@ -67,12 +70,7 @@ public class TestInstance : IEquatable<TestInstance>
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != GetType()) return false;
-        return Equals((TestInstance) obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(IntProperty, ObjectProperty);
+        return Equals((TestInstance)obj);
     }
 
     private int PrivateIntProperty { get; set; }

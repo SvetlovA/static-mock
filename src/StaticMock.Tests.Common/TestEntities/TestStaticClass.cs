@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Tests.TestEntities;
+﻿using System;
+
+namespace StaticMock.Tests.Common.TestEntities;
 
 public static class TestStaticClass
 {

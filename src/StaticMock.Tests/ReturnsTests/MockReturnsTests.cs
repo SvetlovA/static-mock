@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using NUnit.Framework;
 using StaticMock.Entities;
-using StaticMock.Tests.TestEntities;
+using StaticMock.Tests.Common.TestEntities;
 
 namespace StaticMock.Tests.ReturnsTests;
 

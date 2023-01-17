@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using StaticMock.Tests.TestEntities;
+using StaticMock.Tests.Common.TestEntities;
 
 namespace StaticMock.Tests.ReturnsTests;
 
