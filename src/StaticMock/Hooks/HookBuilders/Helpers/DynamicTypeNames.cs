@@ -2,11 +2,6 @@
 
 internal class DynamicTypeNames
 {
-    public const string VoidHookAssemblyName = "VoidHookAssembly";
-    public const string VoidHookModuleName = "VoidHookModule";
-    public const string VoidHookTypeName = "VoidHookType";
-    public const string VoidHookMethodName = "VoidHookMethod";
-
     public const string ReturnHookAssemblyName = "ReturnHookAssembly";
     public const string ReturnHookModuleName = "ReturnHookModule";
     public const string ReturnHookTypeName = "ReturnHookType";

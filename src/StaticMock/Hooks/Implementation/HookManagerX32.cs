@@ -5,29 +5,24 @@ namespace StaticMock.Hooks.Implementation;
 
 internal class HookManagerX32 : IHookManager
 {
-    private MethodMemoryInfoX32 _methodMemoryInfoX32;
+    private FunctionMemoryInfoX32 _functionMemoryInfoX32;
 
     private readonly MethodBase _originalMethod;
 
     public HookManagerX32(MethodBase originalMethod)
     {
-        _originalMethod = originalMethod ?? throw new ArgumentNullException(nameof(originalMethod));
+        _originalMethod = originalMethod;
     }
 
-    public unsafe IReturnable ApplyHook(MethodBase hookMethod)
+    public unsafe IReturnable ApplyHook(MethodInfo transpiler)
     {
-        if (hookMethod == null)
-        {
-            throw new ArgumentNullException(nameof(hookMethod));
-        }
-
         var methodPtr = (byte*) _originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
 
         SaveMethodMemoryInfo(methodPtr);
 
         //push replacementSite
         *methodPtr = 0x68;
-        *(uint*) (methodPtr + 1) = (uint) hookMethod.MethodHandle.GetFunctionPointer().ToInt32();
+        *(uint*) (methodPtr + 1) = (uint) transpiler.MethodHandle.GetFunctionPointer().ToInt32();
 
         //ret
         *(methodPtr + 5) = 0xC3;
@@ -39,9 +34,9 @@ internal class HookManagerX32 : IHookManager
     {
         var methodPtr = (byte*) _originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
 
-        *methodPtr = _methodMemoryInfoX32.Byte1;
-        *(uint*) (methodPtr + 1) = _methodMemoryInfoX32.MethodMemoryValue;
-        *(methodPtr + 5) = _methodMemoryInfoX32.Byte1AfterMethod;
+        *methodPtr = _functionMemoryInfoX32.Byte1;
+        *(uint*) (methodPtr + 1) = _functionMemoryInfoX32.FunctionMemoryValue;
+        *(methodPtr + 5) = _functionMemoryInfoX32.Byte1AfterFunction;
     }
 
     public void Dispose()
@@ -51,8 +46,8 @@ internal class HookManagerX32 : IHookManager
 
     private unsafe void SaveMethodMemoryInfo(byte* methodPtr)
     {
-        _methodMemoryInfoX32.Byte1 = *methodPtr;
-        _methodMemoryInfoX32.MethodMemoryValue = *(uint*) (methodPtr + 1);
-        _methodMemoryInfoX32.Byte1AfterMethod = *(methodPtr + 5);
+        _functionMemoryInfoX32.Byte1 = *methodPtr;
+        _functionMemoryInfoX32.FunctionMemoryValue = *(uint*) (methodPtr + 1);
+        _functionMemoryInfoX32.Byte1AfterFunction = *(methodPtr + 5);
     }
 }

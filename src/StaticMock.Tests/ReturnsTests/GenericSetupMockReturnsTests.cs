@@ -10,7 +10,7 @@ public class GenericSetupMockReturnsTests
     public void TestGenericSetupReturnsWithTestMethodReturn1WithoutParameters()
     {
         var originalResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-        var expectedResult = 2;
+        const int expectedResult = 2;
 
         Mock.Setup(
                 () => TestStaticClass.TestMethodReturn1WithoutParameters(),
@@ -22,6 +22,9 @@ public class GenericSetupMockReturnsTests
                     Assert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
+
+        var afterMockActualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
+        Assert.AreEqual(originalResult, afterMockActualResult);
     }
 
     [Test]
