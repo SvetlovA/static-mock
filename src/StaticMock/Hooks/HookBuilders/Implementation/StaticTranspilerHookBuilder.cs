@@ -1,16 +1,18 @@
-﻿using StaticMock.Entities.Context;
+﻿using System.Reflection;
+using HarmonyLib;
+using StaticMock.Entities.Context;
 using StaticMock.Hooks.HookBuilders.Entities;
 using StaticMock.Hooks.HookBuilders.Helpers;
-using System.Reflection;
+using StaticMock.Hooks.HookBuilders.Transpilers;
 
 namespace StaticMock.Hooks.HookBuilders.Implementation;
 
-internal class InstanceHookBuilder : IHookBuilder
+internal class StaticTranspilerHookBuilder : IHookBuilder
 {
     private readonly IReadOnlyList<ItParameterExpression> _itParameterExpressions;
     private readonly MethodInfo _originalMethodInfo;
 
-    public InstanceHookBuilder(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    public StaticTranspilerHookBuilder(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         _itParameterExpressions = itParameterExpressions;
         _originalMethodInfo = originalMethodInfo;
@@ -76,86 +78,110 @@ internal class InstanceHookBuilder : IHookBuilder
         return CreateCallbackHookInternal(callback);
     }
 
-    public MethodInfo CreateReturnHook<TReturn>(TReturn value) =>
-        HookBuilderHelper.CreateReturnHook(value, HookMethodType.Instance, _itParameterExpressions);
+    public MethodInfo CreateReturnHook<TReturn>(TReturn value)
+    {
+        ReturnHookTranspiler<TReturn>.ReturnValue = value;
+        ReturnHookTranspiler<TReturn>.HookMethodType = HookMethodType.Static;
+        ReturnHookTranspiler<TReturn>.ItParameterExpressions = _itParameterExpressions;
+
+        return AccessTools.Method(typeof(ReturnHookTranspiler<TReturn>), nameof(ReturnHookTranspiler<TReturn>.Transpiler));
+    }
 
     public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
     {
         ValidationHelper.ValidateReturnType(_originalMethodInfo.ReturnType, getValue.Method.ReturnType);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg, TReturn>(Func<TArg, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TReturn>(Func<TArg1, TArg2, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TReturn>(Func<TArg1, TArg2, TArg3, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
     public MethodInfo CreateReturnHook<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturn> getValue)
     {
         ValidationHelper.Validate(_originalMethodInfo, getValue.Method);
-        return CreateReturnHookInternal<TReturn>(getValue);
+        return CreateReturnHookInternal(getValue);
     }
 
-    public MethodInfo CreateReturnAsyncHook<TReturn>(TReturn value) =>
-        HookBuilderHelper.CreateReturnAsyncHook(value, HookMethodType.Instance, _itParameterExpressions);
+    public MethodInfo CreateReturnAsyncHook<TReturn>(TReturn value)
+    {
+        ReturnAsyncHookTranspiler<TReturn>.ReturnValue = value;
+        ReturnAsyncHookTranspiler<TReturn>.HookMethodType = HookMethodType.Static;
+        ReturnAsyncHookTranspiler<TReturn>.ItParameterExpressions = _itParameterExpressions;
 
-    public MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new() =>
-        HookBuilderHelper.CreateThrowsHook(exception, HookMethodType.Instance, _itParameterExpressions);
+        return AccessTools.Method(typeof(ReturnAsyncHookTranspiler<TReturn>), nameof(ReturnAsyncHookTranspiler<TReturn>.Transpiler));
+    }
 
-    private MethodInfo CreateReturnHookInternal<TReturn>(object getValue) =>
-        HookBuilderHelper.CreateReturnHook<TReturn>(
-            _originalMethodInfo,
-            getValue,
-            HookMethodType.Instance,
-            _itParameterExpressions);
+    public MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new()
+    {
+        ThrowsHookTranspiler<TException>.Exception = exception;
+        ThrowsHookTranspiler<TException>.HookMethodType = HookMethodType.Static;
+        ThrowsHookTranspiler<TException>.ItParameterExpressions = _itParameterExpressions;
 
-    private MethodInfo CreateCallbackHookInternal(object callback) =>
-        HookBuilderHelper.CreateCallbackHook(
-            _originalMethodInfo,
-            callback,
-            HookMethodType.Instance,
-            _itParameterExpressions);
+        return AccessTools.Method(typeof(ThrowsHookTranspiler<TException>), nameof(ThrowsHookTranspiler<TException>.Transpiler));
+    }
+
+    private MethodInfo CreateReturnHookInternal(object getValue)
+    {
+        ReturnHookTranspiler.OriginalMethodInfo = _originalMethodInfo;
+        ReturnHookTranspiler.GetValue = getValue;
+        ReturnHookTranspiler.HookMethodType = HookMethodType.Static;
+        ReturnHookTranspiler.ItParameterExpressions = _itParameterExpressions;
+
+        return AccessTools.Method(typeof(ReturnHookTranspiler), nameof(ReturnHookTranspiler.Transpiler));
+    }
+
+    private MethodInfo CreateCallbackHookInternal(object callback)
+    {
+        CallbackHookTranspiler.OriginalMethodInfo = _originalMethodInfo;
+        CallbackHookTranspiler.Callback = callback;
+        CallbackHookTranspiler.HookMethodType = HookMethodType.Static;
+        CallbackHookTranspiler.ItParameterExpressions = _itParameterExpressions;
+
+        return AccessTools.Method(typeof(CallbackHookTranspiler), nameof(CallbackHookTranspiler.Transpiler));
+    }
 }

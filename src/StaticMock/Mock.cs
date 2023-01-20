@@ -7,6 +7,7 @@ using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
 using StaticMock.Mocks.Implementation;
+using StaticMock.Helpers.Entities;
 
 namespace StaticMock;
 
@@ -128,6 +129,13 @@ public static class Mock
             throw new Exception("Default setup supported only for void methods");
         }
 
-        SetupMockHelper.SetupDefault(methodExpression.Method, action);
+        var context = new SetupContext();
+
+        var actionMock = new ActionMock(
+            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            action);
+
+        actionMock.Callback(() => { });
     }
 }

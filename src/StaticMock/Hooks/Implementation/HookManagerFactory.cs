@@ -11,8 +11,8 @@ internal class HookManagerFactory : IHookManagerFactory
         _originalMethod = originalMethod;
     }
 
-    public IHookManager CreateHookManager() =>
-        IntPtr.Size == sizeof(int)
-            ? (IHookManager) new HookManagerX32(_originalMethod)
-            : new HookManagerX64(_originalMethod);
+    public IHookManager CreateHookManager() => new HarmonyHookManager(_originalMethod);
+    //IntPtr.Size == sizeof(int)
+    //    ? (IHookManager) new HookManagerX32(_originalMethod)
+    //    : new HookManagerX64(_originalMethod);
 }

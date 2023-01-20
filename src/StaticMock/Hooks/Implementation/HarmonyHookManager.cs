@@ -5,6 +5,8 @@ namespace StaticMock.Hooks.Implementation;
 
 internal class HarmonyHookManager : IHookManager
 {
+    //private static readonly SemaphoreSlim Semaphore = new(1);
+
     private readonly string _harmonyId = $"{nameof(HarmonyHookManager)}{Guid.NewGuid()}";
     private readonly PatchProcessor _patchProcessor;
 
@@ -16,6 +18,8 @@ internal class HarmonyHookManager : IHookManager
 
     public IReturnable ApplyHook(MethodInfo transpiler)
     {
+        //Semaphore.Wait();
+
         _patchProcessor.AddTranspiler(new HarmonyMethod(transpiler));
         _patchProcessor.Patch();
 
@@ -25,40 +29,12 @@ internal class HarmonyHookManager : IHookManager
     public void Return()
     {
         _patchProcessor.Unpatch(HarmonyPatchType.Transpiler, _harmonyId);
+
+        //Semaphore.Release();
     }
 
     public void Dispose()
     {
         Return();
     }
-
-    //public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    //{
-    //    var hookAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName
-    //    {
-    //        Name = DynamicTypeNames.ReturnHookAssemblyName
-    //    }, AssemblyBuilderAccess.Run);
-
-    //    var hookModule = hookAssembly.DefineDynamicModule(DynamicTypeNames.ReturnHookModuleName);
-    //    var hookType = hookModule.DefineType(DynamicTypeNames.ReturnHookTypeName, TypeAttributes.Public);
-    //    var hookStaticField = hookType.DefineField(
-    //        DynamicTypeNames.ReturnHookStaticFieldName,
-    //        typeof(int),
-    //        FieldAttributes.Private | FieldAttributes.Static);
-
-    //    //var hookMethod = hookType.DefineMethod(
-    //    //    DynamicTypeNames.ReturnHookMethodName,
-    //    //    MethodAttributes.Public | MethodAttributes.Static,
-    //    //    typeof(int),
-    //    //    Array.Empty<Type>());
-
-    //    yield return new CodeInstruction(OpCodes.Ldsfld, hookStaticField);
-    //    yield return new CodeInstruction(OpCodes.Ret);
-
-    //    var type = hookType.CreateType();
-    //    var hookFieldInfo = type.GetField(hookStaticField.Name, BindingFlags.Static | BindingFlags.NonPublic) ??
-    //                        throw new Exception($"{hookStaticField.Name} not found in type {hookType.Name}");
-
-    //    hookFieldInfo.SetValue(null, 2);
-    //}
 }

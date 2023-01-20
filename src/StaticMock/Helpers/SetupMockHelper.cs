@@ -15,15 +15,6 @@ internal static class SetupMockHelper
 {
     private const BindingFlags DefaultMethodBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
 
-    public static void SetupDefault(MethodBase methodToReplace, Action action)
-    {
-        var injectionMethod = () => { };
-        var injectionServiceFactory = new HookManagerFactory(methodToReplace);
-        using var injectionService = injectionServiceFactory.CreateHookManager();
-        injectionService.ApplyHook(injectionMethod.Method);
-        action();
-    }
-
     public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
         Expression<Func<TReturnValue>> methodGetExpression)
     {
@@ -161,7 +152,14 @@ internal static class SetupMockHelper
             throw new Exception("Default setup supported only for void methods");
         }
 
-        SetupDefault(originalMethodInfo, action);
+        var context = new SetupContext();
+
+        var actionMock = new ActionMock(
+            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            action);
+
+        actionMock.Callback(() => { });
     }
 
 

@@ -2,7 +2,7 @@
 
 namespace StaticMock.Hooks.HookBuilders.Helpers
 {
-    internal static class HookValidationHelper
+    internal static class ValidationHelper
     {
         public static void Validate(MethodInfo originalMethodInfo, MethodInfo hookedMethodInfo)
         {

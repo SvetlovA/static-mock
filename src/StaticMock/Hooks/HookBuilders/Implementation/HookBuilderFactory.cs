@@ -18,9 +18,9 @@ internal class HookBuilderFactory : IHookBuilderFactory
     {
         if (_originalMethodInfo.IsStatic)
         {
-            return new StaticHookBuilder(_originalMethodInfo, _itParameterExpressions);
+            return new StaticTranspilerHookBuilder(_originalMethodInfo, _itParameterExpressions); //new StaticHookBuilder(_originalMethodInfo, _itParameterExpressions);
         }
 
-        return new InstanceHookBuilder(_originalMethodInfo, _itParameterExpressions);
+        return new InstanceTranspilerHookBuilder(_originalMethodInfo, _itParameterExpressions); //new InstanceHookBuilder(_originalMethodInfo, _itParameterExpressions);
     }
 }
