@@ -4,7 +4,6 @@ using StaticMock.Tests.Common.TestEntities;
 namespace StaticMock.Tests;
 
 [TestFixture]
-[Ignore("Need to change implementation of static trnspilers to support creation of more than 2 transpilers of same method")]
 public class NestedMockingTests
 {
     [Test]
