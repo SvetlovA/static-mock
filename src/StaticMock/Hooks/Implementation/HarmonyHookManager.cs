@@ -1,11 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Collections.Concurrent;
+using System.Reflection;
 using HarmonyLib;
 
 namespace StaticMock.Hooks.Implementation;
 
 internal class HarmonyHookManager : IHookManager
 {
-    private static readonly IDictionary<MethodBase, IHookManager> HookManagerMap = new Dictionary<MethodBase, IHookManager>();
+    private static readonly IDictionary<MethodBase, IHookManager> HookManagerMap = new ConcurrentDictionary<MethodBase, IHookManager>();
 
     private readonly string _harmonyId = $"{nameof(HarmonyHookManager)}{Guid.NewGuid()}";
     private readonly PatchProcessor _patchProcessor;
