@@ -1,60 +1,83 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 using HarmonyLib;
+using Patch = StaticMock.Hooks.Entities.Patch;
 
 namespace StaticMock.Hooks.Implementation;
 
 internal class HarmonyHookManager : IHookManager
 {
-    private static readonly IDictionary<MethodBase, IHookManager> HookManagerMap = new ConcurrentDictionary<MethodBase, IHookManager>();
+    private static readonly IDictionary<MethodBase, Stack<Patch>> PatchMap = new ConcurrentDictionary<MethodBase, Stack<Patch>>();
 
     private readonly string _harmonyId = $"{nameof(HarmonyHookManager)}{Guid.NewGuid()}";
-    private readonly PatchProcessor _patchProcessor;
     private readonly MethodBase _originalMethod;
-
-    private IHookManager? _hookManagerToApply;
-    private MethodInfo? _transpiler;
+    private readonly Patch _patch;
 
     public HarmonyHookManager(MethodBase originalMethod)
     {
         var harmony = new Harmony(_harmonyId);
-        _patchProcessor = harmony.CreateProcessor(originalMethod);
+        var patchProcessor = harmony.CreateProcessor(originalMethod);
+
         _originalMethod = originalMethod;
+        _patch = new Patch { PatchProcessor = patchProcessor, HarmonyId = _harmonyId };
     }
 
     public IReturnable ApplyHook(MethodInfo transpiler)
     {
-        if (HookManagerMap.TryGetValue(_originalMethod, out var hookManager))
+        if (_patch.PatchProcessor == null)
         {
-            hookManager.Return();
-            _hookManagerToApply = hookManager;
-            _transpiler = transpiler;
+            throw new ArgumentNullException(nameof(_patch.PatchProcessor));
         }
 
-        _patchProcessor.AddTranspiler(new HarmonyMethod(transpiler));
-        _patchProcessor.Patch();
+        Monitor.Enter(_originalMethod);
+        if (PatchMap.TryGetValue(_originalMethod, out var patchStack))
+        {
+            if (patchStack.TryPeek(out var patch))
+            {
+                patch.PatchProcessor?.Unpatch(HarmonyPatchType.Transpiler, patch.HarmonyId);
+            }
+        }
 
-        HookManagerMap[_originalMethod] = this;
+        _patch.PatchProcessor.AddTranspiler(new HarmonyMethod(transpiler));
+        _patch.PatchProcessor.Patch();
+        _patch.Transpiler = transpiler;
+
+        if (PatchMap.ContainsKey(_originalMethod))
+        {
+            PatchMap[_originalMethod].Push(_patch);
+        }
+        else
+        {
+            PatchMap[_originalMethod] = new Stack<Patch>(new [] { _patch });
+        }
 
         return this;
     }
 
     public void Return()
     {
-        _patchProcessor.Unpatch(HarmonyPatchType.Transpiler, _harmonyId);
+        if (PatchMap.TryGetValue(_originalMethod, out var patchStack))
+        {
+            if (patchStack.TryPop(out var patchToReturn))
+            {
+                patchToReturn.PatchProcessor?.Unpatch(HarmonyPatchType.Transpiler, patchToReturn.HarmonyId);
+                if (patchStack.TryPeek(out var patchToApply))
+                {
+                    patchToApply.PatchProcessor?.AddTranspiler(new HarmonyMethod(patchToApply.Transpiler));
+                    patchToApply.PatchProcessor?.Patch();
+                }
+            }
+            else
+            {
+                PatchMap.Remove(_originalMethod);
+            }
+        }
+
+        Monitor.Exit(_originalMethod);
     }
 
     public void Dispose()
     {
         Return();
-
-        if (_hookManagerToApply == null)
-        {
-            HookManagerMap.Remove(_originalMethod);
-        }
-        else
-        {
-            _hookManagerToApply.ApplyHook(_transpiler);
-        }
     }
 }
