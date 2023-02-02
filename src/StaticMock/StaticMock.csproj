@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
   </ItemGroup>
 
 </Project>

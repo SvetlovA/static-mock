@@ -4,6 +4,7 @@ using System.Reflection;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
 using StaticMock.Helpers.Entities;
+using StaticMock.Hooks.Entities;
 using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
@@ -102,10 +103,15 @@ internal static class SetupMockHelper
         }
 
         var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions
+        };
 
         return new FuncMock(
-            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
             action);
     }
 
@@ -124,10 +130,15 @@ internal static class SetupMockHelper
         }
 
         var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions
+        };
 
         return new FuncMock(
-            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
             action);
     }
 
@@ -136,10 +147,15 @@ internal static class SetupMockHelper
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
         var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions
+        };
 
         return new ActionMock(
-            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
             action);
     }
 
@@ -153,10 +169,15 @@ internal static class SetupMockHelper
         }
 
         var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions
+        };
 
         var actionMock = new ActionMock(
-            new HookBuilderFactory(originalMethodInfo, context.State.ItParameterExpressions).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo).CreateHookManager(),
+            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
+            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
             action);
 
         actionMock.Callback(() => { });

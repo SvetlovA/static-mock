@@ -1,26 +1,30 @@
 ﻿using System.Reflection;
-using StaticMock.Entities.Context;
+using StaticMock.Entities.Enums;
+using StaticMock.Hooks.Entities;
 
 namespace StaticMock.Hooks.HookBuilders.Implementation;
 
 internal class HookBuilderFactory : IHookBuilderFactory
 {
     private readonly MethodInfo _originalMethodInfo;
-    private readonly IReadOnlyList<ItParameterExpression> _itParameterExpressions;
+    private readonly HookSettings _settings;
 
-    public HookBuilderFactory(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    public HookBuilderFactory(MethodInfo originalMethodInfo, HookSettings settings)
     {
         _originalMethodInfo = originalMethodInfo;
-        _itParameterExpressions = itParameterExpressions;
+        _settings = settings;
     }
 
-    public IHookBuilder CreateHookBuilder()
-    {
-        if (_originalMethodInfo.IsStatic)
+    public IHookBuilder CreateHookBuilder() =>
+        _settings.HookManagerType switch
         {
-            return new StaticTranspilerHookBuilder(_originalMethodInfo, _itParameterExpressions); //new StaticHookBuilder(_originalMethodInfo, _itParameterExpressions);
-        }
-
-        return new InstanceTranspilerHookBuilder(_originalMethodInfo, _itParameterExpressions); //new InstanceHookBuilder(_originalMethodInfo, _itParameterExpressions);
-    }
+            HookManagerType.Harmony => _originalMethodInfo.IsStatic
+                ? new StaticTranspilerHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions)
+                : new InstanceTranspilerHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions),
+            HookManagerType.Native or HookManagerType.MonoMod => _originalMethodInfo.IsStatic
+                ? new StaticHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions)
+                : new InstanceHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions),
+            _ => throw new ArgumentOutOfRangeException(nameof(_settings.HookManagerType), _settings.HookManagerType,
+                $"{_settings.HookManagerType} not exists in {nameof(HookManagerType)}")
+        };
 }
