@@ -16,17 +16,7 @@ internal class MonoModHookManager : IHookManager
 
     public IReturnable ApplyHook(MethodInfo transpiler)
     {
-        if (_originalMethod.IsStatic)
-        {
-            _hook = new Hook(_originalMethod, transpiler);
-        }
-        else
-        {
-            var declaringType = _originalMethod.DeclaringType;
-            var declaringInstance = Activator.CreateInstance(declaringType);
-            _hook = new Hook(_originalMethod, transpiler, declaringInstance);
-        }
-
+        _hook = new Detour(_originalMethod, transpiler);
 
         return this;
     }

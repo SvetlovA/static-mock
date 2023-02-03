@@ -78,7 +78,7 @@ internal static class HookBuilderHelper
             DynamicTypeNames.ExceptionHookMethodName,
             GetMethodAttributes(hookMethodType),
             originalMethod.ReturnType,
-            GetHookMethodParameters(hookMethodType, originalMethod));
+            originalMethod.GetParameters().Select(x => x.ParameterType).ToArray());
 
         return GetHookedMethod(
             hookType,
@@ -113,7 +113,7 @@ internal static class HookBuilderHelper
             DynamicTypeNames.ReturnHookMethodName,
             GetMethodAttributes(hookMethodType),
             hookReturnType,
-            GetHookMethodParameters(hookMethodType, originalMethod));
+            originalMethod.GetParameters().Select(x => x.ParameterType).ToArray());
 
         return GetHookedMethod(
             hookType,
@@ -144,7 +144,7 @@ internal static class HookBuilderHelper
             executable.GetType(),
             FieldAttributes.Private | FieldAttributes.Static);
 
-        var hookMethodParameterTypes = GetHookMethodParameters(hookMethodType, originalMethod);
+        var hookMethodParameterTypes = originalMethod.GetParameters().Select(x => x.ParameterType).ToArray();
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ReturnHookMethodName,
@@ -293,18 +293,4 @@ internal static class HookBuilderHelper
 
         return bindingFlags;
     }
-
-    private static Type[] GetHookMethodParameters(
-        HookMethodType hookMethodType,
-        MethodBase originalMethod) =>
-        hookMethodType switch
-        {
-            HookMethodType.Static =>
-                originalMethod.GetParameters().Select(x => x.ParameterType).ToArray(),
-            HookMethodType.Instance =>
-                new[] { originalMethod.DeclaringType }
-                    .Concat(originalMethod.GetParameters().Select(x => x.ParameterType)).ToArray(),
-            _ => throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType,
-                $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}")
-        };
 }
