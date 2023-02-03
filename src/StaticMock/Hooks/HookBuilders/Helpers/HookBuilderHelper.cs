@@ -12,7 +12,7 @@ internal static class HookBuilderHelper
         object callback,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateHook(
+        CreateExecutableHook(
             originalMethodInfo,
             callback,
             hookMethodType,
@@ -20,20 +20,24 @@ internal static class HookBuilderHelper
             typeof(void));
 
     public static MethodInfo CreateReturnHook<TReturn>(
+        MethodBase originalMethod,
         TReturn value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateHook(
+        CreateValueHook(
+            originalMethod,
             value,
             hookMethodType,
             itParameterExpressions,
             typeof(TReturn));
 
     public static MethodInfo CreateReturnAsyncHook<TReturn>(
+        MethodBase originalMethod,
         TReturn value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateHook(
+        CreateValueHook(
+            originalMethod,
             Task.FromResult(value),
             hookMethodType,
             itParameterExpressions,
@@ -44,7 +48,7 @@ internal static class HookBuilderHelper
         object getValue,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) =>
-        CreateHook(
+        CreateExecutableHook(
             originalMethodInfo,
             getValue,
             hookMethodType,
@@ -52,6 +56,7 @@ internal static class HookBuilderHelper
             typeof(TReturn));
 
     public static MethodInfo CreateThrowsHook<TException>(
+        MethodInfo originalMethod,
         TException exception,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions) where TException : Exception, new()
@@ -72,8 +77,8 @@ internal static class HookBuilderHelper
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ExceptionHookMethodName,
             GetMethodAttributes(hookMethodType),
-            typeof(void),
-            itParameterExpressions.Select(x => x.ParameterType).ToArray());
+            originalMethod.ReturnType,
+            GetHookMethodParameters(hookMethodType, originalMethod));
 
         return GetHookedMethod(
             hookType,
@@ -85,7 +90,8 @@ internal static class HookBuilderHelper
             itParameterExpressions);
     }
 
-    private static MethodInfo CreateHook(
+    private static MethodInfo CreateValueHook(
+        MethodBase originalMethod,
         object? value,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
@@ -107,7 +113,7 @@ internal static class HookBuilderHelper
             DynamicTypeNames.ReturnHookMethodName,
             GetMethodAttributes(hookMethodType),
             hookReturnType,
-            itParameterExpressions.Select(x => x.ParameterType).ToArray());
+            GetHookMethodParameters(hookMethodType, originalMethod));
 
         return GetHookedMethod(
             hookType,
@@ -119,8 +125,8 @@ internal static class HookBuilderHelper
             itParameterExpressions);
     }
 
-    private static MethodInfo CreateHook(
-        MethodBase originalMethodInfo,
+    private static MethodInfo CreateExecutableHook(
+        MethodBase originalMethod,
         object executable,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
@@ -138,7 +144,7 @@ internal static class HookBuilderHelper
             executable.GetType(),
             FieldAttributes.Private | FieldAttributes.Static);
 
-        var hookMethodParameterTypes = originalMethodInfo.GetParameters().Select(x => x.ParameterType).ToArray();
+        var hookMethodParameterTypes = GetHookMethodParameters(hookMethodType, originalMethod);
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ReturnHookMethodName,
@@ -162,7 +168,6 @@ internal static class HookBuilderHelper
                 {
                     executableType = executableType.GetGenericTypeDefinition();
                 }
-
 
                 if (executableType != typeof(Action) && executableType != typeof(Func<>))
                 {
@@ -288,4 +293,18 @@ internal static class HookBuilderHelper
 
         return bindingFlags;
     }
+
+    private static Type[] GetHookMethodParameters(
+        HookMethodType hookMethodType,
+        MethodBase originalMethod) =>
+        hookMethodType switch
+        {
+            HookMethodType.Static =>
+                originalMethod.GetParameters().Select(x => x.ParameterType).ToArray(),
+            HookMethodType.Instance =>
+                new[] { originalMethod.DeclaringType }
+                    .Concat(originalMethod.GetParameters().Select(x => x.ParameterType)).ToArray(),
+            _ => throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType,
+                $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}")
+        };
 }

@@ -9,6 +9,6 @@ public class AssemblySetup
     [OneTimeSetUp]
     public void Setup()
     {
-        Mock.SetHookManagerType(HookManagerType.Harmony);
+        Mock.SetHookManagerType(HookManagerType.MonoMod);
     }
 }

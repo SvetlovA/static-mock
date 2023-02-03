@@ -77,7 +77,11 @@ internal class StaticHookBuilder : IHookBuilder
     }
 
     public MethodInfo CreateReturnHook<TReturn>(TReturn value) =>
-        HookBuilderHelper.CreateReturnHook(value, HookMethodType.Static, _itParameterExpressions);
+        HookBuilderHelper.CreateReturnHook(
+            _originalMethodInfo,
+            value,
+            HookMethodType.Static,
+            _itParameterExpressions);
 
     public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
     {
@@ -140,10 +144,18 @@ internal class StaticHookBuilder : IHookBuilder
     }
 
     public MethodInfo CreateReturnAsyncHook<TReturn>(TReturn value) =>
-        HookBuilderHelper.CreateReturnAsyncHook(value, HookMethodType.Static, _itParameterExpressions);
+        HookBuilderHelper.CreateReturnAsyncHook(
+            _originalMethodInfo,
+            value,
+            HookMethodType.Static,
+            _itParameterExpressions);
 
     public MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new() =>
-        HookBuilderHelper.CreateThrowsHook(exception, HookMethodType.Static, _itParameterExpressions);
+        HookBuilderHelper.CreateThrowsHook(
+            _originalMethodInfo,
+            exception,
+            HookMethodType.Static,
+            _itParameterExpressions);
 
     private MethodInfo CreateReturnHookInternal<TReturn>(object getValue) =>
         HookBuilderHelper.CreateReturnHook<TReturn>(
