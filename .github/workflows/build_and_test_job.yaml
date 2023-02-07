@@ -1,0 +1,44 @@
+name: build and test
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        type: choice
+        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest. Default: ubuntu-latest'
+        required: true
+        options:
+        - ubuntu-latest
+        - windows-latest
+        - macos-latest
+        default: ubuntu-latest
+      dotnet_version:
+        types: string
+        description: 'Version of dotnet to run. Default: 6.0.x'
+        required: true
+        default: '6.0.x'
+      hook_manager_type:
+        type: coice
+        description: 'Run tests on special hook manager type. Possible hook manager types: Harmony, Native, MonoMod. Default: MonoMod'
+        required: true
+        options:
+        - Harmony
+        - Native
+        - MonoMod
+        default: MonoMod
+jobs:
+  buildAndTest:
+    env:
+      HOOK_MANAGER_TYPE: ${{ github.event.inputs.hook_manager_type }}
+    runs-on: ${{ github.event.inputs.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ github.event.inputs.dotnet_version }}
+    - name: Restore dependencies
+      run: dotnet restore src
+    - name: Build
+      run: dotnet build --configuration Release --no-restore src
+    - name: Test
+      run: dotnet test --no-build --configuration Release --verbosity normal src

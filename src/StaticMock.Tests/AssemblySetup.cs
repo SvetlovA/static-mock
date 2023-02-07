@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using StaticMock.Entities.Enums;
+﻿using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
+using StaticMock.Tests.Settings;
 
 namespace StaticMock.Tests;
 
@@ -9,6 +10,13 @@ public class AssemblySetup
     [OneTimeSetUp]
     public void Setup()
     {
-        Mock.SetHookManagerType(HookManagerType.MonoMod);
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("HOOK_MANAGER_TYPE")}.json", optional: true)
+            .Build();
+
+        var appSettings = AppSettingsReader.ReadSettings(configuration);
+
+        Mock.SetHookManagerType(appSettings.HookManagerType);
     }
 }
