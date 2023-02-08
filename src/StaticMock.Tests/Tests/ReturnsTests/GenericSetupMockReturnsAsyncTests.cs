@@ -1,20 +1,19 @@
 ﻿using NUnit.Framework;
-using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.ReturnsTests;
+namespace StaticMock.Tests.Tests.ReturnsTests;
 
 [TestFixture]
-public class MockReturnsAsyncTests
+public class GenericSetupMockReturnsAsyncTests
 {
     [Test]
-    public async Task TestSetupReturnsAsyncMethodsReturnTask()
+    public async Task TestGenericSetupReturnsAsyncMethodsReturnTask()
     {
         var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters();
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters), async () =>
+        Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters(), async () =>
         {
             var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters();
             Assert.AreEqual(expectedResult, actualResult);
@@ -22,13 +21,13 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsAsyncMethodsReturnTaskAsync()
+    public async Task TestGenericSetupReturnsAsyncMethodsReturnTaskAsync()
     {
         var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync), async () =>
+        Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync(), async () =>
         {
             var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);
@@ -36,14 +35,14 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupInstanceReturnsAsyncMethodsReturnTask()
+    public async Task TestGenericSetupInstanceReturnsAsyncMethodsReturnTask()
     {
         var instance = new TestInstance();
         var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), async () =>
+        Mock.Setup(() => instance.TestMethodReturnTaskWithoutParameters(), async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParameters();
             Assert.AreEqual(expectedResult, actualResult);
@@ -51,14 +50,14 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupInstanceReturnsAsyncMethodsReturnTaskAsync()
+    public async Task TestGenericSetupInstanceReturnsAsyncMethodsReturnTaskAsync()
     {
         var instance = new TestInstance();
-        var originalResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
+        var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), async () =>
+        Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync(), async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);
@@ -72,7 +71,7 @@ public class MockReturnsAsyncTests
         const int expectedResult = 2;
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync),
+                () => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync(),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
@@ -80,13 +79,13 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns(() => Task.FromResult(2));
+            .Returns(async () => await Task.FromResult(2));
 
         Assert.AreEqual(1, originalResult);
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameterFuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameterFuncAsync()
     {
         const int parameter1 = 10;
 
@@ -95,26 +94,26 @@ public class MockReturnsAsyncTests
 
         Assert.AreEqual(parameter1, originalResult);
 
-        Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParameterAsync),
-            async () =>
+        Mock.Setup(
+                () => TestStaticAsyncClass.TestMethodReturnWithParameterAsync(parameter1),
+                async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParameterAsync(parameter1);
 
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, Task<int>>(async argument =>
+            .Returns<int>(argument =>
             {
-                await Task.CompletedTask;
                 Assert.AreEqual(parameter1, argument);
-                return argument / 2;
+                return Task.FromResult(argument / 2);
             });
 
         Assert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters2FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters2FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -124,15 +123,8 @@ public class MockReturnsAsyncTests
 
         Assert.AreEqual(parameter1, originalResult);
 
-        Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string)
-                    }
-                },
+        Mock.Setup(
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(context.It.IsAny<int>(), context.It.IsAny<string>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(parameter1, parameter2);
@@ -140,7 +132,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, Task<int>>(async (argument1, argument2) =>
+            .Returns<int, string>(async (argument1, argument2) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
@@ -151,7 +143,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters3FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters3FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -163,24 +155,18 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-            typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-            new SetupProperties
-            {
-                MethodParametersTypes = new[]
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>()),
+                async () =>
                 {
-                    typeof(int),
-                    typeof(string),
-                    typeof(double)
-                }
-            },
-            async () =>
-            {
-                var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(parameter1, parameter2, parameter3);
+                    var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(parameter1, parameter2, parameter3);
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
-            })
-            .Returns<int, string, double, Task<int>>((argument1, argument2, argument3) =>
+                    Assert.AreNotEqual(originalResult, actualResult);
+                    Assert.AreEqual(expectedResult, actualResult);
+                })
+            .Returns<int, string, double>((argument1, argument2, argument3) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
@@ -192,7 +178,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters4FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters4FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -210,17 +196,11 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
@@ -232,7 +212,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], Task<int>>(async (
+            .Returns<int, string, double, int[]>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -249,7 +229,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters5FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters5FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -269,18 +249,12 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                        typeof(string[])
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>(),
+                    context.It.IsAny<string[]>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
@@ -293,7 +267,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], Task<int>>((
+            .Returns<int, string, double, int[], string[]>((
                 argument1,
                 argument2,
                 argument3,
@@ -312,7 +286,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters6FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters6FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -334,19 +308,13 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                        typeof(string[]),
-                        typeof(char)
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>(),
+                    context.It.IsAny<string[]>(),
+                    context.It.IsAny<char>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
@@ -360,7 +328,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], char, Task<int>>(async (
+            .Returns<int, string, double, int[], string[], char>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -381,7 +349,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters7FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters7FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -405,20 +373,14 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                        typeof(string[]),
-                        typeof(char),
-                        typeof(bool)
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>(),
+                    context.It.IsAny<string[]>(),
+                    context.It.IsAny<char>(),
+                    context.It.IsAny<bool>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
@@ -433,7 +395,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], char, bool, Task<int>>((
+            .Returns<int, string, double, int[], string[], char, bool>((
                 argument1,
                 argument2,
                 argument3,
@@ -449,7 +411,6 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter5, argument5);
                 Assert.AreEqual(parameter6, argument6);
                 Assert.AreEqual(parameter7, argument7);
-
                 return Task.FromResult(argument1 / 2);
             });
 
@@ -457,7 +418,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters8FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters8FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -483,21 +444,15 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                        typeof(string[]),
-                        typeof(char),
-                        typeof(bool),
-                        typeof(TestInstance)
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>(),
+                    context.It.IsAny<string[]>(),
+                    context.It.IsAny<char>(),
+                    context.It.IsAny<bool>(),
+                    context.It.IsAny<TestInstance>()),
                 async () =>
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
@@ -513,7 +468,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Task<int>>(async (
+            .Returns<int, string, double, int[], string[], char, bool, TestInstance>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -531,7 +486,6 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter6, argument6);
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
-
                 return await Task.FromResult(argument1 / 2);
             });
 
@@ -539,7 +493,7 @@ public class MockReturnsAsyncTests
     }
 
     [Test]
-    public async Task TestSetupReturnsWithTestMethodReturnParameters9FuncAsync()
+    public async Task TestGenericSetupReturnsWithTestMethodReturnParameters9FuncAsync()
     {
         const int parameter1 = 10;
         const string parameter2 = "testString";
@@ -567,25 +521,19 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
-                typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
-                new SetupProperties
-                {
-                    MethodParametersTypes = new[]
-                    {
-                        typeof(int),
-                        typeof(string),
-                        typeof(double),
-                        typeof(int[]),
-                        typeof(string[]),
-                        typeof(char),
-                        typeof(bool),
-                        typeof(TestInstance),
-                        typeof(Func<int, int>)
-                    }
-                },
+                context => TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    context.It.IsAny<int>(),
+                    context.It.IsAny<string>(),
+                    context.It.IsAny<double>(),
+                    context.It.IsAny<int[]>(),
+                    context.It.IsAny<string[]>(),
+                    context.It.IsAny<char>(),
+                    context.It.IsAny<bool>(),
+                    context.It.IsAny<TestInstance>(),
+                    context.It.IsAny<Func<int, int>>()),
                 async () =>
                 {
-                    var actualResult  = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
+                    var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(
                         parameter1,
                         parameter2,
                         parameter3,
@@ -599,7 +547,7 @@ public class MockReturnsAsyncTests
                     Assert.AreNotEqual(originalResult, actualResult);
                     Assert.AreEqual(expectedResult, actualResult);
                 })
-            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>, Task<int>>((
+            .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>>(async (
                 argument1,
                 argument2,
                 argument3,
@@ -610,6 +558,8 @@ public class MockReturnsAsyncTests
                 argument8,
                 argument9) =>
             {
+                await Task.CompletedTask;
+
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
                 Assert.AreEqual(parameter3, argument3);
@@ -619,7 +569,7 @@ public class MockReturnsAsyncTests
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
                 Assert.AreEqual(parameter9, argument9);
-                return Task.FromResult(argument1 / 2);
+                return argument1 / 2;
             });
 
         Assert.AreEqual(parameter1, originalResult);

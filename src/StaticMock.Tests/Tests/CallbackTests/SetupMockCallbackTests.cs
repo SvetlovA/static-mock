@@ -2,7 +2,7 @@
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.CallbackTests;
+namespace StaticMock.Tests.Tests.CallbackTests;
 
 [TestFixture]
 public class SetupMockCallbackTests
