@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.InteropServices;
 using StaticMock.Hooks.Entities;
 
 namespace StaticMock.Hooks.Implementation;
@@ -16,32 +17,32 @@ internal class HookManagerX64 : IHookManager
 
     public unsafe IReturnable ApplyHook(MethodInfo transpiler)
     {
-        var methodPtr = (byte*)_originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
+        var methodPtr = _originalMethod.MethodHandle.GetFunctionPointer();
 
-        SaveMethodMemoryInfo(methodPtr);
+        SaveMethodMemoryInfo((byte*)methodPtr.ToPointer());
 
         // mov r11, replacement
-        *methodPtr = 0x49;
-        *(methodPtr + 1) = 0xBB;
-        *(ulong*)(methodPtr + 2) = (ulong)transpiler.MethodHandle.GetFunctionPointer().ToInt64();
+        Marshal.WriteByte(methodPtr, 0x49);
+        Marshal.WriteByte(methodPtr, 1, 0xBB);
+        Marshal.WriteIntPtr(methodPtr, 2, transpiler.MethodHandle.GetFunctionPointer());
         // jmp r11
-        *(methodPtr + 10) = 0x41;
-        *(methodPtr + 11) = 0xFF;
-        *(methodPtr + 12) = 0xE3;
+        Marshal.WriteByte(methodPtr, 10, 0x41);
+        Marshal.WriteByte(methodPtr, 11, 0xFF);
+        Marshal.WriteByte(methodPtr, 12, 0xE3);
 
         return this;
     }
 
-    public unsafe void Return()
+    public void Return()
     {
-        var methodPtr = (byte*)_originalMethod.MethodHandle.GetFunctionPointer().ToPointer();
+        var methodPtr = _originalMethod.MethodHandle.GetFunctionPointer();
 
-        *methodPtr = _functionMemoryInfoX64.Byte1;
-        *(methodPtr + 1) = _functionMemoryInfoX64.Byte2;
-        *(ulong*)(methodPtr + 2) = _functionMemoryInfoX64.FunctionMemoryValue;
-        *(methodPtr + 10) = _functionMemoryInfoX64.Byte1AfterFunction;
-        *(methodPtr + 11) = _functionMemoryInfoX64.Byte2AfterFunction;
-        *(methodPtr + 12) = _functionMemoryInfoX64.Byte3AfterFunction;
+        Marshal.WriteByte(methodPtr, _functionMemoryInfoX64.Byte1);
+        Marshal.WriteByte(methodPtr, 1, _functionMemoryInfoX64.Byte2);
+        Marshal.WriteInt64(methodPtr, 2, _functionMemoryInfoX64.FunctionMemoryValue);
+        Marshal.WriteByte(methodPtr, 10, _functionMemoryInfoX64.Byte1AfterFunction);
+        Marshal.WriteByte(methodPtr, 11, _functionMemoryInfoX64.Byte2AfterFunction);
+        Marshal.WriteByte(methodPtr, 12, _functionMemoryInfoX64.Byte3AfterFunction);
     }
 
     public void Dispose()
@@ -53,7 +54,7 @@ internal class HookManagerX64 : IHookManager
     {
         _functionMemoryInfoX64.Byte1 = *methodPtr;
         _functionMemoryInfoX64.Byte2 = *(methodPtr + 1);
-        _functionMemoryInfoX64.FunctionMemoryValue = *(ulong*)(methodPtr + 2);
+        _functionMemoryInfoX64.FunctionMemoryValue = *(long*)(methodPtr + 2);
         _functionMemoryInfoX64.Byte1AfterFunction = *(methodPtr + 10);
         _functionMemoryInfoX64.Byte2AfterFunction = *(methodPtr + 11);
         _functionMemoryInfoX64.Byte3AfterFunction = *(methodPtr + 12);
