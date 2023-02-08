@@ -1,8 +1,19 @@
 # SMock
 SMock is opensource lib for mocking static and instance methods and properties.
 # Installation
-Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/)
+Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/) or [GitHub](https://github.com/SvetlovA/static-mock/pkgs/nuget/SMock)
 # Getting Started
+## Hook Manager Types
+When you are using SMock you have a possibilty to switch hook manager type for your needs.
+| Hook Manager Type | Description |
+| ----------------- | ----------- |
+| Native | Native implementation of hook using Marshalling to access and rewrite memory (**Doesn't support net7**) |
+| Harmony | Using [Harmony](https://github.com/pardeike/Harmony) library to provide hook |
+| MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Using by default**) |
+You have possibilty to set hook manager type manually:
+```cs
+Mock.SetHookManagerType(HookManagerType.MonoMod);
+```
 ## Code Examples
 ### Returns
 ```cs
@@ -34,6 +45,7 @@ Mock.Setup(context => StaticClass.MethodToMockAsync(context.It.IsAny<int>()), as
     Assert.AreEqual(expectedResult, actualResult);
 }).Returns<int>(async argument => await Task.FromResult(argument));
 ```
+[Other returns setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ReturnsTests)
 ### Throws
 ```cs
 Mock.Setup(() => StaticClass.MethodToMock(), () =>
@@ -41,13 +53,7 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     Assert.Throws<Exception>(() => StaticClass.MethodToMock());
 }).Throws<Exception>();
 ```
-### SetupDefault
-```cs
-Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
-{
-    StaticClass.VoidMethodToMock(); // This method do nothing
-});
-```
+[Other throws setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ThrowsTests)
 ### Callback
 ```cs
 Mock.Setup(() => StaticClass.MethodToMock(), () =>
@@ -70,8 +76,16 @@ Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
     DoSomething(argument);
 });
 ```
-[Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
+[Other callback setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/CallbackTests)
+### SetupDefault
+```cs
+Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
+{
+    StaticClass.VoidMethodToMock(); // This method do nothing
+});
+```
+[Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)
 # Known Issues
-* **System.AccessViolationException:** This exception most often occurs if you use x64 platform in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other or try to use x32 platform for your test project compilation.
+* **System.AccessViolationException:** This exception most often occurs if you use x64 platform and **Native** hook manager type in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other, try to use x32 platform for your test project compilation or use **MonoMod** or **Harmony** hook manager types.
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).
