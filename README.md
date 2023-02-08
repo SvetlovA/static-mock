@@ -10,6 +10,7 @@ When you are using SMock you have a possibilty to switch hook manager type for y
 | Native | Native implementation of hook using Marshalling to access and rewrite memory (**Doesn't support net7**) |
 | Harmony | Using [Harmony](https://github.com/pardeike/Harmony) library to provide hook |
 | MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Using by default**) |
+
 You have possibilty to set hook manager type manually:
 ```cs
 Mock.SetHookManagerType(HookManagerType.MonoMod);
