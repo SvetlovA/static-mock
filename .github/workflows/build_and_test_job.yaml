@@ -33,8 +33,8 @@ on:
 jobs:
   buildAndTest:
     env:
-      HOOK_MANAGER_TYPE: ${{ github.event.inputs.hook_manager_type }}
-    runs-on: ${{ github.event.inputs.os }}
+      HOOK_MANAGER_TYPE: ${{ inputs.hook_manager_type }}
+    runs-on: ${{ inputs.os }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
