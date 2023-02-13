@@ -32,8 +32,9 @@ internal class HarmonyHookManager : IHookManager
         Monitor.Enter(_originalMethod);
         if (PatchMap.TryGetValue(_originalMethod, out var patchStack))
         {
-            if (patchStack.TryPeek(out var patch))
+            if (patchStack.Count > 0)
             {
+                var patch = patchStack.Peek();
                 patch.PatchProcessor?.Unpatch(HarmonyPatchType.Transpiler, patch.HarmonyId);
             }
         }
@@ -58,11 +59,13 @@ internal class HarmonyHookManager : IHookManager
     {
         if (PatchMap.TryGetValue(_originalMethod, out var patchStack))
         {
-            if (patchStack.TryPop(out var patchToReturn))
+            if (patchStack.Count > 0)
             {
+                var patchToReturn = patchStack.Pop();
                 patchToReturn.PatchProcessor?.Unpatch(HarmonyPatchType.Transpiler, patchToReturn.HarmonyId);
-                if (patchStack.TryPeek(out var patchToApply))
+                if (patchStack.Count > 0)
                 {
+                    var patchToApply = patchStack.Peek();
                     patchToApply.PatchProcessor?.AddTranspiler(new HarmonyMethod(patchToApply.Transpiler));
                     patchToApply.PatchProcessor?.Patch();
                 }

@@ -181,9 +181,10 @@ internal static class TranspilerBuilderHelper
                 yield return codeInstruction;
             }
         }
+
         yield return new CodeInstruction(endingOpCode);
 
-        var type = hookType.CreateType();
+        var type = hookType.CreateTypeInfo() ?? throw new Exception($"{hookType} builder can't create dynamic type");;
         var hookFieldInfo = type.GetField(hookStaticField.Name, BindingFlags.Static | BindingFlags.NonPublic) ??
                             throw new Exception($"{hookStaticField.Name} not found in type {hookType.Name}");
 
