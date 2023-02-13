@@ -10,7 +10,6 @@ jobs:
       - uses: ./.github/workflows/build_and_test_job.yaml
         with:
           os: ubuntu-latest
-          dotnet_version: '6.0.x'
           hook_manager_type: MonoMod
       - name: Pack
         run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj

@@ -11,11 +11,6 @@ on:
         - windows-latest
         - macos-latest
         default: ubuntu-latest
-      dotnet_version:
-        types: string
-        description: 'Version of dotnet to run. Default: 6.0.x'
-        required: true
-        default: '6.0.x'
       hook_manager_type:
         type: coice
         description: 'Run tests on special hook manager type. Possible hook manager types: Harmony, Native, MonoMod. Default: MonoMod'
@@ -35,7 +30,11 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ github.event.inputs.dotnet_version }}
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+          7.0.x
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
