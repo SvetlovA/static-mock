@@ -18,9 +18,8 @@ internal class HookManagerFactory : IHookManagerFactory
     public IHookManager CreateHookManager() =>
         _settings.HookManagerType switch
         {
-            HookManagerType.Harmony => new HarmonyHookManager(_originalMethod),
-            HookManagerType.Native => IntPtr.Size == sizeof(int) ? new HookManagerX32(_originalMethod) : new HookManagerX64(_originalMethod),
             HookManagerType.MonoMod => new MonoModHookManager(_originalMethod),
+            HookManagerType.Harmony => new HarmonyHookManager(_originalMethod),
             _ => throw new ArgumentOutOfRangeException(nameof(_settings.HookManagerType), _settings.HookManagerType,
                 $"{_settings.HookManagerType} not exists in {nameof(HookManagerType)}")
         };

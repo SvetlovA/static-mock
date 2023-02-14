@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
-using StaticMock.Tests.ThrowsTests.Entities;
+using StaticMock.Tests.Tests.ThrowsTests.Entities;
 
-namespace StaticMock.Tests.ThrowsTests;
+namespace StaticMock.Tests.Tests.ThrowsTests;
 
 [TestFixture]
 public class MockThrowsTests

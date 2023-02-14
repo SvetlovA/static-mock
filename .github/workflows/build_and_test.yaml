@@ -38,19 +38,3 @@ jobs:
     with:
       os: macos-latest
       hook_manager_type: MonoMod
-# Native tests
-  buildAndTestUbuntuNative:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: ubuntu-latest
-      hook_manager_type: Native
-  buildAndTestWindowsNative:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: windows-latest
-      hook_manager_type: Native
-  buildAndTestMacNative:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: macos-latest
-      hook_manager_type: Native

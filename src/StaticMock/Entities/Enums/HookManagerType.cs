@@ -3,15 +3,11 @@
 public enum HookManagerType
 {
     /// <summary>
+    /// MonoMod implementation of hook manager (Default)
+    /// </summary>
+    MonoMod = 0,
+    /// <summary>
     /// Harmony implementation of hook manger
     /// </summary>
-    Harmony = 0,
-    /// <summary>
-    /// Native implementation of hook manager
-    /// </summary>
-    Native = 1,
-    /// <summary>
-    /// MonoMod implementation of hook manager
-    /// </summary>
-    MonoMod = 2
+    Harmony = 1
 }

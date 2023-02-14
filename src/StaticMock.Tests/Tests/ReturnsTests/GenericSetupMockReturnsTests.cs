@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.ReturnsTests;
+namespace StaticMock.Tests.Tests.ReturnsTests;
 
 [TestFixture]
 public class GenericSetupMockReturnsTests

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests;
+namespace StaticMock.Tests.Tests;
 
 [TestFixture]
 public class SetupDefaultTests

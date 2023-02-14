@@ -16,9 +16,8 @@ on:
         description: 'Run tests on special hook manager type. Possible hook manager types: Harmony, Native, MonoMod. Default: MonoMod'
         required: true
         options:
-        - Harmony
-        - Native
         - MonoMod
+        - Harmony
         default: MonoMod
   workflow_call:
     inputs:

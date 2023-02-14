@@ -7,9 +7,8 @@ Download and install the package from [NuGet](https://www.nuget.org/packages/SMo
 When you are using SMock you have a possibilty to switch hook manager type for your needs.
 | Hook Manager Type | Description |
 | ----------------- | ----------- |
-| Native | Native implementation of hook using Marshalling to access and rewrite memory (**Doesn't support net7**) |
+| MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Default**) |
 | Harmony | Using [Harmony](https://github.com/pardeike/Harmony) library to provide hook |
-| MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Using by default**) |
 
 You have possibilty to set hook manager type manually:
 ```cs
@@ -86,7 +85,5 @@ Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
 });
 ```
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)
-# Known Issues
-* **System.AccessViolationException:** This exception most often occurs if you use x64 platform and **Native** hook manager type in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other, try to use x32 platform for your test project compilation or use **MonoMod** or **Harmony** hook manager types.
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).

@@ -18,12 +18,12 @@ internal class HookBuilderFactory : IHookBuilderFactory
     public IHookBuilder CreateHookBuilder() =>
         _settings.HookManagerType switch
         {
+            HookManagerType.MonoMod => _originalMethodInfo.IsStatic
+                ? new StaticHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions)
+                : new InstanceHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions),
             HookManagerType.Harmony => _originalMethodInfo.IsStatic
                 ? new StaticTranspilerHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions)
                 : new InstanceTranspilerHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions),
-            HookManagerType.Native or HookManagerType.MonoMod => _originalMethodInfo.IsStatic
-                ? new StaticHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions)
-                : new InstanceHookBuilder(_originalMethodInfo, _settings.ItParameterExpressions),
             _ => throw new ArgumentOutOfRangeException(nameof(_settings.HookManagerType), _settings.HookManagerType,
                 $"{_settings.HookManagerType} not exists in {nameof(HookManagerType)}")
         };

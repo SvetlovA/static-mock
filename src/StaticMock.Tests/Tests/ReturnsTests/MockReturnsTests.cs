@@ -3,7 +3,7 @@ using NUnit.Framework;
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.ReturnsTests;
+namespace StaticMock.Tests.Tests.ReturnsTests;
 
 [TestFixture]
 public class MockReturnsTests
