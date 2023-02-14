@@ -78,7 +78,7 @@ internal static class HookBuilderHelper
             DynamicTypeNames.ExceptionHookMethodName,
             GetMethodAttributes(hookMethodType),
             originalMethod.ReturnType,
-            originalMethod.GetParameters().Select(x => x.ParameterType).ToArray());
+            GetParameterTypes(hookMethodType, originalMethod));
 
         return GetHookedMethod(
             hookType,
@@ -113,7 +113,7 @@ internal static class HookBuilderHelper
             DynamicTypeNames.ReturnHookMethodName,
             GetMethodAttributes(hookMethodType),
             hookReturnType,
-            originalMethod.GetParameters().Select(x => x.ParameterType).ToArray());
+            GetParameterTypes(hookMethodType, originalMethod));
 
         return GetHookedMethod(
             hookType,
@@ -144,7 +144,7 @@ internal static class HookBuilderHelper
             executable.GetType(),
             FieldAttributes.Private | FieldAttributes.Static);
 
-        var hookMethodParameterTypes = originalMethod.GetParameters().Select(x => x.ParameterType).ToArray();
+        var hookMethodParameterTypes = GetParameterTypes(hookMethodType, originalMethod);
 
         var hookMethod = hookType.DefineMethod(
             DynamicTypeNames.ReturnHookMethodName,
@@ -171,7 +171,7 @@ internal static class HookBuilderHelper
 
                 if (executableType != typeof(Action) && executableType != typeof(Func<>))
                 {
-                    for (var i = 0; i < hookMethodParameterTypes.Length; i++)
+                    for (var i = hookMethodType == HookMethodType.Static ? 0 : 1; i < hookMethodParameterTypes.Length; i++)
                     {
                         il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
                     }
@@ -189,7 +189,7 @@ internal static class HookBuilderHelper
         THookValue hookValue,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
-        Action<ILGenerator>? setupHookIl = null)
+        Action<ILGenerator> setupHookIl = null)
     {
         var hookMethodIl = hookMethod.GetILGenerator();
 
@@ -231,7 +231,7 @@ internal static class HookBuilderHelper
                 hookMethodIl.Emit(OpCodes.Ldsfld, expressionStaticFiled);
                 hookMethodIl.Emit(
                     OpCodes.Ldarg,
-                    hookMethodType == HookMethodType.Static ? i : i + 1);
+                    hookMethodType == HookMethodType.Static ? i : i + 2);
                 hookMethodIl.Emit(OpCodes.Callvirt, parameterExpression.Type.GetMethod("Invoke"));
             }
         }
@@ -292,5 +292,17 @@ internal static class HookBuilderHelper
         }
 
         return bindingFlags;
+    }
+
+    private static Type[] GetParameterTypes(HookMethodType hookMethodType, MethodBase originalMethod)
+    {
+        var originalMethodParameters = originalMethod.GetParameters().Select(x => x.ParameterType);
+
+        return hookMethodType switch
+        {
+            HookMethodType.Static => originalMethodParameters.ToArray(),
+            HookMethodType.Instance => new [] { originalMethod.DeclaringType }.Concat(originalMethodParameters).ToArray(),
+            _ => throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType, $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}")
+        };
     }
 }
