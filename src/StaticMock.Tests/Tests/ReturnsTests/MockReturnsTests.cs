@@ -116,7 +116,7 @@ public class MockReturnsTests
         Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), new SetupProperties { Instance = testInstance }, () =>
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
             Assert.AreEqual(expectedResult, actualResult);
@@ -159,7 +159,7 @@ public class MockReturnsTests
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), async () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParameters();
             Assert.AreEqual(expectedResult, actualResult);
@@ -174,7 +174,7 @@ public class MockReturnsTests
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), async () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);
@@ -216,7 +216,7 @@ public class MockReturnsTests
         var originalValue = instance.IntProperty;
         Assert.AreEqual(default(int), originalValue);
 
-        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
+        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), new SetupProperties { Instance = instance }, () =>
         {
             var actualResult = instance.IntProperty;
             Assert.AreEqual(2, actualResult);
@@ -230,7 +230,7 @@ public class MockReturnsTests
         var originalValue = instance.ObjectProperty;
         Assert.AreEqual(default, originalValue);
 
-        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
+        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), new SetupProperties { Instance = instance }, () =>
         {
             var actualResult = instance.ObjectProperty;
             Assert.AreEqual(typeof(int), actualResult);
@@ -246,7 +246,11 @@ public class MockReturnsTests
         Assert.AreEqual(1, methodInfo.Invoke(testInstance, new object[] { }));
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.Setup(typeof(TestInstance), methodInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             var actualResult = methodInfo.Invoke(testInstance, new object[] { });
             Assert.AreEqual(expectedResult, actualResult);
@@ -264,7 +268,11 @@ public class MockReturnsTests
         Assert.AreEqual(default(int), originalValue);
         var expectedResult = 2;
 
-        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
             Assert.AreEqual(expectedResult, actualResult);
@@ -274,7 +282,6 @@ public class MockReturnsTests
     [Test]
     public void TestReturnsPrivateObjectProperty()
     {
-
         var testInstance = new TestInstance();
         Type type = testInstance.GetType();
         PropertyInfo propertyInfo = type.GetProperty("PrivateObjectProperty", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -283,7 +290,11 @@ public class MockReturnsTests
         Assert.AreEqual(default, originalValue);
         var expectedResult = new TestInstance();
 
-        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
             Assert.AreEqual(expectedResult, actualResult);
@@ -373,7 +384,12 @@ public class MockReturnsTests
         Assert.AreEqual(0, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters),
+            new SetupProperties
+            {
+                Instance = testInstance,
+                GenericTypes = new[] { typeof(int) }
+            },
             () =>
             {
                 var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
@@ -391,7 +407,12 @@ public class MockReturnsTests
         Assert.AreEqual(0, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
+        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters),
+            new SetupProperties
+            {
+                Instance = testInstance,
+                GenericTypes = new[] { typeof(int) }
+            },
             () =>
             {
                 var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
@@ -1001,9 +1022,9 @@ public class MockReturnsTests
         var setup = Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
             new SetupProperties
-                {
-                    MethodParametersTypes = new []{ typeof(int), typeof(string) }
-                },
+            {
+                MethodParametersTypes = new[] { typeof(int), typeof(string) }
+            },
                 () =>
                 {
                     var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
@@ -1068,7 +1089,7 @@ public class MockReturnsTests
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
             new SetupProperties
             {
-                MethodParametersTypes = new []{ typeof(int), typeof(string) }
+                MethodParametersTypes = new[] { typeof(int), typeof(string) }
             },
             () =>
             {
@@ -1097,7 +1118,7 @@ public class MockReturnsTests
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
             new SetupProperties
             {
-                MethodParametersTypes = new []{ typeof(int), typeof(string) }
+                MethodParametersTypes = new[] { typeof(int), typeof(string) }
             },
             () =>
             {

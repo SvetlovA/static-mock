@@ -32,7 +32,13 @@ public static class Mock
     public static IFuncMock SetupProperty(Type type, string propertyName, Action action) => SetupMockHelper.SetupPropertyInternal(type, propertyName, action);
 
     public static IFuncMock SetupProperty(Type type, string propertyName, BindingFlags bindingFlags, Action action) =>
-        SetupMockHelper.SetupPropertyInternal(type, propertyName, action, bindingFlags);
+        SetupMockHelper.SetupPropertyInternal(type, propertyName, action, new SetupProperties
+        {
+            BindingFlags = bindingFlags
+        });
+
+    public static IFuncMock SetupProperty(Type type, string propertyName, SetupProperties setupProperties, Action action) =>
+        SetupMockHelper.SetupPropertyInternal(type, propertyName, action, setupProperties);
 
     public static IActionMock SetupAction(Type type, string methodName, Action action) => SetupMockHelper.SetupVoidInternal(type, methodName, action);
 
@@ -62,7 +68,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
         };
 
         return new FuncMock<TReturnValue>(
@@ -77,7 +84,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
         };
 
         return new AsyncFuncMock<TReturnValue>(
@@ -92,7 +100,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
         };
 
         return new FuncMock<TReturnValue>(
@@ -107,7 +116,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
         };
 
         return new AsyncFuncMock<TReturnValue>(
@@ -127,7 +137,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = context.State.ItParameterExpressions
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = SetupMockHelper.GetOriginalMethodCallInstance(methodExpression)
         };
 
         return new ActionMock(
@@ -142,7 +153,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
         };
 
         return new ActionMock(
@@ -168,7 +180,8 @@ public static class Mock
         var hookSettings = new HookSettings
         {
             HookManagerType = GlobalSettings.HookManagerType,
-            ItParameterExpressions = context.State.ItParameterExpressions
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = SetupMockHelper.GetOriginalMethodCallInstance(methodExpression)
         };
 
         var actionMock = new ActionMock(

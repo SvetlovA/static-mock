@@ -18,4 +18,9 @@ public class SetupProperties
     /// Types of mocking method parameters.
     /// </summary>
     public Type[]? MethodParametersTypes { get; set; }
+
+    /// <summary>
+    /// Instance of testing class, if you are testing instance method or property
+    /// </summary>
+    public object? Instance { get; set; }
 }

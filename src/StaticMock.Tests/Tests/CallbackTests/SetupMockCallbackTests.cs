@@ -28,7 +28,7 @@ public class SetupMockCallbackTests
 
         static void DoSomething() { }
 
-        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodWithoutParametersThrowsException), () =>
+        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodWithoutParametersThrowsException), new SetupProperties { Instance = instance }, () =>
         {
             instance.TestVoidMethodWithoutParametersThrowsException();
         }).Callback(() =>

@@ -43,7 +43,7 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), async () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParameters();
             Assert.AreEqual(expectedResult, actualResult);
@@ -58,7 +58,7 @@ public class MockReturnsAsyncTests
         Assert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), async () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
             Assert.AreEqual(expectedResult, actualResult);

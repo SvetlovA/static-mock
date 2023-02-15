@@ -1,17 +1,20 @@
 ﻿using System.Reflection;
 using MonoMod.RuntimeDetour;
+using StaticMock.Hooks.Entities;
 
 namespace StaticMock.Hooks.Implementation;
 
 internal class MonoModHookManager : IHookManager
 {
     private readonly MethodBase _originalMethod;
+    private readonly HookSettings _settings;
 
     private IDetour? _hook;
 
-    public MonoModHookManager(MethodBase originalMethod)
+    public MonoModHookManager(MethodBase originalMethod, HookSettings settings)
     {
         _originalMethod = originalMethod;
+        _settings = settings;
     }
 
     public IReturnable ApplyHook(MethodInfo transpiler)
@@ -22,7 +25,14 @@ internal class MonoModHookManager : IHookManager
         }
         else
         {
-            _hook = new Hook(_originalMethod, transpiler, Activator.CreateInstance(_originalMethod.DeclaringType));
+            if (_settings.OriginalMethodCallInstance != null)
+            {
+                _hook = new Hook(_originalMethod, transpiler, _settings.OriginalMethodCallInstance);
+            }
+            else
+            {
+                throw new Exception($"Can't take calling instance of {_originalMethod} to create hook");
+            }
         }
 
         return this;

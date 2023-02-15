@@ -20,16 +20,19 @@ internal static class SetupMockHelper
         Expression<Func<TReturnValue>> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
+        object? originalMethodCallInstance = null;
         var setupContext = new SetupContext();
 
-        if (methodGetExpression.Body is MemberExpression { Member: PropertyInfo propertyInfo })
+        if (methodGetExpression.Body is MemberExpression memberExpression)
         {
-            originalMethodInfo = propertyInfo.GetMethod;
+            originalMethodInfo = memberExpression.Member is PropertyInfo propertyInfo ? propertyInfo.GetMethod : null;
+            originalMethodCallInstance = GetOriginalPropertyCallInstance(memberExpression);
         }
 
         if (methodGetExpression.Body is MethodCallExpression methodExpression)
         {
             originalMethodInfo = methodExpression.Method;
+            originalMethodCallInstance = GetOriginalMethodCallInstance(methodExpression);
             setupContext.State.ItParameterExpressions.AddRange(
                 methodExpression.Arguments.Select(x => new ItParameterExpression
                 {
@@ -45,7 +48,8 @@ internal static class SetupMockHelper
         return new MockSetupProperties
         {
             OriginalMethodInfo = originalMethodInfo,
-            SetupContextState = setupContext.State
+            SetupContextState = setupContext.State,
+            OriginalMethodCallInstance = originalMethodCallInstance
         };
     }
 
@@ -53,16 +57,19 @@ internal static class SetupMockHelper
         Expression<TDelegate> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
+        object? originalMethodCallInstance = null;
         var setupContext = new SetupContext();
 
-        if (methodGetExpression.Body is MemberExpression { Member: PropertyInfo propertyInfo })
+        if (methodGetExpression.Body is MemberExpression memberExpression)
         {
-            originalMethodInfo = propertyInfo.GetMethod;
+            originalMethodInfo = memberExpression.Member is PropertyInfo propertyInfo ? propertyInfo.GetMethod : null;
+            originalMethodCallInstance = GetOriginalPropertyCallInstance(memberExpression);
         }
 
         if (methodGetExpression.Body is MethodCallExpression methodExpression)
         {
             originalMethodInfo = methodExpression.Method;
+            originalMethodCallInstance = GetOriginalMethodCallInstance(methodExpression);
             foreach (var methodExpressionArgument in methodExpression.Arguments.OfType<MethodCallExpression>())
             {
                 var argumentMethod = methodExpressionArgument.Method;
@@ -89,7 +96,8 @@ internal static class SetupMockHelper
         return new MockSetupProperties
         {
             OriginalMethodInfo = originalMethodInfo,
-            SetupContextState = setupContext.State
+            SetupContextState = setupContext.State,
+            OriginalMethodCallInstance = originalMethodCallInstance
         };
     }
 
@@ -102,11 +110,17 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
+        if (!originalMethodInfo.IsStatic && setupProperties?.Instance == null)
+        {
+            throw new Exception($"For testing instance methods/properties you should pass instance to {nameof(SetupProperties)}");
+        }
+
         var context = new SetupContext();
         var hookSettings = new HookSettings
         {
             HookManagerType = Mock.GlobalSettings.HookManagerType,
-            ItParameterExpressions = context.State.ItParameterExpressions
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = setupProperties?.Instance
         };
 
         return new FuncMock(
@@ -115,8 +129,9 @@ internal static class SetupMockHelper
             action);
     }
 
-    public static IFuncMock SetupPropertyInternal(Type type, string propertyName, Action action, BindingFlags? bindingFlags = null)
+    public static IFuncMock SetupPropertyInternal(Type type, string propertyName, Action action, SetupProperties? setupProperties = null)
     {
+        var bindingFlags = setupProperties?.BindingFlags;
         var originalPropertyInfo = bindingFlags.HasValue ? type.GetProperty(propertyName, bindingFlags.Value) : type.GetProperty(propertyName);
         if (originalPropertyInfo == null)
         {
@@ -129,11 +144,17 @@ internal static class SetupMockHelper
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
         }
 
+        if (!originalMethodInfo.IsStatic && setupProperties?.Instance == null)
+        {
+            throw new Exception($"For testing instance methods/properties you should pass instance to {nameof(SetupProperties)}");
+        }
+
         var context = new SetupContext();
         var hookSettings = new HookSettings
         {
             HookManagerType = Mock.GlobalSettings.HookManagerType,
-            ItParameterExpressions = context.State.ItParameterExpressions
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = setupProperties?.Instance
         };
 
         return new FuncMock(
@@ -146,11 +167,17 @@ internal static class SetupMockHelper
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
+        if (!originalMethodInfo.IsStatic && setupProperties?.Instance == null)
+        {
+            throw new Exception($"For testing instance methods/properties you should pass instance to {nameof(SetupProperties)}");
+        }
+
         var context = new SetupContext();
         var hookSettings = new HookSettings
         {
             HookManagerType = Mock.GlobalSettings.HookManagerType,
-            ItParameterExpressions = context.State.ItParameterExpressions
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = setupProperties?.Instance
         };
 
         return new ActionMock(
@@ -183,6 +210,19 @@ internal static class SetupMockHelper
         actionMock.Callback(() => { });
     }
 
+    public static object? GetOriginalMethodCallInstance(MethodCallExpression methodExpression) =>
+        methodExpression.Object is MemberExpression originalMethodCallMemberExpression
+            ? originalMethodCallMemberExpression.Expression is ConstantExpression originalMethodCallConstantExpression
+                ? originalMethodCallConstantExpression.Value
+                : null
+            : null;
+
+    public static object? GetOriginalPropertyCallInstance(MemberExpression methodExpression) =>
+        methodExpression.Expression is MemberExpression originalMethodCallMemberExpression
+            ? originalMethodCallMemberExpression.Expression is ConstantExpression originalMethodCallConstantExpression
+                ? originalMethodCallConstantExpression.Value
+                : null
+            : null;
 
     private static MethodInfo GetOriginalMethodInfo(Type type, string methodName, SetupProperties? setupProperties)
     {

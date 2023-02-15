@@ -50,7 +50,7 @@ public class MockThrowsTests
     {
         var testInstance = new TestInstance();
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), new SetupProperties { Instance = testInstance }, () =>
         {
             Assert.Throws<Exception>(() => testInstance.TestMethodReturn1WithoutParameters());
         }).Throws<Exception>();
@@ -106,7 +106,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTask), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTask), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTask());
         });
@@ -117,7 +117,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskAsync), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskAsync), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskAsync());
         });
@@ -128,7 +128,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodReturnTaskAsync), () =>
+        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodReturnTaskAsync), new SetupProperties { Instance = instance}, () =>
         {
             Assert.Throws<Exception>(() => instance.TestVoidMethodReturnTaskAsync());
         });
@@ -139,7 +139,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParametersAsync());
         });
@@ -150,7 +150,7 @@ public class MockThrowsTests
     {
         var instance = new TestInstance();
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), () =>
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
         });
@@ -193,7 +193,7 @@ public class MockThrowsTests
         var originalValue = instance.IntProperty;
         Assert.AreEqual(default(int), originalValue);
 
-        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
+        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), new SetupProperties { Instance = instance }, () =>
         {
             Assert.Throws<Exception>(() =>
             {
@@ -209,7 +209,7 @@ public class MockThrowsTests
         var originalValue = instance.ObjectProperty;
         Assert.AreEqual(default, originalValue);
 
-        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
+        Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), new SetupProperties { Instance = instance }, () =>
         {
             Assert.Throws<Exception>(() =>
             {
@@ -224,7 +224,11 @@ public class MockThrowsTests
         var testInstance = new TestInstance();
         Type type = testInstance.GetType();
         MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic | BindingFlags.Instance);
-        Mock.Setup(typeof(TestInstance), methodInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.Setup(typeof(TestInstance), methodInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             try
             {
@@ -245,7 +249,11 @@ public class MockThrowsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateIntProperty", BindingFlags.NonPublic | BindingFlags.Instance);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
 
-        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             try
             {
@@ -269,7 +277,11 @@ public class MockThrowsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateObjectProperty", BindingFlags.NonPublic | BindingFlags.Instance);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
 
-        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance, () =>
+        Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
+        {
+            Instance = testInstance,
+            BindingFlags = BindingFlags.NonPublic | BindingFlags.Instance
+        }, () =>
         {
             try
             {
@@ -366,7 +378,12 @@ public class MockThrowsTests
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
         Assert.AreEqual(0, originalResult);
 
-        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
+        Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters),
+            new SetupProperties
+            {
+                Instance = testInstance,
+                GenericTypes = new[] { typeof(int) }
+            },
             () =>
             {
                 Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>());
@@ -380,7 +397,12 @@ public class MockThrowsTests
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
         Assert.AreEqual(0, originalResult);
 
-        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
+        Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters),
+            new SetupProperties
+            {
+                Instance = testInstance,
+                GenericTypes = new[] { typeof(int) }
+            },
             () =>
             {
                 Assert.Throws<Exception>(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters());
