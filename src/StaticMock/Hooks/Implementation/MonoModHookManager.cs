@@ -9,7 +9,7 @@ internal class MonoModHookManager : IHookManager
     private readonly MethodBase _originalMethod;
     private readonly HookSettings _settings;
 
-    private IDetour? _hook;
+    private Hook? _hook;
 
     public MonoModHookManager(MethodBase originalMethod, HookSettings settings)
     {
