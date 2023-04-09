@@ -35,9 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.0-alpha.5" />
     <PackageReference Include="MonoModReorg.RuntimeDetour" Version="23.3.22.1" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

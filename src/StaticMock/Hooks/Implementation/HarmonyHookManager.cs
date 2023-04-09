@@ -15,11 +15,12 @@ internal class HarmonyHookManager : IHookManager
 
     public HarmonyHookManager(MethodBase originalMethod)
     {
-        var harmony = new Harmony(_harmonyId);
-        var patchProcessor = harmony.CreateProcessor(originalMethod);
-
         _originalMethod = originalMethod;
-        _patch = new Patch { PatchProcessor = patchProcessor, HarmonyId = _harmonyId };
+        _patch = new Patch
+        {
+            PatchProcessor = new Harmony(_harmonyId).CreateProcessor(originalMethod),
+            HarmonyId = _harmonyId
+        };
     }
 
     public IReturnable ApplyHook(MethodInfo transpiler)
@@ -43,9 +44,9 @@ internal class HarmonyHookManager : IHookManager
         _patch.PatchProcessor.Patch();
         _patch.Transpiler = transpiler;
 
-        if (PatchMap.ContainsKey(_originalMethod))
+        if (PatchMap.TryGetValue(_originalMethod, out var patchesStack))
         {
-            PatchMap[_originalMethod].Push(_patch);
+            patchesStack.Push(_patch);
         }
         else
         {
