@@ -1,42 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>AnyCPU;x86;x64</Platforms>
-    <PackageId>SMock</PackageId>
-    <Authors>SvetlovA</Authors>
-    <Product>SMock</Product>
-    <Description>SMock is opensource lib for mocking static and instance methods and properties.</Description>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/SvetlovA/static-mock</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
-    <PackageTags>mock moq static unit test tests smock</PackageTags>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright (c) 2022 Artem Svetlov</Copyright>
-    <Version>1.8.0</Version>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <PackageId>SMock</PackageId>
+        <Authors>SvetlovA</Authors>
+        <Product>SMock</Product>
+        <Description>SMock is opensource lib for mocking static and instance methods and properties.</Description>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageProjectUrl>https://github.com/SvetlovA/static-mock</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
+        <PackageTags>mock moq static unit test tests smock</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <Copyright>Copyright (c) 2022 Artem Svetlov</Copyright>
+        <Version>1.8.0</Version>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'"></PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.3.0-alpha.5" />
-    <PackageReference Include="MonoModReorg.RuntimeDetour" Version="23.3.22.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Lib.Harmony" Version="2.3.0-alpha.5" />
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='net45' Or '$(TargetFramework)'=='net452' Or '$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='net47' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='net481'">
+            <Aliases>MonoMod</Aliases>
+        </PackageReference>
+        <PackageReference Include="MonoModReorg.RuntimeDetour" Version="23.3.22.1" Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='netstandard2.1' Or '$(TargetFramework)'=='netcoreapp3.0' Or '$(TargetFramework)'=='netcoreapp3.1' Or '$(TargetFramework)'=='net5' Or '$(TargetFramework)'=='net6' Or '$(TargetFramework)'=='net7'">
+            <Aliases>MonoModReorg</Aliases>
+        </PackageReference>
+    </ItemGroup>
 
 </Project>

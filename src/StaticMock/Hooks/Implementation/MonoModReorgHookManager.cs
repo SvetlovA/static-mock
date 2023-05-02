@@ -1,19 +1,19 @@
-﻿extern alias MonoMod;
+﻿extern alias MonoModReorg;
 
 using System.Reflection;
-using MonoMod::MonoMod.RuntimeDetour;
+using MonoModReorg::MonoMod.RuntimeDetour;
 using StaticMock.Hooks.Entities;
 
 namespace StaticMock.Hooks.Implementation;
 
-internal class MonoModHookManager : IHookManager
+internal class MonoModReorgHookManager : IHookManager
 {
     private readonly MethodBase _originalMethod;
     private readonly HookSettings _settings;
 
-    private IDetour? _hook;
+    private Hook? _hook;
 
-    public MonoModHookManager(MethodBase originalMethod, HookSettings settings)
+    public MonoModReorgHookManager(MethodBase originalMethod, HookSettings settings)
     {
         _originalMethod = originalMethod;
         _settings = settings;
