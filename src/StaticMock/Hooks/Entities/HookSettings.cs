@@ -1,4 +1,5 @@
-﻿using StaticMock.Entities.Context;
+﻿using System.Collections.Generic;
+using StaticMock.Entities.Context;
 using StaticMock.Entities.Enums;
 
 namespace StaticMock.Hooks.Entities;

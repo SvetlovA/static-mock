@@ -1,4 +1,6 @@
-﻿using StaticMock.Hooks;
+﻿using System;
+using System.Linq;
+using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Throws;
 

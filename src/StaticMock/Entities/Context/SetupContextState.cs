@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Entities.Context;
+﻿using System.Collections.Generic;
+
+namespace StaticMock.Entities.Context;
 
 public class SetupContextState
 {

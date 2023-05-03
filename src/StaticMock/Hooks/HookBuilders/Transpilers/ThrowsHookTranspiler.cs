@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using System;
+using System.Collections.Generic;
+using HarmonyLib;
 using StaticMock.Entities.Context;
 using StaticMock.Hooks.HookBuilders.Entities;
 using StaticMock.Hooks.HookBuilders.Helpers;

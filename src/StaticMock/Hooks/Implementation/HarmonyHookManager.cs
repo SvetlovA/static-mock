@@ -1,5 +1,8 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using HarmonyLib;
 using Patch = StaticMock.Hooks.Entities.Patch;
 

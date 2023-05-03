@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Hooks;
+﻿using System;
+
+namespace StaticMock.Hooks;
 
 internal interface IReturnable : IDisposable
 {
