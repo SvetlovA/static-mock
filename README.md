@@ -10,7 +10,7 @@ When you are using SMock you have a possibilty to switch hook manager type for y
 | MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Default**) |
 | Harmony | Using [Harmony](https://github.com/pardeike/Harmony) library to provide hook |
 
-You have possibilty to set hook manager type manually:
+There is a possibilty to set hook manager type manually:
 ```cs
 Mock.SetHookManagerType(HookManagerType.MonoMod);
 ```
