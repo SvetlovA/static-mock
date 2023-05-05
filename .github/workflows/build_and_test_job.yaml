@@ -53,6 +53,10 @@ jobs:
       run: dotnet test --no-build --configuration Release --verbosity normal
       working-directory: ./src
     - name: TestLinix
-      if: ${{ inputs.os == 'ubuntu-latest' || github.event.inputs.os == 'macos-latest' }}
-      run: dotnet test --framework "netcoreapp3.1;net5.0;net6.0;net7.0" --no-build --configuration Release --verbosity normal
+      if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
+      run: |
+        dotnet test --framework netcoreapp3.1 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net5.0 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net6.0 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net7.0 --no-build --configuration Release --verbosity normal
       working-directory: ./src
