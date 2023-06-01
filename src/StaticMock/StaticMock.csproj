@@ -41,7 +41,7 @@
 
     <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='netcoreapp3.1' Or '$(TargetFramework)'=='net5.0' Or '$(TargetFramework)'=='net6.0' Or '$(TargetFramework)'=='net7.0'">
       <PackageReference Include="Lib.Harmony" Version="2.3.0-prerelease.2" />
-      <PackageReference Include="MonoModReorg.RuntimeDetour" Version="23.3.22.1" />
+      <PackageReference Include="MonoMod.RuntimeDetour" Version="25.0.0-prerelease.2" />
     </ItemGroup>
 
 </Project>
