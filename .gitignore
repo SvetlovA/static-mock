@@ -2,3 +2,4 @@
 bin
 obj
 *.user
+/docs/_site
