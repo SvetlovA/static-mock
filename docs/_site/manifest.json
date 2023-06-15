@@ -1,0 +1,252 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/MyProjects/static-mock/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Context.It.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Context.It.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Context.ItParameterExpression.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Context.ItParameterExpression.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Context.SetupContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Context.SetupContext.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Context.SetupContextState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Context.SetupContextState.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Context.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Context.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.SetupProperties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.SetupProperties.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mock.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.IActionMock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.IActionMock.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.IAsyncFuncMock-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.IAsyncFuncMock-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.IFuncMock-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.IFuncMock-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.IFuncMock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.IFuncMock.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.IMock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.IMock.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Mocks.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Mocks.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
