@@ -1,0 +1,835 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: StaticMock
+  name: StaticMock
+  href: api/StaticMock.html
+  commentId: N:StaticMock
+  fullName: StaticMock
+  nameWithType: StaticMock
+- uid: StaticMock.Entities
+  name: StaticMock.Entities
+  href: api/StaticMock.Entities.html
+  commentId: N:StaticMock.Entities
+  fullName: StaticMock.Entities
+  nameWithType: StaticMock.Entities
+- uid: StaticMock.Entities.Context
+  name: StaticMock.Entities.Context
+  href: api/StaticMock.Entities.Context.html
+  commentId: N:StaticMock.Entities.Context
+  fullName: StaticMock.Entities.Context
+  nameWithType: StaticMock.Entities.Context
+- uid: StaticMock.Entities.Context.It
+  name: It
+  href: api/StaticMock.Entities.Context.It.html
+  commentId: T:StaticMock.Entities.Context.It
+  fullName: StaticMock.Entities.Context.It
+  nameWithType: It
+- uid: StaticMock.Entities.Context.It.#ctor(StaticMock.Entities.Context.SetupContextState)
+  name: It(SetupContextState)
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It__ctor_StaticMock_Entities_Context_SetupContextState_
+  commentId: M:StaticMock.Entities.Context.It.#ctor(StaticMock.Entities.Context.SetupContextState)
+  name.vb: New(SetupContextState)
+  fullName: StaticMock.Entities.Context.It.It(StaticMock.Entities.Context.SetupContextState)
+  fullName.vb: StaticMock.Entities.Context.It.New(StaticMock.Entities.Context.SetupContextState)
+  nameWithType: It.It(SetupContextState)
+  nameWithType.vb: It.New(SetupContextState)
+- uid: StaticMock.Entities.Context.It.#ctor*
+  name: It
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It__ctor_
+  commentId: Overload:StaticMock.Entities.Context.It.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: StaticMock.Entities.Context.It.It
+  fullName.vb: StaticMock.Entities.Context.It.New
+  nameWithType: It.It
+  nameWithType.vb: It.New
+- uid: StaticMock.Entities.Context.It.Is*
+  name: Is
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_Is_
+  commentId: Overload:StaticMock.Entities.Context.It.Is
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.It.Is
+  nameWithType: It.Is
+- uid: StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
+  name: Is<TValue>(Expression<Func<TValue, bool>>)
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_Is__1_System_Linq_Expressions_Expression_System_Func___0_System_Boolean___
+  commentId: M:StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
+  name.vb: Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
+  fullName: StaticMock.Entities.Context.It.Is<TValue>(System.Linq.Expressions.Expression<System.Func<TValue, bool>>)
+  fullName.vb: StaticMock.Entities.Context.It.Is(Of TValue)(System.Linq.Expressions.Expression(Of System.Func(Of TValue, Boolean)))
+  nameWithType: It.Is<TValue>(Expression<Func<TValue, bool>>)
+  nameWithType.vb: It.Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
+- uid: StaticMock.Entities.Context.It.IsAny*
+  name: IsAny
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_IsAny_
+  commentId: Overload:StaticMock.Entities.Context.It.IsAny
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.It.IsAny
+  nameWithType: It.IsAny
+- uid: StaticMock.Entities.Context.It.IsAny``1
+  name: IsAny<TValue>()
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_IsAny__1
+  commentId: M:StaticMock.Entities.Context.It.IsAny``1
+  name.vb: IsAny(Of TValue)()
+  fullName: StaticMock.Entities.Context.It.IsAny<TValue>()
+  fullName.vb: StaticMock.Entities.Context.It.IsAny(Of TValue)()
+  nameWithType: It.IsAny<TValue>()
+  nameWithType.vb: It.IsAny(Of TValue)()
+- uid: StaticMock.Entities.Context.ItParameterExpression
+  name: ItParameterExpression
+  href: api/StaticMock.Entities.Context.ItParameterExpression.html
+  commentId: T:StaticMock.Entities.Context.ItParameterExpression
+  fullName: StaticMock.Entities.Context.ItParameterExpression
+  nameWithType: ItParameterExpression
+- uid: StaticMock.Entities.Context.ItParameterExpression.ParameterExpression
+  name: ParameterExpression
+  href: api/StaticMock.Entities.Context.ItParameterExpression.html#StaticMock_Entities_Context_ItParameterExpression_ParameterExpression
+  commentId: P:StaticMock.Entities.Context.ItParameterExpression.ParameterExpression
+  fullName: StaticMock.Entities.Context.ItParameterExpression.ParameterExpression
+  nameWithType: ItParameterExpression.ParameterExpression
+- uid: StaticMock.Entities.Context.ItParameterExpression.ParameterExpression*
+  name: ParameterExpression
+  href: api/StaticMock.Entities.Context.ItParameterExpression.html#StaticMock_Entities_Context_ItParameterExpression_ParameterExpression_
+  commentId: Overload:StaticMock.Entities.Context.ItParameterExpression.ParameterExpression
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.ItParameterExpression.ParameterExpression
+  nameWithType: ItParameterExpression.ParameterExpression
+- uid: StaticMock.Entities.Context.ItParameterExpression.ParameterType
+  name: ParameterType
+  href: api/StaticMock.Entities.Context.ItParameterExpression.html#StaticMock_Entities_Context_ItParameterExpression_ParameterType
+  commentId: P:StaticMock.Entities.Context.ItParameterExpression.ParameterType
+  fullName: StaticMock.Entities.Context.ItParameterExpression.ParameterType
+  nameWithType: ItParameterExpression.ParameterType
+- uid: StaticMock.Entities.Context.ItParameterExpression.ParameterType*
+  name: ParameterType
+  href: api/StaticMock.Entities.Context.ItParameterExpression.html#StaticMock_Entities_Context_ItParameterExpression_ParameterType_
+  commentId: Overload:StaticMock.Entities.Context.ItParameterExpression.ParameterType
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.ItParameterExpression.ParameterType
+  nameWithType: ItParameterExpression.ParameterType
+- uid: StaticMock.Entities.Context.SetupContext
+  name: SetupContext
+  href: api/StaticMock.Entities.Context.SetupContext.html
+  commentId: T:StaticMock.Entities.Context.SetupContext
+  fullName: StaticMock.Entities.Context.SetupContext
+  nameWithType: SetupContext
+- uid: StaticMock.Entities.Context.SetupContext.It
+  name: It
+  href: api/StaticMock.Entities.Context.SetupContext.html#StaticMock_Entities_Context_SetupContext_It
+  commentId: P:StaticMock.Entities.Context.SetupContext.It
+  fullName: StaticMock.Entities.Context.SetupContext.It
+  nameWithType: SetupContext.It
+- uid: StaticMock.Entities.Context.SetupContext.It*
+  name: It
+  href: api/StaticMock.Entities.Context.SetupContext.html#StaticMock_Entities_Context_SetupContext_It_
+  commentId: Overload:StaticMock.Entities.Context.SetupContext.It
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.SetupContext.It
+  nameWithType: SetupContext.It
+- uid: StaticMock.Entities.Context.SetupContextState
+  name: SetupContextState
+  href: api/StaticMock.Entities.Context.SetupContextState.html
+  commentId: T:StaticMock.Entities.Context.SetupContextState
+  fullName: StaticMock.Entities.Context.SetupContextState
+  nameWithType: SetupContextState
+- uid: StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
+  name: ItParameterExpressions
+  href: api/StaticMock.Entities.Context.SetupContextState.html#StaticMock_Entities_Context_SetupContextState_ItParameterExpressions
+  commentId: P:StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
+  fullName: StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
+  nameWithType: SetupContextState.ItParameterExpressions
+- uid: StaticMock.Entities.Context.SetupContextState.ItParameterExpressions*
+  name: ItParameterExpressions
+  href: api/StaticMock.Entities.Context.SetupContextState.html#StaticMock_Entities_Context_SetupContextState_ItParameterExpressions_
+  commentId: Overload:StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
+  isSpec: "True"
+  fullName: StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
+  nameWithType: SetupContextState.ItParameterExpressions
+- uid: StaticMock.Entities.SetupProperties
+  name: SetupProperties
+  href: api/StaticMock.Entities.SetupProperties.html
+  commentId: T:StaticMock.Entities.SetupProperties
+  fullName: StaticMock.Entities.SetupProperties
+  nameWithType: SetupProperties
+- uid: StaticMock.Entities.SetupProperties.BindingFlags
+  name: BindingFlags
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_BindingFlags
+  commentId: P:StaticMock.Entities.SetupProperties.BindingFlags
+  fullName: StaticMock.Entities.SetupProperties.BindingFlags
+  nameWithType: SetupProperties.BindingFlags
+- uid: StaticMock.Entities.SetupProperties.BindingFlags*
+  name: BindingFlags
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_BindingFlags_
+  commentId: Overload:StaticMock.Entities.SetupProperties.BindingFlags
+  isSpec: "True"
+  fullName: StaticMock.Entities.SetupProperties.BindingFlags
+  nameWithType: SetupProperties.BindingFlags
+- uid: StaticMock.Entities.SetupProperties.GenericTypes
+  name: GenericTypes
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_GenericTypes
+  commentId: P:StaticMock.Entities.SetupProperties.GenericTypes
+  fullName: StaticMock.Entities.SetupProperties.GenericTypes
+  nameWithType: SetupProperties.GenericTypes
+- uid: StaticMock.Entities.SetupProperties.GenericTypes*
+  name: GenericTypes
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_GenericTypes_
+  commentId: Overload:StaticMock.Entities.SetupProperties.GenericTypes
+  isSpec: "True"
+  fullName: StaticMock.Entities.SetupProperties.GenericTypes
+  nameWithType: SetupProperties.GenericTypes
+- uid: StaticMock.Entities.SetupProperties.MethodParametersTypes
+  name: MethodParametersTypes
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_MethodParametersTypes
+  commentId: P:StaticMock.Entities.SetupProperties.MethodParametersTypes
+  fullName: StaticMock.Entities.SetupProperties.MethodParametersTypes
+  nameWithType: SetupProperties.MethodParametersTypes
+- uid: StaticMock.Entities.SetupProperties.MethodParametersTypes*
+  name: MethodParametersTypes
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_MethodParametersTypes_
+  commentId: Overload:StaticMock.Entities.SetupProperties.MethodParametersTypes
+  isSpec: "True"
+  fullName: StaticMock.Entities.SetupProperties.MethodParametersTypes
+  nameWithType: SetupProperties.MethodParametersTypes
+- uid: StaticMock.Hooks.HookBuilders.Entities
+  name: StaticMock.Hooks.HookBuilders.Entities
+  href: api/StaticMock.Hooks.HookBuilders.Entities.html
+  commentId: N:StaticMock.Hooks.HookBuilders.Entities
+  fullName: StaticMock.Hooks.HookBuilders.Entities
+  nameWithType: StaticMock.Hooks.HookBuilders.Entities
+- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType
+  name: HookMethodType
+  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html
+  commentId: T:StaticMock.Hooks.HookBuilders.Entities.HookMethodType
+  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType
+  nameWithType: HookMethodType
+- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
+  name: Instance
+  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html#StaticMock_Hooks_HookBuilders_Entities_HookMethodType_Instance
+  commentId: F:StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
+  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
+  nameWithType: HookMethodType.Instance
+- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
+  name: Static
+  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html#StaticMock_Hooks_HookBuilders_Entities_HookMethodType_Static
+  commentId: F:StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
+  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
+  nameWithType: HookMethodType.Static
+- uid: StaticMock.Mock
+  name: Mock
+  href: api/StaticMock.Mock.html
+  commentId: T:StaticMock.Mock
+  fullName: StaticMock.Mock
+  nameWithType: Mock
+- uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)
+  name: Setup(Expression<Action<SetupContext>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___System_Action_
+  commentId: M:StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)
+  name.vb: Setup(Expression(Of Action(Of SetupContext)), Action)
+  fullName: StaticMock.Mock.Setup(System.Linq.Expressions.Expression<System.Action<StaticMock.Entities.Context.SetupContext>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action(Of StaticMock.Entities.Context.SetupContext)), System.Action)
+  nameWithType: Mock.Setup(Expression<Action<SetupContext>>, Action)
+  nameWithType.vb: Mock.Setup(Expression(Of Action(Of SetupContext)), Action)
+- uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action},System.Action)
+  name: Setup(Expression<Action>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action__System_Action_
+  commentId: M:StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action},System.Action)
+  name.vb: Setup(Expression(Of Action), Action)
+  fullName: StaticMock.Mock.Setup(System.Linq.Expressions.Expression<System.Action>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action), System.Action)
+  nameWithType: Mock.Setup(Expression<Action>, Action)
+  nameWithType.vb: Mock.Setup(Expression(Of Action), Action)
+- uid: StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name: Setup(Type, string, SetupProperties, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name.vb: Setup(Type, String, SetupProperties, Action)
+  fullName: StaticMock.Mock.Setup(System.Type, string, StaticMock.Entities.SetupProperties, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String, StaticMock.Entities.SetupProperties, System.Action)
+  nameWithType: Mock.Setup(Type, string, SetupProperties, Action)
+  nameWithType.vb: Mock.Setup(Type, String, SetupProperties, Action)
+- uid: StaticMock.Mock.Setup(System.Type,System.String,System.Action)
+  name: Setup(Type, string, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_System_Action_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String,System.Action)
+  name.vb: Setup(Type, String, Action)
+  fullName: StaticMock.Mock.Setup(System.Type, string, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String, System.Action)
+  nameWithType: Mock.Setup(Type, string, Action)
+  nameWithType.vb: Mock.Setup(Type, String, Action)
+- uid: StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name: Setup(Type, string, BindingFlags, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name.vb: Setup(Type, String, BindingFlags, Action)
+  fullName: StaticMock.Mock.Setup(System.Type, string, System.Reflection.BindingFlags, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String, System.Reflection.BindingFlags, System.Action)
+  nameWithType: Mock.Setup(Type, string, BindingFlags, Action)
+  nameWithType.vb: Mock.Setup(Type, String, BindingFlags, Action)
+- uid: StaticMock.Mock.Setup*
+  name: Setup
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_
+  commentId: Overload:StaticMock.Mock.Setup
+  isSpec: "True"
+  fullName: StaticMock.Mock.Setup
+  nameWithType: Mock.Setup
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<TReturnValue>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of TReturnValue)), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, TReturnValue>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, TReturnValue)), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name: SetupAction(Type, string, SetupProperties, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name.vb: SetupAction(Type, String, SetupProperties, Action)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string, StaticMock.Entities.SetupProperties, System.Action)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, StaticMock.Entities.SetupProperties, System.Action)
+  nameWithType: Mock.SetupAction(Type, string, SetupProperties, Action)
+  nameWithType.vb: Mock.SetupAction(Type, String, SetupProperties, Action)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String,System.Action)
+  name: SetupAction(Type, string, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_System_Action_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String,System.Action)
+  name.vb: SetupAction(Type, String, Action)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string, System.Action)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, System.Action)
+  nameWithType: Mock.SetupAction(Type, string, Action)
+  nameWithType.vb: Mock.SetupAction(Type, String, Action)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name: SetupAction(Type, string, BindingFlags, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name.vb: SetupAction(Type, String, BindingFlags, Action)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string, System.Reflection.BindingFlags, System.Action)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, System.Reflection.BindingFlags, System.Action)
+  nameWithType: Mock.SetupAction(Type, string, BindingFlags, Action)
+  nameWithType.vb: Mock.SetupAction(Type, String, BindingFlags, Action)
+- uid: StaticMock.Mock.SetupAction*
+  name: SetupAction
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_
+  commentId: Overload:StaticMock.Mock.SetupAction
+  isSpec: "True"
+  fullName: StaticMock.Mock.SetupAction
+  nameWithType: Mock.SetupAction
+- uid: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action},System.Action)
+  name: SetupDefault(Expression<Action>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Linq_Expressions_Expression_System_Action__System_Action_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action},System.Action)
+  name.vb: SetupDefault(Expression(Of Action), Action)
+  fullName: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression<System.Action>, System.Action)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression(Of System.Action), System.Action)
+  nameWithType: Mock.SetupDefault(Expression<Action>, Action)
+  nameWithType.vb: Mock.SetupDefault(Expression(Of Action), Action)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name: SetupDefault(Type, string, SetupProperties, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name.vb: SetupDefault(Type, String, SetupProperties, Action)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string, StaticMock.Entities.SetupProperties, System.Action)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, StaticMock.Entities.SetupProperties, System.Action)
+  nameWithType: Mock.SetupDefault(Type, string, SetupProperties, Action)
+  nameWithType.vb: Mock.SetupDefault(Type, String, SetupProperties, Action)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String,System.Action)
+  name: SetupDefault(Type, string, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_System_Action_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String,System.Action)
+  name.vb: SetupDefault(Type, String, Action)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string, System.Action)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, System.Action)
+  nameWithType: Mock.SetupDefault(Type, string, Action)
+  nameWithType.vb: Mock.SetupDefault(Type, String, Action)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name: SetupDefault(Type, string, BindingFlags, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name.vb: SetupDefault(Type, String, BindingFlags, Action)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string, System.Reflection.BindingFlags, System.Action)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, System.Reflection.BindingFlags, System.Action)
+  nameWithType: Mock.SetupDefault(Type, string, BindingFlags, Action)
+  nameWithType.vb: Mock.SetupDefault(Type, String, BindingFlags, Action)
+- uid: StaticMock.Mock.SetupDefault*
+  name: SetupDefault
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_
+  commentId: Overload:StaticMock.Mock.SetupDefault
+  isSpec: "True"
+  fullName: StaticMock.Mock.SetupDefault
+  nameWithType: Mock.SetupDefault
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String,System.Action)
+  name: SetupProperty(Type, string, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_System_Action_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String,System.Action)
+  name.vb: SetupProperty(Type, String, Action)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string, System.Action)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, System.Action)
+  nameWithType: Mock.SetupProperty(Type, string, Action)
+  nameWithType.vb: Mock.SetupProperty(Type, String, Action)
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name: SetupProperty(Type, string, BindingFlags, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
+  name.vb: SetupProperty(Type, String, BindingFlags, Action)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string, System.Reflection.BindingFlags, System.Action)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, System.Reflection.BindingFlags, System.Action)
+  nameWithType: Mock.SetupProperty(Type, string, BindingFlags, Action)
+  nameWithType.vb: Mock.SetupProperty(Type, String, BindingFlags, Action)
+- uid: StaticMock.Mock.SetupProperty*
+  name: SetupProperty
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_
+  commentId: Overload:StaticMock.Mock.SetupProperty
+  isSpec: "True"
+  fullName: StaticMock.Mock.SetupProperty
+  nameWithType: Mock.SetupProperty
+- uid: StaticMock.Mocks
+  name: StaticMock.Mocks
+  href: api/StaticMock.Mocks.html
+  commentId: N:StaticMock.Mocks
+  fullName: StaticMock.Mocks
+  nameWithType: StaticMock.Mocks
+- uid: StaticMock.Mocks.IActionMock
+  name: IActionMock
+  href: api/StaticMock.Mocks.IActionMock.html
+  commentId: T:StaticMock.Mocks.IActionMock
+  fullName: StaticMock.Mocks.IActionMock
+  nameWithType: IActionMock
+- uid: StaticMock.Mocks.IActionMock.Callback(System.Action)
+  name: Callback(Action)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback_System_Action_
+  commentId: M:StaticMock.Mocks.IActionMock.Callback(System.Action)
+  fullName: StaticMock.Mocks.IActionMock.Callback(System.Action)
+  nameWithType: IActionMock.Callback(Action)
+- uid: StaticMock.Mocks.IActionMock.Callback*
+  name: Callback
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback_
+  commentId: Overload:StaticMock.Mocks.IActionMock.Callback
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IActionMock.Callback
+  nameWithType: IActionMock.Callback
+- uid: StaticMock.Mocks.IActionMock.Callback``1(System.Action{``0})
+  name: Callback<TArg>(Action<TArg>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__1_System_Action___0__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``1(System.Action{``0})
+  name.vb: Callback(Of TArg)(Action(Of TArg))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg>(System.Action<TArg>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg)(System.Action(Of TArg))
+  nameWithType: IActionMock.Callback<TArg>(Action<TArg>)
+  nameWithType.vb: IActionMock.Callback(Of TArg)(Action(Of TArg))
+- uid: StaticMock.Mocks.IActionMock.Callback``2(System.Action{``0,``1})
+  name: Callback<TArg1, TArg2>(Action<TArg1, TArg2>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__2_System_Action___0___1__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``2(System.Action{``0,``1})
+  name.vb: Callback(Of TArg1, TArg2)(Action(Of TArg1, TArg2))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2>(System.Action<TArg1, TArg2>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2)(System.Action(Of TArg1, TArg2))
+  nameWithType: IActionMock.Callback<TArg1, TArg2>(Action<TArg1, TArg2>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2)(Action(Of TArg1, TArg2))
+- uid: StaticMock.Mocks.IActionMock.Callback``3(System.Action{``0,``1,``2})
+  name: Callback<TArg1, TArg2, TArg3>(Action<TArg1, TArg2, TArg3>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__3_System_Action___0___1___2__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``3(System.Action{``0,``1,``2})
+  name.vb: Callback(Of TArg1, TArg2, TArg3)(Action(Of TArg1, TArg2, TArg3))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3>(System.Action<TArg1, TArg2, TArg3>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3)(System.Action(Of TArg1, TArg2, TArg3))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3>(Action<TArg1, TArg2, TArg3>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3)(Action(Of TArg1, TArg2, TArg3))
+- uid: StaticMock.Mocks.IActionMock.Callback``4(System.Action{``0,``1,``2,``3})
+  name: Callback<TArg1, TArg2, TArg3, TArg4>(Action<TArg1, TArg2, TArg3, TArg4>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__4_System_Action___0___1___2___3__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``4(System.Action{``0,``1,``2,``3})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4)(Action(Of TArg1, TArg2, TArg3, TArg4))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4>(System.Action<TArg1, TArg2, TArg3, TArg4>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4)(System.Action(Of TArg1, TArg2, TArg3, TArg4))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4>(Action<TArg1, TArg2, TArg3, TArg4>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4)(Action(Of TArg1, TArg2, TArg3, TArg4))
+- uid: StaticMock.Mocks.IActionMock.Callback``5(System.Action{``0,``1,``2,``3,``4})
+  name: Callback<TArg1, TArg2, TArg3, TArg4, TArg5>(Action<TArg1, TArg2, TArg3, TArg4, TArg5>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__5_System_Action___0___1___2___3___4__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``5(System.Action{``0,``1,``2,``3,``4})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5>(System.Action<TArg1, TArg2, TArg3, TArg4, TArg5>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5)(System.Action(Of TArg1, TArg2, TArg3, TArg4, TArg5))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5>(Action<TArg1, TArg2, TArg3, TArg4, TArg5>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5))
+- uid: StaticMock.Mocks.IActionMock.Callback``6(System.Action{``0,``1,``2,``3,``4,``5})
+  name: Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__6_System_Action___0___1___2___3___4___5__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``6(System.Action{``0,``1,``2,``3,``4,``5})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(System.Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(System.Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6))
+- uid: StaticMock.Mocks.IActionMock.Callback``7(System.Action{``0,``1,``2,``3,``4,``5,``6})
+  name: Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__7_System_Action___0___1___2___3___4___5___6__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``7(System.Action{``0,``1,``2,``3,``4,``5,``6})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(System.Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(System.Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7))
+- uid: StaticMock.Mocks.IActionMock.Callback``8(System.Action{``0,``1,``2,``3,``4,``5,``6,``7})
+  name: Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__8_System_Action___0___1___2___3___4___5___6___7__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``8(System.Action{``0,``1,``2,``3,``4,``5,``6,``7})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(System.Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(System.Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8))
+- uid: StaticMock.Mocks.IActionMock.Callback``9(System.Action{``0,``1,``2,``3,``4,``5,``6,``7,``8})
+  name: Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>)
+  href: api/StaticMock.Mocks.IActionMock.html#StaticMock_Mocks_IActionMock_Callback__9_System_Action___0___1___2___3___4___5___6___7___8__
+  commentId: M:StaticMock.Mocks.IActionMock.Callback``9(System.Action{``0,``1,``2,``3,``4,``5,``6,``7,``8})
+  name.vb: Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9))
+  fullName: StaticMock.Mocks.IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(System.Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>)
+  fullName.vb: StaticMock.Mocks.IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(System.Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9))
+  nameWithType: IActionMock.Callback<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Action<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>)
+  nameWithType.vb: IActionMock.Callback(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(Action(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9))
+- uid: StaticMock.Mocks.IAsyncFuncMock`1
+  name: IAsyncFuncMock<TReturnValue>
+  href: api/StaticMock.Mocks.IAsyncFuncMock-1.html
+  commentId: T:StaticMock.Mocks.IAsyncFuncMock`1
+  name.vb: IAsyncFuncMock(Of TReturnValue)
+  fullName: StaticMock.Mocks.IAsyncFuncMock<TReturnValue>
+  fullName.vb: StaticMock.Mocks.IAsyncFuncMock(Of TReturnValue)
+  nameWithType: IAsyncFuncMock<TReturnValue>
+  nameWithType.vb: IAsyncFuncMock(Of TReturnValue)
+- uid: StaticMock.Mocks.IAsyncFuncMock`1.ReturnsAsync(`0)
+  name: ReturnsAsync(TReturnValue)
+  href: api/StaticMock.Mocks.IAsyncFuncMock-1.html#StaticMock_Mocks_IAsyncFuncMock_1_ReturnsAsync__0_
+  commentId: M:StaticMock.Mocks.IAsyncFuncMock`1.ReturnsAsync(`0)
+  fullName: StaticMock.Mocks.IAsyncFuncMock<TReturnValue>.ReturnsAsync(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IAsyncFuncMock(Of TReturnValue).ReturnsAsync(TReturnValue)
+  nameWithType: IAsyncFuncMock<TReturnValue>.ReturnsAsync(TReturnValue)
+  nameWithType.vb: IAsyncFuncMock(Of TReturnValue).ReturnsAsync(TReturnValue)
+- uid: StaticMock.Mocks.IAsyncFuncMock`1.ReturnsAsync*
+  name: ReturnsAsync
+  href: api/StaticMock.Mocks.IAsyncFuncMock-1.html#StaticMock_Mocks_IAsyncFuncMock_1_ReturnsAsync_
+  commentId: Overload:StaticMock.Mocks.IAsyncFuncMock`1.ReturnsAsync
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IAsyncFuncMock<TReturnValue>.ReturnsAsync
+  fullName.vb: StaticMock.Mocks.IAsyncFuncMock(Of TReturnValue).ReturnsAsync
+  nameWithType: IAsyncFuncMock<TReturnValue>.ReturnsAsync
+  nameWithType.vb: IAsyncFuncMock(Of TReturnValue).ReturnsAsync
+- uid: StaticMock.Mocks.IFuncMock
+  name: IFuncMock
+  href: api/StaticMock.Mocks.IFuncMock.html
+  commentId: T:StaticMock.Mocks.IFuncMock
+  fullName: StaticMock.Mocks.IFuncMock
+  nameWithType: IFuncMock
+- uid: StaticMock.Mocks.IFuncMock.Returns*
+  name: Returns
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns_
+  commentId: Overload:StaticMock.Mocks.IFuncMock.Returns
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IFuncMock.Returns
+  nameWithType: IFuncMock.Returns
+- uid: StaticMock.Mocks.IFuncMock.Returns``1(``0)
+  name: Returns<TReturnValue>(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__1___0_
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``1(``0)
+  name.vb: Returns(Of TReturnValue)(TReturnValue)
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TReturnValue>(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TReturnValue)(TReturnValue)
+  nameWithType: IFuncMock.Returns<TReturnValue>(TReturnValue)
+  nameWithType.vb: IFuncMock.Returns(Of TReturnValue)(TReturnValue)
+- uid: StaticMock.Mocks.IFuncMock.Returns``1(System.Func{``0})
+  name: Returns<TReturnValue>(Func<TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__1_System_Func___0__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``1(System.Func{``0})
+  name.vb: Returns(Of TReturnValue)(Func(Of TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TReturnValue>(System.Func<TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TReturnValue)(System.Func(Of TReturnValue))
+  nameWithType: IFuncMock.Returns<TReturnValue>(Func<TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TReturnValue)(Func(Of TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``10(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__10_System_Func___0___1___2___3___4___5___6___7___8___9__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``10(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``2(System.Func{``0,``1})
+  name: Returns<TArg, TReturnValue>(Func<TArg, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__2_System_Func___0___1__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``2(System.Func{``0,``1})
+  name.vb: Returns(Of TArg, TReturnValue)(Func(Of TArg, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg, TReturnValue>(System.Func<TArg, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg, TReturnValue)(System.Func(Of TArg, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg, TReturnValue>(Func<TArg, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg, TReturnValue)(Func(Of TArg, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``3(System.Func{``0,``1,``2})
+  name: Returns<TArg1, TArg2, TReturnValue>(Func<TArg1, TArg2, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__3_System_Func___0___1___2__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``3(System.Func{``0,``1,``2})
+  name.vb: Returns(Of TArg1, TArg2, TReturnValue)(Func(Of TArg1, TArg2, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TReturnValue>(System.Func<TArg1, TArg2, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TReturnValue)(System.Func(Of TArg1, TArg2, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TReturnValue>(Func<TArg1, TArg2, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TReturnValue)(Func(Of TArg1, TArg2, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``4(System.Func{``0,``1,``2,``3})
+  name: Returns<TArg1, TArg2, TArg3, TReturnValue>(Func<TArg1, TArg2, TArg3, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__4_System_Func___0___1___2___3__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``4(System.Func{``0,``1,``2,``3})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TReturnValue>(Func<TArg1, TArg2, TArg3, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``5(System.Func{``0,``1,``2,``3,``4})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__5_System_Func___0___1___2___3___4__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``5(System.Func{``0,``1,``2,``3,``4})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``6(System.Func{``0,``1,``2,``3,``4,``5})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__6_System_Func___0___1___2___3___4___5__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``6(System.Func{``0,``1,``2,``3,``4,``5})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``7(System.Func{``0,``1,``2,``3,``4,``5,``6})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__7_System_Func___0___1___2___3___4___5___6__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``7(System.Func{``0,``1,``2,``3,``4,``5,``6})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``8(System.Func{``0,``1,``2,``3,``4,``5,``6,``7})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__8_System_Func___0___1___2___3___4___5___6___7__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``8(System.Func{``0,``1,``2,``3,``4,``5,``6,``7})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``9(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__9_System_Func___0___1___2___3___4___5___6___7___8__
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``9(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+  nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync*
+  name: ReturnsAsync
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync_
+  commentId: Overload:StaticMock.Mocks.IFuncMock.ReturnsAsync
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync
+  nameWithType: IFuncMock.ReturnsAsync
+- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
+  name: ReturnsAsync<TReturnValue>(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync__1___0_
+  commentId: M:StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
+  name.vb: ReturnsAsync(Of TReturnValue)(TReturnValue)
+  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
+  nameWithType: IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
+  nameWithType.vb: IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
+- uid: StaticMock.Mocks.IFuncMock`1
+  name: IFuncMock<TReturnValue>
+  href: api/StaticMock.Mocks.IFuncMock-1.html
+  commentId: T:StaticMock.Mocks.IFuncMock`1
+  name.vb: IFuncMock(Of TReturnValue)
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue)
+  nameWithType: IFuncMock<TReturnValue>
+  nameWithType.vb: IFuncMock(Of TReturnValue)
+- uid: StaticMock.Mocks.IFuncMock`1.Returns(`0)
+  name: Returns(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__0_
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns(`0)
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(TReturnValue)
+  nameWithType: IFuncMock<TReturnValue>.Returns(TReturnValue)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(TReturnValue)
+- uid: StaticMock.Mocks.IFuncMock`1.Returns(System.Func{`0})
+  name: Returns(Func<TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns_System_Func__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns(System.Func{`0})
+  name.vb: Returns(Func(Of TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns(System.Func<TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(System.Func(Of TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns(Func<TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Func(Of TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns*
+  name: Returns
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns_
+  commentId: Overload:StaticMock.Mocks.IFuncMock`1.Returns
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns
+  nameWithType: IFuncMock<TReturnValue>.Returns
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``1(System.Func{``0,`0})
+  name: Returns<TArg>(Func<TArg, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__1_System_Func___0__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``1(System.Func{``0,`0})
+  name.vb: Returns(Of TArg)(Func(Of TArg, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg>(System.Func<TArg, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg)(System.Func(Of TArg, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg>(Func<TArg, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg)(Func(Of TArg, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``2(System.Func{``0,``1,`0})
+  name: Returns<TArg1, TArg2>(Func<TArg1, TArg2, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__2_System_Func___0___1__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``2(System.Func{``0,``1,`0})
+  name.vb: Returns(Of TArg1, TArg2)(Func(Of TArg1, TArg2, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2>(System.Func<TArg1, TArg2, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2)(System.Func(Of TArg1, TArg2, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2>(Func<TArg1, TArg2, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2)(Func(Of TArg1, TArg2, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``3(System.Func{``0,``1,``2,`0})
+  name: Returns<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__3_System_Func___0___1___2__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``3(System.Func{``0,``1,``2,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3)(Func(Of TArg1, TArg2, TArg3, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3>(System.Func<TArg1, TArg2, TArg3, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3)(System.Func(Of TArg1, TArg2, TArg3, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3>(Func<TArg1, TArg2, TArg3, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3)(Func(Of TArg1, TArg2, TArg3, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``4(System.Func{``0,``1,``2,``3,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4>(Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__4_System_Func___0___1___2___3__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``4(System.Func{``0,``1,``2,``3,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4)(Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4>(System.Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4>(Func<TArg1, TArg2, TArg3, TArg4, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4)(Func(Of TArg1, TArg2, TArg3, TArg4, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``5(System.Func{``0,``1,``2,``3,``4,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__5_System_Func___0___1___2___3___4__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``5(System.Func{``0,``1,``2,``3,``4,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``6(System.Func{``0,``1,``2,``3,``4,``5,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__6_System_Func___0___1___2___3___4___5__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``6(System.Func{``0,``1,``2,``3,``4,``5,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``7(System.Func{``0,``1,``2,``3,``4,``5,``6,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__7_System_Func___0___1___2___3___4___5___6__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``7(System.Func{``0,``1,``2,``3,``4,``5,``6,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``8(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__8_System_Func___0___1___2___3___4___5___6___7__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``8(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns``9(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,`0})
+  name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__9_System_Func___0___1___2___3___4___5___6___7___8__0__
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns``9(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,`0})
+  name.vb: Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+  nameWithType: IFuncMock<TReturnValue>.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue))
+- uid: StaticMock.Mocks.IMock
+  name: IMock
+  href: api/StaticMock.Mocks.IMock.html
+  commentId: T:StaticMock.Mocks.IMock
+  fullName: StaticMock.Mocks.IMock
+  nameWithType: IMock
+- uid: StaticMock.Mocks.IMock.Throws(System.Type,System.Object[])
+  name: Throws(Type, params object[])
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_System_Type_System_Object___
+  commentId: M:StaticMock.Mocks.IMock.Throws(System.Type,System.Object[])
+  name.vb: Throws(Type, ParamArray Object())
+  fullName: StaticMock.Mocks.IMock.Throws(System.Type, params object[])
+  fullName.vb: StaticMock.Mocks.IMock.Throws(System.Type, ParamArray Object())
+  nameWithType: IMock.Throws(Type, params object[])
+  nameWithType.vb: IMock.Throws(Type, ParamArray Object())
+- uid: StaticMock.Mocks.IMock.Throws(System.Type)
+  name: Throws(Type)
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_System_Type_
+  commentId: M:StaticMock.Mocks.IMock.Throws(System.Type)
+  fullName: StaticMock.Mocks.IMock.Throws(System.Type)
+  nameWithType: IMock.Throws(Type)
+- uid: StaticMock.Mocks.IMock.Throws*
+  name: Throws
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_
+  commentId: Overload:StaticMock.Mocks.IMock.Throws
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IMock.Throws
+  nameWithType: IMock.Throws
+- uid: StaticMock.Mocks.IMock.Throws``1
+  name: Throws<TException>()
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws__1
+  commentId: M:StaticMock.Mocks.IMock.Throws``1
+  name.vb: Throws(Of TException)()
+  fullName: StaticMock.Mocks.IMock.Throws<TException>()
+  fullName.vb: StaticMock.Mocks.IMock.Throws(Of TException)()
+  nameWithType: IMock.Throws<TException>()
+  nameWithType.vb: IMock.Throws(Of TException)()
+- uid: StaticMock.Mocks.IMock.Throws``1(System.Object[])
+  name: Throws<TException>(object[])
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws__1_System_Object___
+  commentId: M:StaticMock.Mocks.IMock.Throws``1(System.Object[])
+  name.vb: Throws(Of TException)(Object())
+  fullName: StaticMock.Mocks.IMock.Throws<TException>(object[])
+  fullName.vb: StaticMock.Mocks.IMock.Throws(Of TException)(Object())
+  nameWithType: IMock.Throws<TException>(object[])
+  nameWithType.vb: IMock.Throws(Of TException)(Object())
