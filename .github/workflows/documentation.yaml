@@ -17,9 +17,11 @@ jobs:
         dotnet-version: 7.x
 
     - run: dotnet tool update -g docfx
-    - run: docfx docs/docfx.json
+    - run: docfx docfx.json
+      working-directory: docs
 
     - name: Deploy
+      working-directory: docs
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
