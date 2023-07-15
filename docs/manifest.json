@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/MyProjects/static-mock/docfx_project",
+  "source_base_path": "D:/MyProjects/static-mock/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -49,6 +49,36 @@
       "output": {
         ".html": {
           "relative_path": "api/StaticMock.Entities.Context.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Enums.HookManagerType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Enums.HookManagerType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Enums.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Enums.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.GlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.GlobalSettings.html"
         }
       },
       "version": ""

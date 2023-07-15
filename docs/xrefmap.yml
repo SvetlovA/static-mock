@@ -146,6 +146,49 @@ references:
   isSpec: "True"
   fullName: StaticMock.Entities.Context.SetupContextState.ItParameterExpressions
   nameWithType: SetupContextState.ItParameterExpressions
+- uid: StaticMock.Entities.Enums
+  name: StaticMock.Entities.Enums
+  href: api/StaticMock.Entities.Enums.html
+  commentId: N:StaticMock.Entities.Enums
+  fullName: StaticMock.Entities.Enums
+  nameWithType: StaticMock.Entities.Enums
+- uid: StaticMock.Entities.Enums.HookManagerType
+  name: HookManagerType
+  href: api/StaticMock.Entities.Enums.HookManagerType.html
+  commentId: T:StaticMock.Entities.Enums.HookManagerType
+  fullName: StaticMock.Entities.Enums.HookManagerType
+  nameWithType: HookManagerType
+- uid: StaticMock.Entities.Enums.HookManagerType.Harmony
+  name: Harmony
+  href: api/StaticMock.Entities.Enums.HookManagerType.html#StaticMock_Entities_Enums_HookManagerType_Harmony
+  commentId: F:StaticMock.Entities.Enums.HookManagerType.Harmony
+  fullName: StaticMock.Entities.Enums.HookManagerType.Harmony
+  nameWithType: HookManagerType.Harmony
+- uid: StaticMock.Entities.Enums.HookManagerType.MonoMod
+  name: MonoMod
+  href: api/StaticMock.Entities.Enums.HookManagerType.html#StaticMock_Entities_Enums_HookManagerType_MonoMod
+  commentId: F:StaticMock.Entities.Enums.HookManagerType.MonoMod
+  fullName: StaticMock.Entities.Enums.HookManagerType.MonoMod
+  nameWithType: HookManagerType.MonoMod
+- uid: StaticMock.Entities.GlobalSettings
+  name: GlobalSettings
+  href: api/StaticMock.Entities.GlobalSettings.html
+  commentId: T:StaticMock.Entities.GlobalSettings
+  fullName: StaticMock.Entities.GlobalSettings
+  nameWithType: GlobalSettings
+- uid: StaticMock.Entities.GlobalSettings.HookManagerType
+  name: HookManagerType
+  href: api/StaticMock.Entities.GlobalSettings.html#StaticMock_Entities_GlobalSettings_HookManagerType
+  commentId: P:StaticMock.Entities.GlobalSettings.HookManagerType
+  fullName: StaticMock.Entities.GlobalSettings.HookManagerType
+  nameWithType: GlobalSettings.HookManagerType
+- uid: StaticMock.Entities.GlobalSettings.HookManagerType*
+  name: HookManagerType
+  href: api/StaticMock.Entities.GlobalSettings.html#StaticMock_Entities_GlobalSettings_HookManagerType_
+  commentId: Overload:StaticMock.Entities.GlobalSettings.HookManagerType
+  isSpec: "True"
+  fullName: StaticMock.Entities.GlobalSettings.HookManagerType
+  nameWithType: GlobalSettings.HookManagerType
 - uid: StaticMock.Entities.SetupProperties
   name: SetupProperties
   href: api/StaticMock.Entities.SetupProperties.html
@@ -178,6 +221,19 @@ references:
   isSpec: "True"
   fullName: StaticMock.Entities.SetupProperties.GenericTypes
   nameWithType: SetupProperties.GenericTypes
+- uid: StaticMock.Entities.SetupProperties.Instance
+  name: Instance
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_Instance
+  commentId: P:StaticMock.Entities.SetupProperties.Instance
+  fullName: StaticMock.Entities.SetupProperties.Instance
+  nameWithType: SetupProperties.Instance
+- uid: StaticMock.Entities.SetupProperties.Instance*
+  name: Instance
+  href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_Instance_
+  commentId: Overload:StaticMock.Entities.SetupProperties.Instance
+  isSpec: "True"
+  fullName: StaticMock.Entities.SetupProperties.Instance
+  nameWithType: SetupProperties.Instance
 - uid: StaticMock.Entities.SetupProperties.MethodParametersTypes
   name: MethodParametersTypes
   href: api/StaticMock.Entities.SetupProperties.html#StaticMock_Entities_SetupProperties_MethodParametersTypes
@@ -221,6 +277,32 @@ references:
   commentId: T:StaticMock.Mock
   fullName: StaticMock.Mock
   nameWithType: Mock
+- uid: StaticMock.Mock.GlobalSettings
+  name: GlobalSettings
+  href: api/StaticMock.Mock.html#StaticMock_Mock_GlobalSettings
+  commentId: P:StaticMock.Mock.GlobalSettings
+  fullName: StaticMock.Mock.GlobalSettings
+  nameWithType: Mock.GlobalSettings
+- uid: StaticMock.Mock.GlobalSettings*
+  name: GlobalSettings
+  href: api/StaticMock.Mock.html#StaticMock_Mock_GlobalSettings_
+  commentId: Overload:StaticMock.Mock.GlobalSettings
+  isSpec: "True"
+  fullName: StaticMock.Mock.GlobalSettings
+  nameWithType: Mock.GlobalSettings
+- uid: StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
+  name: SetHookManagerType(HookManagerType)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetHookManagerType_StaticMock_Entities_Enums_HookManagerType_
+  commentId: M:StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
+  fullName: StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
+  nameWithType: Mock.SetHookManagerType(HookManagerType)
+- uid: StaticMock.Mock.SetHookManagerType*
+  name: SetHookManagerType
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetHookManagerType_
+  commentId: Overload:StaticMock.Mock.SetHookManagerType
+  isSpec: "True"
+  fullName: StaticMock.Mock.SetHookManagerType
+  nameWithType: Mock.SetHookManagerType
 - uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)
   name: Setup(Expression<Action<SetupContext>>, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___System_Action_
@@ -386,6 +468,15 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.SetupDefault
   nameWithType: Mock.SetupDefault
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name: SetupProperty(Type, string, SetupProperties, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
+  name.vb: SetupProperty(Type, String, SetupProperties, Action)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string, StaticMock.Entities.SetupProperties, System.Action)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, StaticMock.Entities.SetupProperties, System.Action)
+  nameWithType: Mock.SetupProperty(Type, string, SetupProperties, Action)
+  nameWithType.vb: Mock.SetupProperty(Type, String, SetupProperties, Action)
 - uid: StaticMock.Mock.SetupProperty(System.Type,System.String,System.Action)
   name: SetupProperty(Type, string, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_System_Action_
