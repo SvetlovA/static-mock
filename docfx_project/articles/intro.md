@@ -1,8 +1,10 @@
 # SMock
 SMock is opensource lib for mocking static and instance methods and properties.
 # Installation
-Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/)
+Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/) or [GitHub](https://github.com/SvetlovA/static-mock/pkgs/nuget/SMock)
 # Getting Started
+## Hook Manager Types
+SMock is based on [MonoMod](https://github.com/MonoMod/MonoMod) library that produce hook functionality
 ## Code Examples
 ### Returns
 ```cs
@@ -34,6 +36,7 @@ Mock.Setup(context => StaticClass.MethodToMockAsync(context.It.IsAny<int>()), as
     Assert.AreEqual(expectedResult, actualResult);
 }).Returns<int>(async argument => await Task.FromResult(argument));
 ```
+[Other returns setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ReturnsTests)
 ### Throws
 ```cs
 Mock.Setup(() => StaticClass.MethodToMock(), () =>
@@ -41,13 +44,7 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
     Assert.Throws<Exception>(() => StaticClass.MethodToMock());
 }).Throws<Exception>();
 ```
-### SetupDefault
-```cs
-Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
-{
-    StaticClass.VoidMethodToMock(); // This method do nothing
-});
-```
+[Other throws setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ThrowsTests)
 ### Callback
 ```cs
 Mock.Setup(() => StaticClass.MethodToMock(), () =>
@@ -70,8 +67,14 @@ Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
     DoSomething(argument);
 });
 ```
-[Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests)
-# Known Issues
-* **System.AccessViolationException:** This exception most often occurs if you use x64 platform in your test project. If you have this exception **System.AccessViolationException: 'Attempted to read or write protected memory. This is often an indication that other memory is corrupt.'** try to move mocking methods away from each other or try to use x32 platform for your test project compilation.
+[Other callback setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/CallbackTests)
+### SetupDefault
+```cs
+Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
+{
+    StaticClass.VoidMethodToMock(); // This method do nothing
+});
+```
+[Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).

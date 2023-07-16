@@ -6,45 +6,19 @@ on:
     branches: [ master ]
   workflow_dispatch:
 jobs:
-  buildAndTestUbuntu:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore src
-    - name: Build
-      run: dotnet build --configuration Release --no-restore src
-    - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal src
-  buildAndTestWindows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore src
-    - name: Build
-      run: dotnet build --configuration Release --no-restore src
-    - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal src
-  buildAndTestMac:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore src
-    - name: Build
-      run: dotnet build --configuration Release --no-restore src
-    - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal src
+# MonoMod tests
+  buildAndTestUbuntuMonoMod:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: ubuntu-latest
+      hook_manager_type: MonoMod
+  buildAndTestWindowsMonoMod:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: windows-latest
+      hook_manager_type: MonoMod
+  buildAndTestMacMonoMod:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: macos-latest
+      hook_manager_type: MonoMod

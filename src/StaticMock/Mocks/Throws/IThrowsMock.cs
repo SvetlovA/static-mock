@@ -1,4 +1,5 @@
-﻿using StaticMock.Hooks;
+﻿using System;
+using StaticMock.Hooks;
 
 namespace StaticMock.Mocks.Throws;
 

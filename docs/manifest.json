@@ -55,6 +55,36 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Enums.HookManagerType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Enums.HookManagerType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.Enums.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.Enums.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Entities.GlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Entities.GlobalSettings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/StaticMock.Entities.SetupProperties.yml",
       "output": {
         ".html": {

@@ -4,5 +4,5 @@ namespace StaticMock.Hooks;
 
 internal interface IHookManager : IReturnable
 {
-    IReturnable ApplyHook(MethodBase hookMethod);
+    IReturnable ApplyHook(MethodInfo transpiler);
 }

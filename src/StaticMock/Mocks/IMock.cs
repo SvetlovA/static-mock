@@ -1,4 +1,6 @@
-﻿namespace StaticMock.Mocks;
+﻿using System;
+
+namespace StaticMock.Mocks;
 
 public interface IMock
 {

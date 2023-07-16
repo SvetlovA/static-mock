@@ -1,0 +1,61 @@
+name: build and test job
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        type: choice
+        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest. Default: windows-latest'
+        required: true
+        options:
+        - ubuntu-latest
+        - windows-latest
+        - macos-latest
+        default: windows-latest
+      hook_manager_type:
+        type: choice
+        description: 'Run tests on special hook manager type. Possible hook manager types: Harmony, Native, MonoMod. Default: MonoMod'
+        required: true
+        options:
+        - MonoMod
+        default: MonoMod
+  workflow_call:
+    inputs:
+      os:
+        type: string
+        required: true
+        default: ubuntu-latest
+      hook_manager_type:
+        type: string
+        required: true
+        default: MonoMod
+jobs:
+  buildAndTest:
+    env:
+      HOOK_MANAGER_TYPE: ${{ inputs.hook_manager_type }}
+    runs-on: ${{ inputs.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+          7.0.x
+    - name: Restore dependencies
+      run: dotnet restore src
+    - name: Build
+      run: dotnet build --configuration Release --no-restore src
+    - name: TestAllPlatforms
+      if: ${{ inputs.os == 'windows-latest' }}
+      run: dotnet test --no-build --configuration Release --verbosity normal
+      working-directory: ./src
+    - name: TestLinix
+      if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
+      run: |
+        dotnet test --framework netcoreapp3.1 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net5.0 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net6.0 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net7.0 --no-build --configuration Release --verbosity normal
+      working-directory: ./src
