@@ -2,13 +2,13 @@ name: publish
 on:
   workflow_dispatch:
 jobs:
+  buildAndTest:
+    uses: ./.github/workflows/build_and_test.yaml
   pack:
+    needs: buildAndTest
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/build_and_test_job.yaml
-        with:
-          os: ubuntu-latest
-          hook_manager_type: MonoMod
+      - uses: actions/checkout@v3
       - name: Pack
         run: dotnet pack --no-build --configuration Release --output packages src/StaticMock/StaticMock.csproj
       - uses: actions/upload-artifact@v3
