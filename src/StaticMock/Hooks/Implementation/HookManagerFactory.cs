@@ -20,6 +20,7 @@ internal class HookManagerFactory : IHookManagerFactory
         _settings.HookManagerType switch
         {
             HookManagerType.MonoMod => new MonoModHookManager(_originalMethod, _settings),
+            HookManagerType.Harmony => new HarmonyHookManager(_originalMethod),
             _ => throw new ArgumentOutOfRangeException(nameof(_settings.HookManagerType), _settings.HookManagerType,
                 $"{_settings.HookManagerType} not exists in {nameof(HookManagerType)}")
         };

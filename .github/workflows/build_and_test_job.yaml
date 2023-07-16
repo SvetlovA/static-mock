@@ -17,6 +17,7 @@ on:
         required: true
         options:
         - MonoMod
+        - Harmony
         default: MonoMod
   workflow_call:
     inputs:
