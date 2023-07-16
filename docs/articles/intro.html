@@ -79,14 +79,7 @@
 <p>Download and install the package from <a href="https://www.nuget.org/packages/SMock/">NuGet</a> or <a href="https://github.com/SvetlovA/static-mock/pkgs/nuget/SMock">GitHub</a></p>
 <h1 id="getting-started">Getting Started</h1>
 <h2 id="hook-manager-types">Hook Manager Types</h2>
-<p>When you are using SMock you have a possibilty to switch hook manager type for your needs.
-| Hook Manager Type | Description |
-| ----------------- | ----------- |
-| MonoMod | Using <a href="https://github.com/MonoMod/MonoMod">MonoMod</a> library to provide hook (<strong>Default</strong>) |
-| Harmony | Using <a href="https://github.com/pardeike/Harmony">Harmony</a> library to provide hook |</p>
-<p>There is a possibilty to set hook manager type manually:</p>
-<pre><code class="lang-cs">Mock.SetHookManagerType(HookManagerType.MonoMod);
-</code></pre>
+<p>SMock is based on <a href="https://github.com/MonoMod/MonoMod">MonoMod</a> library that produce hook functionality</p>
 <h2 id="code-examples">Code Examples</h2>
 <h3 id="returns">Returns</h3>
 <pre><code class="lang-cs">Mock.Setup(context =&gt; StaticClass.MethodToMock(context.It.IsAny&lt;int&gt;()), () =&gt;

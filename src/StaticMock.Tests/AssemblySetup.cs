@@ -16,8 +16,6 @@ public class AssemblySetup
             .Build();
 
         var appSettings = AppSettingsReader.ReadSettings(configuration);
-
-        Mock.SetHookManagerType(appSettings.HookManagerType);
         Console.WriteLine($"Hook manager type: {appSettings.HookManagerType}");
     }
 }

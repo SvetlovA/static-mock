@@ -6,22 +6,6 @@ on:
     branches: [ master ]
   workflow_dispatch:
 jobs:
-# Harmony tests
-  buildAndTestUbuntuHarmony:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: ubuntu-latest
-      hook_manager_type: Harmony
-  buildAndTestWindowsHarmony:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: windows-latest
-      hook_manager_type: Harmony
-  buildAndTestMacHarmony:
-    uses: ./.github/workflows/build_and_test_job.yaml
-    with:
-      os: macos-latest
-      hook_manager_type: Harmony
 # MonoMod tests
   buildAndTestUbuntuMonoMod:
     uses: ./.github/workflows/build_and_test_job.yaml

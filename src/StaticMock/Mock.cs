@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
-using StaticMock.Entities.Enums;
 using StaticMock.Hooks.Entities;
 using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
@@ -17,8 +16,6 @@ namespace StaticMock;
 public static class Mock
 {
     public static GlobalSettings GlobalSettings { get; } = new();
-
-    public static void SetHookManagerType(HookManagerType hookManagerType) => GlobalSettings.HookManagerType = hookManagerType;
 
     public static IFuncMock Setup(Type type, string methodName, Action action) => SetupMockHelper.SetupInternal(type, methodName, action);
 

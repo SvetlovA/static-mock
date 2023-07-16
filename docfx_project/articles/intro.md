@@ -4,16 +4,7 @@ SMock is opensource lib for mocking static and instance methods and properties.
 Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/) or [GitHub](https://github.com/SvetlovA/static-mock/pkgs/nuget/SMock)
 # Getting Started
 ## Hook Manager Types
-When you are using SMock you have a possibilty to switch hook manager type for your needs.
-| Hook Manager Type | Description |
-| ----------------- | ----------- |
-| MonoMod | Using [MonoMod](https://github.com/MonoMod/MonoMod) library to provide hook (**Default**) |
-| Harmony | Using [Harmony](https://github.com/pardeike/Harmony) library to provide hook |
-
-There is a possibilty to set hook manager type manually:
-```cs
-Mock.SetHookManagerType(HookManagerType.MonoMod);
-```
+SMock is based on [MonoMod](https://github.com/MonoMod/MonoMod) library that produce hook functionality
 ## Code Examples
 ### Returns
 ```cs

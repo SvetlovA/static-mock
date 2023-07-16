@@ -158,12 +158,6 @@ references:
   commentId: T:StaticMock.Entities.Enums.HookManagerType
   fullName: StaticMock.Entities.Enums.HookManagerType
   nameWithType: HookManagerType
-- uid: StaticMock.Entities.Enums.HookManagerType.Harmony
-  name: Harmony
-  href: api/StaticMock.Entities.Enums.HookManagerType.html#StaticMock_Entities_Enums_HookManagerType_Harmony
-  commentId: F:StaticMock.Entities.Enums.HookManagerType.Harmony
-  fullName: StaticMock.Entities.Enums.HookManagerType.Harmony
-  nameWithType: HookManagerType.Harmony
 - uid: StaticMock.Entities.Enums.HookManagerType.MonoMod
   name: MonoMod
   href: api/StaticMock.Entities.Enums.HookManagerType.html#StaticMock_Entities_Enums_HookManagerType_MonoMod
@@ -290,19 +284,6 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.GlobalSettings
   nameWithType: Mock.GlobalSettings
-- uid: StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
-  name: SetHookManagerType(HookManagerType)
-  href: api/StaticMock.Mock.html#StaticMock_Mock_SetHookManagerType_StaticMock_Entities_Enums_HookManagerType_
-  commentId: M:StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
-  fullName: StaticMock.Mock.SetHookManagerType(StaticMock.Entities.Enums.HookManagerType)
-  nameWithType: Mock.SetHookManagerType(HookManagerType)
-- uid: StaticMock.Mock.SetHookManagerType*
-  name: SetHookManagerType
-  href: api/StaticMock.Mock.html#StaticMock_Mock_SetHookManagerType_
-  commentId: Overload:StaticMock.Mock.SetHookManagerType
-  isSpec: "True"
-  fullName: StaticMock.Mock.SetHookManagerType
-  nameWithType: Mock.SetHookManagerType
 - uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)
   name: Setup(Expression<Action<SetupContext>>, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___System_Action_
