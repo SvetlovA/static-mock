@@ -4,7 +4,7 @@ using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Returns;
 
-namespace StaticMock.Mocks.Implementation;
+namespace StaticMock.Mocks.Implementation.Hierarchical;
 
 internal class AsyncFuncMock<TReturnValue> : FuncMock<Task<TReturnValue>>, IAsyncFuncMock<TReturnValue>
 {
@@ -23,12 +23,14 @@ internal class AsyncFuncMock<TReturnValue> : FuncMock<Task<TReturnValue>>, IAsyn
         _action = action;
     }
 
-    public void ReturnsAsync(TReturnValue value)
+    public IDisposable ReturnsAsync(TReturnValue value)
     {
         var returnService = new ReturnsMock<TReturnValue>(_hookBuilder, _hookManager);
         using (returnService.ReturnsAsync(value))
         {
             _action();
         }
+
+        return new Disposable();
     }
 }

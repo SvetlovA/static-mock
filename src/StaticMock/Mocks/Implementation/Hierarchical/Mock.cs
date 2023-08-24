@@ -4,7 +4,7 @@ using StaticMock.Hooks;
 using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Throws;
 
-namespace StaticMock.Mocks.Implementation;
+namespace StaticMock.Mocks.Implementation.Hierarchical;
 
 internal class Mock : IMock
 {
@@ -22,9 +22,13 @@ internal class Mock : IMock
         _action = action;
     }
 
-    public void Throws(Type exceptionType) => ThrowsInternal(exceptionType, null);
+    public IDisposable Throws(Type exceptionType)
+    {
+        ThrowsInternal(exceptionType, null);
+        return new Disposable();
+    }
 
-    public void Throws(Type exceptionType, params object[] constructorArgs)
+    public IDisposable Throws(Type exceptionType, params object[] constructorArgs)
     {
         if (constructorArgs == null || !constructorArgs.Any())
         {
@@ -33,18 +37,21 @@ internal class Mock : IMock
         }
 
         ThrowsInternal(exceptionType, constructorArgs);
+        return new Disposable();
     }
 
-    public void Throws<TException>() where TException : Exception, new()
+    public IDisposable Throws<TException>() where TException : Exception, new()
     {
         var throwService = new ThrowsMock(_hookBuilder, _hookManager);
         using (throwService.Throws<TException>())
         {
             _action();
         }
+
+        return new Disposable();
     }
 
-    public void Throws<TException>(object[] constructorArgs) where TException : Exception
+    public IDisposable Throws<TException>(object[] constructorArgs) where TException : Exception
     {
         if (constructorArgs == null || !constructorArgs.Any())
         {
@@ -53,6 +60,7 @@ internal class Mock : IMock
         }
 
         ThrowsInternal(typeof(TException), constructorArgs);
+        return new Disposable();
     }
 
     private void ThrowsInternal(Type exceptionType, object[]? constructorArgs)
