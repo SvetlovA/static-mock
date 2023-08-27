@@ -284,7 +284,9 @@ internal static class SetupMockHelper
         var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
         var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
 
-        return new FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory, action);
+        return action == null
+            ? new Mocks.Implementation.Sequential.FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory)
+            : new FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory, action);
     }
 
     public static IAsyncFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>> methodGetExpression, Action? action = null)

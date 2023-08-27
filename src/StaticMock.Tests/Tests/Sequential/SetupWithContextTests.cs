@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.Tests;
+namespace StaticMock.Tests.Tests.Sequential;
 
 [TestFixture]
 public class SetupWithContextTests
@@ -11,11 +11,13 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1))).Returns(expectedValue))
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns(expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -23,10 +25,13 @@ public class SetupWithContextTests
     public void TestReturnSetupItIsWithParameterNegative()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)))
+                   .Returns(default(int)))
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
-        }).Returns(default(int));
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -35,11 +40,13 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>()), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>())).Returns(expectedValue))
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns(expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -48,12 +55,13 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(
-            context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0))).Returns(expectedValue))
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>());
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns(expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -61,11 +69,13 @@ public class SetupWithContextTests
     public void TestReturnSetupItIsWithParametersNegative()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(
-            context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(
+                       context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0))).Returns(default(int)))
         {
-            Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameters(2, new []{ 0 }));
-        }).Returns(default(int));
+            Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameters(2, new[] { 0 }));
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -74,12 +84,14 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(
-            context.It.IsAny<int>(), context.It.IsAny<int[]>()), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameters(
+                   context.It.IsAny<int>(), context.It.IsAny<int[]>())).Returns(expectedValue))
         {
-            var actualValue = TestStaticClass.TestMethodReturnWithParameters(1, new []{ 0 });
+            var actualValue = TestStaticClass.TestMethodReturnWithParameters(1, new[] { 0 });
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns(expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -88,11 +100,13 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1))).Returns<int>(_ => expectedValue))
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns<int>(_ => expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -100,10 +114,12 @@ public class SetupWithContextTests
     public void TestCallbackSetupItIsWithParameterNegative()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)))
+                   .Returns<int>(_ => default))
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
-        }).Returns<int>(_ => default);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -112,11 +128,13 @@ public class SetupWithContextTests
     {
         const int expectedValue = 2;
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>()), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>())).Returns<int>(_ => expectedValue))
         {
             var actualValue = TestStaticClass.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns<int>(_ => expectedValue);
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -127,11 +145,13 @@ public class SetupWithContextTests
 
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1))).Returns<int>(_ => expectedValue))
         {
             var actualValue = instance.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns<int>(_ => expectedValue);
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 
@@ -140,10 +160,13 @@ public class SetupWithContextTests
     {
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)))
+                   .Returns<int>(_ => default))
         {
             Assert.Throws<Exception>(() => instance.TestMethodReturnWithParameter(2));
-        }).Returns<int>(_ => default);
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 
@@ -153,11 +176,13 @@ public class SetupWithContextTests
         const int expectedValue = 2;
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.IsAny<int>()), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameter(context.It.IsAny<int>())).Returns<int>(_ => expectedValue))
         {
             var actualValue = instance.TestMethodReturnWithParameter(1);
             Assert.AreEqual(expectedValue, actualValue);
-        }).Returns<int>(_ => expectedValue);
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameter(1));
     }
 
@@ -165,11 +190,13 @@ public class SetupWithContextTests
     public void TestThrowsSetupItIsWithParameterPositive()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(
-            context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(
+                           context.It.Is<int>(x => x == 1)))
+                   .Throws<ArgumentException>())
         {
             Assert.Throws<ArgumentException>(() => TestStaticClass.TestMethodReturnWithParameter(1));
-        }).Throws<ArgumentException>();
+        }
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -177,10 +204,13 @@ public class SetupWithContextTests
     public void TestThrowsSetupItIsWithParameterNegative()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.Is<int>(x => x == 1)))
+                   .Throws<ArgumentException>())
         {
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
-        }).Throws<ArgumentException>();
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -188,10 +218,13 @@ public class SetupWithContextTests
     public void TestThrowsSetupItIsAnyWithParameterPositive()
     {
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
-        Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>()), () =>
+
+        using (Mock.Setup(context => TestStaticClass.TestMethodReturnWithParameter(context.It.IsAny<int>()))
+                   .Throws<ArgumentException>())
         {
             Assert.Throws<ArgumentException>(() => TestStaticClass.TestMethodReturnWithParameter(1));
-        }).Throws<ArgumentException>();
+        }
+
         Assert.AreEqual(1, TestStaticClass.TestMethodReturnWithParameter(1));
     }
 
@@ -200,11 +233,14 @@ public class SetupWithContextTests
     {
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => instance.TestMethodReturnWithParameters(
-            context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameters(
+                       context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0))).Throws<ArgumentException>())
         {
-            Assert.Throws<ArgumentException>(() => instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        }).Throws<ArgumentException>();
+            Assert.Throws<ArgumentException>(
+                () => instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -213,11 +249,14 @@ public class SetupWithContextTests
     {
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => instance.TestMethodReturnWithParameters(
-            context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameters(
+                           context.It.Is<int>(x => x == 1), context.It.Is<int[]>(x => x.Length == 0)))
+                   .Throws<ArgumentException>())
         {
-            Assert.Throws<Exception>(() => instance.TestMethodReturnWithParameters(2, new []{ 0 }));
-        }).Throws<ArgumentException>();
+            Assert.Throws<Exception>(() => instance.TestMethodReturnWithParameters(2, new[] { 0 }));
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 
@@ -226,11 +265,14 @@ public class SetupWithContextTests
     {
         var instance = new TestInstance();
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        Mock.Setup(context => instance.TestMethodReturnWithParameters(
-            context.It.IsAny<int>(), context.It.IsAny<int[]>()), () =>
+
+        using (Mock.Setup(context => instance.TestMethodReturnWithParameters(
+                       context.It.IsAny<int>(), context.It.IsAny<int[]>())).Throws<ArgumentException>())
         {
-            Assert.Throws<ArgumentException>(() => instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
-        }).Throws<ArgumentException>();
+            Assert.Throws<ArgumentException>(
+                () => instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
+        }
+
         Assert.AreEqual(1, instance.TestMethodReturnWithParameters(1, Array.Empty<int>()));
     }
 }

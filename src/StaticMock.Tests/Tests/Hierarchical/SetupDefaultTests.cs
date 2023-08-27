@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.Tests;
+namespace StaticMock.Tests.Tests.Hierarchical;
 
 [TestFixture]
 public class SetupDefaultTests
@@ -22,7 +22,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturn1WithoutParameters), () => 
         { 
             TestStaticClass.TestMethodReturn1WithoutParameters();
-        }));
+        }), "Default setup supported only for void methods");
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
         {
             TestStaticClass.TestMethodReturn1WithoutParameters();
-        }));
+        }), "Default setup supported only for void methods");
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(lambda, () =>
         {
             TestStaticClass.TestMethodReturn1WithoutParameters();
-        }));
+        }), "Get expression not contains method to setup");
     }
 
     [Test]
@@ -110,7 +110,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.StaticIntProperty), () =>
         {
             var actualResult = TestStaticClass.StaticIntProperty;
-        }));
+        }), $"Can't find method {nameof(TestStaticClass.StaticIntProperty)} of type {nameof(TestStaticClass)}");
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.StaticObjectProperty), () =>
         {
             var actualResult = TestStaticClass.StaticObjectProperty;
-        }));
+        }), $"Can't find method {nameof(TestStaticClass.StaticObjectProperty)} of type {nameof(TestStaticClass)}");
     }
 
     [Test]
@@ -130,7 +130,7 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestInstance), nameof(TestInstance.IntProperty), () =>
         {
             var actualResult = instance.IntProperty;
-        }));
+        }), $"Can't find method {nameof(TestInstance.IntProperty)} of type {nameof(TestInstance)}");
     }
 
     [Test]
@@ -141,6 +141,6 @@ public class SetupDefaultTests
         Assert.Throws<Exception>(() => Mock.SetupDefault(typeof(TestInstance), nameof(TestInstance.ObjectProperty), () =>
         {
             var actualResult = instance.ObjectProperty;
-        }));
+        }), $"Can't find method {nameof(TestInstance.ObjectProperty)} of type {nameof(TestInstance)}");
     }
 }

@@ -2,7 +2,7 @@
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.Tests.CallbackTests;
+namespace StaticMock.Tests.Tests.Sequential.CallbackTests;
 
 [TestFixture]
 public class SetupMockCallbackTests
@@ -12,13 +12,12 @@ public class SetupMockCallbackTests
     {
         static void DoSomething() { }
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithoutParametersThrowsException), () =>
-        {
-            TestStaticClass.TestVoidMethodWithoutParametersThrowsException();
-        }).Callback(() =>
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithoutParametersThrowsException)).Callback(() =>
         {
             DoSomething();
         });
+
+        TestStaticClass.TestVoidMethodWithoutParametersThrowsException();
     }
 
     [Test]
@@ -28,13 +27,12 @@ public class SetupMockCallbackTests
 
         static void DoSomething() { }
 
-        Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodWithoutParametersThrowsException), new SetupProperties { Instance = instance }, () =>
-        {
-            instance.TestVoidMethodWithoutParametersThrowsException();
-        }).Callback(() =>
+        using var _ = Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodWithoutParametersThrowsException), new SetupProperties { Instance = instance }).Callback(() =>
         {
             DoSomething();
         });
+
+        instance.TestVoidMethodWithoutParametersThrowsException();
     }
 
     [Test]
@@ -42,16 +40,17 @@ public class SetupMockCallbackTests
     {
         const int parameter1 = 10;
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[] { typeof(int) }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(parameter1))
+                })
             .Callback<int>(argument =>
             {
                 Assert.AreEqual(parameter1, argument);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(parameter1);
     }
 
     [Test]
@@ -60,7 +59,7 @@ public class SetupMockCallbackTests
         const int parameter1 = 10;
         const string parameter2 = "testString";
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -68,13 +67,14 @@ public class SetupMockCallbackTests
                         typeof(int),
                         typeof(string)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2))
+                })
             .Callback<int, string>((argument1, argument2) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class SetupMockCallbackTests
         const string parameter2 = "testString";
         const double parameter3 = 10;
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -93,14 +93,15 @@ public class SetupMockCallbackTests
                         typeof(string),
                         typeof(double)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2, parameter3))
+                })
             .Callback<int, string, double>((argument1, argument2, argument3) =>
             {
                 Assert.AreEqual(parameter1, argument1);
                 Assert.AreEqual(parameter2, argument2);
                 Assert.AreEqual(parameter3, argument3);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2, parameter3);
     }
 
     [Test]
@@ -111,7 +112,7 @@ public class SetupMockCallbackTests
         const double parameter3 = 10;
         var parameter4 = new[] { 10, 20 };
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -121,12 +122,7 @@ public class SetupMockCallbackTests
                         typeof(double),
                         typeof(int[])
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4))
+                })
             .Callback<int, string, double, int[]>((
                 argument1,
                 argument2,
@@ -138,6 +134,12 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter3, argument3);
                 Assert.AreEqual(parameter4, argument4);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4);
     }
 
     [Test]
@@ -149,7 +151,7 @@ public class SetupMockCallbackTests
         var parameter4 = new[] { 10, 20 };
         var parameter5 = new[] { parameter2, parameter1.ToString() };
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -160,13 +162,7 @@ public class SetupMockCallbackTests
                         typeof(int[]),
                         typeof(string[])
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4,
-                        parameter5))
+                })
             .Callback<int, string, double, int[], string[]>((
                 argument1,
                 argument2,
@@ -180,6 +176,13 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter4, argument4);
                 Assert.AreEqual(parameter5, argument5);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4,
+            parameter5);
     }
 
     [Test]
@@ -192,7 +195,7 @@ public class SetupMockCallbackTests
         var parameter5 = new[] { parameter2, parameter1.ToString() };
         const char parameter6 = 'a';
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -204,14 +207,7 @@ public class SetupMockCallbackTests
                         typeof(string[]),
                         typeof(char)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4,
-                        parameter5,
-                        parameter6))
+                })
             .Callback<int, string, double, int[], string[], char>((
                 argument1,
                 argument2,
@@ -227,6 +223,14 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter5, argument5);
                 Assert.AreEqual(parameter6, argument6);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4,
+            parameter5,
+            parameter6);
     }
 
     [Test]
@@ -240,7 +244,7 @@ public class SetupMockCallbackTests
         const char parameter6 = 'a';
         const bool parameter7 = true;
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -253,15 +257,7 @@ public class SetupMockCallbackTests
                         typeof(char),
                         typeof(bool)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4,
-                        parameter5,
-                        parameter6,
-                        parameter7))
+                })
             .Callback<int, string, double, int[], string[], char, bool>((
                 argument1,
                 argument2,
@@ -279,6 +275,15 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter6, argument6);
                 Assert.AreEqual(parameter7, argument7);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4,
+            parameter5,
+            parameter6,
+            parameter7);
     }
 
     [Test]
@@ -293,7 +298,7 @@ public class SetupMockCallbackTests
         const bool parameter7 = true;
         var parameter8 = new TestInstance();
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -307,16 +312,7 @@ public class SetupMockCallbackTests
                         typeof(bool),
                         typeof(TestInstance)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4,
-                        parameter5,
-                        parameter6,
-                        parameter7,
-                        parameter8))
+                })
             .Callback<int, string, double, int[], string[], char, bool, TestInstance>((
                 argument1,
                 argument2,
@@ -336,6 +332,16 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter7, argument7);
                 Assert.AreEqual(parameter8, argument8);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4,
+            parameter5,
+            parameter6,
+            parameter7,
+            parameter8);
     }
 
     [Test]
@@ -351,7 +357,7 @@ public class SetupMockCallbackTests
         var parameter8 = new TestInstance();
         Func<int, int> parameter9 = x => x;
 
-        Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
                 new SetupProperties
                 {
                     MethodParametersTypes = new[]
@@ -366,17 +372,7 @@ public class SetupMockCallbackTests
                         typeof(TestInstance),
                         typeof(Func<int, int>)
                     }
-                },
-                () => TestStaticClass.TestVoidMethodWithParameters(
-                        parameter1,
-                        parameter2,
-                        parameter3,
-                        parameter4,
-                        parameter5,
-                        parameter6,
-                        parameter7,
-                        parameter8,
-                        parameter9))
+                })
             .Callback<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>>((
                 argument1,
                 argument2,
@@ -398,15 +394,23 @@ public class SetupMockCallbackTests
                 Assert.AreEqual(parameter8, argument8);
                 Assert.AreEqual(parameter9, argument9);
             });
+
+        TestStaticClass.TestVoidMethodWithParameters(
+            parameter1,
+            parameter2,
+            parameter3,
+            parameter4,
+            parameter5,
+            parameter6,
+            parameter7,
+            parameter8,
+            parameter9);
     }
 
 
     [Test]
     public void TestSetupVoidWithTestMethodParameterCountMismatchFunc()
     {
-        const int parameter1 = 10;
-        const string parameter2 = "parameter2";
-
         var setup = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
             new SetupProperties
             {
@@ -415,8 +419,7 @@ public class SetupMockCallbackTests
                     typeof(int),
                     typeof(string)
                 }
-            },
-            () => TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2));
+            });
 
         Assert.Throws<Exception>(() => setup.Callback<int>(argument => { }));
     }
@@ -424,9 +427,6 @@ public class SetupMockCallbackTests
     [Test]
     public void TestSetupVoidWithTestMethodParameterTypeMismatchFunc()
     {
-        const int parameter1 = 10;
-        const string parameter2 = "parameter2";
-
         var setup = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
             new SetupProperties
             {
@@ -435,8 +435,7 @@ public class SetupMockCallbackTests
                     typeof(int),
                     typeof(string)
                 }
-            },
-            () => TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2));
+            });
 
         Assert.Throws<Exception>(() => setup.Callback<string, string>((argument1, argument2) => { }));
     }
@@ -450,7 +449,7 @@ public class SetupMockCallbackTests
         TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
         var executed = false;
 
-        Mock.SetupAction(
+        using var _ = Mock.SetupAction(
             typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithParameters),
             new SetupProperties
             {
@@ -459,15 +458,13 @@ public class SetupMockCallbackTests
                     typeof(int),
                     typeof(string)
                 }
-            },
-            () =>
-            {
-                TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
             }).Callback(() =>
         {
             executed = true;
             Assert.Pass("Method executed");
         });
+
+        TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
 
         Assert.IsTrue(executed);
     }

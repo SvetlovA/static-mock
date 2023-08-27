@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using StaticMock.Tests.Common.TestEntities;
 
-namespace StaticMock.Tests.Tests;
+namespace StaticMock.Tests.Tests.Hierarchical;
 
 [TestFixture]
 public class NestedMockingTests

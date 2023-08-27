@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
-using StaticMock.Tests.Tests.ThrowsTests.Entities;
+using StaticMock.Tests.Entities;
 
-namespace StaticMock.Tests.Tests.ThrowsTests;
+namespace StaticMock.Tests.Tests.Hierarchical.ThrowsTests;
 
 [TestFixture]
 public class MockThrowsTests
@@ -62,7 +62,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTask), () =>
         {
             Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTask());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -71,7 +71,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskAsync), () =>
         {
             Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class MockThrowsTests
         Mock.SetupAction(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestVoidMethodReturnTaskAsync), () =>
         {
             Assert.Throws<Exception>(() => TestStaticAsyncClass.TestVoidMethodReturnTaskAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync), () =>
         {
             Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters), () =>
         {
             Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -109,7 +109,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTask), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTask());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskAsync), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -131,7 +131,7 @@ public class MockThrowsTests
         Mock.SetupAction(typeof(TestInstance), nameof(TestInstance.TestVoidMethodReturnTaskAsync), new SetupProperties { Instance = instance}, () =>
         {
             Assert.Throws<Exception>(() => instance.TestVoidMethodReturnTaskAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -142,7 +142,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParametersAsync());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class MockThrowsTests
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), new SetupProperties { Instance = instance }, () =>
         {
             Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
-        });
+        }).Throws<Exception>();
     }
 
     [Test]
