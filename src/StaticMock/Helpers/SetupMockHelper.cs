@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
 using StaticMock.Helpers.Entities;
@@ -10,7 +11,7 @@ using StaticMock.Hooks.Entities;
 using StaticMock.Hooks.HookBuilders.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
-using StaticMock.Mocks.Implementation;
+using StaticMock.Mocks.Implementation.Hierarchical;
 
 namespace StaticMock.Helpers;
 
@@ -103,7 +104,7 @@ internal static class SetupMockHelper
         };
     }
 
-    public static IFuncMock SetupInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IFuncMock SetupInternal(Type type, string methodName, Action? action = null, SetupProperties? setupProperties = null)
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
@@ -125,13 +126,15 @@ internal static class SetupMockHelper
             OriginalMethodCallInstance = setupProperties?.Instance
         };
 
-        return new FuncMock(
-            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
-            action);
+        var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.FuncMock(hookBuilderFactory, hookManagerFactory)
+            : new FuncMock(hookBuilderFactory, hookManagerFactory, action);
     }
 
-    public static IFuncMock SetupPropertyInternal(Type type, string propertyName, Action action, SetupProperties? setupProperties = null)
+    public static IFuncMock SetupPropertyInternal(Type type, string propertyName, Action? action = null, SetupProperties? setupProperties = null)
     {
         var bindingFlags = setupProperties?.BindingFlags;
         var originalPropertyInfo = bindingFlags.HasValue ? type.GetProperty(propertyName, bindingFlags.Value) : type.GetProperty(propertyName);
@@ -159,13 +162,15 @@ internal static class SetupMockHelper
             OriginalMethodCallInstance = setupProperties?.Instance
         };
 
-        return new FuncMock(
-            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
-            action);
+        var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory =  new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.FuncMock(hookBuilderFactory, hookManagerFactory)
+            : new FuncMock(hookBuilderFactory, hookManagerFactory, action);
     }
 
-    public static IActionMock SetupVoidInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static IActionMock SetupVoidInternal(Type type, string methodName, Action? action = null, SetupProperties? setupProperties = null)
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
@@ -182,13 +187,15 @@ internal static class SetupMockHelper
             OriginalMethodCallInstance = setupProperties?.Instance
         };
 
-        return new ActionMock(
-            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
-            action);
+        var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory =  new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.ActionMock(hookBuilderFactory, hookManagerFactory)
+            : new ActionMock(hookBuilderFactory, hookManagerFactory, action);
     }
 
-    public static void SetupDefaultInternal(Type type, string methodName, Action action, SetupProperties? setupProperties = null)
+    public static void SetupDefaultInternal(Type type, string methodName, Action? action = null, SetupProperties? setupProperties = null)
     {
         var originalMethodInfo = GetOriginalMethodInfo(type, methodName, setupProperties);
 
@@ -204,10 +211,12 @@ internal static class SetupMockHelper
             ItParameterExpressions = context.State.ItParameterExpressions
         };
 
-        var actionMock = new ActionMock(
-            new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder(),
-            new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager(),
-            action);
+        var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory =  new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager();
+
+        IActionMock actionMock = action == null
+            ? new Mocks.Implementation.Sequential.ActionMock(hookBuilderFactory, hookManagerFactory)
+            : new ActionMock(hookBuilderFactory, hookManagerFactory, action);
 
         actionMock.Callback(() => { });
     }
@@ -225,6 +234,150 @@ internal static class SetupMockHelper
                 ? originalMethodCallConstantExpression.Value
                 : null
             : null;
+
+    public static IFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action? action = null)
+    {
+        var mockSetupProperties = GetMockSetupProperties(methodGetExpression);
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory)
+            : new FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory, action);
+    }
+
+    public static IAsyncFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<Task<TReturnValue>>> methodGetExpression, Action? action = null)
+    {
+        var mockSetupProperties = GetMockSetupProperties(methodGetExpression);
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.AsyncFuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory)
+            : new AsyncFuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory, action);
+    }
+
+    public static IFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<SetupContext, TReturnValue>> methodGetExpression, Action? action = null)
+    {
+        var mockSetupProperties = GetMockSetupProperties(methodGetExpression);
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory)
+            : new FuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory, action);
+    }
+
+    public static IAsyncFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>> methodGetExpression, Action? action = null)
+    {
+        var mockSetupProperties = GetMockSetupProperties(methodGetExpression);
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.AsyncFuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory)
+            : new AsyncFuncMock<TReturnValue>(hookBuilderFactory, hookManagerFactory,  action);
+    }
+
+    public static IActionMock SetupInternal(Expression<Action> methodGetExpression, Action? action = null)
+    {
+        if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
+        {
+            throw new Exception("Get expression not contains method to setup");
+        }
+
+        var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = GetOriginalMethodCallInstance(methodExpression)
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(methodExpression.Method, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(methodExpression.Method, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.ActionMock(hookBuilderFactory, hookManagerFactory)
+            : new ActionMock(hookBuilderFactory, hookManagerFactory, action);
+    }
+
+    public static IActionMock SetupInternal(Expression<Action<SetupContext>> methodGetExpression, Action? action = null)
+    {
+        var mockSetupProperties = GetMockSetupProperties(methodGetExpression);
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = mockSetupProperties.SetupContextState.ItParameterExpressions,
+            OriginalMethodCallInstance = mockSetupProperties.OriginalMethodCallInstance
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(mockSetupProperties.OriginalMethodInfo, hookSettings).CreateHookManager();
+
+        return action == null
+            ? new Mocks.Implementation.Sequential.ActionMock(hookBuilderFactory, hookManagerFactory)
+            : new ActionMock(hookBuilderFactory, hookManagerFactory, action);
+    }
+
+    public static void SetupDefaultInternal(Expression<Action> methodGetExpression, Action? action = null)
+    {
+        if (!(methodGetExpression.Body is MethodCallExpression methodExpression))
+        {
+            throw new Exception("Get expression not contains method to setup");
+        }
+
+        var originalMethodInfo = methodExpression.Method;
+        if (originalMethodInfo.ReturnType != typeof(void))
+        {
+            throw new Exception("Default setup supported only for void methods");
+        }
+
+        var context = new SetupContext();
+        var hookSettings = new HookSettings
+        {
+            HookManagerType = Mock.GlobalSettings.HookManagerType,
+            ItParameterExpressions = context.State.ItParameterExpressions,
+            OriginalMethodCallInstance = SetupMockHelper.GetOriginalMethodCallInstance(methodExpression)
+        };
+
+        var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
+        var hookManagerFactory = new HookManagerFactory(originalMethodInfo, hookSettings).CreateHookManager();
+
+        IActionMock actionMock = action == null
+            ? new Mocks.Implementation.Sequential.ActionMock(hookBuilderFactory, hookManagerFactory)
+            : new ActionMock(hookBuilderFactory, hookManagerFactory, action);
+
+        actionMock.Callback(() => { });
+    }
 
     private static MethodInfo GetOriginalMethodInfo(Type type, string methodName, SetupProperties? setupProperties)
     {

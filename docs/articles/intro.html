@@ -15,7 +15,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/blob/net7_update/docfx_project/articles/intro.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/docfx_project/articles/intro.md/#L1">
   </head>
 
   <script type="module">
@@ -81,7 +81,8 @@
 <h2 id="hook-manager-types">Hook Manager Types</h2>
 <p>SMock is based on <a href="https://github.com/MonoMod/MonoMod">MonoMod</a> library that produce hook functionality</p>
 <h2 id="code-examples">Code Examples</h2>
-<h3 id="returns">Returns</h3>
+<p>Setup is possible in two ways <strong>Hierarchical</strong> and <strong>Sequential</strong></p>
+<h3 id="returns-hierarchical">Returns (Hierarchical)</h3>
 <pre><code class="lang-cs">Mock.Setup(context =&gt; StaticClass.MethodToMock(context.It.IsAny&lt;int&gt;()), () =&gt;
 {
     var actualResult = StaticClass.MethodToMock(1);
@@ -110,15 +111,30 @@ Mock.Setup(context =&gt; StaticClass.MethodToMockAsync(context.It.IsAny&lt;int&g
     Assert.AreEqual(expectedResult, actualResult);
 }).Returns&lt;int&gt;(async argument =&gt; await Task.FromResult(argument));
 </code></pre>
-<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ReturnsTests">Other returns setup examples</a></p>
-<h3 id="throws">Throws</h3>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ReturnsTests">Other returns hierarchical setup examples</a></p>
+<h3 id="returns-sequential">Returns (Sequential)</h3>
+<pre><code class="lang-cs">using var _ = Mock.Setup(context =&gt; StaticClass.MethodToMock(context.It.IsAny&lt;int&gt;()))
+    .Returns(expectedResult);
+
+var actualResult = StaticClass.MethodToMock(1);
+Assert.AreNotEqual(originalResult, actualResult);
+Assert.AreEqual(expectedResult, actualResult);
+</code></pre>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/ReturnsTests">Other returns sequential setup examples</a></p>
+<h3 id="throws-hierarchical">Throws (Hierarchical)</h3>
 <pre><code class="lang-cs">Mock.Setup(() =&gt; StaticClass.MethodToMock(), () =&gt;
 {
     Assert.Throws&lt;Exception&gt;(() =&gt; StaticClass.MethodToMock());
 }).Throws&lt;Exception&gt;();
 </code></pre>
-<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/ThrowsTests">Other throws setup examples</a></p>
-<h3 id="callback">Callback</h3>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ThrowsTests">Other throws hierarchical setup examples</a></p>
+<h3 id="throws-sequential">Throws (Sequential)</h3>
+<pre><code class="lang-cs">using var _ = Mock.Setup(() =&gt; StaticClass.MethodToMock()).Throws&lt;Exception&gt;();
+
+Assert.Throws&lt;Exception&gt;(() =&gt; StaticClass.MethodToMock());
+</code></pre>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/ThrowsTests">Other throws sequential setup examples</a></p>
+<h3 id="callback-hierarchical">Callback (Hierarchical)</h3>
 <pre><code class="lang-cs">Mock.Setup(() =&gt; StaticClass.MethodToMock(), () =&gt;
 {
     var actualResult = StaticClass.MethodToMock();
@@ -139,20 +155,25 @@ Mock.Setup(context =&gt; StaticClass.MethodToMock(context.It.IsAny&lt;int&gt;())
     DoSomething(argument);
 });
 </code></pre>
-<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/CallbackTests">Other callback setup examples</a></p>
-<h3 id="setupdefault">SetupDefault</h3>
-<pre><code class="lang-cs">Mock.SetupDefault(() =&gt; StaticClass.VoidMethodToMock(), () =&gt;
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/CallbackTests">Other callback hierarchical setup examples</a></p>
+<h3 id="callback-sequential">Callback (Sequential)</h3>
+<pre><code class="lang-cs">using var _ = Mock.Setup(() =&gt; StaticClass.MethodToMock()).Callback(() =&gt;
 {
-    StaticClass.VoidMethodToMock(); // This method do nothing
+    DoSomething();
 });
+
+var actualResult = StaticClass.MethodToMock();
+Assert.AreNotEqual(originalResult, actualResult);
+Assert.AreEqual(expectedResult, actualResult);
 </code></pre>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests">Other callback sequential setup examples</a></p>
 <p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests">Other examples</a></p>
 <h1 id="library-license">Library license</h1>
 <p>The library is available under the <a href="https://github.com/SvetlovA/static-mock/blob/master/LICENSE">MIT license</a>.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SvetlovA/static-mock/blob/net7_update/docfx_project/articles/intro.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/docfx_project/articles/intro.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

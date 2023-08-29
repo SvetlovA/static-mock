@@ -17,7 +17,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/new/net7_update/apiSpec/new?filename=StaticMock_Mock.md&amp;value=---%0Auid%3A%20StaticMock.Mock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/new/SequentialSetup/apiSpec/new?filename=StaticMock_Mock.md&amp;value=---%0Auid%3A%20StaticMock.Mock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -79,7 +79,7 @@
 
   <h1 id="StaticMock_Mock" data-uid="StaticMock.Mock" class="text-break">
     Class Mock
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -146,7 +146,7 @@
 
   <h3 id="StaticMock_Mock_GlobalSettings" data-uid="StaticMock.Mock.GlobalSettings">
   GlobalSettings
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -179,9 +179,45 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___" data-uid="StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}})">
+  Setup(Expression&lt;Action&lt;SetupContext&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IActionMock Setup(Expression&lt;Action&lt;SetupContext&gt;&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="StaticMock.Entities.Context.SetupContext.html">SetupContext</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IActionMock.html">IActionMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___System_Action_" data-uid="StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)">
   Setup(Expression&lt;Action&lt;SetupContext&gt;&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -217,9 +253,45 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action__" data-uid="StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action})">
+  Setup(Expression&lt;Action&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IActionMock Setup(Expression&lt;Action&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IActionMock.html">IActionMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action__System_Action_" data-uid="StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action},System.Action)">
   Setup(Expression&lt;Action&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -255,9 +327,87 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup_System_Type_System_String_" data-uid="StaticMock.Mock.Setup(System.Type,System.String)">
+  Setup(Type, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock Setup(Type type, string methodName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
+  <h3 id="StaticMock_Mock_Setup_System_Type_System_String_StaticMock_Entities_SetupProperties_" data-uid="StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties)">
+  Setup(Type, string, SetupProperties)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock Setup(Type type, string methodName, SetupProperties setupProperties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>setupProperties</code> <a class="xref" href="StaticMock.Entities.SetupProperties.html">SetupProperties</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_" data-uid="StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)">
   Setup(Type, string, SetupProperties, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -299,7 +449,7 @@
 
   <h3 id="StaticMock_Mock_Setup_System_Type_System_String_System_Action_" data-uid="StaticMock.Mock.Setup(System.Type,System.String,System.Action)">
   Setup(Type, string, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -337,9 +487,49 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup_System_Type_System_String_System_Reflection_BindingFlags_" data-uid="StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags)">
+  Setup(Type, string, BindingFlags)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock Setup(Type type, string methodName, BindingFlags bindingFlags)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindingFlags</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup_System_Type_System_String_System_Reflection_BindingFlags_System_Action_" data-uid="StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags,System.Action)">
   Setup(Type, string, BindingFlags, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -379,9 +569,87 @@
 
   <a id="StaticMock_Mock_SetupAction_" data-uid="StaticMock.Mock.SetupAction*"></a>
 
+  <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String)">
+  SetupAction(Type, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IActionMock SetupAction(Type type, string methodName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IActionMock.html">IActionMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupAction_" data-uid="StaticMock.Mock.SetupAction*"></a>
+
+  <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_StaticMock_Entities_SetupProperties_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties)">
+  SetupAction(Type, string, SetupProperties)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IActionMock SetupAction(Type type, string methodName, SetupProperties setupProperties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>setupProperties</code> <a class="xref" href="StaticMock.Entities.SetupProperties.html">SetupProperties</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IActionMock.html">IActionMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupAction_" data-uid="StaticMock.Mock.SetupAction*"></a>
+
   <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)">
   SetupAction(Type, string, SetupProperties, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -423,7 +691,7 @@
 
   <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_System_Action_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String,System.Action)">
   SetupAction(Type, string, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -461,9 +729,49 @@
 
   <a id="StaticMock_Mock_SetupAction_" data-uid="StaticMock.Mock.SetupAction*"></a>
 
+  <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_System_Reflection_BindingFlags_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags)">
+  SetupAction(Type, string, BindingFlags)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IActionMock SetupAction(Type type, string methodName, BindingFlags bindingFlags)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindingFlags</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IActionMock.html">IActionMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupAction_" data-uid="StaticMock.Mock.SetupAction*"></a>
+
   <h3 id="StaticMock_Mock_SetupAction_System_Type_System_String_System_Reflection_BindingFlags_System_Action_" data-uid="StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags,System.Action)">
   SetupAction(Type, string, BindingFlags, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -503,9 +811,40 @@
 
   <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
 
+  <h3 id="StaticMock_Mock_SetupDefault_System_Linq_Expressions_Expression_System_Action__" data-uid="StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action})">
+  SetupDefault(Expression&lt;Action&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetupDefault(Expression&lt;Action&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
+
   <h3 id="StaticMock_Mock_SetupDefault_System_Linq_Expressions_Expression_System_Action__System_Action_" data-uid="StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action},System.Action)">
   SetupDefault(Expression&lt;Action&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -536,9 +875,77 @@
 
   <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
 
+  <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String)">
+  SetupDefault(Type, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetupDefault(Type type, string methodName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
+
+  <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_StaticMock_Entities_SetupProperties_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties)">
+  SetupDefault(Type, string, SetupProperties)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetupDefault(Type type, string methodName, SetupProperties setupProperties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>setupProperties</code> <a class="xref" href="StaticMock.Entities.SetupProperties.html">SetupProperties</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
+
   <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)">
   SetupDefault(Type, string, SetupProperties, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L57"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -575,7 +982,7 @@
 
   <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_System_Action_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String,System.Action)">
   SetupDefault(Type, string, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -608,9 +1015,44 @@
 
   <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
 
+  <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_System_Reflection_BindingFlags_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags)">
+  SetupDefault(Type, string, BindingFlags)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetupDefault(Type type, string methodName, BindingFlags bindingFlags)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>methodName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindingFlags</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupDefault_" data-uid="StaticMock.Mock.SetupDefault*"></a>
+
   <h3 id="StaticMock_Mock_SetupDefault_System_Type_System_String_System_Reflection_BindingFlags_System_Action_" data-uid="StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags,System.Action)">
   SetupDefault(Type, string, BindingFlags, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L51"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -645,9 +1087,87 @@
 
   <a id="StaticMock_Mock_SetupProperty_" data-uid="StaticMock.Mock.SetupProperty*"></a>
 
+  <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String)">
+  SetupProperty(Type, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock SetupProperty(Type type, string propertyName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupProperty_" data-uid="StaticMock.Mock.SetupProperty*"></a>
+
+  <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_StaticMock_Entities_SetupProperties_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties)">
+  SetupProperty(Type, string, SetupProperties)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock SetupProperty(Type type, string propertyName, SetupProperties setupProperties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>setupProperties</code> <a class="xref" href="StaticMock.Entities.SetupProperties.html">SetupProperties</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupProperty_" data-uid="StaticMock.Mock.SetupProperty*"></a>
+
   <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)">
   SetupProperty(Type, string, SetupProperties, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -689,7 +1209,7 @@
 
   <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_System_Action_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String,System.Action)">
   SetupProperty(Type, string, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -727,9 +1247,49 @@
 
   <a id="StaticMock_Mock_SetupProperty_" data-uid="StaticMock.Mock.SetupProperty*"></a>
 
+  <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_System_Reflection_BindingFlags_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags)">
+  SetupProperty(Type, string, BindingFlags)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock SetupProperty(Type type, string propertyName, BindingFlags bindingFlags)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindingFlags</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock.html">IFuncMock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_SetupProperty_" data-uid="StaticMock.Mock.SetupProperty*"></a>
+
   <h3 id="StaticMock_Mock_SetupProperty_System_Type_System_String_System_Reflection_BindingFlags_System_Action_" data-uid="StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags,System.Action)">
   SetupProperty(Type, string, BindingFlags, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -769,9 +1329,50 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}})">
+  Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, Task&lt;TReturnValue&gt;&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IAsyncFuncMock&lt;TReturnValue&gt; Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, Task&lt;TReturnValue&gt;&gt;&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="StaticMock.Entities.Context.SetupContext.html">SetupContext</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;TReturnValue&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IAsyncFuncMock-1.html">IAsyncFuncMock</a>&lt;TReturnValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TReturnValue</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____System_Action_" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)">
   Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, Task&lt;TReturnValue&gt;&gt;&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -812,9 +1413,50 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}})">
+  Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, TReturnValue&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock&lt;TReturnValue&gt; Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, TReturnValue&gt;&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="StaticMock.Entities.Context.SetupContext.html">SetupContext</a>, TReturnValue&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock-1.html">IFuncMock</a>&lt;TReturnValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TReturnValue</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___System_Action_" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)">
   Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;SetupContext, TReturnValue&gt;&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -855,9 +1497,50 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}})">
+  Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;Task&lt;TReturnValue&gt;&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IAsyncFuncMock&lt;TReturnValue&gt; Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;Task&lt;TReturnValue&gt;&gt;&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;TReturnValue&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IAsyncFuncMock-1.html">IAsyncFuncMock</a>&lt;TReturnValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TReturnValue</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____System_Action_" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)">
   Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;Task&lt;TReturnValue&gt;&gt;&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -898,9 +1581,50 @@
 
   <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
 
+  <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+  Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;TReturnValue&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IFuncMock&lt;TReturnValue&gt; Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;TReturnValue&gt;&gt; methodGetExpression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>methodGetExpression</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TReturnValue&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="StaticMock.Mocks.IFuncMock-1.html">IFuncMock</a>&lt;TReturnValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TReturnValue</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="StaticMock_Mock_Setup_" data-uid="StaticMock.Mock.Setup*"></a>
+
   <h3 id="StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___System_Action_" data-uid="StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)">
   Setup&lt;TReturnValue&gt;(Expression&lt;Func&lt;TReturnValue&gt;&gt;, Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Hierarchical.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -943,7 +1667,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SvetlovA/static-mock/blob/net7_update/src/StaticMock/Mock.cs/#L16" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SvetlovA/static-mock/blob/SequentialSetup/src/StaticMock/Mock.Sequential.cs/#L12" class="edit-link">Edit this page</a>
         </div>
 
         
