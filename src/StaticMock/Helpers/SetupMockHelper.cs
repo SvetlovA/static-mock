@@ -366,7 +366,7 @@ internal static class SetupMockHelper
         {
             HookManagerType = Mock.GlobalSettings.HookManagerType,
             ItParameterExpressions = context.State.ItParameterExpressions,
-            OriginalMethodCallInstance = SetupMockHelper.GetOriginalMethodCallInstance(methodExpression)
+            OriginalMethodCallInstance = GetOriginalMethodCallInstance(methodExpression)
         };
 
         var hookBuilderFactory = new HookBuilderFactory(originalMethodInfo, hookSettings).CreateHookBuilder();
