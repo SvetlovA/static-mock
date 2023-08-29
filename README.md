@@ -40,7 +40,8 @@ Mock.Setup(context => StaticClass.MethodToMockAsync(context.It.IsAny<int>()), as
 [Other returns hierarchical setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ReturnsTests)
 ### Returns (Sequential)
 ```cs
-using var _ = Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>())).Returns(expectedResult);
+using var _ = Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()))
+    .Returns(expectedResult);
 
 var actualResult = StaticClass.MethodToMock(1);
 Assert.AreNotEqual(originalResult, actualResult);
@@ -97,6 +98,7 @@ Assert.AreNotEqual(originalResult, actualResult);
 Assert.AreEqual(expectedResult, actualResult);
 ```
 [Other callback sequential setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests)
+
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).
