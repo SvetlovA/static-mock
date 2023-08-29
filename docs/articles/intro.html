@@ -128,7 +128,7 @@ Assert.AreEqual(expectedResult, actualResult);
 </code></pre>
 <p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ThrowsTests">Other throws hierarchical setup examples</a></p>
 <h3 id="throws-sequential">Throws (Sequential)</h3>
-<pre><code class="lang-cs">Mock.Setup(() =&gt; StaticClass.MethodToMock()).Throws&lt;Exception&gt;();
+<pre><code class="lang-cs">using var _ = Mock.Setup(() =&gt; StaticClass.MethodToMock()).Throws&lt;Exception&gt;();
 
 Assert.Throws&lt;Exception&gt;(() =&gt; StaticClass.MethodToMock());
 </code></pre>
@@ -156,7 +156,7 @@ Mock.Setup(context =&gt; StaticClass.MethodToMock(context.It.IsAny&lt;int&gt;())
 </code></pre>
 <p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/CallbackTests">Other callback hierarchical setup examples</a></p>
 <h3 id="callback-sequential">Callback (Sequential)</h3>
-<pre><code class="lang-cs">Mock.Setup(() =&gt; StaticClass.MethodToMock()).Callback(() =&gt;
+<pre><code class="lang-cs">using var _ = Mock.Setup(() =&gt; StaticClass.MethodToMock()).Callback(() =&gt;
 {
     DoSomething();
 });
@@ -165,14 +165,8 @@ var actualResult = StaticClass.MethodToMock();
 Assert.AreNotEqual(originalResult, actualResult);
 Assert.AreEqual(expectedResult, actualResult);
 </code></pre>
-<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests">Other callback sequential setup examples</a></p>
-<h3 id="setupdefault">SetupDefault</h3>
-<pre><code class="lang-cs">Mock.SetupDefault(() =&gt; StaticClass.VoidMethodToMock(), () =&gt;
-{
-    StaticClass.VoidMethodToMock(); // This method do nothing
-});
-</code></pre>
-<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests">Other examples</a></p>
+<p><a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests">Other callback sequential setup examples</a>
+<a href="https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests">Other examples</a></p>
 <h1 id="library-license">Library license</h1>
 <p>The library is available under the <a href="https://github.com/SvetlovA/static-mock/blob/master/LICENSE">MIT license</a>.</p>
 </article>

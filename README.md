@@ -57,7 +57,7 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
 [Other throws hierarchical setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ThrowsTests)
 ### Throws (Sequential)
 ```cs
-Mock.Setup(() => StaticClass.MethodToMock()).Throws<Exception>();
+using var _ = Mock.Setup(() => StaticClass.MethodToMock()).Throws<Exception>();
 
 Assert.Throws<Exception>(() => StaticClass.MethodToMock());
 ```
@@ -87,7 +87,7 @@ Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 [Other callback hierarchical setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/CallbackTests)
 ### Callback (Sequential)
 ```cs
-Mock.Setup(() => StaticClass.MethodToMock()).Callback(() =>
+using var _ = Mock.Setup(() => StaticClass.MethodToMock()).Callback(() =>
 {
     DoSomething();
 });
@@ -97,13 +97,6 @@ Assert.AreNotEqual(originalResult, actualResult);
 Assert.AreEqual(expectedResult, actualResult);
 ```
 [Other callback sequential setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests)
-### SetupDefault
-```cs
-Mock.SetupDefault(() => StaticClass.VoidMethodToMock(), () =>
-{
-    StaticClass.VoidMethodToMock(); // This method do nothing
-});
-```
 [Other examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)
 # Library license
 The library is available under the [MIT license](https://github.com/SvetlovA/static-mock/blob/master/LICENSE).
