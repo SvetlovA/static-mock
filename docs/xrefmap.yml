@@ -51,15 +51,6 @@ references:
   isSpec: "True"
   fullName: StaticMock.Entities.Context.It.Is
   nameWithType: It.Is
-- uid: StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
-  name: Is<TValue>(Expression<Func<TValue, bool>>)
-  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_Is__1_System_Linq_Expressions_Expression_System_Func___0_System_Boolean___
-  commentId: M:StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
-  name.vb: Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
-  fullName: StaticMock.Entities.Context.It.Is<TValue>(System.Linq.Expressions.Expression<System.Func<TValue, bool>>)
-  fullName.vb: StaticMock.Entities.Context.It.Is(Of TValue)(System.Linq.Expressions.Expression(Of System.Func(Of TValue, Boolean)))
-  nameWithType: It.Is<TValue>(Expression<Func<TValue, bool>>)
-  nameWithType.vb: It.Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
 - uid: StaticMock.Entities.Context.It.IsAny*
   name: IsAny
   href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_IsAny_
@@ -76,6 +67,15 @@ references:
   fullName.vb: StaticMock.Entities.Context.It.IsAny(Of TValue)()
   nameWithType: It.IsAny<TValue>()
   nameWithType.vb: It.IsAny(Of TValue)()
+- uid: StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
+  name: Is<TValue>(Expression<Func<TValue, bool>>)
+  href: api/StaticMock.Entities.Context.It.html#StaticMock_Entities_Context_It_Is__1_System_Linq_Expressions_Expression_System_Func___0_System_Boolean___
+  commentId: M:StaticMock.Entities.Context.It.Is``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})
+  name.vb: Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
+  fullName: StaticMock.Entities.Context.It.Is<TValue>(System.Linq.Expressions.Expression<System.Func<TValue, bool>>)
+  fullName.vb: StaticMock.Entities.Context.It.Is(Of TValue)(System.Linq.Expressions.Expression(Of System.Func(Of TValue, Boolean)))
+  nameWithType: It.Is<TValue>(Expression<Func<TValue, bool>>)
+  nameWithType.vb: It.Is(Of TValue)(Expression(Of Func(Of TValue, Boolean)))
 - uid: StaticMock.Entities.Context.ItParameterExpression
   name: ItParameterExpression
   href: api/StaticMock.Entities.Context.ItParameterExpression.html
@@ -284,6 +284,15 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.GlobalSettings
   nameWithType: Mock.GlobalSettings
+- uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}})
+  name: Setup(Expression<Action<SetupContext>>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___
+  commentId: M:StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}})
+  name.vb: Setup(Expression(Of Action(Of SetupContext)))
+  fullName: StaticMock.Mock.Setup(System.Linq.Expressions.Expression<System.Action<StaticMock.Entities.Context.SetupContext>>)
+  fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action(Of StaticMock.Entities.Context.SetupContext)))
+  nameWithType: Mock.Setup(Expression<Action<SetupContext>>)
+  nameWithType.vb: Mock.Setup(Expression(Of Action(Of SetupContext)))
 - uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action{StaticMock.Entities.Context.SetupContext}},System.Action)
   name: Setup(Expression<Action<SetupContext>>, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action_StaticMock_Entities_Context_SetupContext___System_Action_
@@ -293,6 +302,15 @@ references:
   fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action(Of StaticMock.Entities.Context.SetupContext)), System.Action)
   nameWithType: Mock.Setup(Expression<Action<SetupContext>>, Action)
   nameWithType.vb: Mock.Setup(Expression(Of Action(Of SetupContext)), Action)
+- uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action})
+  name: Setup(Expression<Action>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action__
+  commentId: M:StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action})
+  name.vb: Setup(Expression(Of Action))
+  fullName: StaticMock.Mock.Setup(System.Linq.Expressions.Expression<System.Action>)
+  fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action))
+  nameWithType: Mock.Setup(Expression<Action>)
+  nameWithType.vb: Mock.Setup(Expression(Of Action))
 - uid: StaticMock.Mock.Setup(System.Linq.Expressions.Expression{System.Action},System.Action)
   name: Setup(Expression<Action>, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Linq_Expressions_Expression_System_Action__System_Action_
@@ -302,6 +320,24 @@ references:
   fullName.vb: StaticMock.Mock.Setup(System.Linq.Expressions.Expression(Of System.Action), System.Action)
   nameWithType: Mock.Setup(Expression<Action>, Action)
   nameWithType.vb: Mock.Setup(Expression(Of Action), Action)
+- uid: StaticMock.Mock.Setup(System.Type,System.String)
+  name: Setup(Type, string)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String)
+  name.vb: Setup(Type, String)
+  fullName: StaticMock.Mock.Setup(System.Type, string)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String)
+  nameWithType: Mock.Setup(Type, string)
+  nameWithType.vb: Mock.Setup(Type, String)
+- uid: StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name: Setup(Type, string, SetupProperties)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_StaticMock_Entities_SetupProperties_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name.vb: Setup(Type, String, SetupProperties)
+  fullName: StaticMock.Mock.Setup(System.Type, string, StaticMock.Entities.SetupProperties)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String, StaticMock.Entities.SetupProperties)
+  nameWithType: Mock.Setup(Type, string, SetupProperties)
+  nameWithType.vb: Mock.Setup(Type, String, SetupProperties)
 - uid: StaticMock.Mock.Setup(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
   name: Setup(Type, string, SetupProperties, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
@@ -320,6 +356,15 @@ references:
   fullName.vb: StaticMock.Mock.Setup(System.Type, String, System.Action)
   nameWithType: Mock.Setup(Type, string, Action)
   nameWithType.vb: Mock.Setup(Type, String, Action)
+- uid: StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags)
+  name: Setup(Type, string, BindingFlags)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags)
+  name.vb: Setup(Type, String, BindingFlags)
+  fullName: StaticMock.Mock.Setup(System.Type, string, System.Reflection.BindingFlags)
+  fullName.vb: StaticMock.Mock.Setup(System.Type, String, System.Reflection.BindingFlags)
+  nameWithType: Mock.Setup(Type, string, BindingFlags)
+  nameWithType.vb: Mock.Setup(Type, String, BindingFlags)
 - uid: StaticMock.Mock.Setup(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
   name: Setup(Type, string, BindingFlags, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_Setup_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
@@ -336,42 +381,24 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.Setup
   nameWithType: Mock.Setup
-- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
-  name: Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
-  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___System_Action_
-  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
-  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
-  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<TReturnValue>>, System.Action)
-  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of TReturnValue)), System.Action)
-  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
-  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
-- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
-  name: Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
-  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___System_Action_
-  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
-  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
-  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, TReturnValue>>, System.Action)
-  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, TReturnValue)), System.Action)
-  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
-  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
-- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
-  name: Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
-  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____System_Action_
-  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
-  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
-  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
-  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
-  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
-  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
-- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
-  name: Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
-  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____System_Action_
-  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
-  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
-  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
-  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
-  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
-  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String)
+  name: SetupAction(Type, string)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String)
+  name.vb: SetupAction(Type, String)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String)
+  nameWithType: Mock.SetupAction(Type, string)
+  nameWithType.vb: Mock.SetupAction(Type, String)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name: SetupAction(Type, string, SetupProperties)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_StaticMock_Entities_SetupProperties_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name.vb: SetupAction(Type, String, SetupProperties)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string, StaticMock.Entities.SetupProperties)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, StaticMock.Entities.SetupProperties)
+  nameWithType: Mock.SetupAction(Type, string, SetupProperties)
+  nameWithType.vb: Mock.SetupAction(Type, String, SetupProperties)
 - uid: StaticMock.Mock.SetupAction(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
   name: SetupAction(Type, string, SetupProperties, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
@@ -390,6 +417,15 @@ references:
   fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, System.Action)
   nameWithType: Mock.SetupAction(Type, string, Action)
   nameWithType.vb: Mock.SetupAction(Type, String, Action)
+- uid: StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags)
+  name: SetupAction(Type, string, BindingFlags)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags)
+  name.vb: SetupAction(Type, String, BindingFlags)
+  fullName: StaticMock.Mock.SetupAction(System.Type, string, System.Reflection.BindingFlags)
+  fullName.vb: StaticMock.Mock.SetupAction(System.Type, String, System.Reflection.BindingFlags)
+  nameWithType: Mock.SetupAction(Type, string, BindingFlags)
+  nameWithType.vb: Mock.SetupAction(Type, String, BindingFlags)
 - uid: StaticMock.Mock.SetupAction(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
   name: SetupAction(Type, string, BindingFlags, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupAction_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
@@ -406,6 +442,15 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.SetupAction
   nameWithType: Mock.SetupAction
+- uid: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action})
+  name: SetupDefault(Expression<Action>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Linq_Expressions_Expression_System_Action__
+  commentId: M:StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action})
+  name.vb: SetupDefault(Expression(Of Action))
+  fullName: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression<System.Action>)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression(Of System.Action))
+  nameWithType: Mock.SetupDefault(Expression<Action>)
+  nameWithType.vb: Mock.SetupDefault(Expression(Of Action))
 - uid: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression{System.Action},System.Action)
   name: SetupDefault(Expression<Action>, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Linq_Expressions_Expression_System_Action__System_Action_
@@ -415,6 +460,24 @@ references:
   fullName.vb: StaticMock.Mock.SetupDefault(System.Linq.Expressions.Expression(Of System.Action), System.Action)
   nameWithType: Mock.SetupDefault(Expression<Action>, Action)
   nameWithType.vb: Mock.SetupDefault(Expression(Of Action), Action)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String)
+  name: SetupDefault(Type, string)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String)
+  name.vb: SetupDefault(Type, String)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String)
+  nameWithType: Mock.SetupDefault(Type, string)
+  nameWithType.vb: Mock.SetupDefault(Type, String)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name: SetupDefault(Type, string, SetupProperties)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_StaticMock_Entities_SetupProperties_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name.vb: SetupDefault(Type, String, SetupProperties)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string, StaticMock.Entities.SetupProperties)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, StaticMock.Entities.SetupProperties)
+  nameWithType: Mock.SetupDefault(Type, string, SetupProperties)
+  nameWithType.vb: Mock.SetupDefault(Type, String, SetupProperties)
 - uid: StaticMock.Mock.SetupDefault(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
   name: SetupDefault(Type, string, SetupProperties, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
@@ -433,6 +496,15 @@ references:
   fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, System.Action)
   nameWithType: Mock.SetupDefault(Type, string, Action)
   nameWithType.vb: Mock.SetupDefault(Type, String, Action)
+- uid: StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags)
+  name: SetupDefault(Type, string, BindingFlags)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags)
+  name.vb: SetupDefault(Type, String, BindingFlags)
+  fullName: StaticMock.Mock.SetupDefault(System.Type, string, System.Reflection.BindingFlags)
+  fullName.vb: StaticMock.Mock.SetupDefault(System.Type, String, System.Reflection.BindingFlags)
+  nameWithType: Mock.SetupDefault(Type, string, BindingFlags)
+  nameWithType.vb: Mock.SetupDefault(Type, String, BindingFlags)
 - uid: StaticMock.Mock.SetupDefault(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
   name: SetupDefault(Type, string, BindingFlags, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupDefault_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
@@ -449,6 +521,24 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.SetupDefault
   nameWithType: Mock.SetupDefault
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String)
+  name: SetupProperty(Type, string)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String)
+  name.vb: SetupProperty(Type, String)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String)
+  nameWithType: Mock.SetupProperty(Type, string)
+  nameWithType.vb: Mock.SetupProperty(Type, String)
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name: SetupProperty(Type, string, SetupProperties)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_StaticMock_Entities_SetupProperties_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties)
+  name.vb: SetupProperty(Type, String, SetupProperties)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string, StaticMock.Entities.SetupProperties)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, StaticMock.Entities.SetupProperties)
+  nameWithType: Mock.SetupProperty(Type, string, SetupProperties)
+  nameWithType.vb: Mock.SetupProperty(Type, String, SetupProperties)
 - uid: StaticMock.Mock.SetupProperty(System.Type,System.String,StaticMock.Entities.SetupProperties,System.Action)
   name: SetupProperty(Type, string, SetupProperties, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_StaticMock_Entities_SetupProperties_System_Action_
@@ -467,6 +557,15 @@ references:
   fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, System.Action)
   nameWithType: Mock.SetupProperty(Type, string, Action)
   nameWithType.vb: Mock.SetupProperty(Type, String, Action)
+- uid: StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags)
+  name: SetupProperty(Type, string, BindingFlags)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags)
+  name.vb: SetupProperty(Type, String, BindingFlags)
+  fullName: StaticMock.Mock.SetupProperty(System.Type, string, System.Reflection.BindingFlags)
+  fullName.vb: StaticMock.Mock.SetupProperty(System.Type, String, System.Reflection.BindingFlags)
+  nameWithType: Mock.SetupProperty(Type, string, BindingFlags)
+  nameWithType.vb: Mock.SetupProperty(Type, String, BindingFlags)
 - uid: StaticMock.Mock.SetupProperty(System.Type,System.String,System.Reflection.BindingFlags,System.Action)
   name: SetupProperty(Type, string, BindingFlags, Action)
   href: api/StaticMock.Mock.html#StaticMock_Mock_SetupProperty_System_Type_System_String_System_Reflection_BindingFlags_System_Action_
@@ -483,6 +582,78 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mock.SetupProperty
   nameWithType: Mock.SetupProperty
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}})
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}})
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))))
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task<TReturnValue>>>)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task(Of TReturnValue))))
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))))
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext_System_Threading_Tasks_Task___0____System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,System.Threading.Tasks.Task{``0}}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, Task<TReturnValue>>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, Task(Of TReturnValue))), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}})
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}})
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)))
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, TReturnValue>>)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, TReturnValue)))
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)))
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_StaticMock_Entities_Context_SetupContext___0___System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{StaticMock.Entities.Context.SetupContext,``0}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<StaticMock.Entities.Context.SetupContext, TReturnValue>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of StaticMock.Entities.Context.SetupContext, TReturnValue)), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<SetupContext, TReturnValue>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of SetupContext, TReturnValue)), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}})
+  name: Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}})
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))))
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<System.Threading.Tasks.Task<TReturnValue>>>)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of System.Threading.Tasks.Task(Of TReturnValue))))
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))))
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func_System_Threading_Tasks_Task___0____System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{System.Threading.Tasks.Task{``0}}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<System.Threading.Tasks.Task<TReturnValue>>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of System.Threading.Tasks.Task(Of TReturnValue))), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<Task<TReturnValue>>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of Task(Of TReturnValue))), Action)
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}})
+  name: Setup<TReturnValue>(Expression<Func<TReturnValue>>)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}})
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)))
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<TReturnValue>>)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of TReturnValue)))
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<TReturnValue>>)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)))
+- uid: StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
+  name: Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
+  href: api/StaticMock.Mock.html#StaticMock_Mock_Setup__1_System_Linq_Expressions_Expression_System_Func___0___System_Action_
+  commentId: M:StaticMock.Mock.Setup``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Action)
+  name.vb: Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
+  fullName: StaticMock.Mock.Setup<TReturnValue>(System.Linq.Expressions.Expression<System.Func<TReturnValue>>, System.Action)
+  fullName.vb: StaticMock.Mock.Setup(Of TReturnValue)(System.Linq.Expressions.Expression(Of System.Func(Of TReturnValue)), System.Action)
+  nameWithType: Mock.Setup<TReturnValue>(Expression<Func<TReturnValue>>, Action)
+  nameWithType.vb: Mock.Setup(Of TReturnValue)(Expression(Of Func(Of TReturnValue)), Action)
 - uid: StaticMock.Mocks
   name: StaticMock.Mocks
   href: api/StaticMock.Mocks.html
@@ -628,15 +799,22 @@ references:
   isSpec: "True"
   fullName: StaticMock.Mocks.IFuncMock.Returns
   nameWithType: IFuncMock.Returns
-- uid: StaticMock.Mocks.IFuncMock.Returns``1(``0)
-  name: Returns<TReturnValue>(TReturnValue)
-  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__1___0_
-  commentId: M:StaticMock.Mocks.IFuncMock.Returns``1(``0)
-  name.vb: Returns(Of TReturnValue)(TReturnValue)
-  fullName: StaticMock.Mocks.IFuncMock.Returns<TReturnValue>(TReturnValue)
-  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TReturnValue)(TReturnValue)
-  nameWithType: IFuncMock.Returns<TReturnValue>(TReturnValue)
-  nameWithType.vb: IFuncMock.Returns(Of TReturnValue)(TReturnValue)
+- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync*
+  name: ReturnsAsync
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync_
+  commentId: Overload:StaticMock.Mocks.IFuncMock.ReturnsAsync
+  isSpec: "True"
+  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync
+  nameWithType: IFuncMock.ReturnsAsync
+- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
+  name: ReturnsAsync<TReturnValue>(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync__1___0_
+  commentId: M:StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
+  name.vb: ReturnsAsync(Of TReturnValue)(TReturnValue)
+  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
+  nameWithType: IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
+  nameWithType.vb: IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
 - uid: StaticMock.Mocks.IFuncMock.Returns``1(System.Func{``0})
   name: Returns<TReturnValue>(Func<TReturnValue>)
   href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__1_System_Func___0__
@@ -646,6 +824,15 @@ references:
   fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TReturnValue)(System.Func(Of TReturnValue))
   nameWithType: IFuncMock.Returns<TReturnValue>(Func<TReturnValue>)
   nameWithType.vb: IFuncMock.Returns(Of TReturnValue)(Func(Of TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock.Returns``1(``0)
+  name: Returns<TReturnValue>(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__1___0_
+  commentId: M:StaticMock.Mocks.IFuncMock.Returns``1(``0)
+  name.vb: Returns(Of TReturnValue)(TReturnValue)
+  fullName: StaticMock.Mocks.IFuncMock.Returns<TReturnValue>(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TReturnValue)(TReturnValue)
+  nameWithType: IFuncMock.Returns<TReturnValue>(TReturnValue)
+  nameWithType.vb: IFuncMock.Returns(Of TReturnValue)(TReturnValue)
 - uid: StaticMock.Mocks.IFuncMock.Returns``10(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})
   name: Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue>)
   href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_Returns__10_System_Func___0___1___2___3___4___5___6___7___8___9__
@@ -727,22 +914,6 @@ references:
   fullName.vb: StaticMock.Mocks.IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue)(System.Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
   nameWithType: IFuncMock.Returns<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>(Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue>)
   nameWithType.vb: IFuncMock.Returns(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue)(Func(Of TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue))
-- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync*
-  name: ReturnsAsync
-  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync_
-  commentId: Overload:StaticMock.Mocks.IFuncMock.ReturnsAsync
-  isSpec: "True"
-  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync
-  nameWithType: IFuncMock.ReturnsAsync
-- uid: StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
-  name: ReturnsAsync<TReturnValue>(TReturnValue)
-  href: api/StaticMock.Mocks.IFuncMock.html#StaticMock_Mocks_IFuncMock_ReturnsAsync__1___0_
-  commentId: M:StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)
-  name.vb: ReturnsAsync(Of TReturnValue)(TReturnValue)
-  fullName: StaticMock.Mocks.IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
-  fullName.vb: StaticMock.Mocks.IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
-  nameWithType: IFuncMock.ReturnsAsync<TReturnValue>(TReturnValue)
-  nameWithType.vb: IFuncMock.ReturnsAsync(Of TReturnValue)(TReturnValue)
 - uid: StaticMock.Mocks.IFuncMock`1
   name: IFuncMock<TReturnValue>
   href: api/StaticMock.Mocks.IFuncMock-1.html
@@ -752,14 +923,6 @@ references:
   fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue)
   nameWithType: IFuncMock<TReturnValue>
   nameWithType.vb: IFuncMock(Of TReturnValue)
-- uid: StaticMock.Mocks.IFuncMock`1.Returns(`0)
-  name: Returns(TReturnValue)
-  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__0_
-  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns(`0)
-  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns(TReturnValue)
-  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(TReturnValue)
-  nameWithType: IFuncMock<TReturnValue>.Returns(TReturnValue)
-  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(TReturnValue)
 - uid: StaticMock.Mocks.IFuncMock`1.Returns(System.Func{`0})
   name: Returns(Func<TReturnValue>)
   href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns_System_Func__0__
@@ -769,6 +932,14 @@ references:
   fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(System.Func(Of TReturnValue))
   nameWithType: IFuncMock<TReturnValue>.Returns(Func<TReturnValue>)
   nameWithType.vb: IFuncMock(Of TReturnValue).Returns(Func(Of TReturnValue))
+- uid: StaticMock.Mocks.IFuncMock`1.Returns(`0)
+  name: Returns(TReturnValue)
+  href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns__0_
+  commentId: M:StaticMock.Mocks.IFuncMock`1.Returns(`0)
+  fullName: StaticMock.Mocks.IFuncMock<TReturnValue>.Returns(TReturnValue)
+  fullName.vb: StaticMock.Mocks.IFuncMock(Of TReturnValue).Returns(TReturnValue)
+  nameWithType: IFuncMock<TReturnValue>.Returns(TReturnValue)
+  nameWithType.vb: IFuncMock(Of TReturnValue).Returns(TReturnValue)
 - uid: StaticMock.Mocks.IFuncMock`1.Returns*
   name: Returns
   href: api/StaticMock.Mocks.IFuncMock-1.html#StaticMock_Mocks_IFuncMock_1_Returns_
@@ -865,6 +1036,12 @@ references:
   commentId: T:StaticMock.Mocks.IMock
   fullName: StaticMock.Mocks.IMock
   nameWithType: IMock
+- uid: StaticMock.Mocks.IMock.Throws(System.Type)
+  name: Throws(Type)
+  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_System_Type_
+  commentId: M:StaticMock.Mocks.IMock.Throws(System.Type)
+  fullName: StaticMock.Mocks.IMock.Throws(System.Type)
+  nameWithType: IMock.Throws(Type)
 - uid: StaticMock.Mocks.IMock.Throws(System.Type,System.Object[])
   name: Throws(Type, params object[])
   href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_System_Type_System_Object___
@@ -874,12 +1051,6 @@ references:
   fullName.vb: StaticMock.Mocks.IMock.Throws(System.Type, ParamArray Object())
   nameWithType: IMock.Throws(Type, params object[])
   nameWithType.vb: IMock.Throws(Type, ParamArray Object())
-- uid: StaticMock.Mocks.IMock.Throws(System.Type)
-  name: Throws(Type)
-  href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_System_Type_
-  commentId: M:StaticMock.Mocks.IMock.Throws(System.Type)
-  fullName: StaticMock.Mocks.IMock.Throws(System.Type)
-  nameWithType: IMock.Throws(Type)
 - uid: StaticMock.Mocks.IMock.Throws*
   name: Throws
   href: api/StaticMock.Mocks.IMock.html#StaticMock_Mocks_IMock_Throws_
