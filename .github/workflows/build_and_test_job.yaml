@@ -34,7 +34,7 @@ jobs:
       HOOK_MANAGER_TYPE: ${{ inputs.hook_manager_type }}
     runs-on: ${{ inputs.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
