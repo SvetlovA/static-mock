@@ -1,4 +1,8 @@
 # SMock
+
+[![NuGet Version](https://img.shields.io/nuget/v/Smock.svg?style=flat)](https://www.nuget.org/packages/SMock) 
+[![NuGet Download](https://img.shields.io/nuget/dt/SMock.svg?style=flat)](https://www.nuget.org/packages/SMock) 
+
 SMock is opensource lib for mocking static and instance methods and properties. [API Documntation](https://svetlova.github.io/static-mock/api/index.html)
 # Installation
 Download and install the package from [NuGet](https://www.nuget.org/packages/SMock/) or [GitHub](https://github.com/SvetlovA/static-mock/pkgs/nuget/SMock)
