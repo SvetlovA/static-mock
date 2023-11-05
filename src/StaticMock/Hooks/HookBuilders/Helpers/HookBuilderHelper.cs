@@ -180,8 +180,8 @@ internal static class HookBuilderHelper
                         il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
                     }
                 }
-
-                il.Emit(OpCodes.Callvirt, executable.GetType().GetMethod("Invoke"));
+                
+                il.Emit(OpCodes.Callvirt, executable.GetType().GetMethod("Invoke") ?? throw new Exception($"Method 'Invoke' of type {executableType} not found"));
             });
     }
 
@@ -193,7 +193,7 @@ internal static class HookBuilderHelper
         THookValue hookValue,
         HookMethodType hookMethodType,
         IReadOnlyList<ItParameterExpression> itParameterExpressions,
-        Action<ILGenerator> setupHookIl = null)
+        Action<ILGenerator>? setupHookIl = null)
     {
         var hookMethodIl = hookMethod.GetILGenerator();
 
@@ -236,7 +236,7 @@ internal static class HookBuilderHelper
                 hookMethodIl.Emit(
                     OpCodes.Ldarg,
                     hookMethodType == HookMethodType.Static ? i : i + 2);
-                hookMethodIl.Emit(OpCodes.Callvirt, parameterExpression.Type.GetMethod("Invoke"));
+                hookMethodIl.Emit(OpCodes.Callvirt, parameterExpression.Type.GetMethod("Invoke") ?? throw new Exception($"Method 'Invoke' of type {parameterExpression.Type} not found"));
             }
         }
     }
@@ -305,7 +305,7 @@ internal static class HookBuilderHelper
         return hookMethodType switch
         {
             HookMethodType.Static => originalMethodParameters.ToArray(),
-            HookMethodType.Instance => new [] { originalMethod.DeclaringType }.Concat(originalMethodParameters).ToArray(),
+            HookMethodType.Instance when originalMethod.DeclaringType != null => new [] { originalMethod.DeclaringType }.Concat(originalMethodParameters).ToArray(),
             _ => throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType, $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}")
         };
     }

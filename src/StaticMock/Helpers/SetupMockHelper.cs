@@ -144,6 +144,11 @@ internal static class SetupMockHelper
         }
 
         var originalMethodInfo = originalPropertyInfo.GetMethod;
+        if (originalMethodInfo == null)
+        {
+            throw new ArgumentNullException(nameof(originalMethodInfo));
+        }
+        
         if (originalMethodInfo.ReturnType == typeof(void))
         {
             throw new Exception($"Can't use some features of this setup for void return. To Setup void method us {nameof(Mock.SetupAction)} setup");
