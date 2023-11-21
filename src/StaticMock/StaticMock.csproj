@@ -49,7 +49,7 @@
     <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='netcoreapp3.1' Or '$(TargetFramework)'=='net5.0' Or '$(TargetFramework)'=='net6.0' Or '$(TargetFramework)'=='net7.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='netcoreapp3.1' Or '$(TargetFramework)'=='net5.0' Or '$(TargetFramework)'=='net6.0' Or '$(TargetFramework)'=='net7.0' or '$(TargetFramework)'=='net8.0'">
     <PackageReference Include="MonoMod.RuntimeDetour" Version="25.0.2" />
   </ItemGroup>
 
