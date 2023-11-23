@@ -52,6 +52,6 @@ jobs:
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
-        name: Tests
+        name: Test Report for ${{ inputs.os }}
         path: ./src/**/*.trx
         reporter: dotnet-trx
