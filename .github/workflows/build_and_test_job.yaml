@@ -37,7 +37,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore src
     - name: TestAllPlatforms
       if: ${{ inputs.os == 'windows-latest' }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=/<framework>/testResults.trx"
+      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=testResults.trx;overwrite=false"
       working-directory: ./src
     - name: TestLinix
       if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
