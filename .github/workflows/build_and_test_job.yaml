@@ -35,11 +35,11 @@ jobs:
       run: dotnet restore src
     - name: Build
       run: dotnet build --configuration Release --no-restore src
-    - name: TestAllPlatforms
+    - name: TestWindows
       if: ${{ inputs.os == 'windows-latest' }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=testResults.trx;overwrite=false"
+      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults.trx"
       working-directory: ./src
-    - name: TestLinix
+    - name: TestUnix
       if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
       run: |
         dotnet test --framework netcoreapp3.1 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=netcoreapp3.1/testResults.trx"
