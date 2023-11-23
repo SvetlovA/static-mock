@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using NUnit.Framework;
-using StaticMock.Tests.Settings;
+﻿using NUnit.Framework;
 
 namespace StaticMock.Tests;
 
@@ -10,12 +8,6 @@ public class AssemblySetup
     [OneTimeSetUp]
     public void Setup()
     {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("HOOK_MANAGER_TYPE")}.json", optional: true)
-            .Build();
-
-        var appSettings = AppSettingsReader.ReadSettings(configuration);
-        Console.WriteLine($"Hook manager type: {appSettings.HookManagerType}");
+        Console.WriteLine($".NET Version: {Environment.Version}");
     }
 }

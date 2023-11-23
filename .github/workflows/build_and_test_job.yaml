@@ -11,27 +11,14 @@ on:
         - windows-latest
         - macos-latest
         default: windows-latest
-      hook_manager_type:
-        type: choice
-        description: 'Run tests on special hook manager type. Possible hook manager types: Harmony, Native, MonoMod. Default: MonoMod'
-        required: true
-        options:
-        - MonoMod
-        default: MonoMod
   workflow_call:
     inputs:
       os:
         type: string
         required: true
         default: ubuntu-latest
-      hook_manager_type:
-        type: string
-        required: true
-        default: MonoMod
 jobs:
   buildAndTest:
-    env:
-      HOOK_MANAGER_TYPE: ${{ inputs.hook_manager_type }}
     runs-on: ${{ inputs.os }}
     steps:
     - uses: actions/checkout@v4
@@ -43,6 +30,7 @@ jobs:
           5.0.x
           6.0.x
           7.0.x
+          8.0.x
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
@@ -58,4 +46,5 @@ jobs:
         dotnet test --framework net5.0 --no-build --configuration Release --verbosity normal
         dotnet test --framework net6.0 --no-build --configuration Release --verbosity normal
         dotnet test --framework net7.0 --no-build --configuration Release --verbosity normal
+        dotnet test --framework net8.0 --no-build --configuration Release --verbosity normal
       working-directory: ./src
