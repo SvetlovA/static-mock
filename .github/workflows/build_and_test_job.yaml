@@ -37,21 +37,21 @@ jobs:
       run: dotnet build --configuration Release --no-restore src
     - name: TestAllPlatforms
       if: ${{ inputs.os == 'windows-latest' }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/testResults.trx"
+      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=testResults.trx"
       working-directory: ./src
     - name: TestLinix
       if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
       run: |
-        dotnet test --framework netcoreapp3.1 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/netcoreapp3.1/testResults.trx"
-        dotnet test --framework net5.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/net5.0/testResults.trx"
-        dotnet test --framework net6.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/net6.0/testResults.trx"
-        dotnet test --framework net7.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/net7.0/testResults.trx"
-        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults/net8.0/testResults.trx"
+        dotnet test --framework netcoreapp3.1 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=netcoreapp3.1/testResults.trx"
+        dotnet test --framework net5.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net5.0/testResults.trx"
+        dotnet test --framework net6.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net6.0/testResults.trx"
+        dotnet test --framework net7.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net7.0/testResults.trx"
+        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
         name: Tests
-        path: ./src/TestResults/**/*.trx
+        path: /**/*.trx
         reporter: dotnet-trx
