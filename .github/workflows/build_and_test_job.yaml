@@ -37,7 +37,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore src
     - name: TestWindows
       if: ${{ inputs.os == 'windows-latest' }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults.trx"
+      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults"
       working-directory: ./src
     - name: TestUnix
       if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
