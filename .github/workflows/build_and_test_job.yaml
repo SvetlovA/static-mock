@@ -50,9 +50,8 @@ jobs:
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v1
-      working-directory: ./src
       if: success() || failure()
       with:
         name: Tests
-        path: /TestResults/**/*.trx
+        path: ./src/TestResults/**/*.trx
         reporter: dotnet-trx
