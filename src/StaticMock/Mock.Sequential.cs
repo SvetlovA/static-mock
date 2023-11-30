@@ -10,14 +10,12 @@ using StaticMock.Helpers;
 namespace StaticMock
 {
     /// <summary>
-    /// Provides a set of static methods for setting up and configuring method and property mocks. (Sequential)
+    /// Provides a set of static methods for setting up and configuring method and property mocks.
     /// </summary>
     public static partial class Mock
     {
-        #region Method Mock Setup
-
         /// <summary>
-        /// Sets up a method mock for the specified type and method name.
+        /// Sets up a method mock for the specified type and method name. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -26,7 +24,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(type, methodName);
 
         /// <summary>
-        /// Sets up a method mock for the specified type, method name, and binding flags.
+        /// Sets up a method mock for the specified type, method name, and binding flags. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -39,7 +37,7 @@ namespace StaticMock
             });
 
         /// <summary>
-        /// Sets up a method mock for the specified type, method name, and setup properties.
+        /// Sets up a method mock for the specified type, method name, and setup properties. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -48,12 +46,8 @@ namespace StaticMock
         public static IFuncMock Setup(Type type, string methodName, SetupProperties setupProperties) =>
             SetupMockHelper.SetupInternal(type, methodName, setupProperties: setupProperties);
 
-        #endregion
-
-        #region Property Mock Setup
-
         /// <summary>
-        /// Sets up a property mock for the specified type and property name.
+        /// Sets up a property mock for the specified type and property name. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the property to be mocked.</param>
         /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -62,7 +56,7 @@ namespace StaticMock
             SetupMockHelper.SetupPropertyInternal(type, propertyName);
 
         /// <summary>
-        /// Sets up a property mock for the specified type, property name, and binding flags.
+        /// Sets up a property mock for the specified type, property name, and binding flags. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the property to be mocked.</param>
         /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -75,7 +69,7 @@ namespace StaticMock
             });
 
         /// <summary>
-        /// Sets up a property mock for the specified type, property name, and setup properties.
+        /// Sets up a property mock for the specified type, property name, and setup properties. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the property to be mocked.</param>
         /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -84,12 +78,8 @@ namespace StaticMock
         public static IFuncMock SetupProperty(Type type, string propertyName, SetupProperties setupProperties) =>
             SetupMockHelper.SetupPropertyInternal(type, propertyName, setupProperties: setupProperties);
 
-        #endregion
-
-        #region Action Mock Setup
-
         /// <summary>
-        /// Sets up an action (void method) mock for the specified type and method name.
+        /// Sets up an action (void method) mock for the specified type and method name. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -98,7 +88,7 @@ namespace StaticMock
             SetupMockHelper.SetupVoidInternal(type, methodName);
 
         /// <summary>
-        /// Sets up an action (void method) mock for the specified type, method name, and binding flags.
+        /// Sets up an action (void method) mock for the specified type, method name, and binding flags. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -111,7 +101,7 @@ namespace StaticMock
             });
 
         /// <summary>
-        /// Sets up an action (void method) mock for the specified type, method name, and setup properties.
+        /// Sets up an action (void method) mock for the specified type, method name, and setup properties. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -120,12 +110,8 @@ namespace StaticMock
         public static IActionMock SetupAction(Type type, string methodName, SetupProperties setupProperties) =>
             SetupMockHelper.SetupVoidInternal(type, methodName, setupProperties: setupProperties);
 
-        #endregion
-
-        #region Default Setup
-
         /// <summary>
-        /// Sets up a default action for the specified type and method name.
+        /// Sets up a default action for the specified type and method name. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -133,7 +119,7 @@ namespace StaticMock
             SetupMockHelper.SetupDefaultInternal(type, methodName);
 
         /// <summary>
-        /// Sets up a default action for the specified type, method name, and binding flags.
+        /// Sets up a default action for the specified type, method name, and binding flags. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -145,7 +131,7 @@ namespace StaticMock
             });
 
         /// <summary>
-        /// Sets up a default action for the specified type, method name, and setup properties.
+        /// Sets up a default action for the specified type, method name, and setup properties. (Sequential)
         /// </summary>
         /// <param name="type">The type containing the method to be mocked.</param>
         /// <param name="methodName">The name of the method to be mocked.</param>
@@ -153,12 +139,8 @@ namespace StaticMock
         public static void SetupDefault(Type type, string methodName, SetupProperties setupProperties) =>
             SetupMockHelper.SetupDefaultInternal(type, methodName, setupProperties: setupProperties);
 
-        #endregion
-
-        #region Expression-Based Setup
-
         /// <summary>
-        /// Sets up a function mock for the specified expression.
+        /// Sets up a function mock for the specified expression. (Sequential)
         /// </summary>
         /// <typeparam name="TReturnValue">The return type of the function to be mocked.</typeparam>
         /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
@@ -167,7 +149,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up an asynchronous function mock for the specified expression.
+        /// Sets up an asynchronous function mock for the specified expression. (Sequential)
         /// </summary>
         /// <typeparam name="TReturnValue">The return type of the asynchronous function to be mocked.</typeparam>
         /// <param name="methodGetExpression">The expression representing the asynchronous method to be mocked.</param>
@@ -177,7 +159,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up a function mock for the specified expression, including setup context.
+        /// Sets up a function mock for the specified expression, including setup context. (Sequential)
         /// </summary>
         /// <typeparam name="TReturnValue">The return type of the function to be mocked.</typeparam>
         /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
@@ -186,7 +168,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up an asynchronous function mock for the specified expression, including setup context.
+        /// Sets up an asynchronous function mock for the specified expression, including setup context. (Sequential)
         /// </summary>
         /// <typeparam name="TReturnValue">The return type of the asynchronous function to be mocked.</typeparam>
         /// <param name="methodGetExpression">The expression representing the asynchronous method to be mocked.</param>
@@ -195,7 +177,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up an action (void method) mock for the specified expression.
+        /// Sets up an action (void method) mock for the specified expression. (Sequential)
         /// </summary>
         /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
         /// <returns>An <see cref="IActionMock"/> representing the configured action mock.</returns>
@@ -203,7 +185,7 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up an action (void method) mock for the specified expression, including setup context.
+        /// Sets up an action (void method) mock for the specified expression, including setup context. (Sequential)
         /// </summary>
         /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
         /// <returns>An <see cref="IActionMock"/> representing the configured action mock.</returns>
@@ -211,12 +193,10 @@ namespace StaticMock
             SetupMockHelper.SetupInternal(methodGetExpression);
 
         /// <summary>
-        /// Sets up a default action for the specified expression.
+        /// Sets up a default action for the specified expression. (Sequential)
         /// </summary>
         /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
         public static void SetupDefault(Expression<Action> methodGetExpression) =>
             SetupMockHelper.SetupDefaultInternal(methodGetExpression);
-
-        #endregion
     }
 }
