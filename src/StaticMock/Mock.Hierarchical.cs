@@ -10,7 +10,7 @@ using StaticMock.Mocks;
 namespace StaticMock;
 
 /// <summary>
-/// Provides a set of static methods for setting up and configuring method and property mocks. (Hierarchical)
+/// Provides a set of static methods for setting up and configuring method and property mocks.
 /// </summary>
 public static partial class Mock
 {
@@ -20,7 +20,7 @@ public static partial class Mock
     public static GlobalSettings GlobalSettings { get; } = new();
 
     /// <summary>
-    /// Sets up a method mock for the specified type, method name, and action.
+    /// Sets up a method mock for the specified type, method name, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -29,7 +29,7 @@ public static partial class Mock
     public static IFuncMock Setup(Type type, string methodName, Action action) => SetupMockHelper.SetupInternal(type, methodName, action);
     
     /// <summary>
-    /// Sets up a method mock for the specified type, method name, binding flags, and action.
+    /// Sets up a method mock for the specified type, method name, binding flags, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -43,7 +43,7 @@ public static partial class Mock
         });
 
     /// <summary>
-    /// Sets up a method mock for the specified type, method name, setup properties, and action.
+    /// Sets up a method mock for the specified type, method name, setup properties, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -54,7 +54,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(type, methodName, action, setupProperties);
 
     /// <summary>
-    /// Sets up a property mock for the specified type, property name, and action.
+    /// Sets up a property mock for the specified type, property name, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the property to be mocked.</param>
     /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -63,7 +63,7 @@ public static partial class Mock
     public static IFuncMock SetupProperty(Type type, string propertyName, Action action) => SetupMockHelper.SetupPropertyInternal(type, propertyName, action);
 
     /// <summary>
-    /// Sets up a property mock for the specified type, property name, binding flags, and action.
+    /// Sets up a property mock for the specified type, property name, binding flags, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the property to be mocked.</param>
     /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -77,7 +77,7 @@ public static partial class Mock
         });
 
     /// <summary>
-    /// Sets up a property mock for the specified type, property name, setup properties, and action.
+    /// Sets up a property mock for the specified type, property name, setup properties, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the property to be mocked.</param>
     /// <param name="propertyName">The name of the property to be mocked.</param>
@@ -88,7 +88,7 @@ public static partial class Mock
         SetupMockHelper.SetupPropertyInternal(type, propertyName, action, setupProperties);
 
     /// <summary>
-    /// Sets up an action (void method) mock for the specified type, method name, and action.
+    /// Sets up an action (void method) mock for the specified type, method name, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -97,7 +97,7 @@ public static partial class Mock
     public static IActionMock SetupAction(Type type, string methodName, Action action) => SetupMockHelper.SetupVoidInternal(type, methodName, action);
 
     /// <summary>
-    /// Sets up an action (void method) mock for the specified type, method name, binding flags, and action.
+    /// Sets up an action (void method) mock for the specified type, method name, binding flags, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -111,7 +111,7 @@ public static partial class Mock
         });
 
     /// <summary>
-    /// Sets up an action (void method) mock for the specified type, method name, setup properties, and action.
+    /// Sets up an action (void method) mock for the specified type, method name, setup properties, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -122,7 +122,7 @@ public static partial class Mock
         SetupMockHelper.SetupVoidInternal(type, methodName, action, setupProperties);
 
     /// <summary>
-    /// Sets up a default action for the specified type, method name, and action.
+    /// Sets up a default action for the specified type, method name, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -130,7 +130,7 @@ public static partial class Mock
     public static void SetupDefault(Type type, string methodName, Action action) => SetupMockHelper.SetupDefaultInternal(type, methodName, action);
 
     /// <summary>
-    /// Sets up a default action for the specified type, method name, binding flags, and action.
+    /// Sets up a default action for the specified type, method name, binding flags, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -143,7 +143,7 @@ public static partial class Mock
         });
 
     /// <summary>
-    /// Sets up a default action for the specified type, method name, setup properties, and action.
+    /// Sets up a default action for the specified type, method name, setup properties, and action. (Hierarchical)
     /// </summary>
     /// <param name="type">The type containing the method to be mocked.</param>
     /// <param name="methodName">The name of the method to be mocked.</param>
@@ -153,7 +153,7 @@ public static partial class Mock
         SetupMockHelper.SetupDefaultInternal(type, methodName, action, setupProperties);
 
     /// <summary>
-    /// Sets up a function mock for the specified expression and action.
+    /// Sets up a function mock for the specified expression and action. (Hierarchical)
     /// </summary>
     /// <typeparam name="TReturnValue">The return type of the function to be mocked.</typeparam>
     /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
@@ -163,7 +163,7 @@ public static partial class Mock
         Action action) => SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up an asynchronous function mock for the specified expression and action.
+    /// Sets up an asynchronous function mock for the specified expression and action. (Hierarchical)
     /// </summary>
     /// <typeparam name="TReturnValue">The return type of the asynchronous function to be mocked.</typeparam>
     /// <param name="methodGetExpression">The expression representing the asynchronous method to be mocked.</param>
@@ -173,7 +173,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up a function mock for the specified expression and action, including setup context.
+    /// Sets up a function mock for the specified expression and action, including setup context. (Hierarchical)
     /// </summary>
     /// <typeparam name="TReturnValue">The return type of the function to be mocked.</typeparam>
     /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
@@ -183,7 +183,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up an asynchronous function mock for the specified expression and action, including setup context.
+    /// Sets up an asynchronous function mock for the specified expression and action, including setup context. (Hierarchical)
     /// </summary>
     /// <typeparam name="TReturnValue">The return type of the asynchronous function to be mocked.</typeparam>
     /// <param name="methodGetExpression">The expression representing the asynchronous method to be mocked.</param>
@@ -193,7 +193,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up an action (void method) mock for the specified expression and action.
+    /// Sets up an action (void method) mock for the specified expression and action. (Hierarchical)
     /// </summary>
     /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
     /// <param name="action">The action to be executed when the mocked method is called.</param>
@@ -202,7 +202,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up an action (void method) mock for the specified expression and action, including setup context.
+    /// Sets up an action (void method) mock for the specified expression and action, including setup context. (Hierarchical)
     /// </summary>
     /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
     /// <param name="action">The action to be executed when the mocked method is called.</param>
@@ -211,7 +211,7 @@ public static partial class Mock
         SetupMockHelper.SetupInternal(methodGetExpression, action);
 
     /// <summary>
-    /// Sets up a default action for the specified expression and action.
+    /// Sets up a default action for the specified expression and action. (Hierarchical)
     /// </summary>
     /// <param name="methodGetExpression">The expression representing the method to be mocked.</param>
     /// <param name="action">The action to be executed when the mocked method is called.</param>
