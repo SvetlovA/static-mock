@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
@@ -32,63 +33,63 @@ public class InstanceWithoutDefaultEmptyConstructorTests
     public void TestInstanceMethodReturns()
     {
         var testInstance = new TestInstanceWithoutDefaultEmptyConstructor(new TestInstance(), default, default);
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         const int expectedResult = 2;
 
         using (Mock.Setup(typeof(TestInstanceWithoutDefaultEmptyConstructor), nameof(TestInstanceWithoutDefaultEmptyConstructor.TestMethodReturn1WithoutParameters), new SetupProperties { Instance = testInstance }).Returns(expectedResult))
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }
 
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
     }
 
     [Test]
     public void TestInstanceMethodReturnsCallback()
     {
         var testInstance = new TestInstanceWithoutDefaultEmptyConstructor(new TestInstance(), default, default);
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         const int expectedResult = 2;
 
         using (Mock.Setup(typeof(TestInstanceWithoutDefaultEmptyConstructor), nameof(TestInstanceWithoutDefaultEmptyConstructor.TestMethodReturn1WithoutParameters), new SetupProperties { Instance = testInstance }).Returns(() => expectedResult))
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }
 
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
     }
 
     [Test]
     public void TestInstanceMethodReturnsGeneric()
     {
         var testInstance = new TestInstanceWithoutDefaultEmptyConstructor(new TestInstance(), default, default);
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         const int expectedResult = 2;
 
         using (Mock.Setup(() => testInstance.TestMethodReturn1WithoutParameters()).Returns(expectedResult))
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }
 
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
     }
 
     [Test]
     public void TestInstanceMethodReturnsGenericCallback()
     {
         var testInstance = new TestInstanceWithoutDefaultEmptyConstructor(new TestInstance(), default, default);
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         const int expectedResult = 2;
 
         using (Mock.Setup(() => testInstance.TestMethodReturn1WithoutParameters()).Returns(() => expectedResult))
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }
 
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
     }
 }

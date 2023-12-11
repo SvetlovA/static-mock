@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock.Tests.Common.TestEntities;
 using StaticMock.Tests.Entities;
 
@@ -54,7 +55,7 @@ public class GenericMockThrowsTests
     {
         using var _ = Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTask()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTask());
+        ClassicAssert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTask());
     }
 
     [Test]
@@ -62,7 +63,7 @@ public class GenericMockThrowsTests
     {
         using var _ = Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTaskAsync()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskAsync());
+        ClassicAssert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskAsync());
     }
 
     [Test]
@@ -78,7 +79,7 @@ public class GenericMockThrowsTests
     {
        using var _ = Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync());
+        ClassicAssert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync());
     }
 
     [Test]
@@ -86,7 +87,7 @@ public class GenericMockThrowsTests
     {
         using var _ = Mock.Setup(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters());
+        ClassicAssert.ThrowsAsync<Exception>(() => TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters());
     }
 
     [Test]
@@ -96,7 +97,7 @@ public class GenericMockThrowsTests
 
         using var _ = Mock.Setup(() => instance.TestMethodReturnTask()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTask());
+        ClassicAssert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTask());
     }
 
     [Test]
@@ -106,7 +107,7 @@ public class GenericMockThrowsTests
 
         using var _ = Mock.Setup(() => instance.TestMethodReturnTaskAsync()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskAsync());
+        ClassicAssert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskAsync());
     }
 
     [Test]
@@ -126,7 +127,7 @@ public class GenericMockThrowsTests
 
         using var _ = Mock.Setup(() => instance.TestMethodReturnTaskWithoutParametersAsync()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParametersAsync());
+        ClassicAssert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParametersAsync());
     }
 
     [Test]
@@ -136,14 +137,14 @@ public class GenericMockThrowsTests
 
         using var _ = Mock.Setup(() => instance.TestMethodReturnTaskWithoutParameters()).Throws<Exception>();
 
-        Assert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
+        ClassicAssert.ThrowsAsync<Exception>(() => instance.TestMethodReturnTaskWithoutParameters());
     }
 
     [Test]
     public void TestThrowsStaticIntProperty()
     {
         var originalValue = TestStaticClass.StaticIntProperty;
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
 
         using var _ = Mock.Setup(() => TestStaticClass.StaticIntProperty).Throws<Exception>();
 
@@ -157,7 +158,7 @@ public class GenericMockThrowsTests
     public void TestThrowsStaticObjectProperty()
     {
         var originalValue = TestStaticClass.StaticObjectProperty;
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
 
         using var _ = Mock.Setup(() => TestStaticClass.StaticObjectProperty).Throws<Exception>();
 
@@ -172,7 +173,7 @@ public class GenericMockThrowsTests
     {
         var instance = new TestInstance();
         var originalValue = instance.IntProperty;
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
 
         using var _ = Mock.Setup(() => instance.IntProperty).Throws<Exception>();
 
@@ -187,7 +188,7 @@ public class GenericMockThrowsTests
     {
         var instance = new TestInstance();
         var originalValue = instance.ObjectProperty;
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
 
         using var _ = Mock.Setup(() => instance.ObjectProperty).Throws<Exception>();
 
@@ -201,7 +202,7 @@ public class GenericMockThrowsTests
     public void TestGenericSetupThrowsWithGenericTestMethodReturnDefaultWithoutParameters()
     {
         var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
 
         using var _ = Mock.Setup(() => TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>()).Throws<Exception>();
 
@@ -213,7 +214,7 @@ public class GenericMockThrowsTests
     {
         var testInstance = new TestInstance();
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
 
         using var _ = Mock.Setup(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>()).Throws<Exception>();
 
@@ -225,7 +226,7 @@ public class GenericMockThrowsTests
     {
         var testInstance = new TestGenericInstance<int>();
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
 
         using var _ = Mock.Setup(() => testInstance.GenericTestMethodReturnDefaultWithoutParameters()).Throws<Exception>();
 
