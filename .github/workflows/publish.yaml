@@ -19,7 +19,7 @@ jobs:
       runs-on: ubuntu-latest
       needs: pack
       steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pack-drop
       - name: Prepare
@@ -30,7 +30,7 @@ jobs:
       runs-on: ubuntu-latest
       needs: pack
       steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pack-drop
       - name: Push
