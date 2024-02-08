@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock.Entities;
 using StaticMock.Tests.Common.TestEntities;
 
@@ -21,8 +22,8 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -40,8 +41,8 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturnWithParameter(10);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -63,8 +64,8 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturnReferenceObject();
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -82,8 +83,8 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturn1WithOutParameter(out _);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -103,8 +104,8 @@ public class MockReturnsTests
                     var y = 1;
                     var actualResult = TestStaticClass.TestMethodReturn1WithRefParameter(ref y);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -113,13 +114,13 @@ public class MockReturnsTests
     public void TestInstanceMethodReturns()
     {
         var testInstance = new TestInstance();
-        Assert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
+        ClassicAssert.AreEqual(1, testInstance.TestMethodReturn1WithoutParameters());
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturn1WithoutParameters), new SetupProperties { Instance = testInstance }, () =>
         {
             var actualResult = testInstance.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -127,13 +128,13 @@ public class MockReturnsTests
     public async Task TestSetupReturnsMethodsReturnTask()
     {
         var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters();
-        Assert.AreEqual(1, originalResult);
+        ClassicAssert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters), async () =>
         {
             var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(Task.FromResult(expectedResult));
     }
 
@@ -141,13 +142,13 @@ public class MockReturnsTests
     public async Task TestSetupReturnsMethodsReturnTaskAsync()
     {
         var originalResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
-        Assert.AreEqual(1, originalResult);
+        ClassicAssert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync), async () =>
         {
             var actualResult = await TestStaticAsyncClass.TestMethodReturnTaskWithoutParametersAsync();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(Task.FromResult(expectedResult));
     }
 
@@ -156,13 +157,13 @@ public class MockReturnsTests
     {
         var instance = new TestInstance();
         var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
-        Assert.AreEqual(1, originalResult);
+        ClassicAssert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParameters), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParameters();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(Task.FromResult(expectedResult));
     }
 
@@ -171,13 +172,13 @@ public class MockReturnsTests
     {
         var instance = new TestInstance();
         var originalResult = await instance.TestMethodReturnTaskWithoutParameters();
-        Assert.AreEqual(1, originalResult);
+        ClassicAssert.AreEqual(1, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.TestMethodReturnTaskWithoutParametersAsync), new SetupProperties { Instance = instance }, async () =>
         {
             var actualResult = await instance.TestMethodReturnTaskWithoutParametersAsync();
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(Task.FromResult(expectedResult));
     }
 
@@ -185,13 +186,13 @@ public class MockReturnsTests
     public void TestReturnsStaticIntProperty()
     {
         var originalValue = TestStaticClass.StaticIntProperty;
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
         var expectedResult = 2;
 
         Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticIntProperty), () =>
         {
             var actualResult = TestStaticClass.StaticIntProperty;
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -199,13 +200,13 @@ public class MockReturnsTests
     public void TestReturnsStaticObjectProperty()
     {
         var originalValue = TestStaticClass.StaticObjectProperty;
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
         var expectedResult = new TestInstance();
 
         Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.StaticObjectProperty), () =>
         {
             var actualResult = TestStaticClass.StaticObjectProperty;
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -214,12 +215,12 @@ public class MockReturnsTests
     {
         var instance = new TestInstance();
         var originalValue = instance.IntProperty;
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
 
         Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.IntProperty), new SetupProperties { Instance = instance }, () =>
         {
             var actualResult = instance.IntProperty;
-            Assert.AreEqual(2, actualResult);
+            ClassicAssert.AreEqual(2, actualResult);
         }).Returns(2);
     }
 
@@ -228,12 +229,12 @@ public class MockReturnsTests
     {
         var instance = new TestInstance();
         var originalValue = instance.ObjectProperty;
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
 
         Mock.SetupProperty(typeof(TestInstance), nameof(TestInstance.ObjectProperty), new SetupProperties { Instance = instance }, () =>
         {
             var actualResult = instance.ObjectProperty;
-            Assert.AreEqual(typeof(int), actualResult);
+            ClassicAssert.AreEqual(typeof(int), actualResult);
         }).Returns(typeof(int));
     }
 
@@ -243,7 +244,7 @@ public class MockReturnsTests
         var testInstance = new TestInstance();
         Type type = testInstance.GetType();
         MethodInfo methodInfo = type.GetMethod("TestPrivateMethodReturn1WithoutParameters", BindingFlags.NonPublic | BindingFlags.Instance);
-        Assert.AreEqual(1, methodInfo.Invoke(testInstance, new object[] { }));
+        ClassicAssert.AreEqual(1, methodInfo.Invoke(testInstance, new object[] { }));
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestInstance), methodInfo.Name, new SetupProperties
@@ -253,7 +254,7 @@ public class MockReturnsTests
         }, () =>
         {
             var actualResult = methodInfo.Invoke(testInstance, new object[] { });
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -265,7 +266,7 @@ public class MockReturnsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateIntProperty", BindingFlags.NonPublic | BindingFlags.Instance);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
         var originalValue = mothodInfo.Invoke(testInstance, new object[] { });
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
         var expectedResult = 2;
 
         Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
@@ -275,7 +276,7 @@ public class MockReturnsTests
         }, () =>
         {
             var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -287,7 +288,7 @@ public class MockReturnsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateObjectProperty", BindingFlags.NonPublic | BindingFlags.Instance);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
         var originalValue = mothodInfo.Invoke(testInstance, new object[] { });
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
         var expectedResult = new TestInstance();
 
         Mock.SetupProperty(typeof(TestInstance), propertyInfo.Name, new SetupProperties
@@ -297,7 +298,7 @@ public class MockReturnsTests
         }, () =>
         {
             var actualResult = mothodInfo.Invoke(testInstance, new object[] { });
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -319,8 +320,8 @@ public class MockReturnsTests
                 {
                     var actualResult = methodInfo.Invoke(type, new object[] { });
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(expectedResult);
     }
@@ -332,13 +333,13 @@ public class MockReturnsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateStaticIntProperty", BindingFlags.NonPublic | BindingFlags.Static);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
         var originalValue = mothodInfo.Invoke(type, new object[] { });
-        Assert.AreEqual(default(int), originalValue);
+        ClassicAssert.AreEqual(default(int), originalValue);
         var expectedResult = 2;
 
         Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
         {
             var actualResult = mothodInfo.Invoke(type, new object[] { });
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -349,13 +350,13 @@ public class MockReturnsTests
         PropertyInfo propertyInfo = type.GetProperty("PrivateStaticObjectProperty", BindingFlags.NonPublic | BindingFlags.Static);
         MethodInfo mothodInfo = propertyInfo.GetMethod;
         var originalValue = mothodInfo.Invoke(type, new object[] { });
-        Assert.AreEqual(default, originalValue);
+        ClassicAssert.AreEqual(default, originalValue);
         var expectedResult = new TestInstance();
 
         Mock.SetupProperty(typeof(TestStaticClass), propertyInfo.Name, BindingFlags.NonPublic | BindingFlags.Static, () =>
         {
             var actualResult = mothodInfo.Invoke(type, new object[] { });
-            Assert.AreEqual(expectedResult, actualResult);
+            ClassicAssert.AreEqual(expectedResult, actualResult);
         }).Returns(expectedResult);
     }
 
@@ -363,7 +364,7 @@ public class MockReturnsTests
     public void TestSetupReturnsWithGenericTestMethodReturnDefaultWithoutParameters()
     {
         var originalResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters), new SetupProperties { GenericTypes = new[] { typeof(int) } },
@@ -371,8 +372,8 @@ public class MockReturnsTests
             {
                 var actualResult = TestStaticClass.GenericTestMethodReturnDefaultWithoutParameters<int>();
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             }).Returns(expectedResult);
     }
 
@@ -381,7 +382,7 @@ public class MockReturnsTests
     {
         var testInstance = new TestInstance();
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestInstance), nameof(TestInstance.GenericTestMethodReturnDefaultWithoutParameters),
@@ -394,8 +395,8 @@ public class MockReturnsTests
             {
                 var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters<int>();
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             }).Returns(expectedResult);
     }
 
@@ -404,7 +405,7 @@ public class MockReturnsTests
     {
         var testInstance = new TestGenericInstance<int>();
         var originalResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
-        Assert.AreEqual(0, originalResult);
+        ClassicAssert.AreEqual(0, originalResult);
         var expectedResult = 2;
 
         Mock.Setup(typeof(TestGenericInstance<int>), nameof(TestGenericInstance<int>.GenericTestMethodReturnDefaultWithoutParameters),
@@ -417,8 +418,8 @@ public class MockReturnsTests
             {
                 var actualResult = testInstance.GenericTestMethodReturnDefaultWithoutParameters();
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             }).Returns(expectedResult);
     }
 
@@ -434,12 +435,12 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturn1WithoutParameters();
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns(() => 2);
 
-        Assert.AreEqual(1, originalResult);
+        ClassicAssert.AreEqual(1, originalResult);
     }
 
     [Test]
@@ -450,23 +451,23 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameter(parameter1);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameter),
             () =>
                 {
                     var actualResult = TestStaticClass.TestMethodReturnWithParameter(parameter1);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, int>(argument =>
             {
-                Assert.AreEqual(parameter1, argument);
+                ClassicAssert.AreEqual(parameter1, argument);
                 return argument / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -478,7 +479,7 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
                 new SetupProperties
@@ -493,17 +494,17 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, int>((argument1, argument2) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -516,7 +517,7 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2, parameter3);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -533,18 +534,18 @@ public class MockReturnsTests
             {
                 var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2, parameter3);
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             })
             .Returns<int, string, double, int>((argument1, argument2, argument3) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -563,7 +564,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -585,8 +586,8 @@ public class MockReturnsTests
                         parameter3,
                         parameter4);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], int>((
                 argument1,
@@ -594,14 +595,14 @@ public class MockReturnsTests
                 argument3,
                 argument4) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -622,7 +623,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -646,8 +647,8 @@ public class MockReturnsTests
                         parameter4,
                         parameter5);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], string[], int>((
                 argument1,
@@ -656,15 +657,15 @@ public class MockReturnsTests
                 argument4,
                 argument5) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -687,7 +688,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -713,8 +714,8 @@ public class MockReturnsTests
                         parameter5,
                         parameter6);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], string[], char, int>((
                 argument1,
@@ -724,16 +725,16 @@ public class MockReturnsTests
                 argument5,
                 argument6) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -758,7 +759,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -786,8 +787,8 @@ public class MockReturnsTests
                         parameter6,
                         parameter7);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], string[], char, bool, int>((
                 argument1,
@@ -798,17 +799,17 @@ public class MockReturnsTests
                 argument6,
                 argument7) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -835,7 +836,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -865,8 +866,8 @@ public class MockReturnsTests
                         parameter7,
                         parameter8);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], string[], char, bool, TestInstance, int>((
                 argument1,
@@ -878,18 +879,18 @@ public class MockReturnsTests
                 argument7,
                 argument8) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
-                Assert.AreEqual(parameter8, argument8);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter8, argument8);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -918,7 +919,7 @@ public class MockReturnsTests
 
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -950,8 +951,8 @@ public class MockReturnsTests
                         parameter8,
                         parameter9);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, double, int[], string[], char, bool, TestInstance, Func<int, int>, int>((
                 argument1,
@@ -964,19 +965,19 @@ public class MockReturnsTests
                 argument8,
                 argument9) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
-                Assert.AreEqual(parameter8, argument8);
-                Assert.AreEqual(parameter9, argument9);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter8, argument8);
+                ClassicAssert.AreEqual(parameter9, argument9);
                 return argument1 / 2;
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
 
@@ -989,7 +990,7 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         var setup = Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -1001,8 +1002,8 @@ public class MockReturnsTests
             {
                 var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             });
 
         Assert.Throws<Exception>(() => setup.Returns<int, int>(argument => argument / 2));
@@ -1017,7 +1018,7 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         var setup = Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -1029,8 +1030,8 @@ public class MockReturnsTests
                 {
                     var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 });
 
         Assert.Throws<Exception>(() => setup.Returns<string, string, int>((argument1, argument2) => 2));
@@ -1045,7 +1046,7 @@ public class MockReturnsTests
         var originalResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(parameter1, parameter2);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
                 typeof(TestStaticAsyncClass), nameof(TestStaticAsyncClass.TestMethodReturnWithParametersAsync),
@@ -1061,17 +1062,17 @@ public class MockReturnsTests
                 {
                     var actualResult = await TestStaticAsyncClass.TestMethodReturnWithParametersAsync(parameter1, parameter2);
 
-                    Assert.AreNotEqual(originalResult, actualResult);
-                    Assert.AreEqual(expectedResult, actualResult);
+                    ClassicAssert.AreNotEqual(originalResult, actualResult);
+                    ClassicAssert.AreEqual(expectedResult, actualResult);
                 })
             .Returns<int, string, Task<int>>((argument1, argument2) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
                 return Task.FromResult(argument1 / 2);
             });
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 
     [Test]
@@ -1083,7 +1084,7 @@ public class MockReturnsTests
         var originalResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
         var expectedResult = originalResult / 2;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         var setup = Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -1095,8 +1096,8 @@ public class MockReturnsTests
             {
                 var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             });
 
         Assert.Throws<Exception>(() => setup.Returns<int, string, string>((argument1, argument2) => string.Empty));
@@ -1112,7 +1113,7 @@ public class MockReturnsTests
         var expectedResult = originalResult / 2;
         var executed = false;
 
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.AreEqual(parameter1, originalResult);
 
         Mock.Setup(
             typeof(TestStaticClass), nameof(TestStaticClass.TestMethodReturnWithParameters),
@@ -1124,16 +1125,16 @@ public class MockReturnsTests
             {
                 var actualResult = TestStaticClass.TestMethodReturnWithParameters(parameter1, parameter2);
 
-                Assert.AreNotEqual(originalResult, actualResult);
-                Assert.AreEqual(expectedResult, actualResult);
+                ClassicAssert.AreNotEqual(originalResult, actualResult);
+                ClassicAssert.AreEqual(expectedResult, actualResult);
             }).Returns(() =>
         {
             executed = true;
-            Assert.Pass("Method executed");
+            ClassicAssert.Pass("Method executed");
             return originalResult / 2;
         });
 
-        Assert.IsTrue(executed);
-        Assert.AreEqual(parameter1, originalResult);
+        ClassicAssert.IsTrue(executed);
+        ClassicAssert.AreEqual(parameter1, originalResult);
     }
 }

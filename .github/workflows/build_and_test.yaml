@@ -7,19 +7,15 @@ on:
   workflow_dispatch:
   workflow_call:
 jobs:
-# MonoMod tests
-  buildAndTestUbuntuMonoMod:
+  buildAndTestUbuntu:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: ubuntu-latest
-      hook_manager_type: MonoMod
-  buildAndTestWindowsMonoMod:
+  buildAndTestWindows:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: windows-latest
-      hook_manager_type: MonoMod
-  buildAndTestMacMonoMod:
+  buildAndTestMac:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: macos-latest
-      hook_manager_type: MonoMod

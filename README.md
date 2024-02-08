@@ -16,29 +16,29 @@ Setup is possible in two ways **Hierarchical** and **Sequential**
 Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
     var actualResult = StaticClass.MethodToMock(1);
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Returns(expectedResult);
 
 Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
     var actualResult = StaticClass.MethodToMock(1);
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Returns(() => expectedResult);
 
 Mock.Setup(context => StaticClass.MethodToMock(context.It.Is<int>(x => x == 1)), () =>
 {
     var actualResult = StaticClass.MethodToMock(1);
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Returns<int>(argument => argument);
 
 Mock.Setup(context => StaticClass.MethodToMockAsync(context.It.IsAny<int>()), async () =>
 {
     var actualResult = await StaticClass.MethodToMockAsync(1);
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Returns<int>(async argument => await Task.FromResult(argument));
 ```
 [Other returns hierarchical setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical/ReturnsTests)
@@ -48,8 +48,8 @@ using var _ = Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<in
     .Returns(expectedResult);
 
 var actualResult = StaticClass.MethodToMock(1);
-Assert.AreNotEqual(originalResult, actualResult);
-Assert.AreEqual(expectedResult, actualResult);
+ClassicAssert.AreNotEqual(originalResult, actualResult);
+ClassicAssert.AreEqual(expectedResult, actualResult);
 ```
 [Other returns sequential setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/ReturnsTests)
 ### Throws (Hierarchical)
@@ -72,8 +72,8 @@ Assert.Throws<Exception>(() => StaticClass.MethodToMock());
 Mock.Setup(() => StaticClass.MethodToMock(), () =>
 {
     var actualResult = StaticClass.MethodToMock();
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Callback(() =>
 {
     DoSomething();
@@ -82,8 +82,8 @@ Mock.Setup(() => StaticClass.MethodToMock(), () =>
 Mock.Setup(context => StaticClass.MethodToMock(context.It.IsAny<int>()), () =>
 {
     var actualResult = StaticClass.MethodToMock(1);
-    Assert.AreNotEqual(originalResult, actualResult);
-    Assert.AreEqual(expectedResult, actualResult);
+    ClassicAssert.AreNotEqual(originalResult, actualResult);
+    ClassicAssert.AreEqual(expectedResult, actualResult);
 }).Callback<int>(argument =>
 {
     DoSomething(argument);
@@ -98,8 +98,8 @@ using var _ = Mock.Setup(() => StaticClass.MethodToMock()).Callback(() =>
 });
 
 var actualResult = StaticClass.MethodToMock();
-Assert.AreNotEqual(originalResult, actualResult);
-Assert.AreEqual(expectedResult, actualResult);
+ClassicAssert.AreNotEqual(originalResult, actualResult);
+ClassicAssert.AreEqual(expectedResult, actualResult);
 ```
 [Other callback sequential setup examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential/CallbackTests)
 

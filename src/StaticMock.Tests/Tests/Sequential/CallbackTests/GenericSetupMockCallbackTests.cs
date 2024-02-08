@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock.Tests.Common.TestEntities;
 
 namespace StaticMock.Tests.Tests.Sequential.CallbackTests;
@@ -48,7 +49,7 @@ public class GenericSetupMockCallbackTests
 
         using var _ = Mock.Setup(() => TestStaticClass.TestVoidMethodWithParameters(parameter1)).Callback<int>(argument => 
         {
-            Assert.AreEqual(parameter1, argument);
+            ClassicAssert.AreEqual(parameter1, argument);
         });
 
         TestStaticClass.TestVoidMethodWithParameters(parameter1);
@@ -63,8 +64,8 @@ public class GenericSetupMockCallbackTests
         using var _ = Mock.Setup(context => TestStaticClass.TestVoidMethodWithParameters(context.It.IsAny<int>(), context.It.IsAny<string>()))
             .Callback<int, string>((argument1, argument2) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
@@ -84,9 +85,9 @@ public class GenericSetupMockCallbackTests
                     context.It.IsAny<double>()))
             .Callback<int, string, double>((argument1, argument2, argument3) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2, parameter3);
@@ -112,10 +113,10 @@ public class GenericSetupMockCallbackTests
                 argument3,
                 argument4) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -148,11 +149,11 @@ public class GenericSetupMockCallbackTests
                 argument4,
                 argument5) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -189,12 +190,12 @@ public class GenericSetupMockCallbackTests
                 argument5,
                 argument6) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -235,13 +236,13 @@ public class GenericSetupMockCallbackTests
                 argument6,
                 argument7) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -286,14 +287,14 @@ public class GenericSetupMockCallbackTests
                 argument7,
                 argument8) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
-                Assert.AreEqual(parameter8, argument8);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter8, argument8);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -342,15 +343,15 @@ public class GenericSetupMockCallbackTests
                 argument8,
                 argument9) =>
             {
-                Assert.AreEqual(parameter1, argument1);
-                Assert.AreEqual(parameter2, argument2);
-                Assert.AreEqual(parameter3, argument3);
-                Assert.AreEqual(parameter4, argument4);
-                Assert.AreEqual(parameter5, argument5);
-                Assert.AreEqual(parameter6, argument6);
-                Assert.AreEqual(parameter7, argument7);
-                Assert.AreEqual(parameter8, argument8);
-                Assert.AreEqual(parameter9, argument9);
+                ClassicAssert.AreEqual(parameter1, argument1);
+                ClassicAssert.AreEqual(parameter2, argument2);
+                ClassicAssert.AreEqual(parameter3, argument3);
+                ClassicAssert.AreEqual(parameter4, argument4);
+                ClassicAssert.AreEqual(parameter5, argument5);
+                ClassicAssert.AreEqual(parameter6, argument6);
+                ClassicAssert.AreEqual(parameter7, argument7);
+                ClassicAssert.AreEqual(parameter8, argument8);
+                ClassicAssert.AreEqual(parameter9, argument9);
             });
 
         TestStaticClass.TestVoidMethodWithParameters(
@@ -394,11 +395,11 @@ public class GenericSetupMockCallbackTests
         using var _ = Mock.Setup(context => TestStaticClass.TestVoidMethodWithParameters(context.It.IsAny<int>(), context.It.IsAny<string>())).Callback(() =>
         {
             executed = true;
-            Assert.Pass("Method executed");
+            ClassicAssert.Pass("Method executed");
         });
 
         TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
 
-        Assert.IsTrue(executed);
+        ClassicAssert.IsTrue(executed);
     }
 }

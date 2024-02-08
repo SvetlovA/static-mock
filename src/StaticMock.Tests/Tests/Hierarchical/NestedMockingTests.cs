@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock.Tests.Common.TestEntities;
 
 namespace StaticMock.Tests.Tests.Hierarchical;
@@ -15,11 +16,11 @@ public class NestedMockingTests
         Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
         {
             var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedParentResult, actualParentResult);
+            ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
             Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
             }).Returns(expectedChildResult);
         }).Returns(expectedParentResult);
     }
@@ -36,8 +37,8 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturnWithParameter(2);
-                Assert.AreEqual(expectedParentResult, actualParentResult);
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
             }).Returns(expectedChildResult);
         }).Returns(expectedParentResult);
     }
@@ -53,11 +54,11 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturnWithParameter(2);
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
             }).Returns(expectedChildResult);
 
             var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedParentResult, actualParentResult);
+            ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
         }).Returns(expectedParentResult);
     }
 
@@ -72,9 +73,9 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturnWithParameter(2);
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
                 var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedParentResult, actualParentResult);
+                ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
             }).Returns(expectedChildResult);
         }).Returns(expectedParentResult);
     }
@@ -89,10 +90,10 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
             {
                 var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedParentResult, actualParentResult);
+                ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
                 Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturnWithParameter(2));
                 actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedParentResult, actualParentResult);
+                ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
             }).Throws<Exception>();
         }).Returns(expectedParentResult);
     }
@@ -105,7 +106,7 @@ public class NestedMockingTests
         Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
         {
             var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-            Assert.AreEqual(expectedParentResult, actualParentResult);
+            ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
             Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
             {
                 Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters());
@@ -124,7 +125,7 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturn1WithoutParameters(), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
             }).Returns(expectedChildResult);
         }).Throws<Exception>();
     }
@@ -168,9 +169,9 @@ public class NestedMockingTests
             Mock.Setup(() => TestStaticClass.TestMethodReturnWithParameter(2), () =>
             {
                 var actualChildResult = TestStaticClass.TestMethodReturnWithParameter(2);
-                Assert.AreEqual(expectedChildResult, actualChildResult);
+                ClassicAssert.AreEqual(expectedChildResult, actualChildResult);
                 var actualParentResult = TestStaticClass.TestMethodReturn1WithoutParameters();
-                Assert.AreEqual(expectedParentResult, actualParentResult);
+                ClassicAssert.AreEqual(expectedParentResult, actualParentResult);
             }).Returns<int>(x => expectedChildResult);
         }).Returns(() => expectedParentResult);
     }
