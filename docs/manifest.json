@@ -1,5 +1,4 @@
 {
-  "homepages": [],
   "source_base_path": "C:/MyProjects/static-mock/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -273,7 +272,6 @@
       "version": ""
     }
   ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"
