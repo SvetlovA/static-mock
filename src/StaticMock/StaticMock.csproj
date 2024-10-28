@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net462;net47;net471;net472;net48;net481;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462;net47;net471;net472;net48;net481</TargetFrameworks>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <PackageId>SMock</PackageId>
     <Authors>SvetlovA</Authors>
@@ -41,16 +41,13 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='net47' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='net481'">
     <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' Or '$(TargetFramework)'=='net6.0' Or '$(TargetFramework)'=='net7.0' or '$(TargetFramework)'=='net8.0'">
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.1.0" />
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.0" />
   </ItemGroup>
 
 </Project>
