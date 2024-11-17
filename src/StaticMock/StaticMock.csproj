@@ -14,7 +14,7 @@
     <PackageTags>mock moq static unit test tests smock</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>Copyright (c) 2024 Artem Svetlov</Copyright>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -47,7 +47,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.0" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.1" />
   </ItemGroup>
 
 </Project>
