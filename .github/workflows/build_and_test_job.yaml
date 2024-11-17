@@ -40,7 +40,7 @@ jobs:
       if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
       run: |
         dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
-        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
+        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net9.0/testResults.trx"
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v1
