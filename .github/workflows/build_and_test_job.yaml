@@ -4,12 +4,13 @@ on:
     inputs:
       os:
         type: choice
-        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest. Default: windows-latest'
+        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest (arm based CPU architecture), macos-latest-large. Default: windows-latest'
         required: true
         options:
         - ubuntu-latest
         - windows-latest
         - macos-latest
+        - macos-latest-large
         default: windows-latest
   workflow_call:
     inputs:
