@@ -4,12 +4,13 @@ on:
     inputs:
       os:
         type: choice
-        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest. Default: windows-latest'
+        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest (arm based CPU architecture), macos-13 (x86_64 based CPU arcitecture). Default: windows-latest'
         required: true
         options:
         - ubuntu-latest
         - windows-latest
         - macos-latest
+        - macos-13
         default: windows-latest
   workflow_call:
     inputs:
@@ -26,23 +27,21 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-          6.0.x
-          7.0.x
           8.0.x
+          9.0.x
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
       run: dotnet build --configuration Release --no-restore src
     - name: TestWindows
-      if: ${{ inputs.os == 'windows-latest' }}
+      if: ${{ startsWith(inputs.os, 'windows') }}
       run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults"
       working-directory: ./src
     - name: TestUnix
-      if: ${{ inputs.os == 'ubuntu-latest' || inputs.os == 'macos-latest' }}
+      if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       run: |
-        dotnet test --framework net6.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net6.0/testResults.trx"
-        dotnet test --framework net7.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net7.0/testResults.trx"
         dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
+        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net9.0/testResults.trx"
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v1
