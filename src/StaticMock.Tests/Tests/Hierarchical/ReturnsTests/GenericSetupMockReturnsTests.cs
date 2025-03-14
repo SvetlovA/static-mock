@@ -946,11 +946,35 @@ public class GenericSetupMockReturnsTests
             }).Returns(() =>
         {
             executed = true;
-            ClassicAssert.Pass("Method executed");
+            Assert.Pass("Method executed");
             return originalResult / 2;
         });
 
         ClassicAssert.IsTrue(executed);
         ClassicAssert.AreEqual(parameter1, originalResult);
+    }
+    
+    [Test]
+    public void TestGenericSetupDateTimeUtcNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+
+        Mock.Setup(context => DateTime.UtcNow,
+                () => { Assert.That(DateTime.UtcNow, Is.EqualTo(expectedDate)); })
+            .Returns(expectedDate);
+        
+        Assert.That(DateTime.UtcNow, Is.Not.EqualTo(expectedDate));
+    }
+
+    [Test]
+    public void TestGenericSetupDateTimeNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+
+        Mock.Setup(context => DateTime.Now,
+                () => { Assert.That(DateTime.Now, Is.EqualTo(expectedDate)); })
+            .Returns(expectedDate);
+        
+        Assert.That(DateTime.Now, Is.Not.EqualTo(expectedDate));
     }
 }

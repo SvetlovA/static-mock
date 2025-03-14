@@ -41,13 +41,15 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='net47' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='net481'">
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />
-  </ItemGroup>
+<!--  <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='net47' Or '$(TargetFramework)'=='net471' Or '$(TargetFramework)'=='net472' Or '$(TargetFramework)'=='net48' Or '$(TargetFramework)'=='net481'">-->
+<!--    <PackageReference Include="MonoMod.RuntimeDetour" Version="22.7.31.1" />-->
+<!--    <PackageReference Include="MonoMod.Core" Version="1.2.3" />-->
+<!--  </ItemGroup>-->
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+<!--  Condition="'$(TargetFramework)'=='netstandard2.0'"-->
+  <ItemGroup >
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.1" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3" />
   </ItemGroup>
 
 </Project>

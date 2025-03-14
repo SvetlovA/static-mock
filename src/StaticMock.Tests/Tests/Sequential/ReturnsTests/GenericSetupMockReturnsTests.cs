@@ -886,4 +886,44 @@ public class GenericSetupMockReturnsTests
         ClassicAssert.IsTrue(executed);
         ClassicAssert.AreEqual(parameter1, originalResult);
     }
+
+    [Test]
+    public void TestGenericSetupReturnsDateTimeUtcNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.Setup(context => DateTime.UtcNow)
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.UtcNow, Is.EqualTo(expectedDate));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.Setup(context => DateTime.Now)
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.Now, Is.EqualTo(expectedDate));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsUnsafeProperty()
+    {
+        const int actualValue = 1;
+        const int expectedValue = 2;
+        
+        TestStaticClass.UnsafeProperty = actualValue;
+        Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(actualValue));
+
+        using (var _ = Mock.Setup(context => TestStaticClass.UnsafeProperty)
+                   .Returns(expectedValue))
+        {
+            Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(actualValue));
+    }
 }

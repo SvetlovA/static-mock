@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using MonoMod.Core;
+using MonoMod.Core.Platforms;
 using MonoMod.RuntimeDetour;
 using StaticMock.Hooks.Entities;
 
@@ -11,6 +13,7 @@ internal class MonoModHookManager : IHookManager
     private readonly HookSettings _settings;
 
     private Hook? _hook;
+    private ICoreDetour? _detour;
 
     public MonoModHookManager(MethodBase originalMethod, HookSettings settings)
     {
@@ -22,7 +25,8 @@ internal class MonoModHookManager : IHookManager
     {
         if (_originalMethod.IsStatic)
         {
-            _hook = new Hook(_originalMethod, transpiler);
+            _detour = DetourFactory.Current.CreateDetour(_originalMethod, transpiler);
+            //_hook = new Hook(_originalMethod, transpiler);
         }
         else
         {
@@ -41,6 +45,7 @@ internal class MonoModHookManager : IHookManager
 
     public void Return()
     {
+        _detour?.Dispose();
         _hook?.Dispose();
     }
 

@@ -118,7 +118,8 @@ public static class TestStaticClass
     {
         return parameter;
     }
-
+    
+    public static unsafe int UnsafeProperty { get; set; }
     public static int StaticIntProperty { get; set; }
     public static object StaticObjectProperty { get; set; }
 

@@ -1051,4 +1051,26 @@ public class MockReturnsTests
         ClassicAssert.IsTrue(executed);
         ClassicAssert.AreEqual(parameter1, originalResult);
     }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeUtcNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.SetupProperty(typeof(DateTime), nameof(DateTime.UtcNow))
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.UtcNow, Is.EqualTo(expectedDate));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.SetupProperty(typeof(DateTime), nameof(DateTime.Now))
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.Now, Is.EqualTo(expectedDate));
+    }
 }
