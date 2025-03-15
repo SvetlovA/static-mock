@@ -1,4 +1,4 @@
-﻿namespace StaticMock.Hooks.HookBuilders.Entities;
+﻿namespace StaticMock.HookBuilders.Entities;
 
 public enum HookMethodType
 {

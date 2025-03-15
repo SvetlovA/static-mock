@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Reflection;
 using StaticMock.Entities.Context;
-using StaticMock.Hooks.HookBuilders.Entities;
-using StaticMock.Hooks.HookBuilders.Helpers;
+using StaticMock.HookBuilders.Entities;
+using StaticMock.HookBuilders.Helpers;
 
-namespace StaticMock.Hooks.HookBuilders.Implementation;
+namespace StaticMock.HookBuilders.Implementation;
 
-internal class StaticHookBuilder : IHookBuilder
+internal class InstanceHookBuilder : IHookBuilder
 {
     private readonly IReadOnlyList<ItParameterExpression> _itParameterExpressions;
     private readonly MethodInfo _originalMethodInfo;
 
-    public StaticHookBuilder(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
+    public InstanceHookBuilder(MethodInfo originalMethodInfo, IReadOnlyList<ItParameterExpression> itParameterExpressions)
     {
         _itParameterExpressions = itParameterExpressions;
         _originalMethodInfo = originalMethodInfo;
@@ -82,7 +82,7 @@ internal class StaticHookBuilder : IHookBuilder
         HookBuilderHelper.CreateReturnHook(
             _originalMethodInfo,
             value,
-            HookMethodType.Static,
+            HookMethodType.Instance,
             _itParameterExpressions);
 
     public MethodInfo CreateReturnHook<TReturn>(Func<TReturn> getValue)
@@ -149,27 +149,27 @@ internal class StaticHookBuilder : IHookBuilder
         HookBuilderHelper.CreateReturnAsyncHook(
             _originalMethodInfo,
             value,
-            HookMethodType.Static,
+            HookMethodType.Instance,
             _itParameterExpressions);
 
     public MethodInfo CreateThrowsHook<TException>(TException exception) where TException : Exception, new() =>
         HookBuilderHelper.CreateThrowsHook(
             _originalMethodInfo,
             exception,
-            HookMethodType.Static,
+            HookMethodType.Instance,
             _itParameterExpressions);
 
     private MethodInfo CreateReturnHookInternal<TReturn>(object getValue) =>
         HookBuilderHelper.CreateReturnHook<TReturn>(
             _originalMethodInfo,
             getValue,
-            HookMethodType.Static,
+            HookMethodType.Instance,
             _itParameterExpressions);
 
     private MethodInfo CreateCallbackHookInternal(object callback) =>
         HookBuilderHelper.CreateCallbackHook(
             _originalMethodInfo,
             callback,
-            HookMethodType.Static,
+            HookMethodType.Instance,
             _itParameterExpressions);
 }

@@ -1,4 +1,4 @@
-﻿namespace StaticMock.Hooks;
+﻿namespace StaticMock.Hooks.Factories;
 
 internal interface IHookManagerFactory
 {

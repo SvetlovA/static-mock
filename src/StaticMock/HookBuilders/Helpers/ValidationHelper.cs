@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace StaticMock.Hooks.HookBuilders.Helpers
+namespace StaticMock.HookBuilders.Helpers
 {
     internal static class ValidationHelper
     {

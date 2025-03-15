@@ -2,8 +2,9 @@
 using System.Reflection;
 using StaticMock.Entities.Enums;
 using StaticMock.Hooks.Entities;
+using StaticMock.Hooks.Implementation;
 
-namespace StaticMock.Hooks.Implementation;
+namespace StaticMock.Hooks.Factories.Implementation;
 
 internal class HookManagerFactory : IHookManagerFactory
 {
@@ -19,7 +20,7 @@ internal class HookManagerFactory : IHookManagerFactory
     public IHookManager CreateHookManager() =>
         _settings.HookManagerType switch
         {
-            HookManagerType.MonoMod => new MonoModHookManager(_originalMethod, _settings),
+            HookManagerType.MonoMod => new MonoModHookManager(new MonoModHookFactory(_originalMethod, _settings)),
             _ => throw new ArgumentOutOfRangeException(nameof(_settings.HookManagerType), _settings.HookManagerType,
                 $"{_settings.HookManagerType} not exists in {nameof(HookManagerType)}")
         };

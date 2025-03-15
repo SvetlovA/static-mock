@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace StaticMock.Hooks.HookBuilders;
+namespace StaticMock.HookBuilders;
 
 internal interface IHookBuilder
 {

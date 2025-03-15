@@ -1,6 +1,6 @@
-﻿namespace StaticMock.Hooks.HookBuilders.Helpers;
+﻿namespace StaticMock.HookBuilders.Helpers;
 
-internal class DynamicTypeNames
+internal static class DynamicTypeNames
 {
     public const string ReturnHookAssemblyName = "ReturnHookAssembly";
     public const string ReturnHookModuleName = "ReturnHookModule";

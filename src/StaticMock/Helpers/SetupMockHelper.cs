@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using StaticMock.Entities;
 using StaticMock.Entities.Context;
 using StaticMock.Helpers.Entities;
+using StaticMock.HookBuilders.Factories;
 using StaticMock.Hooks.Entities;
-using StaticMock.Hooks.HookBuilders.Implementation;
+using StaticMock.Hooks.Factories;
+using StaticMock.Hooks.Factories.Implementation;
 using StaticMock.Hooks.Implementation;
 using StaticMock.Mocks;
 using StaticMock.Mocks.Implementation.Hierarchical;
@@ -19,8 +21,7 @@ internal static class SetupMockHelper
 {
     private const BindingFlags DefaultMethodBindingFlags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
 
-    public static MockSetupProperties GetMockSetupProperties<TReturnValue>(
-        Expression<Func<TReturnValue>> methodGetExpression)
+    private static MockSetupProperties GetMockSetupProperties<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;
         object? originalMethodCallInstance = null;
@@ -226,19 +227,50 @@ internal static class SetupMockHelper
         actionMock.Callback(() => { });
     }
 
-    public static object? GetOriginalMethodCallInstance(MethodCallExpression methodExpression) =>
-        methodExpression.Object is MemberExpression originalMethodCallMemberExpression
-            ? originalMethodCallMemberExpression.Expression is ConstantExpression originalMethodCallConstantExpression
-                ? originalMethodCallConstantExpression.Value
-                : null
-            : null;
+    private static object? GetOriginalMethodCallInstance(MethodCallExpression methodExpression)
+    {
+        if (methodExpression.Object is MemberExpression originalMethodCallMemberExpression)
+        {
+            return GetCapturedCallInstance(originalMethodCallMemberExpression);
+        }
 
-    public static object? GetOriginalPropertyCallInstance(MemberExpression methodExpression) =>
-        methodExpression.Expression is MemberExpression originalMethodCallMemberExpression
-            ? originalMethodCallMemberExpression.Expression is ConstantExpression originalMethodCallConstantExpression
-                ? originalMethodCallConstantExpression.Value
-                : null
-            : null;
+        return null;
+    }
+
+    private static object? GetOriginalPropertyCallInstance(MemberExpression methodExpression)
+    {
+        if (methodExpression.Expression is MemberExpression originalPropertyCallMemberExpression)
+        {
+            return GetCapturedCallInstance(originalPropertyCallMemberExpression);
+        }
+
+        return null;
+    }
+
+    private static object? GetCapturedCallInstance(MemberExpression callMemeberExpression)
+    {
+        if (callMemeberExpression.Expression is ConstantExpression originalMethodCallConstantExpression)
+        {
+            var captured = originalMethodCallConstantExpression.Value;
+            var closureFields = captured?.GetType().GetFields() ?? [];
+            foreach (var field in closureFields)
+            {
+                var fieldValue = field.GetValue(captured);
+                if (fieldValue?.GetType() == callMemeberExpression.Type) 
+                {
+                    return fieldValue;
+                }
+            }
+            return captured;
+        }
+            
+        if (callMemeberExpression.Expression is MemberExpression memberExpression)
+        {
+            return Expression.Lambda(memberExpression).Compile().DynamicInvoke();
+        }
+
+        return null;
+    }
 
     public static IFuncMock<TReturnValue> SetupInternal<TReturnValue>(Expression<Func<TReturnValue>> methodGetExpression, Action? action = null)
     {

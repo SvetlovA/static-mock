@@ -1,6 +1,6 @@
 ﻿using System;
+using StaticMock.HookBuilders;
 using StaticMock.Hooks;
-using StaticMock.Hooks.HookBuilders;
 
 namespace StaticMock.Mocks.Callback;
 

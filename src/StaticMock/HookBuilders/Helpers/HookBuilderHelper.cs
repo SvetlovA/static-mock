@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 using StaticMock.Entities.Context;
-using StaticMock.Hooks.HookBuilders.Entities;
+using StaticMock.HookBuilders.Entities;
 
-namespace StaticMock.Hooks.HookBuilders.Helpers;
+namespace StaticMock.HookBuilders.Helpers;
 
 internal static class HookBuilderHelper
 {

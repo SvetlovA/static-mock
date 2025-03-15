@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using StaticMock.Entities.Enums;
+using StaticMock.HookBuilders.Implementation;
 using StaticMock.Hooks.Entities;
 
-namespace StaticMock.Hooks.HookBuilders.Implementation;
+namespace StaticMock.HookBuilders.Factories;
 
 internal class HookBuilderFactory : IHookBuilderFactory
 {
