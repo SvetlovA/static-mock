@@ -175,7 +175,11 @@ internal static class HookBuilderHelper
 
                 if (executableType != typeof(Action) && executableType != typeof(Func<>))
                 {
+#if NETFRAMEWORK
                     for (var i = hookMethodType == HookMethodType.Static ? 0 : 1; i < hookMethodParameterTypes.Length; i++)
+#else
+                    for (var i = 0; i < hookMethodParameterTypes.Length; i++)
+#endif
                     {
                         il.Emit(OpCodes.Ldarg, hookMethodType == HookMethodType.Static ? i : i + 1);
                     }
@@ -235,7 +239,11 @@ internal static class HookBuilderHelper
                 hookMethodIl.Emit(OpCodes.Ldsfld, expressionStaticFiled);
                 hookMethodIl.Emit(
                     OpCodes.Ldarg,
+#if NETFRAMEWORK
                     hookMethodType == HookMethodType.Static ? i : i + 2);
+#else
+                    hookMethodType == HookMethodType.Static ? i : i + 1);
+#endif
                 hookMethodIl.Emit(OpCodes.Callvirt, parameterExpression.Type.GetMethod("Invoke") ?? throw new Exception($"Method 'Invoke' of type {parameterExpression.Type} not found"));
             }
         }
@@ -305,7 +313,12 @@ internal static class HookBuilderHelper
         return hookMethodType switch
         {
             HookMethodType.Static => originalMethodParameters.ToArray(),
-            HookMethodType.Instance when originalMethod.DeclaringType != null => new [] { originalMethod.DeclaringType }.Concat(originalMethodParameters).ToArray(),
+#if NETFRAMEWORK
+            HookMethodType.Instance when originalMethod.DeclaringType != null => [originalMethod.DeclaringType, .. originalMethodParameters],
+#else
+            HookMethodType.Instance => originalMethodParameters.ToArray(),
+#endif
+            
             _ => throw new ArgumentOutOfRangeException(nameof(hookMethodType), hookMethodType, $"Method type {hookMethodType} isn't exists in {nameof(HookMethodType)}")
         };
     }

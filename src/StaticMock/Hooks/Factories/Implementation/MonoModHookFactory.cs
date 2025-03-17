@@ -21,22 +21,14 @@ internal class MonoModHookFactory : IHookFactory
 
     public IDisposable? CreateHook(MethodInfo transpiler)
     {
+#if NETFRAMEWORK
         if (!_originalMethod.IsStatic && _settings.OriginalMethodCallInstance == null)
         {
             throw new Exception($"Can't take calling instance of {_originalMethod} to create hook");
         }
-        
-#if NETFRAMEWORK
         return new Hook(_originalMethod, transpiler, _originalMethod.IsStatic ? null : _settings.OriginalMethodCallInstance);
 #else
-        if (_originalMethod.IsGenericMethod ||
-            _originalMethod.DeclaringType!.IsGenericType ||
-            _originalMethod.IsStatic)
-        {
-            return DetourFactory.Current.CreateDetour(_originalMethod, transpiler);
-        }
-
-        return new Hook(_originalMethod, transpiler, _settings.OriginalMethodCallInstance);
+        return DetourFactory.Current.CreateDetour(_originalMethod, transpiler);
 #endif
     }
 }
