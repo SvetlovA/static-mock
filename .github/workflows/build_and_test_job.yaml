@@ -44,7 +44,7 @@ jobs:
         dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net9.0/testResults.trx"
       working-directory: ./src
     - name: Test Report
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: success() || failure()
       with:
         name: Test Report for ${{ inputs.os }}
