@@ -910,13 +910,9 @@ public class GenericSetupMockReturnsTests
     }
     
     [Test]
-    public void TestGenericSetupReturnsUnsafeProperty()
+    public void TestGenericSetupReturnsStaticUnsafeProperty()
     {
-        const int actualValue = 1;
         const int expectedValue = 2;
-        
-        TestStaticClass.UnsafeProperty = actualValue;
-        Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(actualValue));
 
         using (var _ = Mock.Setup(context => TestStaticClass.UnsafeProperty)
                    .Returns(expectedValue))
@@ -924,6 +920,52 @@ public class GenericSetupMockReturnsTests
             Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(expectedValue));
         }
 
-        Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(actualValue));
+        Assert.That(TestStaticClass.UnsafeProperty, Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeMethod()
+    {
+        const int expectedValue = 2;
+
+        using (var _ = Mock.Setup(context => TestStaticClass.TestUnsafeStaticMethod())
+                   .Returns(expectedValue))
+        {
+            Assert.That(TestStaticClass.TestUnsafeStaticMethod(), Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(TestStaticClass.TestUnsafeStaticMethod(), Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeProperty()
+    {
+        const int expectedValue = 2;
+
+        var instance = new TestInstance();
+
+        using (var _ = Mock.Setup(context => instance.UnsafeProperty)
+                   .Returns(expectedValue))
+        {
+            Assert.That(instance.UnsafeProperty, Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(instance.UnsafeProperty, Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeMethod()
+    {
+        const int expectedValue = 2;
+        
+        var instance = new TestInstance();
+
+        using (var _ = Mock.Setup(context => instance.TestUnsafeInstanceMethod())
+                   .Returns(expectedValue))
+        {
+            Assert.That(instance.TestUnsafeInstanceMethod(), Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(instance.TestUnsafeInstanceMethod(), Is.Not.EqualTo(expectedValue));
     }
 }

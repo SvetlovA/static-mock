@@ -274,4 +274,80 @@ public class GenericMockThrowsTests
             Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
         }).Throws<Exception>(new object[] { message });
     }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeUtcNow()
+    {
+        Mock.Setup(context => DateTime.UtcNow, () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var x = DateTime.UtcNow;
+                });
+            })
+            .Throws<Exception>();
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeNow()
+    {
+        Mock.Setup(context => DateTime.Now, () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var x = DateTime.Now;
+                });
+            })
+            .Throws<Exception>();
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeProperty()
+    {
+        Mock.Setup(context => TestStaticClass.UnsafeProperty, () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var x = TestStaticClass.UnsafeProperty;
+                });
+            })
+            .Throws<Exception>();
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeMethod()
+    {
+        Mock.Setup(context => TestStaticClass.TestUnsafeStaticMethod(), () =>
+            {
+                Assert.Throws<Exception>(() => TestStaticClass.TestUnsafeStaticMethod());
+            })
+            .Throws<Exception>();
+        
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeProperty()
+    {
+        var instance = new TestInstance();
+        Mock.Setup(context => instance.UnsafeProperty, () =>
+            {
+                Assert.Throws<Exception>(() =>
+                {
+                    var x = instance.UnsafeProperty;
+                });
+            })
+            .Throws<Exception>();
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeMethod()
+    {
+        var instance = new TestInstance();
+        Mock.Setup(context => instance.TestUnsafeInstanceMethod(), () =>
+            {
+                Assert.Throws<Exception>(() => instance.TestUnsafeInstanceMethod());
+            })
+            .Throws<Exception>();
+        
+    }
 }

@@ -47,7 +47,7 @@
   
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3" />
+    <PackageReference Include="MonoMod.Core" Version="1.2.3" />
   </ItemGroup>
 
 </Project>

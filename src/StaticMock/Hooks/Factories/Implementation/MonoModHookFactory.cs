@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using MonoMod.RuntimeDetour;
 using StaticMock.Hooks.Entities;
 #if !NETFRAMEWORK
 using MonoMod.Core;
+#else
+using MonoMod.RuntimeDetour;
 #endif
 
 namespace StaticMock.Hooks.Factories.Implementation;

@@ -118,8 +118,31 @@ public static class TestStaticClass
     {
         return parameter;
     }
+
+    public static unsafe int TestUnsafeStaticMethod()
+    {
+        int* x = stackalloc int[2];
+        var y = &x;
+        return 0;
+    }
+
+    public static unsafe int UnsafeProperty
+    {
+        get
+        {
+            int* x = stackalloc int[2];
+            var y = &x;
+            return 0;
+        }
+        set { }
+    }
     
-    public static unsafe int UnsafeProperty { get; set; }
+    public static unsafe void TestUnsafeStaticVoidMethod()
+    {
+        int* x = stackalloc int[2];
+        var y = &x;
+    }
+
     public static int StaticIntProperty { get; set; }
     public static object StaticObjectProperty { get; set; }
 
