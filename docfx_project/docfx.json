@@ -43,7 +43,7 @@
         ]
       }
     ],
-    "output": "../docs",
+    "output": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
