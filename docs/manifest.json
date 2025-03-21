@@ -1,5 +1,5 @@
 {
-  "source_base_path": "C:/MyProjects/static-mock/docfx_project",
+  "source_base_path": "C:/Users/21art/Projects/static-mock/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -10,7 +10,11 @@
           "relative_path": "api/StaticMock.Entities.Context.It.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Context.It",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -20,7 +24,11 @@
           "relative_path": "api/StaticMock.Entities.Context.ItParameterExpression.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Context.ItParameterExpression",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -30,7 +38,11 @@
           "relative_path": "api/StaticMock.Entities.Context.SetupContext.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Context.SetupContext",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -40,7 +52,11 @@
           "relative_path": "api/StaticMock.Entities.Context.SetupContextState.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Context.SetupContextState",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -50,7 +66,11 @@
           "relative_path": "api/StaticMock.Entities.Context.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Context",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -60,7 +80,11 @@
           "relative_path": "api/StaticMock.Entities.Enums.HookManagerType.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Enums.HookManagerType",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -70,7 +94,11 @@
           "relative_path": "api/StaticMock.Entities.Enums.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.Enums",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -80,7 +108,11 @@
           "relative_path": "api/StaticMock.Entities.GlobalSettings.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.GlobalSettings",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -90,7 +122,11 @@
           "relative_path": "api/StaticMock.Entities.SetupProperties.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities.SetupProperties",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -100,27 +136,67 @@
           "relative_path": "api/StaticMock.Entities.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Entities",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.yml",
+      "source_relative_path": "api/StaticMock.HookBuilders.Entities.HookMethodType.yml",
       "output": {
         ".html": {
-          "relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html"
+          "relative_path": "api/StaticMock.HookBuilders.Entities.HookMethodType.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.HookBuilders.Entities.HookMethodType",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.yml",
+      "source_relative_path": "api/StaticMock.HookBuilders.Entities.yml",
       "output": {
         ".html": {
-          "relative_path": "api/StaticMock.Hooks.HookBuilders.Entities.html"
+          "relative_path": "api/StaticMock.HookBuilders.Entities.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.HookBuilders.Entities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Hooks.Factories.IHookFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Hooks.Factories.IHookFactory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Hooks.Factories.IHookFactory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StaticMock.Hooks.Factories.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StaticMock.Hooks.Factories.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Hooks.Factories",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -130,7 +206,11 @@
           "relative_path": "api/StaticMock.Mock.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mock",
+      "Summary": "<p sourcefile=\"api/StaticMock.Mock.yml\" sourcestartlinenumber=\"1\">Provides a set of static methods for setting up and configuring method and property mocks.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -140,7 +220,11 @@
           "relative_path": "api/StaticMock.Mocks.IActionMock.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks.IActionMock",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -150,7 +234,11 @@
           "relative_path": "api/StaticMock.Mocks.IAsyncFuncMock-1.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks.IAsyncFuncMock<TReturnValue>",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -160,7 +248,11 @@
           "relative_path": "api/StaticMock.Mocks.IFuncMock-1.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks.IFuncMock<TReturnValue>",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -170,7 +262,11 @@
           "relative_path": "api/StaticMock.Mocks.IFuncMock.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks.IFuncMock",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -180,7 +276,11 @@
           "relative_path": "api/StaticMock.Mocks.IMock.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks.IMock",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -190,7 +290,11 @@
           "relative_path": "api/StaticMock.Mocks.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock.Mocks",
+      "Summary": null
     },
     {
       "type": "ManagedReference",
@@ -200,7 +304,11 @@
           "relative_path": "api/StaticMock.html"
         }
       },
-      "version": ""
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "StaticMock",
+      "Summary": null
     },
     {
       "type": "Conceptual",

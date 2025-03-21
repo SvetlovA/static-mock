@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -16,7 +16,7 @@
       
       
       
-      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/new/master/apiSpec/new?filename=StaticMock_Mocks_IFuncMock.md&amp;value=---%0Auid%3A%20StaticMock.Mocks.IFuncMock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/SvetlovA/static-mock/new/NativeDetour-Support/apiSpec/new?filename=StaticMock_Mocks_IFuncMock.md&amp;value=---%0Auid%3A%20StaticMock.Mocks.IFuncMock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -29,15 +29,15 @@
       <meta name="loc:changeTheme" content="Change theme">
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
   </head>
-
-  <script type="module" src="./../public/docfx.min.js"></script>
-
-  <script>
-    const theme = localStorage.getItem('theme') || 'auto'
-    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
-  </script>
-
 
   <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
     <header class="bg-body border-bottom">
@@ -73,7 +73,7 @@
 
       <div class="content">
         <div class="actionbar">
-          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
             <i class="bi bi-list"></i>
           </button>
 
@@ -85,7 +85,7 @@
 
 
   <h1 id="StaticMock_Mocks_IFuncMock" data-uid="StaticMock.Mocks.IFuncMock" class="text-break">
-Interface IFuncMock  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L5"><i class="bi bi-code-slash"></i></a>
+Interface IFuncMock  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L5"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -136,7 +136,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_ReturnsAsync__1___0_" data-uid="StaticMock.Mocks.IFuncMock.ReturnsAsync``1(``0)">
   ReturnsAsync&lt;TReturnValue&gt;(TReturnValue)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -177,7 +177,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__1_System_Func___0__" data-uid="StaticMock.Mocks.IFuncMock.Returns``1(System.Func{``0})">
   Returns&lt;TReturnValue&gt;(Func&lt;TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -218,7 +218,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__1___0_" data-uid="StaticMock.Mocks.IFuncMock.Returns``1(``0)">
   Returns&lt;TReturnValue&gt;(TReturnValue)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L7"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -259,7 +259,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__10_System_Func___0___1___2___3___4___5___6___7___8___9__" data-uid="StaticMock.Mocks.IFuncMock.Returns``10(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -318,7 +318,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__2_System_Func___0___1__" data-uid="StaticMock.Mocks.IFuncMock.Returns``2(System.Func{``0,``1})">
   Returns&lt;TArg, TReturnValue&gt;(Func&lt;TArg, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -361,7 +361,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__3_System_Func___0___1___2__" data-uid="StaticMock.Mocks.IFuncMock.Returns``3(System.Func{``0,``1,``2})">
   Returns&lt;TArg1, TArg2, TReturnValue&gt;(Func&lt;TArg1, TArg2, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -406,7 +406,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__4_System_Func___0___1___2___3__" data-uid="StaticMock.Mocks.IFuncMock.Returns``4(System.Func{``0,``1,``2,``3})">
   Returns&lt;TArg1, TArg2, TArg3, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -453,7 +453,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__5_System_Func___0___1___2___3___4__" data-uid="StaticMock.Mocks.IFuncMock.Returns``5(System.Func{``0,``1,``2,``3,``4})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -502,7 +502,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__6_System_Func___0___1___2___3___4___5__" data-uid="StaticMock.Mocks.IFuncMock.Returns``6(System.Func{``0,``1,``2,``3,``4,``5})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -553,7 +553,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__7_System_Func___0___1___2___3___4___5___6__" data-uid="StaticMock.Mocks.IFuncMock.Returns``7(System.Func{``0,``1,``2,``3,``4,``5,``6})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -606,7 +606,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__8_System_Func___0___1___2___3___4___5___6___7__" data-uid="StaticMock.Mocks.IFuncMock.Returns``8(System.Func{``0,``1,``2,``3,``4,``5,``6,``7})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -661,7 +661,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 
   <h3 id="StaticMock_Mocks_IFuncMock_Returns__9_System_Func___0___1___2___3___4___5___6___7___8__" data-uid="StaticMock.Mocks.IFuncMock.Returns``9(System.Func{``0,``1,``2,``3,``4,``5,``6,``7,``8})">
   Returns&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue&gt;(Func&lt;TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TReturnValue&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -718,7 +718,7 @@ Interface IFuncMock  <a class="header-action link-secondary" title="View source"
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock/Mocks/IFuncMock.cs/#L5" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SvetlovA/static-mock/blob/NativeDetour-Support/src/StaticMock/Mocks/IFuncMock.cs/#L5" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -241,30 +241,55 @@ references:
   isSpec: "True"
   fullName: StaticMock.Entities.SetupProperties.MethodParametersTypes
   nameWithType: SetupProperties.MethodParametersTypes
-- uid: StaticMock.Hooks.HookBuilders.Entities
-  name: StaticMock.Hooks.HookBuilders.Entities
-  href: api/StaticMock.Hooks.HookBuilders.Entities.html
-  commentId: N:StaticMock.Hooks.HookBuilders.Entities
-  fullName: StaticMock.Hooks.HookBuilders.Entities
-  nameWithType: StaticMock.Hooks.HookBuilders.Entities
-- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType
+- uid: StaticMock.HookBuilders.Entities
+  name: StaticMock.HookBuilders.Entities
+  href: api/StaticMock.HookBuilders.Entities.html
+  commentId: N:StaticMock.HookBuilders.Entities
+  fullName: StaticMock.HookBuilders.Entities
+  nameWithType: StaticMock.HookBuilders.Entities
+- uid: StaticMock.HookBuilders.Entities.HookMethodType
   name: HookMethodType
-  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html
-  commentId: T:StaticMock.Hooks.HookBuilders.Entities.HookMethodType
-  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType
+  href: api/StaticMock.HookBuilders.Entities.HookMethodType.html
+  commentId: T:StaticMock.HookBuilders.Entities.HookMethodType
+  fullName: StaticMock.HookBuilders.Entities.HookMethodType
   nameWithType: HookMethodType
-- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
+- uid: StaticMock.HookBuilders.Entities.HookMethodType.Instance
   name: Instance
-  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html#StaticMock_Hooks_HookBuilders_Entities_HookMethodType_Instance
-  commentId: F:StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
-  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Instance
+  href: api/StaticMock.HookBuilders.Entities.HookMethodType.html#StaticMock_HookBuilders_Entities_HookMethodType_Instance
+  commentId: F:StaticMock.HookBuilders.Entities.HookMethodType.Instance
+  fullName: StaticMock.HookBuilders.Entities.HookMethodType.Instance
   nameWithType: HookMethodType.Instance
-- uid: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
+- uid: StaticMock.HookBuilders.Entities.HookMethodType.Static
   name: Static
-  href: api/StaticMock.Hooks.HookBuilders.Entities.HookMethodType.html#StaticMock_Hooks_HookBuilders_Entities_HookMethodType_Static
-  commentId: F:StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
-  fullName: StaticMock.Hooks.HookBuilders.Entities.HookMethodType.Static
+  href: api/StaticMock.HookBuilders.Entities.HookMethodType.html#StaticMock_HookBuilders_Entities_HookMethodType_Static
+  commentId: F:StaticMock.HookBuilders.Entities.HookMethodType.Static
+  fullName: StaticMock.HookBuilders.Entities.HookMethodType.Static
   nameWithType: HookMethodType.Static
+- uid: StaticMock.Hooks.Factories
+  name: StaticMock.Hooks.Factories
+  href: api/StaticMock.Hooks.Factories.html
+  commentId: N:StaticMock.Hooks.Factories
+  fullName: StaticMock.Hooks.Factories
+  nameWithType: StaticMock.Hooks.Factories
+- uid: StaticMock.Hooks.Factories.IHookFactory
+  name: IHookFactory
+  href: api/StaticMock.Hooks.Factories.IHookFactory.html
+  commentId: T:StaticMock.Hooks.Factories.IHookFactory
+  fullName: StaticMock.Hooks.Factories.IHookFactory
+  nameWithType: IHookFactory
+- uid: StaticMock.Hooks.Factories.IHookFactory.CreateHook(System.Reflection.MethodInfo)
+  name: CreateHook(MethodInfo)
+  href: api/StaticMock.Hooks.Factories.IHookFactory.html#StaticMock_Hooks_Factories_IHookFactory_CreateHook_System_Reflection_MethodInfo_
+  commentId: M:StaticMock.Hooks.Factories.IHookFactory.CreateHook(System.Reflection.MethodInfo)
+  fullName: StaticMock.Hooks.Factories.IHookFactory.CreateHook(System.Reflection.MethodInfo)
+  nameWithType: IHookFactory.CreateHook(MethodInfo)
+- uid: StaticMock.Hooks.Factories.IHookFactory.CreateHook*
+  name: CreateHook
+  href: api/StaticMock.Hooks.Factories.IHookFactory.html#StaticMock_Hooks_Factories_IHookFactory_CreateHook_
+  commentId: Overload:StaticMock.Hooks.Factories.IHookFactory.CreateHook
+  isSpec: "True"
+  fullName: StaticMock.Hooks.Factories.IHookFactory.CreateHook
+  nameWithType: IHookFactory.CreateHook
 - uid: StaticMock.Mock
   name: Mock
   href: api/StaticMock.Mock.html
