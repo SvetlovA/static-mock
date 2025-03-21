@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using StaticMock.HookBuilders;
 using StaticMock.Hooks;
-using StaticMock.Hooks.HookBuilders;
 using StaticMock.Mocks.Throws;
 
 namespace StaticMock.Mocks.Implementation.Sequential;

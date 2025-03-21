@@ -394,4 +394,68 @@ public class MockThrowsTests
 
         Assert.Throws<Exception>(() => TestStaticClass.TestMethodReturn1WithoutParameters(), message);
     }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeUtcNow()
+    {
+        using var _ = Mock.Setup(context => DateTime.UtcNow)
+            .Throws(typeof(Exception));
+
+        Assert.Throws<Exception>(() =>
+        {
+            var x = DateTime.UtcNow;
+        });
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeNow()
+    {
+        using var _ = Mock.Setup(context => DateTime.Now)
+            .Throws(typeof(Exception));
+
+        Assert.Throws<Exception>(() =>
+        {
+            var x = DateTime.Now;
+        });
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeProperty()
+    {
+        using var _ = Mock.Setup(context => TestStaticClass.UnsafeProperty)
+            .Throws(typeof(Exception));
+        Assert.Throws<Exception>(() =>
+        {
+            var x = TestStaticClass.UnsafeProperty;
+        });
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeMethod()
+    {
+        using var _ = Mock.Setup(context => TestStaticClass.TestUnsafeStaticMethod())
+            .Throws(typeof(Exception));
+        Assert.Throws<Exception>(() => TestStaticClass.TestUnsafeStaticMethod());
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeProperty()
+    {
+        var instance = new TestInstance();
+        using var _ = Mock.Setup(context => instance.UnsafeProperty)
+            .Throws(typeof(Exception));
+        Assert.Throws<Exception>(() =>
+        {
+            var x = instance.UnsafeProperty;
+        });
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeMethod()
+    {
+        var instance = new TestInstance();
+        using var _ = Mock.Setup(context => instance.TestUnsafeInstanceMethod())
+            .Throws(typeof(Exception));
+        Assert.Throws<Exception>(() => instance.TestUnsafeInstanceMethod());
+    }
 }

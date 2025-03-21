@@ -395,11 +395,46 @@ public class GenericSetupMockCallbackTests
         using var _ = Mock.Setup(context => TestStaticClass.TestVoidMethodWithParameters(context.It.IsAny<int>(), context.It.IsAny<string>())).Callback(() =>
         {
             executed = true;
-            ClassicAssert.Pass("Method executed");
+            Assert.Pass("Method executed");
         });
 
         TestStaticClass.TestVoidMethodWithParameters(parameter1, parameter2);
 
         ClassicAssert.IsTrue(executed);
+    }
+
+    [Test]
+    public void TestGenericSetupVoidUnsafeStaticMethod()
+    {
+        TestStaticClass.TestUnsafeStaticVoidMethod();
+        var executed = false;
+
+        using var _ = Mock.Setup(context => TestStaticClass.TestUnsafeStaticVoidMethod()).Callback(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+        });
+
+        TestStaticClass.TestUnsafeStaticVoidMethod();
+
+        Assert.That(executed, Is.True);
+    }
+    
+    [Test]
+    public void TestGenericSetupVoidUnsafeInstanceMethod()
+    {
+        var instance = new TestInstance();
+        instance.TestUnsafeInstanceVoidMethod();
+        var executed = false;
+
+        using var _ = Mock.Setup(context => instance.TestUnsafeInstanceVoidMethod()).Callback(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+        });
+
+        instance.TestUnsafeInstanceVoidMethod();
+
+        Assert.That(executed, Is.True);
     }
 }

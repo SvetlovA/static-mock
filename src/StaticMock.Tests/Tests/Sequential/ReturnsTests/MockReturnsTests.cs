@@ -1051,4 +1051,86 @@ public class MockReturnsTests
         ClassicAssert.IsTrue(executed);
         ClassicAssert.AreEqual(parameter1, originalResult);
     }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeUtcNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.SetupProperty(typeof(DateTime), nameof(DateTime.UtcNow))
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.UtcNow, Is.EqualTo(expectedDate));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsDateTimeNow()
+    {
+        var expectedDate = new DateTime(2020, 4, 5);
+        
+        using var _ = Mock.SetupProperty(typeof(DateTime), nameof(DateTime.Now))
+            .Returns(expectedDate);
+
+        Assert.That(DateTime.Now, Is.EqualTo(expectedDate));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeProperty()
+    {
+        const int expectedValue = 2;
+
+        using (var _ = Mock.SetupProperty(typeof(TestStaticClass), nameof(TestStaticClass.UnsafeProperty))
+                   .Returns(expectedValue))
+        {
+            Assert.That(TestStaticClass.UnsafeProperty, Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(TestStaticClass.UnsafeProperty, Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsStaticUnsafeMethod()
+    {
+        const int expectedValue = 2;
+
+        using (var _ = Mock.Setup(typeof(TestStaticClass), nameof(TestStaticClass.TestUnsafeStaticMethod))
+                   .Returns(expectedValue))
+        {
+            Assert.That(TestStaticClass.TestUnsafeStaticMethod(), Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(TestStaticClass.TestUnsafeStaticMethod(), Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeProperty()
+    {
+        const int expectedValue = 2;
+
+        var instance = new TestInstance();
+
+        using (var _ = Mock.SetupProperty(instance.GetType(), nameof(instance.UnsafeProperty), new SetupProperties {  Instance = instance })
+                   .Returns(expectedValue))
+        {
+            Assert.That(instance.UnsafeProperty, Is.EqualTo(expectedValue));
+        }
+        
+        Assert.That(instance.UnsafeProperty, Is.Not.EqualTo(expectedValue));
+    }
+    
+    [Test]
+    public void TestGenericSetupReturnsInstanceUnsafeMethod()
+    {
+        const int expectedValue = 2;
+        
+        var instance = new TestInstance();
+
+        using (var _ = Mock.Setup(typeof(TestInstance), nameof(instance.TestUnsafeInstanceMethod), new SetupProperties { Instance = instance })
+                   .Returns(expectedValue))
+        {
+            Assert.That(instance.TestUnsafeInstanceMethod(), Is.EqualTo(expectedValue));
+        }
+
+        Assert.That(instance.TestUnsafeInstanceMethod, Is.Not.EqualTo(expectedValue));
+    }
 }

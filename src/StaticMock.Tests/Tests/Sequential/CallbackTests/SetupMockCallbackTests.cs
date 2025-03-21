@@ -469,4 +469,39 @@ public class SetupMockCallbackTests
 
         ClassicAssert.IsTrue(executed);
     }
+    
+    [Test]
+    public void TestGenericSetupVoidUnsafeStaticMethod()
+    {
+        TestStaticClass.TestUnsafeStaticVoidMethod();
+        var executed = false;
+
+        using var _ = Mock.SetupAction(typeof(TestStaticClass), nameof(TestStaticClass.TestUnsafeStaticVoidMethod)).Callback(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+        });
+
+        TestStaticClass.TestUnsafeStaticVoidMethod();
+
+        Assert.That(executed, Is.True);
+    }
+    
+    [Test]
+    public void TestGenericSetupVoidUnsafeInstanceMethod()
+    {
+        var instance = new TestInstance();
+        instance.TestUnsafeInstanceVoidMethod();
+        var executed = false;
+
+        using var _ = Mock.SetupAction(instance.GetType(), nameof(instance.TestUnsafeInstanceVoidMethod), new SetupProperties { Instance = instance }).Callback(() =>
+        {
+            executed = true;
+            Assert.Pass("Method executed");
+        });
+
+        instance.TestUnsafeInstanceVoidMethod();
+
+        Assert.That(executed, Is.True);
+    }
 }

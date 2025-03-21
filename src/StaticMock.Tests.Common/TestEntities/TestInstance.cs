@@ -57,6 +57,30 @@ public class TestInstance : IEquatable<TestInstance>
     {
         return Task.FromResult(1);
     }
+    
+    public unsafe int TestUnsafeInstanceMethod()
+    {
+        int* x = stackalloc int[2];
+        var y = &x;
+        return 0;
+    }
+
+    public unsafe int UnsafeProperty
+    {
+        get
+        {
+            int* x = stackalloc int[2];
+            var y = &x;
+            return 0;
+        }
+        set { }
+    }
+
+    public unsafe void TestUnsafeInstanceVoidMethod()
+    {
+        int* x = stackalloc int[2];
+        var y = &x;
+    }
 
     private int PrivateIntProperty { get; set; }
     private object PrivateObjectProperty { get; set; }
