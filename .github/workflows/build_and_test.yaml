@@ -15,7 +15,11 @@ jobs:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: windows-latest
-  buildAndTestMac:
+  buildAndTestMac-x86_64:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: macos-13
+  buildAndTestMac-arm64:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: macos-latest
