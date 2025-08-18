@@ -8,7 +8,7 @@ jobs:
     needs: buildAndTest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Pack
         run: dotnet pack --configuration Release --output packages src/StaticMock/StaticMock.csproj
       - uses: actions/upload-artifact@v4
