@@ -29,6 +29,7 @@ jobs:
         dotnet-version: |
           8.0.x
           9.0.x
+          10.0.x
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
@@ -42,6 +43,7 @@ jobs:
       run: |
         dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
         dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net9.0/testResults.trx"
+        dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net10.0/testResults.trx"
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v2
