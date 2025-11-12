@@ -295,10 +295,21 @@ Mock.Setup(() => MyClass.Process(It.IsAny<string>())).Returns("result");
 
 ## What's Next?
 
-Ready to dive deeper? Check out our comprehensive guides:
+Ready to dive deeper? Explore our comprehensive documentation:
 
+### 🚀 **Getting Started**
 - **[Getting Started Guide](articles/getting-started.md)** - Detailed walkthrough with examples
+- **[Testing Framework Integration](articles/framework-integration.md)** - NUnit, xUnit, MSTest, and more
+
+### 📚 **Advanced Topics**
+- **[Advanced Usage Patterns](articles/advanced-patterns.md)** - Complex scenarios and best practices
+- **[Real-World Examples](articles/real-world-examples.md)** - Enterprise case studies and practical examples
+- **[Performance Guide](articles/performance-guide.md)** - Optimization strategies and benchmarks
+
+### 🛠️ **Reference & Support**
 - **[API Reference](api/index.md)** - Complete API documentation
+- **[Migration Guide](articles/migration-guide.md)** - Upgrading and switching from other frameworks
+- **[Troubleshooting & FAQ](articles/troubleshooting.md)** - Solutions to common issues
 
 ---
 

@@ -720,10 +720,28 @@ When you encounter issues:
 
 ## Next Steps
 
-Now that you understand the basics of SMock, explore these resources:
+Now that you understand the basics of SMock, continue your journey with these comprehensive guides:
 
-- **[API Reference](../api/index.md)** - Complete API documentation
-- **[GitHub Repository](https://github.com/SvetlovA/static-mock)** - Source code, examples, and community
+### 🚀 **Level Up Your Skills**
+- **[Advanced Usage Patterns](advanced-patterns.md)** - Complex mock scenarios, state management, and composition patterns
+- **[Testing Framework Integration](framework-integration.md)** - Deep integration with NUnit, xUnit, MSTest, and CI/CD pipelines
+- **[Real-World Examples & Case Studies](real-world-examples.md)** - Enterprise scenarios, legacy modernization, and practical applications
+
+### 🛠️ **Optimization & Troubleshooting**
+- **[Performance Guide & Benchmarks](performance-guide.md)** - Optimization strategies, benchmarking, and scaling considerations
+- **[Troubleshooting & FAQ](troubleshooting.md)** - Solutions to common issues, diagnostic tools, and community support
+- **[Migration Guide](migration-guide.md)** - Upgrading between versions and switching from other mocking frameworks
+
+### 📚 **Reference Materials**
+- **[API Reference](../api/index.md)** - Complete API documentation with detailed method signatures
+- **[GitHub Repository](https://github.com/SvetlovA/static-mock)** - Source code, issue tracking, and community discussions
 - **[NuGet Package](https://www.nuget.org/packages/SMock)** - Latest releases and version history
+
+### 💡 **Quick Navigation by Use Case**
+- **New to mocking?** Start with [Advanced Usage Patterns](advanced-patterns.md) for more examples
+- **Enterprise developer?** Check out [Real-World Examples](real-world-examples.md) for case studies
+- **Performance concerns?** Visit [Performance Guide](performance-guide.md) for optimization strategies
+- **Having issues?** Go to [Troubleshooting & FAQ](troubleshooting.md) for solutions
+- **Migrating from another framework?** See [Migration Guide](migration-guide.md) for guidance
 
 Happy testing with SMock! 🚀

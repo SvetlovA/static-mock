@@ -1,2 +1,14 @@
 - name: Getting Started
   href: getting-started.md
+- name: Advanced Usage Patterns
+  href: advanced-patterns.md
+- name: Testing Framework Integration
+  href: framework-integration.md
+- name: Real-World Examples & Case Studies
+  href: real-world-examples.md
+- name: Performance Guide & Benchmarks
+  href: performance-guide.md
+- name: Migration Guide
+  href: migration-guide.md
+- name: Troubleshooting & FAQ
+  href: troubleshooting.md
