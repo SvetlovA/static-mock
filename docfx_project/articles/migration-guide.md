@@ -365,7 +365,7 @@ public class SMockMigrationValidation
             .Returns(new DateTime(2024, 1, 1));
 
         var result = DateTime.Now;
-        Assert.AreEqual(new DateTime(2024, 1, 1), result);
+        ClassicAssert.AreEqual(new DateTime(2024, 1, 1), result);
     }
 
     [Test]
@@ -375,7 +375,7 @@ public class SMockMigrationValidation
             .Returns("test content");
 
         var result = File.ReadAllText("any-file.txt");
-        Assert.AreEqual("test content", result);
+        ClassicAssert.AreEqual("test content", result);
     }
 
     [Test]
@@ -385,7 +385,7 @@ public class SMockMigrationValidation
             .Returns(Task.CompletedTask);
 
         await Task.Delay(1000); // Should complete immediately
-        Assert.Pass("Async mocking works correctly");
+        ClassicAssert.Pass("Async mocking works correctly");
     }
 
     [Test]
@@ -397,7 +397,7 @@ public class SMockMigrationValidation
             .Callback<string>(_ => callbackExecuted = true);
 
         Console.WriteLine("test");
-        Assert.IsTrue(callbackExecuted);
+        ClassicAssert.IsTrue(callbackExecuted);
     }
 }
 ```
@@ -426,3 +426,28 @@ After successful migration:
 - **Training**: Share new features and patterns with your team
 
 This migration guide should help you smoothly transition between SMock versions and from other mocking frameworks. For additional support, consult the [troubleshooting guide](troubleshooting.md).
+
+## Working Migration Examples
+
+The migration examples shown in this guide are based on actual working test cases. You can find complete, debugged migration examples in the SMock test suite:
+
+- **[Migration Examples](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/MigrationGuide/MigrationExamples.cs)** - `src/StaticMock.Tests/Tests/Examples/MigrationGuide/MigrationExamples.cs`
+
+These examples demonstrate:
+- **Current working syntax** - All examples compile and pass tests with the latest SMock version
+- **Best practices** - Proper usage patterns for both Sequential and Hierarchical APIs
+- **Real-world scenarios** - Practical migration patterns you can copy and adapt
+- **Parameter matching** - Up-to-date syntax for `It.IsAny<T>()` and other matchers
+
+### Running Migration Examples
+
+```bash
+# Navigate to the src directory
+cd src
+
+# Run the migration examples specifically
+dotnet test --filter "ClassName=MigrationExamples"
+
+# Or run all example tests
+dotnet test --filter "FullyQualifiedName~Examples"
+```

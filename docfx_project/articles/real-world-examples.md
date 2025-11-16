@@ -963,3 +963,29 @@ public class MultiTenantDataAccessTests
 ```
 
 This comprehensive guide demonstrates how SMock enables testing of complex, real-world applications with multiple external dependencies, ensuring reliable and maintainable test suites.
+
+## Working Real-World Examples
+
+The real-world examples shown in this guide are based on actual working test cases. You can find complete, debugged examples in the SMock test suite:
+
+- **[Enterprise Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs`
+
+These examples demonstrate:
+- **Financial trading system** - Risk calculation with market data mocking and compliance validation
+- **Legacy code modernization** - File processing with complex dependency chains
+- **Web API order processing** - Complete e-commerce flow with payment, inventory, and shipping
+- **Document management** - File system operations with virus scanning and metadata extraction
+- **Multi-tenant data access** - Database isolation and security testing
+
+### Running Real-World Examples
+
+```bash
+# Navigate to the src directory
+cd src
+
+# Run the real-world examples specifically
+dotnet test --filter "ClassName=EnterpriseScenarios"
+
+# Or run all example tests
+dotnet test --filter "FullyQualifiedName~Examples"
+```

@@ -736,3 +736,32 @@ public class ComprehensiveSMockBenchmark
 ```
 
 This performance guide provides comprehensive insights into SMock's performance characteristics and optimization strategies. Use these benchmarks and techniques to ensure your tests run efficiently at scale.
+
+## Working Performance Examples
+
+The performance tests and benchmarks shown in this guide are based on actual working test cases. You can find complete, debugged examples in the SMock test suite:
+
+- **[Performance Tests](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs)** - `src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs`
+
+These examples demonstrate:
+- **Mock setup performance** - Measuring creation time for different mock types
+- **Runtime overhead** - Comparing mocked vs unmocked method execution
+- **Memory efficiency** - Testing memory usage patterns and cleanup
+- **Scalability testing** - Performance characteristics with multiple mocks
+- **Parameter matching optimization** - Comparing different matching strategies
+
+### Running Performance Examples
+
+```bash
+# Navigate to the src directory
+cd src
+
+# Run the performance examples specifically
+dotnet test --filter "ClassName=PerformanceTests"
+
+# Run with detailed output for performance metrics
+dotnet test --filter "ClassName=PerformanceTests" --verbosity detailed
+
+# Or run all example tests
+dotnet test --filter "FullyQualifiedName~Examples"
+```

@@ -14,18 +14,18 @@
 
 ---
 
-## ✨ Why SMock?
+## Why SMock?
 
 SMock breaks down the barriers of testing legacy code, third-party dependencies, and static APIs. Built on [MonoMod](https://github.com/MonoMod/MonoMod) runtime modification technology, SMock gives you the power to mock what others can't.
 
-- **🎯 Mock Static Methods**: The only .NET library that handles static methods seamlessly
-- **🎨 Two API Styles**: Choose Hierarchical (with validation) or Sequential (disposable) patterns
-- **⚡ Zero Configuration**: Works with your existing test frameworks (NUnit, xUnit, MSTest)
-- **🌊 Complete Feature Set**: Async/await, parameter matching, callbacks, exceptions, unsafe code
+- **Mock Static Methods**: The only .NET library that handles static methods seamlessly
+- **Two API Styles**: Choose Hierarchical (with validation) or Sequential (disposable) patterns
+- **Zero Configuration**: Works with your existing test frameworks (NUnit, xUnit, MSTest)
+- **Complete Feature Set**: Async/await, parameter matching, callbacks, exceptions, unsafe code
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Package Manager
 ```powershell
@@ -61,18 +61,18 @@ Mock.Setup(() => DateTime.Now, () =>
 
 ---
 
-## 🧠 Core Concepts
+## Core Concepts
 
-### 🔄 Hook-Based Runtime Modification
+### Hook-Based Runtime Modification
 
 SMock uses [MonoMod](https://github.com/MonoMod/MonoMod) to create **runtime hooks** that intercept method calls:
 
-- **🎯 Non-Invasive**: No source code changes required
-- **🔒 Isolated**: Each test runs in isolation
-- **⚡ Fast**: Minimal performance overhead
-- **🧹 Auto-Cleanup**: Hooks automatically removed after test completion
+- **Non-Invasive**: No source code changes required
+- **Isolated**: Each test runs in isolation
+- **Fast**: Minimal performance overhead
+- **Auto-Cleanup**: Hooks automatically removed after test completion
 
-### 🎭 Mock Lifecycle
+### Mock Lifecycle
 
 ```csharp
 // 1. Setup: Create a mock for the target method
@@ -90,11 +90,11 @@ mock.Dispose(); // Or automatic with 'using'
 
 ---
 
-## 🎨 API Styles
+## API Styles
 
 SMock provides **two distinct API patterns** to fit different testing preferences:
 
-### 🔄 Sequential API
+### Sequential API
 
 Perfect for **clean, scoped mocking** with automatic cleanup:
 
@@ -118,7 +118,7 @@ public void TestFileOperations()
 } // Mocks automatically cleaned up here
 ```
 
-### 🏗️ Hierarchical API
+### Hierarchical API
 
 Perfect for **inline validation** during mock execution:
 
@@ -148,10 +148,10 @@ public void TestDatabaseConnection()
 
 SMock is designed for **minimal performance impact**:
 
-- **🚀 Runtime Hooks**: Only active during tests
-- **⚡ Zero Production Overhead**: No dependencies in production builds
-- **🎯 Efficient Interception**: Built on MonoMod's optimized IL modification
-- **📊 Benchmarked**: Comprehensive performance testing with BenchmarkDotNet
+- **Runtime Hooks**: Only active during tests
+- **Zero Production Overhead**: No dependencies in production builds
+- **Efficient Interception**: Built on MonoMod's optimized IL modification
+- **Benchmarked**: Comprehensive performance testing with BenchmarkDotNet
 
 ### Performance Characteristics
 
@@ -164,12 +164,12 @@ SMock is designed for **minimal performance impact**:
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
-- **📖 [API Documentation](https://svetlova.github.io/static-mock/api/index.html)**
-- **📝 [More Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)**
-- **🎯 [Hierarchical API Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical)**
-- **🔄 [Sequential API Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential)**
+- **[API Documentation](https://svetlova.github.io/static-mock/api/index.html)**
+- **[More Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)**
+- **[Hierarchical API Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Hierarchical)**
+- **[Sequential API Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests/Sequential)**
 
 ---
 
@@ -183,7 +183,7 @@ This library is available under the [MIT license](https://github.com/SvetlovA/st
 
 ## 🚀 Ready to revolutionize your .NET testing?
 
-**[⚡ Get Started Now](#-installation)** | **[📚 View Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)** | **[💬 Join Discussion](https://github.com/SvetlovA/static-mock/discussions)**
+**[⚡ Get Started Now](#installation)** | **[📚 View Examples](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests/Tests)** | **[💬 Join Discussion](https://github.com/SvetlovA/static-mock/discussions)**
 
 ---
 

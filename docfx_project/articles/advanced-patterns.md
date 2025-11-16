@@ -533,3 +533,29 @@ This advanced patterns guide should help you handle complex testing scenarios ef
 ### Community Resources
 - **[GitHub Issues](https://github.com/SvetlovA/static-mock/issues)** - Report advanced pattern bugs
 - **[GitHub Discussions](https://github.com/SvetlovA/static-mock/discussions)** - Share your advanced patterns
+
+## Working Advanced Pattern Examples
+
+The advanced patterns shown in this guide are based on actual working test cases. You can find complete, debugged examples in the SMock test suite:
+
+- **[Complex Mock Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs`
+
+These examples demonstrate:
+- **Nested static calls** - Coordinating multiple mocks for complex scenarios
+- **State management patterns** - Maintaining state across mock calls
+- **Dynamic behavior** - Mocks that change behavior based on call history
+- **Conditional mocking** - Different behaviors based on parameters or environment
+- **Performance optimization** - Efficient patterns for complex test scenarios
+
+### Running Advanced Pattern Examples
+
+```bash
+# Navigate to the src directory
+cd src
+
+# Run the advanced pattern examples specifically
+dotnet test --filter "ClassName=ComplexMockScenarios"
+
+# Or run all example tests
+dotnet test --filter "FullyQualifiedName~Examples"
+```

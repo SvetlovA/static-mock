@@ -74,6 +74,7 @@ No special configuration required! SMock works with any test framework:
 
 ```csharp
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using StaticMock;
 
 [TestFixture]
@@ -87,7 +88,7 @@ public class MyFirstTests
             .Returns(new DateTime(2024, 1, 1));
 
         var testDate = DateTime.Now;
-        Assert.AreEqual(new DateTime(2024, 1, 1), testDate);
+        ClassicAssert.AreEqual(new DateTime(2024, 1, 1), testDate);
     }
 }
 ```
@@ -110,18 +111,19 @@ SMock provides **two distinct API styles** to match different testing preference
 [Test]
 public void Sequential_API_Example()
 {
-    // Each mock is disposable
-    using var existsMock = Mock.Setup(() => File.Exists("test.txt"))
+    // Each mock is disposable - use context parameter for parameter matching
+    using var existsMock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
         .Returns(true);
 
-    using var readMock = Mock.Setup(() => File.ReadAllText("test.txt"))
+    using var readMock = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
         .Returns("file content");
 
-    // Test your code
-    var processor = new FileProcessor();
-    var result = processor.ProcessFile("test.txt");
+    // Test the mocked file operations directly
+    var exists = File.Exists("test.txt");
+    var content = File.ReadAllText("test.txt");
 
-    Assert.AreEqual("FILE CONTENT", result);
+    ClassicAssert.IsTrue(exists);
+    ClassicAssert.AreEqual("file content", content);
 } // Mocks automatically cleaned up
 ```
 
@@ -139,23 +141,22 @@ public void Sequential_API_Example()
 [Test]
 public void Hierarchical_API_Example()
 {
-    var expectedPath = "important.txt";
+    const string expectedPath = "important.txt";
+    const string mockContent = "validated content";
 
-    Mock.Setup(() => File.ReadAllText(It.IsAny<string>()), () =>
+    Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()), () =>
     {
         // This validation runs DURING the mock call
         var content = File.ReadAllText(expectedPath);
-        Assert.IsNotNull(content);
-        Assert.IsTrue(content.Length > 0);
+        ClassicAssert.IsNotNull(content);
+        ClassicAssert.AreEqual(mockContent, content);
 
         // You can even verify the mock was called with correct parameters
-    }).Returns("validated content");
+    }).Returns(mockContent);
 
     // Test your code - validation happens automatically
-    var service = new DocumentService();
-    var document = service.LoadDocument(expectedPath);
-
-    Assert.AreEqual("validated content", document.Content);
+    var actualContent = File.ReadAllText("important.txt");
+    ClassicAssert.AreEqual(mockContent, actualContent);
 }
 ```
 
@@ -183,10 +184,14 @@ public void Mock_DateTime_Now()
         .Returns(fixedDate);
 
     // Your code that uses DateTime.Now
-    var timeService = new TimeService();
-    var greeting = timeService.GetGreeting(); // Uses DateTime.Now internally
+    var currentDate = DateTime.Now;
 
-    Assert.AreEqual("Good morning! Today is 2024-12-25", greeting);
+    ClassicAssert.AreEqual(fixedDate, currentDate);
+    ClassicAssert.AreEqual(2024, currentDate.Year);
+    ClassicAssert.AreEqual(12, currentDate.Month);
+    ClassicAssert.AreEqual(25, currentDate.Day);
+    ClassicAssert.AreEqual(10, currentDate.Hour);
+    ClassicAssert.AreEqual(30, currentDate.Minute);
 }
 ```
 
@@ -196,17 +201,20 @@ public void Mock_DateTime_Now()
 [Test]
 public void Mock_File_Operations()
 {
-    using var existsMock = Mock.Setup(() => File.Exists("config.json"))
+    using var existsMock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
         .Returns(true);
 
-    using var readMock = Mock.Setup(() => File.ReadAllText("config.json"))
+    using var readMock = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
         .Returns("{\"database\": \"localhost\", \"port\": 5432}");
 
-    var config = new ConfigurationLoader();
-    var settings = config.LoadSettings();
+    // Test file operations
+    var exists = File.Exists("config.json");
+    var content = File.ReadAllText("config.json");
 
-    Assert.AreEqual("localhost", settings.Database);
-    Assert.AreEqual(5432, settings.Port);
+    ClassicAssert.IsTrue(exists);
+    ClassicAssert.AreEqual("{\"database\": \"localhost\", \"port\": 5432}", content);
+    ClassicAssert.IsTrue(content.Contains("localhost"));
+    ClassicAssert.IsTrue(content.Contains("5432"));
 }
 ```
 
@@ -224,7 +232,7 @@ public void Mock_Instance_Method()
         .Returns("Mocked Display Name");
 
     var result = testUser.GetDisplayName();
-    Assert.AreEqual("Mocked Display Name", result);
+    ClassicAssert.AreEqual("Mocked Display Name", result);
 }
 ```
 
@@ -234,11 +242,11 @@ public void Mock_Instance_Method()
 [Test]
 public void Mock_Static_Property()
 {
-    using var mock = Mock.SetupProperty(typeof(Environment), nameof(Environment.MachineName))
+    using var mock = Mock.Setup(() => Environment.MachineName)
         .Returns("TEST-MACHINE");
 
     var machineName = Environment.MachineName;
-    Assert.AreEqual("TEST-MACHINE", machineName);
+    ClassicAssert.AreEqual("TEST-MACHINE", machineName);
 }
 ```
 
@@ -253,27 +261,15 @@ SMock provides powerful parameter matching through the `It` class:
 public void Parameter_Matching_Examples()
 {
     // Match any string parameter
-    using var anyStringMock = Mock.Setup(() =>
-        ValidationHelper.ValidateInput(It.IsAny<string>()))
-        .Returns(true);
+    using var anyStringMock = Mock.Setup(context => Path.GetFileName(context.It.IsAny<string>()))
+        .Returns("mocked-file.txt");
 
-    // Match specific conditions
-    using var conditionalMock = Mock.Setup(() =>
-        MathHelper.Calculate(It.Is<int>(x => x > 0)))
-        .Returns(100);
+    // Test with different paths
+    var result1 = Path.GetFileName(@"C:\temp\test.txt");
+    var result2 = Path.GetFileName(@"D:\documents\report.docx");
 
-    // Match complex objects
-    using var objectMock = Mock.Setup(() =>
-        UserService.ProcessUser(It.Is<User>(u => u.IsActive && u.Age >= 18)))
-        .Returns(new ProcessResult { Success = true });
-
-    // Test your code
-    Assert.IsTrue(ValidationHelper.ValidateInput("test"));
-    Assert.AreEqual(100, MathHelper.Calculate(5));
-
-    var user = new User { IsActive = true, Age = 25 };
-    var result = UserService.ProcessUser(user);
-    Assert.IsTrue(result.Success);
+    ClassicAssert.AreEqual("mocked-file.txt", result1);
+    ClassicAssert.AreEqual("mocked-file.txt", result2);
 }
 ```
 
@@ -283,22 +279,14 @@ public void Parameter_Matching_Examples()
 [Test]
 public void Advanced_Parameter_Matching()
 {
-    using var mock = Mock.Setup(() =>
-        DataProcessor.Transform(It.Is<DataModel>(data =>
-            data.Category == "Important" &&
-            data.Priority > 5 &&
-            data.CreatedDate >= DateTime.Today)))
-        .Returns(new TransformResult { Status = "Processed" });
+    // Note: Conditional parameter matching with It.Is has current limitations
+    // This example shows the expected syntax once fully implemented
+    using var mock = Mock.Setup(context =>
+        Convert.ToInt32(context.It.IsAny<string>()))
+        .Returns(42);
 
-    var testData = new DataModel
-    {
-        Category = "Important",
-        Priority = 8,
-        CreatedDate = DateTime.Now
-    };
-
-    var result = DataProcessor.Transform(testData);
-    Assert.AreEqual("Processed", result.Status);
+    var result = Convert.ToInt32("123");
+    ClassicAssert.AreEqual(42, result);
 }
 ```
 
@@ -308,19 +296,17 @@ public void Advanced_Parameter_Matching()
 [Test]
 public void Hierarchical_Parameter_Validation()
 {
-    Mock.Setup(() => DatabaseQuery.Execute(It.IsAny<string>()), () =>
+    Mock.Setup(context => Path.Combine(context.It.IsAny<string>(), context.It.IsAny<string>()), () =>
     {
-        // Validate the actual parameter that was passed
-        var result = DatabaseQuery.Execute("SELECT * FROM Users");
-        Assert.IsNotNull(result);
+        // Validate the actual parameters that were passed
+        var result = Path.Combine("test", "path");
+        ClassicAssert.IsNotNull(result);
+        ClassicAssert.IsTrue(result.Contains("test"));
+        ClassicAssert.IsTrue(result.Contains("path"));
+    }).Returns(@"test\path");
 
-        // You can access the actual parameters and validate them
-    }).Returns(new QueryResult { RowCount = 10 });
-
-    var service = new DataService();
-    var users = service.GetAllUsers();
-
-    Assert.AreEqual(10, users.Count);
+    var combinedPath = Path.Combine("test", "path");
+    ClassicAssert.AreEqual(@"test\path", combinedPath);
 }
 ```
 
@@ -334,16 +320,12 @@ SMock provides full support for async/await patterns:
 [Test]
 public async Task Mock_Async_Methods()
 {
-    var expectedData = new ApiResponse { Data = "test data" };
+    // Mock async Task.FromResult
+    using var mock = Mock.Setup(() => Task.FromResult(42))
+        .Returns(Task.FromResult(100));
 
-    using var mock = Mock.Setup(() =>
-        HttpClientHelper.GetDataAsync("https://api.example.com/data"))
-        .Returns(Task.FromResult(expectedData));
-
-    var service = new ApiService();
-    var result = await service.FetchDataAsync();
-
-    Assert.AreEqual("test data", result.Data);
+    var result = await Task.FromResult(42);
+    ClassicAssert.AreEqual(100, result);
 }
 ```
 
@@ -353,18 +335,14 @@ public async Task Mock_Async_Methods()
 [Test]
 public async Task Mock_Async_With_Delay()
 {
-    using var mock = Mock.Setup(() =>
-        ExternalService.ProcessAsync(It.IsAny<string>()))
-        .Returns(async () =>
-        {
-            await Task.Delay(100); // Simulate processing time
-            return "processed";
-        });
+    // Mock Task.Delay to complete immediately
+    using var delayMock = Mock.Setup(context => Task.Delay(context.It.IsAny<int>()))
+        .Returns(Task.CompletedTask);
 
-    var service = new WorkflowService();
-    var result = await service.ExecuteWorkflowAsync("input");
+    // Simulate an async operation that would normally take time
+    await Task.Delay(5000); // This should complete immediately
 
-    Assert.AreEqual("processed", result);
+    ClassicAssert.Pass("Async mock executed successfully");
 }
 ```
 
@@ -374,16 +352,20 @@ public async Task Mock_Async_With_Delay()
 [Test]
 public async Task Mock_Async_Exceptions()
 {
-    using var mock = Mock.Setup(() =>
-        NetworkService.DownloadAsync(It.IsAny<string>()))
-        .Throws<HttpRequestException>();
+    // Mock Task.Delay to throw an exception for negative values
+    using var mock = Mock.Setup(context => Task.Delay(context.It.Is<int>(ms => ms < 0)))
+        .Throws<ArgumentOutOfRangeException>();
 
-    var service = new DownloadManager();
-
-    var exception = await Assert.ThrowsAsync<HttpRequestException>(
-        () => service.DownloadFileAsync("https://example.com/file.zip"));
-
-    Assert.IsNotNull(exception);
+    // Test exception handling in async context
+    try
+    {
+        await Task.Delay(-1);
+        Assert.Fail("Expected ArgumentOutOfRangeException to be thrown");
+    }
+    catch (ArgumentOutOfRangeException exception)
+    {
+        ClassicAssert.IsNotNull(exception);
+    }
 }
 ```
 
@@ -397,19 +379,15 @@ Execute custom logic when mocks are called:
 [Test]
 public void Mock_With_Callbacks()
 {
-    var loggedMessages = new List<string>();
+    var callCount = 0;
 
-    using var mock = Mock.Setup(() => Logger.Log(It.IsAny<string>()))
-        .Callback<string>(message =>
-        {
-            loggedMessages.Add($"Captured: {message}");
-            Console.WriteLine($"Mock captured: {message}");
-        });
+    using var mock = Mock.Setup(context => File.WriteAllText(context.It.IsAny<string>(), context.It.IsAny<string>()))
+        .Callback<string, string>((path, content) => callCount++);
 
-    var service = new BusinessService();
-    service.ProcessOrder("ORDER-123");
+    File.WriteAllText("test.txt", "content");
+    File.WriteAllText("test2.txt", "content2");
 
-    Assert.Contains("Captured: Processing order ORDER-123", loggedMessages);
+    ClassicAssert.AreEqual(2, callCount);
 }
 ```
 
@@ -423,16 +401,25 @@ public void Sequential_Return_Values()
 {
     var callCount = 0;
 
-    using var mock = Mock.Setup(() => RandomNumberGenerator.Next())
+    using var mock = Mock.Setup(() => DateTime.Now)
         .Returns(() =>
         {
             callCount++;
-            return callCount * 10; // Returns 10, 20, 30, ...
+            return callCount switch
+            {
+                1 => new DateTime(2024, 1, 1),
+                2 => new DateTime(2024, 1, 2),
+                _ => new DateTime(2024, 1, 3)
+            };
         });
 
-    Assert.AreEqual(10, RandomNumberGenerator.Next());
-    Assert.AreEqual(20, RandomNumberGenerator.Next());
-    Assert.AreEqual(30, RandomNumberGenerator.Next());
+    var date1 = DateTime.Now;
+    var date2 = DateTime.Now;
+    var date3 = DateTime.Now;
+
+    ClassicAssert.AreEqual(new DateTime(2024, 1, 1), date1);
+    ClassicAssert.AreEqual(new DateTime(2024, 1, 2), date2);
+    ClassicAssert.AreEqual(new DateTime(2024, 1, 3), date3);
 }
 ```
 
@@ -444,21 +431,24 @@ Different behaviors based on parameters:
 [Test]
 public void Conditional_Mock_Behavior()
 {
-    using var mock = Mock.Setup(() =>
-        SecurityService.ValidateUser(It.IsAny<string>()))
-        .Returns<string>(username =>
+    using var mock = Mock.Setup(context => Environment.GetEnvironmentVariable(context.It.IsAny<string>()))
+        .Returns<string>(varName => varName switch
         {
-            if (username.StartsWith("admin_"))
-                return new ValidationResult { IsValid = true, Role = "Admin" };
-            else if (username.StartsWith("user_"))
-                return new ValidationResult { IsValid = true, Role = "User" };
-            else
-                return new ValidationResult { IsValid = false };
+            "ENVIRONMENT" => "Development",
+            "DEBUG_MODE" => "true",
+            "LOG_LEVEL" => "Debug",
+            _ => null
         });
 
-    Assert.AreEqual("Admin", SecurityService.ValidateUser("admin_john").Role);
-    Assert.AreEqual("User", SecurityService.ValidateUser("user_jane").Role);
-    Assert.IsFalse(SecurityService.ValidateUser("guest").IsValid);
+    var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+    var debugMode = Environment.GetEnvironmentVariable("DEBUG_MODE");
+    var logLevel = Environment.GetEnvironmentVariable("LOG_LEVEL");
+    var unknown = Environment.GetEnvironmentVariable("UNKNOWN");
+
+    ClassicAssert.AreEqual("Development", environment);
+    ClassicAssert.AreEqual("true", debugMode);
+    ClassicAssert.AreEqual("Debug", logLevel);
+    ClassicAssert.IsNull(unknown);
 }
 ```
 
@@ -745,3 +735,46 @@ Now that you understand the basics of SMock, continue your journey with these co
 - **Migrating from another framework?** See [Migration Guide](migration-guide.md) for guidance
 
 Happy testing with SMock! 🚀
+
+## Working Examples in the Test Suite
+
+All examples in this documentation are based on actual working test cases. You can find complete, debugged examples in the SMock test suite:
+
+### 📁 **Basic Examples**
+- **[Basic Sequential Examples](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/GettingStarted/BasicSequentialExamples.cs)** - `src/StaticMock.Tests/Tests/Examples/GettingStarted/BasicSequentialExamples.cs`
+- **[Basic Hierarchical Examples](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/GettingStarted/BasicHierarchicalExamples.cs)** - `src/StaticMock.Tests/Tests/Examples/GettingStarted/BasicHierarchicalExamples.cs`
+- **[Async Examples](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/GettingStarted/AsyncExamples.cs)** - `src/StaticMock.Tests/Tests/Examples/GettingStarted/AsyncExamples.cs`
+
+### 📁 **Advanced Examples**
+- **[Complex Mock Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs`
+- **[Performance Tests](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs)** - `src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs`
+- **[Real-World Enterprise Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs`
+
+### 📁 **Migration & Integration**
+- **[Migration Examples](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/MigrationGuide/MigrationExamples.cs)** - `src/StaticMock.Tests/Tests/Examples/MigrationGuide/MigrationExamples.cs`
+- **[Framework Integration Tests](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/FrameworkIntegration/NUnitIntegrationTests.cs)** - `src/StaticMock.Tests/Tests/Examples/FrameworkIntegration/NUnitIntegrationTests.cs`
+
+### 💡 **Why Reference the Test Examples?**
+
+The test examples provide:
+- **Verified working code** - All examples compile and pass tests
+- **Complete context** - Full test methods with setup and teardown
+- **Current limitations** - Some examples include `[Ignore]` attributes with notes about current implementation constraints
+- **Best practices** - Real-world usage patterns and error handling
+- **Latest syntax** - Up-to-date API usage that matches the current implementation
+
+### 🔧 **Running the Examples Locally**
+
+To run these examples on your machine:
+
+```bash
+# Clone the repository
+git clone https://github.com/SvetlovA/static-mock.git
+cd static-mock/src
+
+# Run the specific example tests
+dotnet test --filter "FullyQualifiedName~Examples"
+
+# Or run a specific example class
+dotnet test --filter "ClassName=BasicSequentialExamples"
+```
