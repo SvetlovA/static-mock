@@ -90,9 +90,6 @@ public class EnterpriseScenarios
     }
 
     [Test]
-#if NETFRAMEWORK
-    [Ignore("Web API order processing flow test is not supported on .NET Framework. Environment.TickCount has NotSupported in StaticMock for .NET Framework (Body-less method).")]
-#endif
     public void Web_API_Order_Processing_Flow()
     {
         // Arrange: Set up comprehensive mocking for order processing
@@ -110,7 +107,8 @@ public class EnterpriseScenarios
             .Returns(118.77m);
 
         // Mock environment for payment processing simulation
-        using var paymentMock = Mock.Setup(() => Environment.TickCount)
+        var random = new Random();
+        using var paymentMock = Mock.Setup(() => random.Next())
             .Returns(123); // Mock successful payment (odd number indicates success)
 
         // Mock order persistence
@@ -128,7 +126,7 @@ public class EnterpriseScenarios
         // Act: Process the order
         var inventoryAvailable = File.Exists($"inventory_{testOrderId}.json");
         var totalPrice = Math.Round(109.97m + 8.80m, 2);
-        var paymentResult = Environment.TickCount;
+        var paymentResult = random.Next();
         var paymentSuccessful = paymentResult % 2 == 1;
 
         if (inventoryAvailable && paymentSuccessful)
