@@ -46,17 +46,19 @@ public class BasicHierarchicalExamples
     [Test]
     public void Hierarchical_Parameter_Validation()
     {
+        var expectedPath = Path.Combine("expected", "path");
+        var actualPath = Path.Combine("actual", "path");
+        
         Mock.Setup(context => Path.Combine(context.It.IsAny<string>(), context.It.IsAny<string>()), () =>
         {
             // Validate the actual parameters that were passed
             var result = Path.Combine("test", "path");
             ClassicAssert.IsNotNull(result);
-            ClassicAssert.IsTrue(result.Contains("test"));
-            ClassicAssert.IsTrue(result.Contains("path"));
-        }).Returns(@"test\path");
+            ClassicAssert.AreEqual(expectedPath, result);
+        }).Returns(expectedPath);
 
-        var combinedPath = Path.Combine("test", "path");
-        ClassicAssert.AreEqual(@"test\path", combinedPath);
+        var combinedPath = Path.Combine("actual", "path");
+        ClassicAssert.AreEqual(actualPath, combinedPath);
     }
 
     [Test]
