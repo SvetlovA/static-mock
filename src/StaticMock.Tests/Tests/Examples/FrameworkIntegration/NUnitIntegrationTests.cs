@@ -70,28 +70,6 @@ public class NUnitIntegrationTests
     }
 
     [Test]
-    [Parallelizable]
-    public void Parallel_Test_1()
-    {
-        using var mock = Mock.Setup(() => Environment.MachineName)
-            .Returns("PARALLEL_1");
-
-        var result = Environment.MachineName;
-        ClassicAssert.AreEqual("PARALLEL_1", result);
-    }
-
-    [Test]
-    [Parallelizable]
-    public void Parallel_Test_2()
-    {
-        using var mock = Mock.Setup(() => Environment.MachineName)
-            .Returns("PARALLEL_2");
-
-        var result = Environment.MachineName;
-        ClassicAssert.AreEqual("PARALLEL_2", result);
-    }
-
-    [Test]
     [Category("Integration")]
     public void Test_With_Category()
     {

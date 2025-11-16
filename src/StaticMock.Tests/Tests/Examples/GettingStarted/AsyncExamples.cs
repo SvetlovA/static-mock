@@ -71,8 +71,8 @@ public class AsyncExamples
         const string mockResult = "async mock result";
 
         // Mock an async method that returns a value
-        using var mock = Mock.Setup(() => Task.FromResult("original"))
-            .Returns(Task.FromResult(mockResult));
+        using var mock = Mock.Setup(context => Task.FromResult(context.It.IsAny<string>()))
+            .ReturnsAsync(mockResult);
 
         var result = await Task.FromResult("original");
         ClassicAssert.AreEqual(mockResult, result);
@@ -85,8 +85,8 @@ public class AsyncExamples
         using var delayMock = Mock.Setup(context => Task.Delay(context.It.IsAny<int>()))
             .Returns(Task.CompletedTask);
 
-        using var resultMock = Mock.Setup(() => Task.FromResult(10))
-            .Returns(Task.FromResult(50));
+        using var resultMock = Mock.Setup(context => Task.FromResult(context.It.IsAny<int>()))
+            .ReturnsAsync(50);
 
         // Execute multiple async operations
         await Task.Delay(1000); // Should complete immediately
