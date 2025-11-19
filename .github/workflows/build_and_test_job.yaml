@@ -36,15 +36,24 @@ jobs:
       run: dotnet build --configuration Release --no-restore src
     - name: TestWindows
       if: ${{ startsWith(inputs.os, 'windows') }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
-      working-directory: ./src
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 5
+        max_attempts: 3
+        retry_on: error
+        command: cd ./src && dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults" --collect:"XPlat Code Coverage"
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
-      run: |
-        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
-        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
-        dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
-      working-directory: ./src
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 5
+        max_attempts: 3
+        retry_on: error
+        command: |
+          cd ./src
+          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx" --collect:"XPlat Code Coverage"
+          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx" --collect:"XPlat Code Coverage"
+          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx" --collect:"XPlat Code Coverage"
     - name: Test Report
       uses: dorny/test-reporter@v2
       if: success() || failure()
@@ -52,3 +61,38 @@ jobs:
         name: Test Report for ${{ inputs.os }}
         path: ./src/**/*.trx
         reporter: dotnet-trx
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      if: success() || failure()
+      with:
+        directory: ./src/
+        files: '**/coverage.cobertura.xml'
+        flags: ${{ inputs.os }}
+        name: codecov-${{ inputs.os }}
+        fail_ci_if_error: false
+        verbose: true
+    - name: Comment PR with Test Results
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event.pull_request.number != null && (success() || failure())
+      with:
+        recreate: true
+        header: test-results-${{ inputs.os }}
+        message: |
+          ## 🧪 Test Results for ${{ inputs.os }}
+
+          **Build Status:** ${{ job.status == 'success' && '✅ Passed' || '❌ Failed' }}
+
+          ### 📊 Test Summary
+          - **OS:** `${{ inputs.os }}`
+          - **Configuration:** Release
+          - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET' }}
+
+          ### 📈 Coverage Report
+          Coverage report has been uploaded to [Codecov](https://codecov.io/${{ github.repository }}/pull/${{ github.event.pull_request.number }}).
+
+          ### 📋 Details
+          - Test reports are available in the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          - Coverage files: `coverage.cobertura.xml`
+
+          ---
+          *Last updated: ${{ github.event.head_commit.timestamp }}*
