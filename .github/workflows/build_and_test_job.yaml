@@ -61,39 +61,79 @@ jobs:
         name: Test Report for ${{ inputs.os }}
         path: ./src/**/*.trx
         reporter: dotnet-trx
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4
+    - name: Parse Test Results
       if: success() || failure()
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./src/**/coverage.cobertura.xml
-        flags: ${{ inputs.os }}
-        name: codecov-${{ inputs.os }}
-        fail_ci_if_error: false
-        verbose: true
-        working-directory: ./
+      shell: pwsh
+      run: |
+        $trxFiles = Get-ChildItem -Path "./src" -Filter "*.trx" -Recurse
+        $totalTests = 0
+        $passedTests = 0
+        $failedTests = 0
+        $skippedTests = 0
+        $executionTime = [TimeSpan]::Zero
+
+        foreach ($file in $trxFiles) {
+          [xml]$trx = Get-Content $file.FullName
+          $ns = @{tr = 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+
+          $summary = $trx.SelectSingleNode('//tr:ResultSummary', $ns)
+          if ($summary) {
+            $outcome = $summary.SelectSingleNode('.//tr:Counters', $ns)
+            if ($outcome) {
+              $totalTests += [int]$outcome.total
+              $passedTests += [int]$outcome.passed
+              $failedTests += [int]$outcome.failed
+              $skippedTests += [int]$outcome.inconclusive + [int]$outcome.notExecuted + [int]$outcome.notRunnable
+            }
+          }
+
+          $times = $trx.SelectSingleNode('//tr:Times', $ns)
+          if ($times) {
+            $start = [DateTime]$times.start
+            $finish = [DateTime]$times.finish
+            $executionTime = $executionTime.Add($finish - $start)
+          }
+        }
+
+        # Get coverage data if available
+        $coverageFiles = Get-ChildItem -Path "./src" -Filter "coverage.cobertura.xml" -Recurse
+        $coveragePercent = "N/A"
+        if ($coverageFiles.Count -gt 0) {
+          try {
+            [xml]$coverage = Get-Content $coverageFiles[0].FullName
+            $lineRate = $coverage.coverage.'line-rate'
+            if ($lineRate) {
+              $coveragePercent = "{0:P1}" -f [double]$lineRate
+            }
+          } catch {
+            $coveragePercent = "Error reading coverage"
+          }
+        }
+
+        # Output to environment variables
+        "TEST_TOTAL=$totalTests" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "TEST_PASSED=$passedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "TEST_FAILED=$failedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "COVERAGE_PERCENT=$coveragePercent" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+        Write-Output "Test Results Summary:"
+        Write-Output "Total: $totalTests, Passed: $passedTests, Failed: $failedTests, Skipped: $skippedTests"
+        Write-Output "Duration: $($executionTime.ToString('hh\:mm\:ss'))"
+        Write-Output "Coverage: $coveragePercent"
+    - name: Read PR Comment Template
+      if: github.event.pull_request.number != null && (success() || failure())
+      id: pr-template
+      run: |
+        TEMPLATE_CONTENT=$(cat .github/templates/pr-test-results-comment-template.md)
+        echo "TEMPLATE_CONTENT<<EOF" >> $GITHUB_ENV
+        echo "$TEMPLATE_CONTENT" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
     - name: Comment PR with Test Results
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event.pull_request.number != null && (success() || failure())
       with:
         recreate: true
         header: test-results-${{ inputs.os }}
-        message: |
-          ## 🧪 Test Results for ${{ inputs.os }}
-
-          **Build Status:** ${{ job.status == 'success' && '✅ Passed' || '❌ Failed' }}
-
-          ### 📊 Test Summary
-          - **OS:** `${{ inputs.os }}`
-          - **Configuration:** Release
-          - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET' }}
-
-          ### 📈 Coverage Report
-          Coverage report has been uploaded to [Codecov](https://codecov.io/${{ github.repository }}/pull/${{ github.event.pull_request.number }}).
-
-          ### 📋 Details
-          - Test reports are available in the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - Coverage files: `coverage.cobertura.xml`
-
-          ---
-          *Last updated: ${{ github.event.head_commit.timestamp }}*
+        message: ${{ env.TEMPLATE_CONTENT }}
