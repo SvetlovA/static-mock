@@ -65,12 +65,13 @@ jobs:
       uses: codecov/codecov-action@v4
       if: success() || failure()
       with:
-        directory: ./src/
-        files: '**/coverage.cobertura.xml'
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./src/**/coverage.cobertura.xml
         flags: ${{ inputs.os }}
         name: codecov-${{ inputs.os }}
         fail_ci_if_error: false
         verbose: true
+        working-directory: ./
     - name: Comment PR with Test Results
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event.pull_request.number != null && (success() || failure())
