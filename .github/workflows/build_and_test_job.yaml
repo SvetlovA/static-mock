@@ -41,7 +41,7 @@ jobs:
         timeout_minutes: 5
         max_attempts: 3
         retry_on: error
-        command: cd ./src && dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults" --collect:"XPlat Code Coverage"
+        command: cd ./src && dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       uses: nick-fields/retry@v3
@@ -51,9 +51,9 @@ jobs:
         retry_on: error
         command: |
           cd ./src
-          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx" --collect:"XPlat Code Coverage"
-          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx" --collect:"XPlat Code Coverage"
-          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx" --collect:"XPlat Code Coverage"
+          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
+          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
+          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
     - name: Test Report
       uses: dorny/test-reporter@v2
       if: success() || failure()
@@ -98,21 +98,6 @@ jobs:
             Write-Warning "Failed to parse TRX file: $($file.FullName). Error: $_"
           }
         }
-
-        # Get coverage data if available
-        $coverageFiles = Get-ChildItem -Path "./src" -Filter "coverage.cobertura.xml" -Recurse
-        $coveragePercent = "N/A"
-        if ($coverageFiles.Count -gt 0) {
-          try {
-            [xml]$coverage = Get-Content $coverageFiles[0].FullName
-            $lineRate = $coverage.coverage.'line-rate'
-            if ($lineRate) {
-              $coveragePercent = "{0:P1}" -f [double]$lineRate
-            }
-          } catch {
-            $coveragePercent = "Error reading coverage"
-          }
-        }
         
         $passTestRate = $totalTests -gt 0
           ? "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
@@ -128,13 +113,12 @@ jobs:
         "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "PASS_TEST_RATE=$passTestRate" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "COVERAGE_PERCENT=$coveragePercent" | Out-File -FilePath $env:GITHUB_ENV -Append
         "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
 
         Write-Output "Test Results Summary:"
         Write-Output "Total: $totalTests, Passed: $passedTests, Failed: $failedTests, Skipped: $skippedTests"
+        Write-Output "Pass Rate: $passTestRate"
         Write-Output "Duration: $($executionTime.ToString('hh\:mm\:ss'))"
-        Write-Output "Coverage: $coveragePercent"
     - name: Comment PR with Test Results
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event.pull_request.number != null && (success() || failure())
@@ -154,8 +138,7 @@ jobs:
           | **❌ Failed** | ${{ env.TEST_FAILED }} |
           | **⏭️ Skipped** | ${{ env.TEST_SKIPPED }} |
           | **⏱️ Duration** | ${{ env.TEST_DURATION }}s |
-          | **📈 Coverage** | ${{ env.COVERAGE_PERCENT }} |
-          | **📊 Pass Rate** | ${{ env.PASS_TEST_RATE }} |
+          | **📈 Pass Rate** | ${{ env.PASS_TEST_RATE }} |
 
           ### 🔧 Build Information
           - **OS:** `${{ inputs.os }}`
