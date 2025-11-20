@@ -43,7 +43,7 @@ jobs:
         retry_on: error
         command: |
           cd ./src
-          dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
+          dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults" | Tee-Object -FilePath "../test_output_windows.log"
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       uses: nick-fields/retry@v3
@@ -53,9 +53,12 @@ jobs:
         retry_on: error
         command: |
           cd ./src
-          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
-          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
-          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
+          echo "Running .NET 8.0 tests..." | tee ../test_output_unix.log
+          dotnet test --framework net8.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx" | tee -a ../test_output_unix.log
+          echo "Running .NET 9.0 tests..." | tee -a ../test_output_unix.log
+          dotnet test --framework net9.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx" | tee -a ../test_output_unix.log
+          echo "Running .NET 10.0 tests..." | tee -a ../test_output_unix.log
+          dotnet test --framework net10.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx" | tee -a ../test_output_unix.log
     - name: Test Report
       uses: dorny/test-reporter@v2
       if: success() || failure()
@@ -67,93 +70,11 @@ jobs:
       if: success() || failure()
       shell: pwsh
       run: |
-        $trxFiles = Get-ChildItem -Path "./src" -Filter "*.trx" -Recurse
-        Write-Output "Found $($trxFiles.Count) TRX files:"
-        foreach ($file in $trxFiles) {
-          Write-Output "  - $($file.FullName)"
+        # Ensure script is executable on Unix systems
+        if ($IsLinux -or $IsMacOS) {
+          chmod +x .github/scripts/Parse-TestResults.ps1
         }
-
-        $totalTests = 0
-        $passedTests = 0
-        $failedTests = 0
-        $skippedTests = 0
-        $executionTime = [TimeSpan]::Zero
-
-        foreach ($file in $trxFiles) {
-          try {
-            [xml]$trx = Get-Content $file.FullName
-
-            # Use Select-Xml for namespace-aware parsing
-            $summary = Select-Xml -Xml $trx -XPath "//ns:ResultSummary" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
-            if ($summary) {
-              $counters = Select-Xml -Xml $summary.Node -XPath ".//ns:Counters" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
-              if ($counters) {
-                $node = $counters.Node
-
-                # Debug output to see all available attributes
-                Write-Output "Debug - TRX Counters for $($file.Name):"
-                foreach ($attr in $node.Attributes) {
-                  Write-Output "  $($attr.Name) = $($attr.Value)"
-                }
-
-                # Parse basic counts with null safety
-                $total = if ($node.total) { [int]$node.total } else { 0 }
-                $passed = if ($node.passed) { [int]$node.passed } else { 0 }
-                $failed = if ($node.failed) { [int]$node.failed } else { 0 }
-
-                # Parse all possible skipped test categories with null safety
-                $inconclusive = if ($node.inconclusive) { [int]$node.inconclusive } else { 0 }
-                $notExecuted = if ($node.notExecuted) { [int]$node.notExecuted } else { 0 }
-                $notRunnable = if ($node.notRunnable) { [int]$node.notRunnable } else { 0 }
-                $timeout = if ($node.timeout) { [int]$node.timeout } else { 0 }
-                $aborted = if ($node.aborted) { [int]$node.aborted } else { 0 }
-                $skipped = if ($node.skipped) { [int]$node.skipped } else { 0 }
-
-                $totalTests += $total
-                $passedTests += $passed
-                $failedTests += $failed
-
-                # Sum all types of skipped/non-executed tests
-                $currentSkipped = $inconclusive + $notExecuted + $notRunnable + $timeout + $aborted + $skipped
-                $skippedTests += $currentSkipped
-
-                Write-Output "Debug - File: $($file.Name), Total: $total, Passed: $passed, Failed: $failed, Skipped: $currentSkipped"
-              }
-            }
-
-            $times = Select-Xml -Xml $trx -XPath "//ns:Times" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
-            if ($times) {
-              $start = [DateTime]$times.Node.start
-              $finish = [DateTime]$times.Node.finish
-              $executionTime = $executionTime.Add($finish - $start)
-            }
-          } catch {
-            Write-Warning "Failed to parse TRX file: $($file.FullName). Error: $_"
-          }
-        }
-        
-        if ($totalTests -gt 0) {
-          $passTestRate = "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
-        } else {
-          $passTestRate = "No tests found"
-        }
-
-        # Generate timestamp
-        $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
-
-        # Output to environment variables
-        "TEST_TOTAL=$totalTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "TEST_PASSED=$passedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "TEST_FAILED=$failedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "PASS_TEST_RATE=$passTestRate" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-        Write-Output "Test Results Summary:"
-        Write-Output "Total: $totalTests, Passed: $passedTests, Failed: $failedTests, Skipped: $skippedTests"
-        Write-Output "Pass Rate: $passTestRate"
-        Write-Output "Duration: $($executionTime.ToString('hh\:mm\:ss'))"
+        .github/scripts/Parse-TestResults.ps1 -Debug
     - name: Comment PR with Test Results
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event.pull_request.number != null && (success() || failure())
