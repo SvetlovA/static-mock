@@ -122,7 +122,7 @@ jobs:
         "TEST_PASSED=$passedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_FAILED=$failedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "TEST_RATE=$passedTests / $totalTests" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "PASS_TEST_RATE=$totalTests > 0 && format('**{0:P1}** ({1}/{2} tests passed)', $passedTests / $totalTests, $passedTests, $totalTests) || 'No tests found'" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
         "COVERAGE_PERCENT=$coveragePercent" | Out-File -FilePath $env:GITHUB_ENV -Append
         "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
@@ -151,15 +151,13 @@ jobs:
           | **⏭️ Skipped** | ${{ env.TEST_SKIPPED }} |
           | **⏱️ Duration** | ${{ env.TEST_DURATION }}s |
           | **📈 Coverage** | ${{ env.COVERAGE_PERCENT }} |
+          | **📊 Pass Rate** | ${{ env.PASS_TEST_RATE }} |
 
           ### 🔧 Build Information
           - **OS:** `${{ inputs.os }}`
           - **Configuration:** Release
           - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET' }}
           - **Retry Attempts:** Max 3 attempts with 5min timeout
-
-          ### 📊 Success Rate
-          ${{ env.TEST_TOTAL > 0 && format('**{0:P1}** ({1}/{2} tests passed)', env.TEST_RATE, env.TEST_PASSED, env.TEST_TOTAL) || 'No tests found' }}
 
           ### 📋 Links & Resources
           - 📊 [Detailed Test Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
