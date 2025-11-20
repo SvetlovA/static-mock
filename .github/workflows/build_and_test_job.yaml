@@ -26,7 +26,7 @@ on:
         type: string
         required: true
         default: ubuntu-latest
-    configuration:
+      configuration:
         type: string
         required: false
         default: Release
