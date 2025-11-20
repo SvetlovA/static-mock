@@ -41,7 +41,9 @@ jobs:
         timeout_minutes: 5
         max_attempts: 3
         retry_on: error
-        command: cd ./src && dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
+        command: |
+          cd ./src
+          dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       uses: nick-fields/retry@v3
@@ -66,6 +68,11 @@ jobs:
       shell: pwsh
       run: |
         $trxFiles = Get-ChildItem -Path "./src" -Filter "*.trx" -Recurse
+        Write-Output "Found $($trxFiles.Count) TRX files:"
+        foreach ($file in $trxFiles) {
+          Write-Output "  - $($file.FullName)"
+        }
+
         $totalTests = 0
         $passedTests = 0
         $failedTests = 0
@@ -99,9 +106,9 @@ jobs:
           }
         }
         
-        $passTestRate = $totalTests -gt 0
+        $passTestRate = ($totalTests -gt 0
           ? "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
-          : "No tests found"
+          : "No tests found")
 
         # Generate timestamp
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
