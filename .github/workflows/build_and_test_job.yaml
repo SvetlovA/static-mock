@@ -34,6 +34,12 @@ jobs:
       run: dotnet restore src
     - name: Build
       run: dotnet build --configuration Release --no-restore src
+    - name: Clean TRX files before tests
+      shell: pwsh
+      run: |
+        # Remove any existing TRX files to ensure clean test results
+        Get-ChildItem -Path "./src" -Filter "*.trx" -Recurse -Force | Remove-Item -Force
+        Write-Host "Cleaned up existing TRX files before test run"
     - name: TestWindows
       if: ${{ startsWith(inputs.os, 'windows') }}
       uses: nick-fields/retry@v3
@@ -96,7 +102,7 @@ jobs:
           ### 🔧 Build Information
           - **OS:** `${{ inputs.os }}`
           - **Configuration:** Release
-          - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET' }}
+          - **Frameworks Tested:** `${{ env.TESTED_FRAMEWORKS }}`
           - **Retry Attempts:** Max 3 attempts with 5min timeout
 
           ### 📋 Links & Resources

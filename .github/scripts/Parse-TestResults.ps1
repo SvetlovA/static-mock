@@ -30,6 +30,7 @@ $passedTests = 0
 $failedTests = 0
 $skippedTests = 0
 $executionTime = [TimeSpan]::Zero
+$frameworkVersions = @()
 
 # Find TRX files
 $trxFiles = Get-ChildItem -Path $SourcePath -Filter "*.trx" -Recurse
@@ -77,6 +78,32 @@ foreach ($file in $trxFiles) {
             $finish = [DateTime]$times.Node.finish
             $executionTime = $executionTime.Add($finish - $start)
         }
+
+        # Extract framework version from test settings or deployment
+        $testSettings = Select-Xml -Xml $trx -XPath "//ns:TestSettings" -Namespace $namespace
+        if ($testSettings -and $testSettings.Node.deploymentRoot) {
+            $deploymentPath = $testSettings.Node.deploymentRoot
+            if ($deploymentPath -match '(net\d+\.\d+|netstandard\d+\.\d+|netframework\d+\.\d+|net\d+)') {
+                $framework = $matches[1]
+                if ($frameworkVersions -notcontains $framework) {
+                    $frameworkVersions += $framework
+                    if ($EnableDebug) {
+                        Write-Output "  Found framework: $framework"
+                    }
+                }
+            }
+        }
+
+        # Alternative: Extract from file path (for cases where deployment info isn't available)
+        if ($file.FullName -match '(net\d+\.\d+|netstandard\d+\.\d+|netframework\d+\.\d+|net\d+)') {
+            $framework = $matches[1]
+            if ($frameworkVersions -notcontains $framework) {
+                $frameworkVersions += $framework
+                if ($EnableDebug) {
+                    Write-Output "  Found framework from path: $framework"
+                }
+            }
+        }
     } catch {
         Write-Warning "Failed to parse TRX file: $($file.FullName). Error: $_"
     }
@@ -97,11 +124,19 @@ $skippedTests = $totalTests - $passedTests - $failedTests
 
 if ($EnableDebug) { Write-Output "Calculated skipped tests: $totalTests - $passedTests - $failedTests = $skippedTests" }
 
+# Format framework versions
+$testedFrameworks = if ($frameworkVersions.Count -gt 0) {
+    ($frameworkVersions | Sort-Object) -join ", "
+} else {
+    "Not detected"
+}
+
 # Output results
 Write-Output "Test Results Summary:"
 Write-Output "Total: $totalTests, Passed: $passedTests, Failed: $failedTests, Skipped: $skippedTests"
 Write-Output "Pass Rate: $passTestRate"
 Write-Output "Duration: $($executionTime.ToString('hh\:mm\:ss'))"
+Write-Output "Frameworks Tested: $testedFrameworks"
 
 # Final validation check
 if ($skippedTests -eq 0) {
@@ -122,5 +157,6 @@ if ($env:GITHUB_ENV) {
     "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
     "PASS_TEST_RATE=$passTestRate" | Out-File -FilePath $env:GITHUB_ENV -Append
     "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
+    "TESTED_FRAMEWORKS=$testedFrameworks" | Out-File -FilePath $env:GITHUB_ENV -Append
     "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
 }
