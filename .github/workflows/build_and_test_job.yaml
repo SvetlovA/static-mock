@@ -26,6 +26,10 @@ on:
         type: string
         required: true
         default: ubuntu-latest
+    configuration:
+        type: string
+        required: false
+        default: Release
 jobs:
   buildAndTest:
     runs-on: ${{ inputs.os }}
