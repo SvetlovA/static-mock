@@ -7,19 +7,44 @@ on:
   workflow_dispatch:
   workflow_call:
 jobs:
-  buildAndTestUbuntu:
+  buildAndTestUbuntuRelease:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: ubuntu-latest
-  buildAndTestWindows:
+      configuration: Release
+  buildAndTestWindowsRelease:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: windows-latest
-  buildAndTestMac-x86_64:
+      configuration: Release
+  buildAndTestMac-x86_64Release:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: macos-13
-  buildAndTestMac-arm64:
+      configuration: Release
+  buildAndTestMac-arm64Release:
     uses: ./.github/workflows/build_and_test_job.yaml
     with:
       os: macos-latest
+      configuration: Release
+  buildAndTestUbuntuDebug:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: ubuntu-latest
+      configuration: Debug
+  buildAndTestWindowsDebug:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: windows-latest
+      configuration: Debug
+  buildAndTestMac-x86_64Debug:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: macos-13
+      configuration: Debug
+  buildAndTestMac-arm64Debug:
+    uses: ./.github/workflows/build_and_test_job.yaml
+    with:
+      os: macos-latest
+      configuration: Debug
+

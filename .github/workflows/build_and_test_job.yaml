@@ -12,6 +12,14 @@ on:
         - macos-latest
         - macos-13
         default: windows-latest
+      configuration:
+        type: choice
+        description: 'Build configuration. Default: Release'
+        required: true
+        options:
+        - Debug
+        - Release
+        default: Release
   workflow_call:
     inputs:
       os:
@@ -33,18 +41,18 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build --configuration Release --no-restore src
+      run: dotnet build --configuration ${{ input.configuration }} --no-restore src
     - name: TestWindows
       if: ${{ startsWith(inputs.os, 'windows') }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults"
+      run: dotnet test --no-build --configuration ${{ input.configuration }} --verbosity minimal --logger "trx;LogFilePrefix=testResults"
       working-directory: ./src
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       run: |
         set +e  # Disable exit on error to ensure all frameworks are tested
-        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
-        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
-        dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
+        dotnet test --framework net8.0 --no-build --configuration ${{ input.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
+        dotnet test --framework net9.0 --no-build --configuration ${{ input.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
+        dotnet test --framework net10.0 --no-build --configuration ${{ input.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
         set -e  # Re-enable exit on error
       working-directory: ./src
     - name: Test Report
@@ -68,9 +76,9 @@ jobs:
       if: github.event.pull_request.number != null && (success() || failure())
       with:
         recreate: true
-        header: test-results-${{ inputs.os }}
+        header: test-results-${{ inputs.os }}-${{ input.configuration }}
         message: |
-          ## 🧪 Test Results for ${{ inputs.os }}
+          ## 🧪 Test Results for ${{ inputs.os }} (${{ input.configuration }})
 
           **Build Status:** ${{ job.status == 'success' && '✅ Passed' || '❌ Failed' }}
 
@@ -86,13 +94,12 @@ jobs:
 
           ### 🔧 Build Information
           - **OS:** `${{ inputs.os }}`
-          - **Configuration:** Release
+          - **Configuration:** ${{ input.configuration }}
           - **Frameworks Tested:** `${{ env.TESTED_FRAMEWORKS }}`
-          - **Retry Attempts:** Max 3 attempts with 5min timeout
 
           ### 📋 Links & Resources
           - 📊 [Detailed Test Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - 🔍 [View Test Files](https://github.com/${{ github.repository }}/tree/${{ github.sha }}/src/StaticMock.Tests)
+          - 🔍 [View Test Files](https://github.com/${{ github.repository }}/tree/${{ github.sha }}/src/StaticMock.Tests/Tests)
 
           ---
           <details>
