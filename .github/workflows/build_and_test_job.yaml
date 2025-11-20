@@ -113,6 +113,10 @@ jobs:
             $coveragePercent = "Error reading coverage"
           }
         }
+        
+        $passTestRate = $totalTests -gt 0
+          ? "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
+          : "No tests found"
 
         # Generate timestamp
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
@@ -122,7 +126,7 @@ jobs:
         "TEST_PASSED=$passedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_FAILED=$failedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_SKIPPED=$skippedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "PASS_TEST_RATE=$totalTests > 0 && format('**{0:P1}** ({1}/{2} tests passed)', $passedTests / $totalTests, $passedTests, $totalTests) || 'No tests found'" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "PASS_TEST_RATE=$passTestRate" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
         "COVERAGE_PERCENT=$coveragePercent" | Out-File -FilePath $env:GITHUB_ENV -Append
         "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
