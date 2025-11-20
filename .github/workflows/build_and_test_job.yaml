@@ -106,9 +106,11 @@ jobs:
           }
         }
         
-        $passTestRate = ($totalTests -gt 0
-          ? "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
-          : "No tests found")
+        if ($totalTests -gt 0) {
+          $passTestRate = "**$([math]::Round(($passedTests / $totalTests) * 100, 1))%** ($passedTests/$totalTests tests passed)"
+        } else {
+          $passTestRate = "No tests found"
+        }
 
         # Generate timestamp
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
