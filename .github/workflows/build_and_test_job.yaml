@@ -73,25 +73,29 @@ jobs:
         $executionTime = [TimeSpan]::Zero
 
         foreach ($file in $trxFiles) {
-          [xml]$trx = Get-Content $file.FullName
-          $ns = @{tr = 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+          try {
+            [xml]$trx = Get-Content $file.FullName
 
-          $summary = $trx.SelectSingleNode('//tr:ResultSummary', $ns)
-          if ($summary) {
-            $outcome = $summary.SelectSingleNode('.//tr:Counters', $ns)
-            if ($outcome) {
-              $totalTests += [int]$outcome.total
-              $passedTests += [int]$outcome.passed
-              $failedTests += [int]$outcome.failed
-              $skippedTests += [int]$outcome.inconclusive + [int]$outcome.notExecuted + [int]$outcome.notRunnable
+            # Use Select-Xml for namespace-aware parsing
+            $summary = Select-Xml -Xml $trx -XPath "//ns:ResultSummary" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+            if ($summary) {
+              $counters = Select-Xml -Xml $summary.Node -XPath ".//ns:Counters" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+              if ($counters) {
+                $totalTests += [int]$counters.Node.total
+                $passedTests += [int]$counters.Node.passed
+                $failedTests += [int]$counters.Node.failed
+                $skippedTests += [int]$counters.Node.inconclusive + [int]$counters.Node.notExecuted + [int]$counters.Node.notRunnable
+              }
             }
-          }
 
-          $times = $trx.SelectSingleNode('//tr:Times', $ns)
-          if ($times) {
-            $start = [DateTime]$times.start
-            $finish = [DateTime]$times.finish
-            $executionTime = $executionTime.Add($finish - $start)
+            $times = Select-Xml -Xml $trx -XPath "//ns:Times" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+            if ($times) {
+              $start = [DateTime]$times.Node.start
+              $finish = [DateTime]$times.Node.finish
+              $executionTime = $executionTime.Add($finish - $start)
+            }
+          } catch {
+            Write-Warning "Failed to parse TRX file: $($file.FullName). Error: $_"
           }
         }
 
@@ -110,6 +114,9 @@ jobs:
           }
         }
 
+        # Generate timestamp
+        $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
+
         # Output to environment variables
         "TEST_TOTAL=$totalTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_PASSED=$passedTests" | Out-File -FilePath $env:GITHUB_ENV -Append
@@ -118,6 +125,7 @@ jobs:
         "TEST_RATE=$passedTests / $totalTests" | Out-File -FilePath $env:GITHUB_ENV -Append
         "TEST_DURATION=$($executionTime.TotalSeconds)" | Out-File -FilePath $env:GITHUB_ENV -Append
         "COVERAGE_PERCENT=$coveragePercent" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "LAST_UPDATED=$timestamp" | Out-File -FilePath $env:GITHUB_ENV -Append
 
         Write-Output "Test Results Summary:"
         Write-Output "Total: $totalTests, Passed: $passedTests, Failed: $failedTests, Skipped: $skippedTests"
@@ -147,7 +155,7 @@ jobs:
           ### 🔧 Build Information
           - **OS:** `${{ inputs.os }}`
           - **Configuration:** Release
-          - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET 8.0, 9.0, 10.0' }}
+          - **Frameworks:** ${{ startsWith(inputs.os, 'windows') && '.NET & .NET Framework' || '.NET' }}
           - **Retry Attempts:** Max 3 attempts with 5min timeout
 
           ### 📊 Success Rate
@@ -155,8 +163,7 @@ jobs:
 
           ### 📋 Links & Resources
           - 📊 [Detailed Test Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - 🔍 [View Test Files](https://github.com/${{ github.repository }}/tree/${{ github.sha }}/src)
-          - 📈 [Coverage Report](https://codecov.io/${{ github.repository }}/commit/${{ github.sha }})
+          - 🔍 [View Test Files](https://github.com/${{ github.repository }}/tree/${{ github.sha }}/src/StaticMock.Tests)
 
           ---
           <details>
@@ -170,4 +177,4 @@ jobs:
 
           </details>
 
-          *Last updated: ${{ github.event.head_commit.timestamp }}*
+          *Last updated: ${{ env.LAST_UPDATED }}*
