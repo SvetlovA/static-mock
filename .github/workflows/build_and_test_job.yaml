@@ -43,7 +43,7 @@ jobs:
         retry_on: error
         command: |
           cd ./src
-          dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults" | Tee-Object -FilePath "../test_output_windows.log"
+          dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       uses: nick-fields/retry@v3
@@ -53,12 +53,9 @@ jobs:
         retry_on: error
         command: |
           cd ./src
-          echo "Running .NET 8.0 tests..." | tee ../test_output_unix.log
-          dotnet test --framework net8.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx" | tee -a ../test_output_unix.log
-          echo "Running .NET 9.0 tests..." | tee -a ../test_output_unix.log
-          dotnet test --framework net9.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx" | tee -a ../test_output_unix.log
-          echo "Running .NET 10.0 tests..." | tee -a ../test_output_unix.log
-          dotnet test --framework net10.0 --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx" | tee -a ../test_output_unix.log
+          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
+          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
+          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
     - name: Test Report
       uses: dorny/test-reporter@v2
       if: success() || failure()

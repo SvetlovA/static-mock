@@ -40,52 +40,6 @@ if ($trxFiles.Count -eq 0) {
     exit 1
 }
 
-# Parse test output logs for skipped tests
-$testOutputFiles = @()
-if (Test-Path "test_output_windows.log") {
-    $testOutputFiles += "test_output_windows.log"
-}
-if (Test-Path "test_output_unix.log") {
-    $testOutputFiles += "test_output_unix.log"
-}
-
-$outputSkippedTests = 0
-foreach ($outputFile in $testOutputFiles) {
-    if (Test-Path $outputFile) {
-        if ($EnableDebug) { Write-Output "Parsing test output file: $outputFile" }
-        $content = Get-Content $outputFile -Raw
-
-        # Look for various patterns that indicate skipped tests
-        $skippedPatterns = @(
-            '(\d+)\s+test\(s\)\s+skipped',
-            '(\d+)\s+skipped',
-            'Skipped:\s+(\d+)',
-            '(\d+)\s+test\(s\)\s+ignored',
-            '(\d+)\s+ignored',
-            'Ignored:\s+(\d+)'
-        )
-
-        foreach ($pattern in $skippedPatterns) {
-            $matches = [regex]::Matches($content, $pattern, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
-            foreach ($match in $matches) {
-                $skipCount = [int]$match.Groups[1].Value
-                $outputSkippedTests += $skipCount
-                if ($EnableDebug) { Write-Output "Found $skipCount skipped tests using pattern: $pattern" }
-            }
-        }
-
-        if ($EnableDebug) {
-            Write-Output "Sample from $($outputFile):"
-            $lines = $content -split "`n"
-            $relevantLines = $lines | Where-Object { $_ -match "(test|skip|ignore|pass|fail|total)" } | Select-Object -First 5
-            foreach ($line in $relevantLines) {
-                Write-Output "  $line"
-            }
-        }
-    }
-}
-
-if ($EnableDebug) { Write-Output "Found $outputSkippedTests skipped tests from command output" }
 
 foreach ($file in $trxFiles) {
     try {
@@ -107,21 +61,12 @@ foreach ($file in $trxFiles) {
             $passed = Get-AttributeValue $counters 'passed'
             $failed = Get-AttributeValue $counters 'failed'
 
-            # Sum all skipped/non-executed test types
-            $fileSkipped = (Get-AttributeValue $counters 'inconclusive') +
-                          (Get-AttributeValue $counters 'notExecuted') +
-                          (Get-AttributeValue $counters 'notRunnable') +
-                          (Get-AttributeValue $counters 'timeout') +
-                          (Get-AttributeValue $counters 'aborted') +
-                          (Get-AttributeValue $counters 'skipped')
-
             $totalTests += $total
             $passedTests += $passed
             $failedTests += $failed
-            $skippedTests += $fileSkipped
 
             if ($EnableDebug) {
-                Write-Output "  Results: Total=$total, Passed=$passed, Failed=$failed, Skipped=$fileSkipped"
+                Write-Output "  Results: Total=$total, Passed=$passed, Failed=$failed"
             }
         }
 
@@ -147,13 +92,10 @@ if ($totalTests -gt 0) {
 # Generate timestamp
 $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
 
-# Use command output skipped count if it's higher than TRX parsing
-if ($outputSkippedTests -gt $skippedTests) {
-    if ($EnableDebug) { Write-Output "Using command output skipped count ($outputSkippedTests) instead of TRX count ($skippedTests)" }
-    $skippedTests = $outputSkippedTests
-}
+# Calculate skipped tests using simple math
+$skippedTests = $totalTests - $passedTests - $failedTests
 
-if ($EnableDebug) { Write-Output "Final counts: TRX Skipped: $($skippedTests - $outputSkippedTests), Output Skipped: $outputSkippedTests, Total Skipped: $skippedTests" }
+if ($EnableDebug) { Write-Output "Calculated skipped tests: $totalTests - $passedTests - $failedTests = $skippedTests" }
 
 # Output results
 Write-Output "Test Results Summary:"
