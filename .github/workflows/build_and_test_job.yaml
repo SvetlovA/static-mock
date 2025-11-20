@@ -74,7 +74,7 @@ jobs:
         if ($IsLinux -or $IsMacOS) {
           chmod +x .github/scripts/Parse-TestResults.ps1
         }
-        .github/scripts/Parse-TestResults.ps1 -Debug
+        .github/scripts/Parse-TestResults.ps1 -EnableDebug
     - name: Comment PR with Test Results
       uses: marocchino/sticky-pull-request-comment@v2
       if: github.event.pull_request.number != null && (success() || failure())

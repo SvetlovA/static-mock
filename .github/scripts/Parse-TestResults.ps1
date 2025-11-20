@@ -7,7 +7,7 @@
     Outputs results to GitHub environment variables for CI/CD workflows.
 .PARAMETER SourcePath
     Path to search for .trx files (defaults to "./src")
-.PARAMETER Debug
+.PARAMETER EnableDebug
     Enable debug output for troubleshooting (defaults to $false)
 #>
 
@@ -16,7 +16,7 @@ param(
     [string]$SourcePath = "./src",
 
     [Parameter(Mandatory = $false)]
-    [switch]$Debug
+    [switch]$EnableDebug
 )
 
 function Get-AttributeValue {
@@ -52,7 +52,7 @@ if (Test-Path "test_output_unix.log") {
 $outputSkippedTests = 0
 foreach ($outputFile in $testOutputFiles) {
     if (Test-Path $outputFile) {
-        if ($Debug) { Write-Output "Parsing test output file: $outputFile" }
+        if ($EnableDebug) { Write-Output "Parsing test output file: $outputFile" }
         $content = Get-Content $outputFile -Raw
 
         # Look for various patterns that indicate skipped tests
@@ -70,11 +70,11 @@ foreach ($outputFile in $testOutputFiles) {
             foreach ($match in $matches) {
                 $skipCount = [int]$match.Groups[1].Value
                 $outputSkippedTests += $skipCount
-                if ($Debug) { Write-Output "Found $skipCount skipped tests using pattern: $pattern" }
+                if ($EnableDebug) { Write-Output "Found $skipCount skipped tests using pattern: $pattern" }
             }
         }
 
-        if ($Debug) {
+        if ($EnableDebug) {
             Write-Output "Sample from $($outputFile):"
             $lines = $content -split "`n"
             $relevantLines = $lines | Where-Object { $_ -match "(test|skip|ignore|pass|fail|total)" } | Select-Object -First 5
@@ -85,7 +85,7 @@ foreach ($outputFile in $testOutputFiles) {
     }
 }
 
-if ($Debug) { Write-Output "Found $outputSkippedTests skipped tests from command output" }
+if ($EnableDebug) { Write-Output "Found $outputSkippedTests skipped tests from command output" }
 
 foreach ($file in $trxFiles) {
     try {
@@ -97,7 +97,7 @@ foreach ($file in $trxFiles) {
         if ($summary) {
             $counters = $summary.Node
 
-            if ($Debug) {
+            if ($EnableDebug) {
                 Write-Output "Processing $($file.Name):"
                 $counters.Attributes | ForEach-Object { Write-Output "  $($_.Name) = $($_.Value)" }
             }
@@ -120,7 +120,7 @@ foreach ($file in $trxFiles) {
             $failedTests += $failed
             $skippedTests += $fileSkipped
 
-            if ($Debug) {
+            if ($EnableDebug) {
                 Write-Output "  Results: Total=$total, Passed=$passed, Failed=$failed, Skipped=$fileSkipped"
             }
         }
@@ -149,11 +149,11 @@ $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
 
 # Use command output skipped count if it's higher than TRX parsing
 if ($outputSkippedTests -gt $skippedTests) {
-    if ($Debug) { Write-Output "Using command output skipped count ($outputSkippedTests) instead of TRX count ($skippedTests)" }
+    if ($EnableDebug) { Write-Output "Using command output skipped count ($outputSkippedTests) instead of TRX count ($skippedTests)" }
     $skippedTests = $outputSkippedTests
 }
 
-if ($Debug) { Write-Output "Final counts: TRX Skipped: $($skippedTests - $outputSkippedTests), Output Skipped: $outputSkippedTests, Total Skipped: $skippedTests" }
+if ($EnableDebug) { Write-Output "Final counts: TRX Skipped: $($skippedTests - $outputSkippedTests), Output Skipped: $outputSkippedTests, Total Skipped: $skippedTests" }
 
 # Output results
 Write-Output "Test Results Summary:"
