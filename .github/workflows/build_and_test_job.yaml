@@ -88,10 +88,36 @@ jobs:
             if ($summary) {
               $counters = Select-Xml -Xml $summary.Node -XPath ".//ns:Counters" -Namespace @{ns='http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
               if ($counters) {
-                $totalTests += [int]$counters.Node.total
-                $passedTests += [int]$counters.Node.passed
-                $failedTests += [int]$counters.Node.failed
-                $skippedTests += [int]$counters.Node.inconclusive + [int]$counters.Node.notExecuted + [int]$counters.Node.notRunnable
+                $node = $counters.Node
+
+                # Debug output to see all available attributes
+                Write-Output "Debug - TRX Counters for $($file.Name):"
+                foreach ($attr in $node.Attributes) {
+                  Write-Output "  $($attr.Name) = $($attr.Value)"
+                }
+
+                # Parse basic counts with null safety
+                $total = if ($node.total) { [int]$node.total } else { 0 }
+                $passed = if ($node.passed) { [int]$node.passed } else { 0 }
+                $failed = if ($node.failed) { [int]$node.failed } else { 0 }
+
+                # Parse all possible skipped test categories with null safety
+                $inconclusive = if ($node.inconclusive) { [int]$node.inconclusive } else { 0 }
+                $notExecuted = if ($node.notExecuted) { [int]$node.notExecuted } else { 0 }
+                $notRunnable = if ($node.notRunnable) { [int]$node.notRunnable } else { 0 }
+                $timeout = if ($node.timeout) { [int]$node.timeout } else { 0 }
+                $aborted = if ($node.aborted) { [int]$node.aborted } else { 0 }
+                $skipped = if ($node.skipped) { [int]$node.skipped } else { 0 }
+
+                $totalTests += $total
+                $passedTests += $passed
+                $failedTests += $failed
+
+                # Sum all types of skipped/non-executed tests
+                $currentSkipped = $inconclusive + $notExecuted + $notRunnable + $timeout + $aborted + $skipped
+                $skippedTests += $currentSkipped
+
+                Write-Output "Debug - File: $($file.Name), Total: $total, Passed: $passed, Failed: $failed, Skipped: $currentSkipped"
               }
             }
 
