@@ -34,34 +34,17 @@ jobs:
       run: dotnet restore src
     - name: Build
       run: dotnet build --configuration Release --no-restore src
-    - name: Clean TRX files before tests
-      shell: pwsh
-      run: |
-        # Remove any existing TRX files to ensure clean test results
-        Get-ChildItem -Path "./src" -Filter "*.trx" -Recurse -Force | Remove-Item -Force
-        Write-Host "Cleaned up existing TRX files before test run"
     - name: TestWindows
       if: ${{ startsWith(inputs.os, 'windows') }}
-      uses: nick-fields/retry@v3
-      with:
-        timeout_minutes: 5
-        max_attempts: 3
-        retry_on: error
-        command: |
-          cd ./src
-          dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=${{ inputs.os }}/testResults"
+      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults"
+      working-directory: ./src
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
-      uses: nick-fields/retry@v3
-      with:
-        timeout_minutes: 5
-        max_attempts: 3
-        retry_on: error
-        command: |
-          cd ./src
-          dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
-          dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
-          dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
+      run: |
+        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net8.0/testResults.trx"
+        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net9.0/testResults.trx"
+        dotnet test --framework net10.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/net10.0/testResults.trx"
+      working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v2
       if: success() || failure()
