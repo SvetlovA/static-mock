@@ -57,7 +57,7 @@ internal static class SetupMockHelper
         };
     }
 
-    public static MockSetupProperties GetMockSetupProperties<TDelegate>(
+    private static MockSetupProperties GetMockSetupProperties<TDelegate>(
         Expression<TDelegate> methodGetExpression)
     {
         MethodInfo? originalMethodInfo = null;

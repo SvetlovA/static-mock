@@ -518,22 +518,6 @@ public class SMockPerformanceBenchmark
 [TestFixture]
 public class NUnitIntegrationTests
 {
-    [SetUp]
-    public void Setup()
-    {
-        // SMock doesn't require special setup
-        // But you can add diagnostics here
-        Console.WriteLine("Test setup - SMock ready");
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        // Force garbage collection to ensure mock cleanup
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-    }
-
     [Test]
     public void SMock_Works_With_NUnit()
     {

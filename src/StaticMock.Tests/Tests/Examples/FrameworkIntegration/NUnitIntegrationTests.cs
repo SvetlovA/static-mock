@@ -6,23 +6,6 @@ namespace StaticMock.Tests.Tests.Examples.FrameworkIntegration;
 [TestFixture]
 public class NUnitIntegrationTests
 {
-    [SetUp]
-    public void Setup()
-    {
-        // SMock doesn't require special setup
-        // This is optional for test initialization
-        TestContext.WriteLine("Test starting - SMock ready");
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        // Optional: Force cleanup for thorough testing
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        TestContext.WriteLine("Test completed - Cleanup done");
-    }
-
     [Test]
     public void Basic_SMock_Test()
     {
@@ -70,7 +53,6 @@ public class NUnitIntegrationTests
     }
 
     [Test]
-    [Category("Integration")]
     public void Test_With_Category()
     {
         using var mock = Mock.Setup(() => DateTime.UtcNow)

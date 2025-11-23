@@ -114,7 +114,7 @@ public class PerformanceTests
             using var mock = Mock.Setup(() => DateTime.Now)
                 .Returns(new DateTime(2024, 1, 1));
 
-            var _ = DateTime.Now; // Execute mock
+            _ = DateTime.Now;
         }
 
         var finalMemory = GC.GetTotalMemory(true);

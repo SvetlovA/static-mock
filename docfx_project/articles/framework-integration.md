@@ -34,24 +34,7 @@ using StaticMock;
 
 [TestFixture]
 public class NUnitSMockTests
-{
-    [SetUp]
-    public void Setup()
-    {
-        // SMock doesn't require special setup
-        // This is optional for test initialization
-        Console.WriteLine("Test starting - SMock ready");
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        // Optional: Force cleanup for thorough testing
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        Console.WriteLine("Test completed - Cleanup done");
-    }
-
+{~~~~~~~~
     [Test]
     public void Basic_SMock_Test()
     {
@@ -575,9 +558,6 @@ public class SMockHooks
     [AfterScenario]
     public void AfterScenario(ScenarioContext scenarioContext)
     {
-        // Force cleanup after each scenario to ensure isolation
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
         Console.WriteLine($"Completed scenario: {scenarioContext.ScenarioInfo.Title}");
     }
 }
