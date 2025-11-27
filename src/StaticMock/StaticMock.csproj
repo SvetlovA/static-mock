@@ -7,8 +7,8 @@
     <Authors>SvetlovA</Authors>
     <Product>SMock</Product>
     <Description>SMock is opensource lib for mocking static and instance methods and properties.</Description>
-    <PackageLicenseFile>..\..\LICENSE</PackageLicenseFile>
-    <PackageReadmeFile>..\..\README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://svetlova.github.io/static-mock</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SvetlovA/static-mock</RepositoryUrl>
     <PackageTags>mock moq static unit test tests smock</PackageTags>
@@ -37,6 +37,15 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="MonoMod.Core" Version="1.3.3" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="..\..\LICENSE">
+      <Link>LICENSE</Link>
+    </Content>
+    <Content Include="..\..\README.md">
+      <Link>README.md</Link>
+    </Content>
   </ItemGroup>
 
 </Project>
