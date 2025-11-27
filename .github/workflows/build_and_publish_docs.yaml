@@ -1,5 +1,6 @@
 # Your GitHub workflow file under .github/workflows/
 # Trigger the action on push to main
+name: build and publish docs
 on:
   push:
     branches:
