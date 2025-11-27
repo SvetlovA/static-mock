@@ -9,7 +9,13 @@ SMock is a .NET library for mocking static and instance methods and properties. 
 - **Hierarchical Setup**: Mock setup with validation actions - `Mock.Setup(expression, action).Returns(value)`
 - **Sequential Setup**: Disposable mock setup - `using var _ = Mock.Setup(expression).Returns(value)`
 
-The library targets multiple frameworks: .NET Standard 2.0 and .NET Framework 4.62-4.81, published as the "SMock" NuGet package.
+The library targets multiple frameworks: .NET Standard 2.0 and .NET Framework (4.62, 4.7, 4.71, 4.72, 4.8, 4.81), published as the "SMock" NuGet package.
+
+## Prerequisites
+
+The development environment requires:
+- .NET 8.0, 9.0, and 10.0 SDKs installed for cross-platform testing
+- All tests run on Windows by default; Unix/macOS testing requires framework-specific commands
 
 ## Development Commands
 
@@ -49,6 +55,15 @@ dotnet test src/StaticMock.Tests/StaticMock.Tests.csproj
 
 # Run benchmarks
 dotnet run --project src/StaticMock.Tests.Benchmark/StaticMock.Tests.Benchmark.csproj
+```
+
+### Package Building and Publishing
+```bash
+# Pack the library for NuGet publication
+dotnet pack --configuration Release --output packages src/StaticMock/StaticMock.csproj
+
+# Publish to NuGet (requires API key)
+dotnet nuget push packages/*.nupkg -k <NUGET_API_KEY> -s https://api.nuget.org/v3/index.json
 ```
 
 ## Architecture Overview
