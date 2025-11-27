@@ -7,7 +7,8 @@ using BenchmarkDotNet.Toolchains.InProcess.Emit;
 // Configure benchmarks for quick results
 var config = DefaultConfig.Instance
     .AddDiagnoser(MemoryDiagnoser.Default)
-    .AddJob(Job.Dry.WithToolchain(InProcessEmitToolchain.Instance)); // Fastest mode for quick results
+    .AddJob(Job.Dry.WithToolchain(InProcessEmitToolchain.Instance)) // Fastest mode for quick results
+    .WithOptions(ConfigOptions.DisableOptimizationsValidator); // Disable optimization validation to prevent hangs
 
 // If no arguments provided, run all benchmarks
 if (args.Length == 0)

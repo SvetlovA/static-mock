@@ -4,7 +4,6 @@ using StaticMock.Tests.Common.TestEntities;
 namespace StaticMock.Tests.Benchmark;
 
 [MemoryDiagnoser]
-[SimpleJob]
 public class ComprehensiveBenchmarks
 {
     private TestInstance _testInstance = null!;

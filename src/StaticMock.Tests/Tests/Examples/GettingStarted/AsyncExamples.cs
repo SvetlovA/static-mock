@@ -77,11 +77,11 @@ public class AsyncExamples
         const string mockResult = "async mock result";
 
         // Mock an async method that returns a value
-        using var mock = Mock.Setup(context => Task.FromResult(context.It.IsAny<string>()))
+        using var mock = Mock.Setup(context => Task.FromResult<string>(context.It.IsAny<string>()))
             .ReturnsAsync(mockResult);
 
-        var result = await Task.FromResult("original");
-        ClassicAssert.AreEqual(mockResult, result);
+        var result = await Task.FromResult<string>("original");
+        Assert.That(result, Is.EqualTo(mockResult));
     }
 
     [Test]
