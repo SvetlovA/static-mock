@@ -541,40 +541,44 @@ public void Proper_Mock_Disposal()
 
 ### Slow Test Execution
 
-**Benchmarking Framework**:
+**Performance Analysis**:
+
+For comprehensive performance analysis, use the official benchmark project:
+
+```bash
+# Run the official benchmarks
+cd src
+dotnet run --project StaticMock.Tests.Benchmark --configuration Release
+```
+
+For custom performance testing in your own projects:
+
 ```csharp
-public class SMockPerformanceBenchmark
+[Test]
+public void Profile_Mock_Performance()
 {
-    [Benchmark]
-    public void Mock_Setup_Performance()
+    var stopwatch = Stopwatch.StartNew();
+
+    // Measure setup time
+    var setupStart = stopwatch.ElapsedMilliseconds;
+    using var mock = Mock.Setup(() => DateTime.Now).Returns(new DateTime(2024, 1, 1));
+    var setupTime = stopwatch.ElapsedMilliseconds - setupStart;
+
+    // Measure execution time
+    var executionStart = stopwatch.ElapsedMilliseconds;
+    for (int i = 0; i < 1000; i++)
     {
-        using var mock = Mock.Setup(() => DateTime.Now)
-            .Returns(new DateTime(2024, 1, 1));
+        var _ = DateTime.Now;
     }
+    var executionTime = stopwatch.ElapsedMilliseconds - executionStart;
 
-    [Benchmark]
-    public void Mock_Execution_Performance()
-    {
-        using var mock = Mock.Setup(() => DateTime.Now)
-            .Returns(new DateTime(2024, 1, 1));
+    Console.WriteLine($"Setup time: {setupTime}ms");
+    Console.WriteLine($"Execution time (1000 calls): {executionTime}ms");
+    Console.WriteLine($"Per-call overhead: {(double)executionTime / 1000:F3}ms");
 
-        for (int i = 0; i < 1000; i++)
-        {
-            var _ = DateTime.Now;
-        }
-    }
-
-    [Benchmark]
-    public void Complex_Mock_Performance()
-    {
-        using var mock = Mock.Setup(() =>
-            DataProcessor.Transform(It.Is<DataModel>(d => d.IsValid)))
-            .Callback<DataModel>(d => Console.WriteLine($"Processing {d.Id}"))
-            .Returns(new TransformResult { Success = true });
-
-        var data = new DataModel { Id = 1, IsValid = true };
-        var _ = DataProcessor.Transform(data);
-    }
+    // Acceptable thresholds
+    Assert.Less(setupTime, 10, "Setup should be under 10ms");
+    Assert.Less((double)executionTime / 1000, 0.1, "Per-call overhead should be under 0.1ms");
 }
 ```
 
