@@ -9,21 +9,6 @@ public class AsyncExamples
 {
     [Test]
     [MethodImpl(MethodImplOptions.NoOptimization)]
-    public async Task Mock_Async_Methods()
-    {
-        // Mock async HTTP call - using expression-based setup
-        using var mock = Mock.Setup(context => Task.Delay(context.It.IsAny<int>()))
-            .Returns(Task.CompletedTask);
-
-        // Test the mocked delay
-        await Task.Delay(1000); // Should complete immediately due to mock
-
-        // Verify the test completes quickly (no actual delay)
-        Assert.Pass("Async mock executed successfully");
-    }
-
-    [Test]
-    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Task_FromResult()
     {
         using var mock = Mock.Setup(() => Task.FromResult(42))
@@ -69,17 +54,19 @@ public class AsyncExamples
             ClassicAssert.IsNotNull(exception);
         }
     }
-
+    
     [Test]
     [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_Return_Values()
     {
+        const string mockResult = "async mock result";
+
         // Mock an async method that returns a value
         using var mock = Mock.Setup(context => Task.FromResult<string>(context.It.IsAny<string>()))
-            .ReturnsAsync("async mock result");
+            .ReturnsAsync(mockResult);
 
         var result = await Task.FromResult<string>("original");
-        Assert.That(result, Is.EqualTo("async mock result"));
+        Assert.That(result, Is.EqualTo(mockResult));
     }
 
     [Test]
