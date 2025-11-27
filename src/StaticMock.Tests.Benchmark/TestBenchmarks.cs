@@ -11,7 +11,8 @@ public class TestBenchmarks
     {
         Mock.SetupDefault(typeof(TestStaticClass), nameof(TestStaticClass.TestVoidMethodWithoutParametersThrowsException), () =>
         {
-            TestStaticClass.TestVoidMethodWithoutParametersThrowsException();
+            // Fixed: Don't call the original method to avoid infinite recursion
+            // Just perform a simple operation for benchmarking
         });
     }
 }

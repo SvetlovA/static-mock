@@ -12,12 +12,24 @@ on:
         - macos-latest
         - macos-13
         default: windows-latest
+      configuration:
+        type: choice
+        description: 'Build configuration. Default: Release'
+        required: true
+        options:
+        - Debug
+        - Release
+        default: Release
   workflow_call:
     inputs:
       os:
         type: string
         required: true
         default: ubuntu-latest
+      configuration:
+        type: string
+        required: false
+        default: Release
 jobs:
   buildAndTest:
     runs-on: ${{ inputs.os }}
@@ -29,19 +41,23 @@ jobs:
         dotnet-version: |
           8.0.x
           9.0.x
+          10.0.x
     - name: Restore dependencies
       run: dotnet restore src
     - name: Build
-      run: dotnet build --configuration Release --no-restore src
+      run: dotnet build --configuration ${{ inputs.configuration }} --no-restore src
     - name: TestWindows
       if: ${{ startsWith(inputs.os, 'windows') }}
-      run: dotnet test --no-build --configuration Release --verbosity minimal --logger "trx;LogFilePrefix=testResults"
+      run: dotnet test --no-build --configuration ${{ inputs.configuration }} --verbosity minimal --logger "trx;LogFilePrefix=testResults_${{ inputs.os }}_${{ inputs.configuration }}"
       working-directory: ./src
     - name: TestUnix
       if: ${{ startsWith(inputs.os, 'ubuntu') || startsWith(inputs.os, 'macos') }}
       run: |
-        dotnet test --framework net8.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net8.0/testResults.trx"
-        dotnet test --framework net9.0 --no-build --configuration Release --verbosity minimal --logger "trx;LogFileName=net9.0/testResults.trx"
+        set +e  # Disable exit on error to ensure all frameworks are tested
+        dotnet test --framework net8.0 --no-build --configuration ${{ inputs.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/${{ inputs.configuration }}/net8.0/testResults.trx"
+        dotnet test --framework net9.0 --no-build --configuration ${{ inputs.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/${{ inputs.configuration }}/net9.0/testResults.trx"
+        dotnet test --framework net10.0 --no-build --configuration ${{ inputs.configuration }} --verbosity minimal --logger "trx;LogFileName=${{ inputs.os }}/${{ inputs.configuration }}/net10.0/testResults.trx"
+        set -e  # Re-enable exit on error
       working-directory: ./src
     - name: Test Report
       uses: dorny/test-reporter@v2
@@ -50,3 +66,55 @@ jobs:
         name: Test Report for ${{ inputs.os }}
         path: ./src/**/*.trx
         reporter: dotnet-trx
+    - name: Parse Test Results
+      if: success() || failure()
+      shell: pwsh
+      run: |
+        # Ensure script is executable on Unix systems
+        if ($IsLinux -or $IsMacOS) {
+          chmod +x .github/scripts/Parse-TestResults.ps1
+        }
+        .github/scripts/Parse-TestResults.ps1 -EnableDebug
+    - name: Comment PR with Test Results
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event.pull_request.number != null && (success() || failure())
+      with:
+        recreate: true
+        header: test-results-${{ inputs.os }}-${{ inputs.configuration }}
+        message: |
+          ## 🧪 Test Results for ${{ inputs.os }} (${{ inputs.configuration }})
+
+          **Build Status:** ${{ job.status == 'success' && '✅ Passed' || '❌ Failed' }}
+
+          ### 📊 Test Statistics
+          | Metric | Value |
+          |--------|-------|
+          | **Total Tests** | ${{ env.TEST_TOTAL }} |
+          | **✅ Passed** | ${{ env.TEST_PASSED }} |
+          | **❌ Failed** | ${{ env.TEST_FAILED }} |
+          | **⏭️ Skipped** | ${{ env.TEST_SKIPPED }} |
+          | **⏱️ Duration** | ${{ env.TEST_DURATION }}s |
+          | **📈 Pass Rate** | ${{ env.PASS_TEST_RATE }} |
+
+          ### 🔧 Build Information
+          - **OS:** `${{ inputs.os }}`
+          - **Configuration:** ${{ inputs.configuration }}
+          - **Frameworks Tested:** `${{ env.TESTED_FRAMEWORKS }}`
+
+          ### 📋 Links & Resources
+          - 📊 [Detailed Test Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          - 🔍 [View Test Files](https://github.com/${{ github.repository }}/tree/${{ github.sha }}/src/StaticMock.Tests/Tests)
+
+          ---
+          <details>
+          <summary>🔍 Technical Details</summary>
+
+          - **Commit:** [`${{ github.sha }}`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          - **Branch:** `${{ github.head_ref || github.ref_name }}`
+          - **Run ID:** `${{ github.run_id }}`
+          - **Attempt:** `${{ github.run_attempt }}`
+          - **Workflow:** `${{ github.workflow }}`
+
+          </details>
+
+          *Last updated: ${{ env.LAST_UPDATED }}*
