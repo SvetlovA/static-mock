@@ -72,8 +72,8 @@ public class AsyncExamples
     
     [Test]
     [MethodImpl(MethodImplOptions.NoOptimization)]
-#if ARM64
-    [Ignore("Fails on ARM64 builds due to a known issue with mocking async methods on this architecture.")]
+#if APPLE_SILICON
+    [Ignore("Fails on Apple Silicon CI runners due to known issue with async mocking.")]
 #endif
     public async Task Mock_Async_Return_Values()
     {
