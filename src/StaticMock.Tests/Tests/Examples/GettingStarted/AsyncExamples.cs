@@ -74,14 +74,12 @@ public class AsyncExamples
     [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_Return_Values()
     {
-        const string mockResult = "async mock result";
-
         // Mock an async method that returns a value
         using var mock = Mock.Setup(context => Task.FromResult<string>(context.It.IsAny<string>()))
-            .ReturnsAsync(mockResult);
+            .ReturnsAsync("async mock result");
 
         var result = await Task.FromResult<string>("original");
-        Assert.That(result, Is.EqualTo(mockResult));
+        Assert.That(result, Is.EqualTo("async mock result"));
     }
 
     [Test]
