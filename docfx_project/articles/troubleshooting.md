@@ -69,9 +69,78 @@ public void Verify_Environment()
 
 ## Common Issues
 
-### Issue 1: Mock Not Triggering
+### Issue 1: Compiler Optimization Preventing Mock Application
 
-**Symptoms**: Mock setup appears correct, but original method is still called.
+**Symptoms**: Mock setup appears correct, but original method is still called, especially in Release builds.
+
+**Root Cause**: Compiler optimizations can inline or optimize method calls, preventing SMock's runtime hooks from intercepting them.
+
+**Diagnostic Steps**:
+
+```csharp
+[Test]
+public void Debug_Optimization_Issue()
+{
+    Console.WriteLine($"Current Configuration: {GetBuildConfiguration()}");
+
+    using var mock = Mock.Setup(() => DateTime.Now)
+        .Returns(new DateTime(2024, 1, 1));
+
+    var result = DateTime.Now;
+    Console.WriteLine($"Mocked result: {result}");
+    Console.WriteLine($"Expected: {new DateTime(2024, 1, 1)}");
+
+    if (result != new DateTime(2024, 1, 1))
+    {
+        Console.WriteLine("⚠️ Mock not applied - likely due to compiler optimization");
+    }
+}
+
+private string GetBuildConfiguration()
+{
+#if DEBUG
+    return "Debug";
+#else
+    return "Release";
+#endif
+}
+```
+
+**Solutions**:
+
+1. **Run tests in Debug configuration**:
+   ```bash
+   dotnet test --configuration Debug
+   ```
+
+2. **Disable compiler optimization in your test project** by adding this to your `.csproj`:
+   ```xml
+   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+     <Optimize>false</Optimize>
+   </PropertyGroup>
+   ```
+
+3. **Disable optimization for specific methods** using the `MethodImpl` attribute:
+   ```csharp
+   using System.Runtime.CompilerServices;
+
+   [MethodImpl(MethodImplOptions.NoOptimization)]
+   [Test]
+   public void MyTestMethod()
+   {
+       using var mock = Mock.Setup(() => File.ReadAllText("config.json"))
+           .Returns("{ \"setting\": \"test\" }");
+
+       var result = File.ReadAllText("config.json");
+       Assert.AreEqual("{ \"setting\": \"test\" }", result);
+   }
+   ```
+
+**Best Practice**: Always test your mocking setup in both Debug and Release configurations to catch optimization issues early.
+
+### Issue 2: Mock Not Triggering (Parameter/Signature Issues)
+
+**Symptoms**: Mock setup appears correct, but original method is still called due to parameter or signature mismatches.
 
 **Diagnostic Steps**:
 
@@ -131,7 +200,7 @@ public void Debug_Mock_Not_Triggering()
        .Returns(new MyClass { Test = "value" });
    ```
 
-### Issue 2: Assembly Loading Failures
+### Issue 3: Assembly Loading Failures
 
 **Symptoms**: `FileNotFoundException`, `BadImageFormatException`, or similar assembly errors.
 
@@ -187,7 +256,7 @@ public void Debug_Assembly_Loading()
    </runtime>
    ```
 
-### Issue 3: Performance Degradation
+### Issue 4: Performance Degradation
 
 **Symptoms**: Tests run significantly slower after adding SMock.
 

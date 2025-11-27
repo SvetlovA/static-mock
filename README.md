@@ -164,6 +164,43 @@ SMock is designed for **minimal performance impact**:
 
 ---
 
+## ⚠️ Known Issues & Solutions
+
+### Compiler Optimization Issue
+
+If your mocks are not being applied and you're getting the original method behavior instead of the mocked behavior, this is likely due to compiler optimizations. The compiler may inline or optimize method calls, preventing SMock from intercepting them.
+
+**Solutions**:
+
+1. **Run tests in Debug configuration**:
+   ```bash
+   dotnet test --configuration Debug
+   ```
+
+2. **Disable compiler optimization in your test project** by adding this to your `.csproj`:
+   ```xml
+   <PropertyGroup>
+     <Optimize>false</Optimize>
+   </PropertyGroup>
+   ```
+
+3. **Disable optimization for specific methods** using the `MethodImpl` attribute:
+   ```csharp
+   [Test]
+   [MethodImpl(MethodImplOptions.NoOptimization)]
+   public void MyTestMethod()
+   {
+       using var mock = Mock.Setup(() => File.ReadAllText("config.json"))
+           .Returns("{ \"setting\": \"test\" }");
+
+       // Your test code here
+   }
+   ```
+
+This issue typically occurs in Release builds where the compiler aggressively optimizes method calls. Using any of the above solutions will ensure your mocks work correctly.
+
+---
+
 ## Additional Resources
 
 - **[API Documentation](https://svetlova.github.io/static-mock/api/index.html)**

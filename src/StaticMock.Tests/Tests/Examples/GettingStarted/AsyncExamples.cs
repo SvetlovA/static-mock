@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -7,6 +8,7 @@ namespace StaticMock.Tests.Tests.Examples.GettingStarted;
 public class AsyncExamples
 {
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_Methods()
     {
         // Mock async HTTP call - using expression-based setup
@@ -21,6 +23,7 @@ public class AsyncExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Task_FromResult()
     {
         using var mock = Mock.Setup(() => Task.FromResult(42))
@@ -31,6 +34,7 @@ public class AsyncExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_With_Delay_Simulation()
     {
         const string testData = "processed data";
@@ -47,6 +51,7 @@ public class AsyncExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_Exception_Handling()
     {
         // Mock Task.Delay to throw an exception
@@ -66,6 +71,7 @@ public class AsyncExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Async_Return_Values()
     {
         const string mockResult = "async mock result";
@@ -79,18 +85,19 @@ public class AsyncExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public async Task Mock_Multiple_Async_Operations()
     {
         // Mock multiple async operations
         using var delayMock = Mock.Setup(context => Task.Delay(context.It.IsAny<int>()))
             .Returns(Task.CompletedTask);
 
-        using var resultMock = Mock.Setup(context => Task.FromResult(context.It.IsAny<int>()))
+        using var resultMock = Mock.Setup(context => Task.FromResult<int>(context.It.IsAny<int>()))
             .ReturnsAsync(50);
 
         // Execute multiple async operations
         await Task.Delay(1000); // Should complete immediately
-        var value = await Task.FromResult(10); // Should return 50
+        var value = await Task.FromResult<int>(10); // Should return 50
 
         ClassicAssert.AreEqual(50, value);
     }

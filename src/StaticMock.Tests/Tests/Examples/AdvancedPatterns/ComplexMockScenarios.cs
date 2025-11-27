@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -27,6 +28,7 @@ public class ComplexMockScenarios
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public void Multi_Mock_Coordination()
     {
         const string userToken = "auth_token_123";

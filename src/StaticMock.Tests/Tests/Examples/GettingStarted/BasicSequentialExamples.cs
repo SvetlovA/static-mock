@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -38,6 +39,7 @@ public class BasicSequentialExamples
     }
 
     [Test]
+    [MethodImpl(MethodImplOptions.NoOptimization)]
     public void Mock_File_Operations()
     {
         using var existsMock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
