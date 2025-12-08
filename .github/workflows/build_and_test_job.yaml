@@ -4,13 +4,13 @@ on:
     inputs:
       os:
         type: choice
-        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest (arm based CPU architecture), macos-13 (x86_64 based CPU arcitecture). Default: windows-latest'
+        description: 'OS to run on. Possible variants: ubuntu-latest, windows-latest, macos-latest (arm based CPU architecture), macos-15-intel (x86_64 based CPU arcitecture). Default: windows-latest'
         required: true
         options:
         - ubuntu-latest
         - windows-latest
         - macos-latest
-        - macos-13
+        - macos-15-intel
         default: windows-latest
       configuration:
         type: choice
