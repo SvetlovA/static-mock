@@ -55,7 +55,7 @@ using var mock = Mock.Setup(() => DateTime.Now)
     .Returns(new DateTime(2024, 1, 1));
 
 // Hierarchical API
-Mock.Setup(() => File.ReadAllText(It.IsAny<string>()), () =>
+Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()), () =>
 {
     var content = File.ReadAllText("test.txt");
     Assert.IsNotNull(content);
@@ -134,7 +134,7 @@ Mock.Setup(() => File.ReadAllText(It.IsAny<string>()), () =>
 Matches any argument of the specified type.
 
 ```csharp
-Mock.Setup(() => Service.Process(It.IsAny<string>()))
+Mock.Setup(context => Service.Process(context.It.IsAny<string>()))
     .Returns("result");
 ```
 
@@ -142,7 +142,7 @@ Mock.Setup(() => Service.Process(It.IsAny<string>()))
 Matches arguments that satisfy the specified predicate condition.
 
 ```csharp
-Mock.Setup(() => Math.Abs(It.Is<int>(x => x < 0)))
+Mock.Setup(context => Math.Abs(context.It.Is<int>(x => x < 0)))
     .Returns(42);
 ```
 
@@ -289,7 +289,7 @@ using var mock = Mock.SetupProperty(typeof(DateTime), nameof(DateTime.Now))
 
 ### Parameter-Based Returns
 ```csharp
-using var mock = Mock.Setup(() => Math.Max(It.IsAny<int>(), It.IsAny<int>()))
+using var mock = Mock.Setup(context => Math.Max(context.It.IsAny<int>(), context.It.IsAny<int>()))
     .Returns<int, int>((a, b) => a > b ? a : b);
 ```
 
@@ -297,7 +297,7 @@ using var mock = Mock.Setup(() => Math.Max(It.IsAny<int>(), It.IsAny<int>()))
 ```csharp
 var calls = new List<string>();
 
-using var mock = Mock.Setup(() => Console.WriteLine(It.IsAny<string>()))
+using var mock = Mock.Setup(context => Console.WriteLine(context.It.IsAny<string>()))
     .Callback<string>(message => calls.Add(message));
 ```
 

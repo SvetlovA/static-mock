@@ -292,7 +292,7 @@ public class AsyncXUnitTests
     [Fact]
     public async Task Async_SMock_Test()
     {
-        using var mock = Mock.Setup(() => HttpClient.GetStringAsync(It.IsAny<string>()))
+        using var mock = Mock.Setup(context => HttpClient.GetStringAsync(context.It.IsAny<string>()))
             .Returns(Task.FromResult("{\"status\": \"success\"}"));
 
         var httpService = new HttpService();
@@ -615,7 +615,7 @@ public class CustomFrameworkTest : SMockTestBase
         {
             // Create mocks using the helper methods
             CreateMock(() => DateTime.Now, new DateTime(2024, 1, 1));
-            CreateMock(() => Console.WriteLine(It.IsAny<string>()));
+            CreateMock(context => Console.WriteLine(context.It.IsAny<string>()));
 
             // Your test logic here
             var result = DateTime.Now;

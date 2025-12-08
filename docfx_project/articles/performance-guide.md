@@ -139,7 +139,7 @@ public class ExtendedSMockBenchmarks
     [Benchmark]
     public void ParameterMatching_IsAny()
     {
-        using var mock = Mock.Setup(() => File.Exists(It.IsAny<string>()))
+        using var mock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
             .Returns(true);
 
         var _ = File.Exists("test.txt");
@@ -148,7 +148,7 @@ public class ExtendedSMockBenchmarks
     [Benchmark]
     public void ParameterMatching_Conditional()
     {
-        using var mock = Mock.Setup(() => File.ReadAllText(It.Is<string>(s => s.EndsWith(".txt"))))
+        using var mock = Mock.Setup(context => File.ReadAllText(context.It.Is<string>(s => s.EndsWith(".txt"))))
             .Returns("content");
 
         var _ = File.ReadAllText("test.txt");
@@ -159,7 +159,7 @@ public class ExtendedSMockBenchmarks
     public void MockWithCallback()
     {
         var counter = 0;
-        using var mock = Mock.Setup(() => Console.WriteLine(It.IsAny<string>()))
+        using var mock = Mock.Setup(context => Console.WriteLine(context.It.IsAny<string>()))
             .Callback<string>(s => counter++);
 
         for (int i = 0; i < 100; i++)
@@ -174,7 +174,7 @@ public class ExtendedSMockBenchmarks
     {
         using var mock1 = Mock.Setup(() => DateTime.Now).Returns(new DateTime(2024, 1, 1));
         using var mock2 = Mock.Setup(() => Environment.MachineName).Returns("TEST");
-        using var mock3 = Mock.Setup(() => File.Exists(It.IsAny<string>())).Returns(true);
+        using var mock3 = Mock.Setup(context => File.Exists(context.It.IsAny<string>())).Returns(true);
 
         var _ = DateTime.Now;
         var _ = Environment.MachineName;
@@ -185,7 +185,7 @@ public class ExtendedSMockBenchmarks
     [Benchmark]
     public async Task AsyncMock_Setup()
     {
-        using var mock = Mock.Setup(() => Task.Delay(It.IsAny<int>()))
+        using var mock = Mock.Setup(context => Task.Delay(context.It.IsAny<int>()))
             .Returns(Task.CompletedTask);
 
         await Task.Delay(100);
@@ -368,7 +368,7 @@ Mock.Setup(() => myInstance.GetCurrentTime())
 // ✅ Efficient - Setup multiple mocks together
 using var mock1 = Mock.Setup(() => DateTime.Now).Returns(fixedDate);
 using var mock2 = Mock.Setup(() => Environment.MachineName).Returns("TEST");
-using var mock3 = Mock.Setup(() => File.Exists(It.IsAny<string>())).Returns(true);
+using var mock3 = Mock.Setup(context => File.Exists(context.It.IsAny<string>())).Returns(true);
 
 // Execute all operations
 ```

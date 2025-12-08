@@ -177,26 +177,26 @@ public void Debug_Mock_Not_Triggering()
    Mock.Setup(() => MyClass.Method("exact_value")).Returns("result");
 
    // ✅ Solution: Use parameter matching
-   Mock.Setup(() => MyClass.Method(It.IsAny<string>())).Returns("result");
+   Mock.Setup(context => MyClass.Method(context.It.IsAny<string>())).Returns("result");
    ```
 
 2. **Method Overload Confusion**:
    ```csharp
    // ❌ Problem: Wrong overload
-   Mock.Setup(() => Convert.ToString(It.IsAny<object>())).Returns("mocked");
+   Mock.Setup(context => Convert.ToString(context.It.IsAny<object>())).Returns("mocked");
 
    // ✅ Solution: Specify exact overload
-   Mock.Setup(() => Convert.ToString(It.IsAny<int>())).Returns("mocked");
+   Mock.Setup(context => Convert.ToString(context.It.IsAny<int>())).Returns("mocked");
    ```
 
 3. **Generic Method Issues**:
    ```csharp
    // ❌ Problem: Generic type not resolved
-   Mock.Setup(() => JsonSerializer.Deserialize<object>(It.IsAny<string>()))
+   Mock.Setup(context => JsonSerializer.Deserialize<object>(context.It.IsAny<string>()))
        .Returns(new { test = "value" });
 
    // ✅ Solution: Specify concrete type
-   Mock.Setup(() => JsonSerializer.Deserialize<MyClass>(It.IsAny<string>()))
+   Mock.Setup(context => JsonSerializer.Deserialize<MyClass>(context.It.IsAny<string>()))
        .Returns(new MyClass { Test = "value" });
    ```
 
@@ -348,7 +348,7 @@ public void Debug_Parameter_Matching()
     // Test different parameter matching strategies
     var callLog = new List<string>();
 
-    using var mock = Mock.Setup(() => TestClass.ProcessData(It.IsAny<string>()))
+    using var mock = Mock.Setup(context => TestClass.ProcessData(context.It.IsAny<string>()))
         .Callback<string>(data => callLog.Add($"Called with: {data}"))
         .Returns("mocked");
 
@@ -370,8 +370,8 @@ public void Debug_Parameter_Matching()
 public void Advanced_Parameter_Matching()
 {
     // Complex object matching
-    using var mock = Mock.Setup(() =>
-        DataProcessor.Process(It.Is<ProcessRequest>(req =>
+    using var mock = Mock.Setup(context =>
+        DataProcessor.Process(context.It.Is<ProcessRequest>(req =>
             req.Priority > 5 &&
             req.Type == "Important" &&
             req.Data.Contains("test"))))
@@ -410,7 +410,7 @@ public async Task Debug_Async_Mocking()
     Assert.AreEqual("mocked_data", result1);
 
     // Option 2: Async lambda
-    using var mock2 = Mock.Setup(() => AsyncService.ProcessAsync(It.IsAny<string>()))
+    using var mock2 = Mock.Setup(context => AsyncService.ProcessAsync(context.It.IsAny<string>()))
         .Returns(async (string input) =>
         {
             await Task.Delay(1); // Simulate async work
@@ -435,12 +435,12 @@ public void Debug_Hook_Conflicts()
     var calls = new List<string>();
 
     // Create multiple mocks for the same method
-    using var mock1 = Mock.Setup(() => Logger.Log(It.IsAny<string>()))
+    using var mock1 = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
         .Callback<string>(msg => calls.Add($"Mock1: {msg}"))
         .Returns();
 
     // This might conflict with mock1
-    using var mock2 = Mock.Setup(() => Logger.Log(It.IsAny<string>()))
+    using var mock2 = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
         .Callback<string>(msg => calls.Add($"Mock2: {msg}"))
         .Returns();
 
@@ -462,7 +462,7 @@ public void Resolved_Conditional_Mocking()
 {
     var calls = new List<string>();
 
-    using var mock = Mock.Setup(() => Logger.Log(It.IsAny<string>()))
+    using var mock = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
         .Callback<string>(msg =>
         {
             if (msg.StartsWith("error"))
@@ -518,13 +518,13 @@ public void Monitor_Memory_Usage()
 public void Proper_Mock_Disposal()
 {
     // ✅ Good: Using statement ensures disposal
-    using var mock = Mock.Setup(() => File.Exists(It.IsAny<string>()))
+    using var mock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
         .Returns(true);
 
     // Test logic here
 
     // ✅ Good: Explicit disposal if using statement not possible
-    var mock2 = Mock.Setup(() => File.ReadAllText(It.IsAny<string>()))
+    var mock2 = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
         .Returns("content");
     try
     {
@@ -665,7 +665,7 @@ public void CI_Environment_Check()
 
 ```csharp
 // ✅ This works - static method on sealed class
-using var mock = Mock.Setup(() => File.ReadAllText(It.IsAny<string>()))
+using var mock = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
     .Returns("mocked content");
 
 // ❌ This won't work - instance method on sealed class
@@ -687,7 +687,7 @@ using var mock = Mock.Setup(() => File.ReadAllText(It.IsAny<string>()))
 
 ```csharp
 // Works with third-party libraries
-using var mock = Mock.Setup(() => JsonConvert.SerializeObject(It.IsAny<object>()))
+using var mock = Mock.Setup(context => JsonConvert.SerializeObject(context.It.IsAny<object>()))
     .Returns("{\"mocked\": true}");
 ```
 
@@ -700,7 +700,7 @@ public void Verify_Method_Called()
 {
     var wasCalled = false;
 
-    using var mock = Mock.Setup(() => Logger.Log(It.IsAny<string>()))
+    using var mock = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
         .Callback<string>(msg => wasCalled = true);
 
     // Your code that should call Logger.Log
@@ -715,11 +715,11 @@ public void Verify_Method_Called()
 
 ```csharp
 // ✅ Specify the generic type
-using var mock = Mock.Setup(() => JsonSerializer.Deserialize<MyClass>(It.IsAny<string>()))
+using var mock = Mock.Setup(context => JsonSerializer.Deserialize<MyClass>(context.It.IsAny<string>()))
     .Returns(new MyClass());
 
 // ❌ Don't use open generic types
-// Mock.Setup(() => JsonSerializer.Deserialize<T>(It.IsAny<string>()))
+// Mock.Setup(context => JsonSerializer.Deserialize<T>(context.It.IsAny<string>()))
 ```
 
 ## Getting Help

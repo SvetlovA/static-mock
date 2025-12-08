@@ -50,8 +50,8 @@ public class TradingSystemTests
             .Returns(new DateTime(2024, 1, 15, 9, 30, 0));
 
         // Mock compliance rules for stress scenario
-        using var complianceMock = Mock.Setup(() =>
-            ComplianceValidator.ValidateRiskLimits(It.IsAny<decimal>()))
+        using var complianceMock = Mock.Setup(context =>
+            ComplianceValidator.ValidateRiskLimits(context.It.IsAny<decimal>()))
             .Returns<decimal>(risk => new ComplianceResult
             {
                 IsValid = risk <= 0.15m, // 15% max risk in stress conditions
@@ -60,8 +60,8 @@ public class TradingSystemTests
 
         // Mock audit logging to verify risk calculations are logged
         var auditEntries = new List<AuditEntry>();
-        using var auditMock = Mock.Setup(() =>
-            AuditLogger.LogRiskCalculation(It.IsAny<string>(), It.IsAny<decimal>(), It.IsAny<DateTime>()))
+        using var auditMock = Mock.Setup(context =>
+            AuditLogger.LogRiskCalculation(context.It.IsAny<string>(), context.It.IsAny<decimal>(), context.It.IsAny<DateTime>()))
             .Callback<string, decimal, DateTime>((portfolioId, risk, timestamp) =>
                 auditEntries.Add(new AuditEntry
                 {
@@ -227,8 +227,8 @@ public class ModernizedInventoryManagerTests
             new WarehouseItem { Location = "WH003", ItemCode = "ITEM003", Quantity = 75 }
         };
 
-        using var queryMock = Mock.Setup(() =>
-            DatabaseQueryHelper.ExecuteQuery(It.IsAny<IDbConnection>(), It.IsAny<string>()))
+        using var queryMock = Mock.Setup(context =>
+            DatabaseQueryHelper.ExecuteQuery(context.It.IsAny<IDbConnection>(), context.It.IsAny<string>()))
             .Returns(mockWarehouseData);
 
         using var formatterMock = Mock.Setup(() =>
@@ -246,8 +246,8 @@ public class ModernizedInventoryManagerTests
             .Returns(testUser);
 
         var auditEntries = new List<AuditLogEntry>();
-        using var auditMock = Mock.Setup(() =>
-            AuditLogger.LogReportGeneration(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+        using var auditMock = Mock.Setup(context =>
+            AuditLogger.LogReportGeneration(context.It.IsAny<string>(), context.It.IsAny<DateTime>(), context.It.IsAny<string>()))
             .Callback<string, DateTime, string>((reportType, date, user) =>
                 auditEntries.Add(new AuditLogEntry
                 {
@@ -288,8 +288,8 @@ public class ModernizedInventoryManagerTests
         using var pathMock = Mock.Setup(() => SystemPaths.GetConfigDirectory())
             .Returns(@"C:\TestConfig");
 
-        using var fileMock = Mock.Setup(() =>
-            FileHelper.ReadConfig(It.IsAny<string>()))
+        using var fileMock = Mock.Setup(context =>
+            FileHelper.ReadConfig(context.It.IsAny<string>()))
             .Returns(new InventoryConfig { ConnectionString = "invalid_connection" });
 
         // Mock database connection failure
@@ -326,14 +326,14 @@ public class ModernizedInventoryManagerTests
 
             if (scenario.Config == null)
             {
-                using var fileMock = Mock.Setup(() =>
-                    FileHelper.ReadConfig(It.IsAny<string>()))
+                using var fileMock = Mock.Setup(context =>
+                    FileHelper.ReadConfig(context.It.IsAny<string>()))
                     .Throws<FileNotFoundException>();
             }
             else
             {
-                using var fileMock = Mock.Setup(() =>
-                    FileHelper.ReadConfig(It.IsAny<string>()))
+                using var fileMock = Mock.Setup(context =>
+                    FileHelper.ReadConfig(context.It.IsAny<string>()))
                     .Returns(scenario.Config);
 
                 if (!string.IsNullOrEmpty(scenario.Config.ConnectionString))
@@ -355,16 +355,16 @@ public class ModernizedInventoryManagerTests
             else
             {
                 // Additional mocks needed for successful scenarios
-                using var queryBuilderMock = Mock.Setup(() =>
-                    SqlQueryBuilder.BuildWarehouseQuery(It.IsAny<DateTime>()))
+                using var queryBuilderMock = Mock.Setup(context =>
+                    SqlQueryBuilder.BuildWarehouseQuery(context.It.IsAny<DateTime>()))
                     .Returns("SELECT * FROM Inventory");
 
-                using var queryMock = Mock.Setup(() =>
-                    DatabaseQueryHelper.ExecuteQuery(It.IsAny<IDbConnection>(), It.IsAny<string>()))
+                using var queryMock = Mock.Setup(context =>
+                    DatabaseQueryHelper.ExecuteQuery(context.It.IsAny<IDbConnection>(), context.It.IsAny<string>()))
                     .Returns(new WarehouseItem[0]);
 
-                using var formatterMock = Mock.Setup(() =>
-                    ReportFormatter.FormatInventoryData(It.IsAny<WarehouseItem[]>()))
+                using var formatterMock = Mock.Setup(context =>
+                    ReportFormatter.FormatInventoryData(context.It.IsAny<WarehouseItem[]>()))
                     .Returns(new InventoryReport
                     {
                         ReportDate = new DateTime(2024, 1, 15),
@@ -372,8 +372,8 @@ public class ModernizedInventoryManagerTests
                         TotalQuantity = 0
                     });
 
-                using var auditMock = Mock.Setup(() =>
-                    AuditLogger.LogReportGeneration(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<string>()));
+                using var auditMock = Mock.Setup(context =>
+                    AuditLogger.LogReportGeneration(context.It.IsAny<string>(), context.It.IsAny<DateTime>(), context.It.IsAny<string>()));
 
                 Assert.DoesNotThrow(() =>
                     inventoryManager.GenerateReport(new DateTime(2024, 1, 15)),
@@ -424,8 +424,8 @@ public class OrderProcessingApiTests
         };
 
         // Mock inventory checks
-        using var inventoryMock = Mock.Setup(() =>
-            InventoryService.CheckAvailability(It.IsAny<string>(), It.IsAny<int>()))
+        using var inventoryMock = Mock.Setup(context =>
+            InventoryService.CheckAvailability(context.It.IsAny<string>(), context.It.IsAny<int>()))
             .Returns<string, int>((productId, quantity) => new InventoryResult
             {
                 ProductId = productId,
@@ -434,8 +434,8 @@ public class OrderProcessingApiTests
             });
 
         // Mock pricing service
-        using var pricingMock = Mock.Setup(() =>
-            PricingService.CalculateTotal(It.IsAny<OrderItem[]>()))
+        using var pricingMock = Mock.Setup(context =>
+            PricingService.CalculateTotal(context.It.IsAny<OrderItem[]>()))
             .Returns(new PricingResult
             {
                 Subtotal = 109.97m,
@@ -444,8 +444,8 @@ public class OrderProcessingApiTests
             });
 
         // Mock shipping calculation
-        using var shippingMock = Mock.Setup(() =>
-            ShippingCalculator.CalculateShipping(It.IsAny<Address>(), It.IsAny<decimal>()))
+        using var shippingMock = Mock.Setup(context =>
+            ShippingCalculator.CalculateShipping(context.It.IsAny<Address>(), context.It.IsAny<decimal>()))
             .Returns(new ShippingResult
             {
                 Cost = 9.99m,
@@ -454,8 +454,8 @@ public class OrderProcessingApiTests
             });
 
         // Mock payment processing
-        using var paymentMock = Mock.Setup(() =>
-            PaymentProcessor.ProcessPayment(It.IsAny<PaymentMethod>(), It.IsAny<decimal>()))
+        using var paymentMock = Mock.Setup(context =>
+            PaymentProcessor.ProcessPayment(context.It.IsAny<PaymentMethod>(), context.It.IsAny<decimal>()))
             .Returns(Task.FromResult(new PaymentResult
             {
                 Success = true,
@@ -465,15 +465,15 @@ public class OrderProcessingApiTests
 
         // Mock order persistence
         var savedOrders = new List<Order>();
-        using var orderSaveMock = Mock.Setup(() =>
-            OrderRepository.SaveOrder(It.IsAny<Order>()))
+        using var orderSaveMock = Mock.Setup(context =>
+            OrderRepository.SaveOrder(context.It.IsAny<Order>()))
             .Callback<Order>(order => savedOrders.Add(order))
             .Returns(Task.FromResult("ORD_" + Guid.NewGuid().ToString("N")[..8].ToUpper()));
 
         // Mock notification service
         var sentNotifications = new List<NotificationRequest>();
-        using var notificationMock = Mock.Setup(() =>
-            NotificationService.SendOrderConfirmation(It.IsAny<string>(), It.IsAny<string>()))
+        using var notificationMock = Mock.Setup(context =>
+            NotificationService.SendOrderConfirmation(context.It.IsAny<string>(), context.It.IsAny<string>()))
             .Callback<string, string>((customerId, orderId) =>
                 sentNotifications.Add(new NotificationRequest
                 {
@@ -485,8 +485,8 @@ public class OrderProcessingApiTests
 
         // Mock audit logging
         var auditLogs = new List<AuditLog>();
-        using var auditMock = Mock.Setup(() =>
-            AuditLogger.LogOrderProcessing(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<decimal>()))
+        using var auditMock = Mock.Setup(context =>
+            AuditLogger.LogOrderProcessing(context.It.IsAny<string>(), context.It.IsAny<string>(), context.It.IsAny<decimal>()))
             .Callback<string, string, decimal>((orderId, customerId, amount) =>
                 auditLogs.Add(new AuditLog
                 {
@@ -534,8 +534,8 @@ public class OrderProcessingApiTests
         SetupSuccessfulInventoryAndPricing();
 
         // Mock payment failure
-        using var paymentMock = Mock.Setup(() =>
-            PaymentProcessor.ProcessPayment(It.IsAny<PaymentMethod>(), It.IsAny<decimal>()))
+        using var paymentMock = Mock.Setup(context =>
+            PaymentProcessor.ProcessPayment(context.It.IsAny<PaymentMethod>(), context.It.IsAny<decimal>()))
             .Returns(Task.FromResult(new PaymentResult
             {
                 Success = false,
@@ -545,8 +545,8 @@ public class OrderProcessingApiTests
 
         // Mock inventory rollback
         var rollbackCalls = new List<InventoryRollbackRequest>();
-        using var rollbackMock = Mock.Setup(() =>
-            InventoryService.RollbackReservation(It.IsAny<string>(), It.IsAny<int>()))
+        using var rollbackMock = Mock.Setup(context =>
+            InventoryService.RollbackReservation(context.It.IsAny<string>(), context.It.IsAny<int>()))
             .Callback<string, int>((productId, quantity) =>
                 rollbackCalls.Add(new InventoryRollbackRequest
                 {
@@ -555,8 +555,8 @@ public class OrderProcessingApiTests
                 }));
 
         // Ensure no order is saved on failure
-        using var orderSaveMock = Mock.Setup(() =>
-            OrderRepository.SaveOrder(It.IsAny<Order>()))
+        using var orderSaveMock = Mock.Setup(context =>
+            OrderRepository.SaveOrder(context.It.IsAny<Order>()))
             .Throws(new InvalidOperationException("Order should not be saved on payment failure"));
 
         // Act: Process order with failing payment
@@ -582,8 +582,8 @@ public class OrderProcessingApiTests
         var testOrder = CreateBasicOrderRequest();
 
         // Mock partial inventory availability
-        using var inventoryMock = Mock.Setup(() =>
-            InventoryService.CheckAvailability(It.IsAny<string>(), It.IsAny<int>()))
+        using var inventoryMock = Mock.Setup(context =>
+            InventoryService.CheckAvailability(context.It.IsAny<string>(), context.It.IsAny<int>()))
             .Returns<string, int>((productId, quantity) =>
             {
                 if (productId == "PROD_001")
@@ -631,7 +631,7 @@ public class OrderProcessingApiTests
 
     private void SetupSuccessfulInventoryAndPricing()
     {
-        Mock.Setup(() => InventoryService.CheckAvailability(It.IsAny<string>(), It.IsAny<int>()))
+        Mock.Setup(context => InventoryService.CheckAvailability(context.It.IsAny<string>(), context.It.IsAny<int>()))
             .Returns<string, int>((productId, quantity) => new InventoryResult
             {
                 ProductId = productId,
@@ -639,10 +639,10 @@ public class OrderProcessingApiTests
                 StockLevel = quantity + 10
             });
 
-        Mock.Setup(() => PricingService.CalculateTotal(It.IsAny<OrderItem[]>()))
+        Mock.Setup(context => PricingService.CalculateTotal(context.It.IsAny<OrderItem[]>()))
             .Returns(new PricingResult { Subtotal = 109.97m, Tax = 8.80m, Total = 118.77m });
 
-        Mock.Setup(() => ShippingCalculator.CalculateShipping(It.IsAny<Address>(), It.IsAny<decimal>()))
+        Mock.Setup(context => ShippingCalculator.CalculateShipping(context.It.IsAny<Address>(), context.It.IsAny<decimal>()))
             .Returns(new ShippingResult { Cost = 9.99m, EstimatedDays = 3, Method = "Standard" });
     }
 }
@@ -678,8 +678,8 @@ public class DocumentManagementSystemTests
         using var directoryCreateMock = Mock.Setup(() =>
             Directory.CreateDirectory(Path.GetDirectoryName(expectedPath)));
 
-        using var fileWriteMock = Mock.Setup(() =>
-            File.WriteAllBytes(expectedPath, It.IsAny<byte[]>()));
+        using var fileWriteMock = Mock.Setup(context =>
+            File.WriteAllBytes(expectedPath, context.It.IsAny<byte[]>()));
 
         // Mock virus scanning
         using var virusScanMock = Mock.Setup(() =>
@@ -706,8 +706,8 @@ public class DocumentManagementSystemTests
             });
 
         // Mock thumbnail generation
-        using var thumbnailMock = Mock.Setup(() =>
-            ThumbnailGenerator.GenerateThumbnail(expectedPath, It.IsAny<ThumbnailOptions>()))
+        using var thumbnailMock = Mock.Setup(context =>
+            ThumbnailGenerator.GenerateThumbnail(expectedPath, context.It.IsAny<ThumbnailOptions>()))
             .Returns(new ThumbnailResult
             {
                 ThumbnailPath = expectedPath.Replace(".pdf", "_thumb.jpg"),
@@ -717,15 +717,15 @@ public class DocumentManagementSystemTests
 
         // Mock database storage
         var savedDocuments = new List<DocumentRecord>();
-        using var dbSaveMock = Mock.Setup(() =>
-            DocumentRepository.SaveDocument(It.IsAny<DocumentRecord>()))
+        using var dbSaveMock = Mock.Setup(context =>
+            DocumentRepository.SaveDocument(context.It.IsAny<DocumentRecord>()))
             .Callback<DocumentRecord>(doc => savedDocuments.Add(doc))
             .Returns(Task.FromResult("DOC_" + Guid.NewGuid().ToString("N")[..8]));
 
         // Mock audit logging
         var auditEntries = new List<DocumentAuditEntry>();
-        using var auditMock = Mock.Setup(() =>
-            DocumentAuditLogger.LogDocumentUpload(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>()))
+        using var auditMock = Mock.Setup(context =>
+            DocumentAuditLogger.LogDocumentUpload(context.It.IsAny<string>(), context.It.IsAny<string>(), context.It.IsAny<long>()))
             .Callback<string, string, long>((userId, fileName, fileSize) =>
                 auditEntries.Add(new DocumentAuditEntry
                 {
@@ -775,11 +775,11 @@ public class DocumentManagementSystemTests
         var tempPath = Path.Combine(Path.GetTempPath(), "suspicious_file.exe");
 
         // Set up file system mocks
-        using var directoryExistsMock = Mock.Setup(() =>
-            Directory.Exists(It.IsAny<string>())).Returns(true);
+        using var directoryExistsMock = Mock.Setup(context =>
+            Directory.Exists(context.It.IsAny<string>())).Returns(true);
 
-        using var fileWriteMock = Mock.Setup(() =>
-            File.WriteAllBytes(tempPath, It.IsAny<byte[]>()));
+        using var fileWriteMock = Mock.Setup(context =>
+            File.WriteAllBytes(tempPath, context.It.IsAny<byte[]>()));
 
         // Mock virus detection
         using var virusScanMock = Mock.Setup(() =>
@@ -793,8 +793,8 @@ public class DocumentManagementSystemTests
 
         // Mock quarantine process
         var quarantinedFiles = new List<QuarantineRecord>();
-        using var quarantineMock = Mock.Setup(() =>
-            QuarantineManager.QuarantineFile(tempPath, It.IsAny<string>()))
+        using var quarantineMock = Mock.Setup(context =>
+            QuarantineManager.QuarantineFile(tempPath, context.It.IsAny<string>()))
             .Callback<string, string>((filePath, threatName) =>
                 quarantinedFiles.Add(new QuarantineRecord
                 {
@@ -808,8 +808,8 @@ public class DocumentManagementSystemTests
 
         // Mock security incident logging
         var securityIncidents = new List<SecurityIncident>();
-        using var securityLogMock = Mock.Setup(() =>
-            SecurityLogger.LogVirusDetection(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        using var securityLogMock = Mock.Setup(context =>
+            SecurityLogger.LogVirusDetection(context.It.IsAny<string>(), context.It.IsAny<string>(), context.It.IsAny<string>()))
             .Callback<string, string, string>((userId, fileName, threatName) =>
                 securityIncidents.Add(new SecurityIncident
                 {
@@ -869,8 +869,8 @@ public class MultiTenantDataAccessTests
 
         // Mock database connection with tenant isolation
         var executedQueries = new List<DatabaseQuery>();
-        using var dbQueryMock = Mock.Setup(() =>
-            DatabaseExecutor.ExecuteQuery(It.IsAny<string>(), It.IsAny<object[]>()))
+        using var dbQueryMock = Mock.Setup(context =>
+            DatabaseExecutor.ExecuteQuery(context.It.IsAny<string>(), context.It.IsAny<object[]>()))
             .Callback<string, object[]>((sql, parameters) =>
                 executedQueries.Add(new DatabaseQuery
                 {
@@ -887,8 +887,8 @@ public class MultiTenantDataAccessTests
 
         // Mock audit logging for data access
         var dataAccessLogs = new List<DataAccessAuditEntry>();
-        using var dataAuditMock = Mock.Setup(() =>
-            DataAccessAuditor.LogQuery(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        using var dataAuditMock = Mock.Setup(context =>
+            DataAccessAuditor.LogQuery(context.It.IsAny<string>(), context.It.IsAny<string>(), context.It.IsAny<string>()))
             .Callback<string, string, string>((userId, tenantId, operation) =>
                 dataAccessLogs.Add(new DataAccessAuditEntry
                 {
@@ -932,14 +932,14 @@ public class MultiTenantDataAccessTests
             .Returns(currentTenantId);
 
         // Mock database query that finds no results (due to tenant filtering)
-        using var dbQueryMock = Mock.Setup(() =>
-            DatabaseExecutor.ExecuteQuery(It.IsAny<string>(), It.IsAny<object[]>()))
+        using var dbQueryMock = Mock.Setup(context =>
+            DatabaseExecutor.ExecuteQuery(context.It.IsAny<string>(), context.It.IsAny<object[]>()))
             .Returns(new Customer[0]); // No results due to tenant isolation
 
         // Mock security violation logging
         var securityViolations = new List<SecurityViolation>();
-        using var securityMock = Mock.Setup(() =>
-            SecurityLogger.LogUnauthorizedAccess(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        using var securityMock = Mock.Setup(context =>
+            SecurityLogger.LogUnauthorizedAccess(context.It.IsAny<string>(), context.It.IsAny<string>(), context.It.IsAny<string>()))
             .Callback<string, string, string>((userId, resource, reason) =>
                 securityViolations.Add(new SecurityViolation
                 {

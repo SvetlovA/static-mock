@@ -26,13 +26,13 @@ public void Mock_Nested_Static_Calls()
         .Returns("SqlServer");
 
     // Mock the connection string building
-    using var connectionMock = Mock.Setup(() =>
-        ConnectionStringBuilder.Build(It.IsAny<string>()))
+    using var connectionMock = Mock.Setup(context =>
+        ConnectionStringBuilder.Build(context.It.IsAny<string>()))
         .Returns("Server=localhost;Database=test;");
 
     // Mock the database connection
-    using var dbMock = Mock.Setup(() =>
-        DatabaseFactory.CreateConnection(It.IsAny<string>()))
+    using var dbMock = Mock.Setup(context =>
+        DatabaseFactory.CreateConnection(context.It.IsAny<string>()))
         .Returns(new MockDbConnection());
 
     var service = new DataService();
@@ -65,8 +65,8 @@ public void Coordinated_Multi_Mock_Pattern()
 
     // Mock audit logging
     var auditCalls = new List<string>();
-    using var auditMock = Mock.Setup(() =>
-        AuditLogger.Log(It.IsAny<string>()))
+    using var auditMock = Mock.Setup(context =>
+        AuditLogger.Log(context.It.IsAny<string>()))
         .Callback<string>(message => auditCalls.Add(message));
 
     var controller = new UserController();
@@ -88,8 +88,8 @@ public void Dynamic_Behavior_Based_On_History()
     var callHistory = new List<string>();
     var attemptCount = 0;
 
-    using var mock = Mock.Setup(() =>
-        ExternalApiClient.Call(It.IsAny<string>()))
+    using var mock = Mock.Setup(context =>
+        ExternalApiClient.Call(context.It.IsAny<string>()))
         .Returns<string>(endpoint =>
         {
             callHistory.Add(endpoint);
@@ -124,13 +124,13 @@ public void Stateful_Mock_Pattern()
     var mockState = new Dictionary<string, object>();
 
     // Mock cache get operations
-    using var getMock = Mock.Setup(() =>
-        CacheManager.Get(It.IsAny<string>()))
+    using var getMock = Mock.Setup(context =>
+        CacheManager.Get(context.It.IsAny<string>()))
         .Returns<string>(key => mockState.GetValueOrDefault(key));
 
     // Mock cache set operations
-    using var setMock = Mock.Setup(() =>
-        CacheManager.Set(It.IsAny<string>(), It.IsAny<object>()))
+    using var setMock = Mock.Setup(context =>
+        CacheManager.Set(context.It.IsAny<string>(), context.It.IsAny<object>()))
         .Callback<string, object>((key, value) => mockState[key] = value);
 
     var service = new CachedDataService();
@@ -167,8 +167,8 @@ public void Session_Based_Mock_Behavior()
         SessionManager.GetCurrentSession())
         .Returns(currentSession);
 
-    using var permissionMock = Mock.Setup(() =>
-        PermissionChecker.HasPermission(It.IsAny<int>(), It.IsAny<string>()))
+    using var permissionMock = Mock.Setup(context =>
+        PermissionChecker.HasPermission(context.It.IsAny<int>(), context.It.IsAny<string>()))
         .Returns<int, string>((userId, permission) =>
         {
             // Permission based on current session
@@ -203,8 +203,8 @@ Different mock behavior based on environment conditions:
 [Test]
 public void Environment_Conditional_Mocking()
 {
-    using var environmentMock = Mock.Setup(() =>
-        Environment.GetEnvironmentVariable(It.IsAny<string>()))
+    using var environmentMock = Mock.Setup(context =>
+        Environment.GetEnvironmentVariable(context.It.IsAny<string>()))
         .Returns<string>(varName => varName switch
         {
             "ENVIRONMENT" => "Development",
@@ -213,8 +213,8 @@ public void Environment_Conditional_Mocking()
             _ => null
         });
 
-    using var loggerMock = Mock.Setup(() =>
-        Logger.Log(It.IsAny<LogLevel>(), It.IsAny<string>()))
+    using var loggerMock = Mock.Setup(context =>
+        Logger.Log(context.It.IsAny<LogLevel>(), context.It.IsAny<string>()))
         .Callback<LogLevel, string>((level, message) =>
         {
             // Only log debug messages in development
@@ -245,8 +245,8 @@ public void Parameter_Driven_Mock_Selection()
         ["orders"] = new[] { new { id = 1, userId = 1, total = 99.99 } }
     };
 
-    using var mock = Mock.Setup(() =>
-        ApiClient.Get(It.IsAny<string>()))
+    using var mock = Mock.Setup(context =>
+        ApiClient.Get(context.It.IsAny<string>()))
         .Returns<string>(endpoint =>
         {
             var resource = endpoint.Split('/').LastOrDefault();
@@ -279,8 +279,8 @@ public void Hierarchical_Mock_Chain()
     var mockCommand = new Mock<IDbCommand>();
     var mockReader = new Mock<IDataReader>();
 
-    using var factoryMock = Mock.Setup(() =>
-        DatabaseFactory.CreateConnection(It.IsAny<string>()))
+    using var factoryMock = Mock.Setup(context =>
+        DatabaseFactory.CreateConnection(context.It.IsAny<string>()))
         .Returns(mockConnection.Object);
 
     using var commandMock = Mock.Setup(() =>
@@ -324,22 +324,22 @@ public void Composite_Mock_Pattern()
     });
 
     // Mock file system operations
-    using var fileExistsMock = Mock.Setup(() =>
-        File.Exists(It.IsAny<string>()))
+    using var fileExistsMock = Mock.Setup(context =>
+        File.Exists(context.It.IsAny<string>()))
         .Returns<string>(path => fileSystemState.ContainsKey(path));
 
-    using var fileReadMock = Mock.Setup(() =>
-        File.ReadAllText(It.IsAny<string>()))
+    using var fileReadMock = Mock.Setup(context =>
+        File.ReadAllText(context.It.IsAny<string>()))
         .Returns<string>(path => fileSystemState.GetValueOrDefault(path, ""));
 
-    using var fileWriteMock = Mock.Setup(() =>
-        File.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+    using var fileWriteMock = Mock.Setup(context =>
+        File.WriteAllText(context.It.IsAny<string>(), context.It.IsAny<string>()))
         .Callback<string, string>((path, content) =>
             fileSystemState[path] = content);
 
     // Mock network operations
-    using var httpMock = Mock.Setup(() =>
-        HttpClient.GetAsync(It.IsAny<string>()))
+    using var httpMock = Mock.Setup(context =>
+        HttpClient.GetAsync(context.It.IsAny<string>()))
         .Returns(() => Task.FromResult(networkResponses.Dequeue()));
 
     var service = new CachingRemoteDataService();
@@ -368,8 +368,8 @@ public void Intermittent_Failure_Simulation()
     var callCount = 0;
     var failurePattern = new[] { true, false, true, false, false }; // fail, succeed, fail, succeed, succeed
 
-    using var mock = Mock.Setup(() =>
-        UnreliableService.ProcessData(It.IsAny<string>()))
+    using var mock = Mock.Setup(context =>
+        UnreliableService.ProcessData(context.It.IsAny<string>()))
         .Returns<string>(data =>
         {
             var shouldFail = callCount < failurePattern.Length && failurePattern[callCount];
@@ -404,8 +404,8 @@ public void Exception_Chain_Testing()
         new InvalidOperationException("Invalid state")
     });
 
-    using var mock = Mock.Setup(() =>
-        ExternalService.Execute(It.IsAny<string>()))
+    using var mock = Mock.Setup(context =>
+        ExternalService.Execute(context.It.IsAny<string>()))
         .Returns<string>(operation =>
         {
             if (exceptions.Count > 0)
@@ -440,7 +440,7 @@ public void Lazy_Mock_Initialization()
     expensiveMock = new Lazy<IDisposable>(() =>
     {
         expensiveOperationCalled = true;
-        return Mock.Setup(() => ExpensiveExternalService.Process(It.IsAny<string>()))
+        return Mock.Setup(context => ExpensiveExternalService.Process(context.It.IsAny<string>()))
             .Returns("mocked_result");
     });
 
@@ -474,7 +474,7 @@ public class MockPoolTests
         MockPool["datetime_fixed"] = () => Mock.Setup(() => DateTime.Now)
             .Returns(new DateTime(2024, 1, 1));
 
-        MockPool["file_exists_true"] = () => Mock.Setup(() => File.Exists(It.IsAny<string>()))
+        MockPool["file_exists_true"] = () => Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
             .Returns(true);
     }
 

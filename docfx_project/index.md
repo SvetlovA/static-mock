@@ -80,7 +80,7 @@ public void TestDatabaseOperations()
 {
     var expectedQuery = "SELECT * FROM Users WHERE Active = 1";
 
-    Mock.Setup(() => DatabaseHelper.ExecuteQuery(It.IsAny<string>()), () =>
+    Mock.Setup(context => DatabaseHelper.ExecuteQuery(context.It.IsAny<string>()), () =>
     {
         // This validation runs DURING the mock execution
         var result = DatabaseHelper.ExecuteQuery(expectedQuery);
@@ -135,15 +135,15 @@ SMock provides powerful parameter matching capabilities:
 
 ```csharp
 // Match any argument
-Mock.Setup(() => MyService.Process(It.IsAny<string>()))
+Mock.Setup(context => MyService.Process(context.It.IsAny<string>()))
     .Returns("mocked");
 
 // Match with conditions
-Mock.Setup(() => MyService.Process(It.Is<string>(s => s.StartsWith("test_"))))
+Mock.Setup(context => MyService.Process(context.It.Is<string>(s => s.StartsWith("test_"))))
     .Returns("conditional_mock");
 
 // Match specific values with complex conditions
-Mock.Setup(() => DataProcessor.Transform(It.Is<DataModel>(d =>
+Mock.Setup(context => DataProcessor.Transform(context.It.Is<DataModel>(d =>
     d.IsValid && d.Priority > 5)))
     .Returns(new ProcessedData { Success = true });
 ```
@@ -158,7 +158,7 @@ using var mock = Mock.Setup(() => HttpClient.GetStringAsync("https://api.example
     .Returns(Task.FromResult("{\"data\": \"test\"}"));
 
 // Mock async methods (Hierarchical)
-Mock.Setup(() => DatabaseService.GetUserAsync(It.IsAny<int>()), async () =>
+Mock.Setup(context => DatabaseService.GetUserAsync(context.It.IsAny<int>()), async () =>
 {
     var user = await DatabaseService.GetUserAsync(123);
     Assert.IsNotNull(user);
@@ -192,7 +192,7 @@ Execute custom logic during mock calls:
 ```csharp
 var callCount = 0;
 
-Mock.Setup(() => Logger.LogMessage(It.IsAny<string>()), () =>
+Mock.Setup(context => Logger.LogMessage(context.It.IsAny<string>()), () =>
 {
     var result = Logger.LogMessage("test");
     Assert.IsTrue(callCount > 0);
@@ -224,9 +224,9 @@ public class ServiceTests
     public void Should_Handle_FileSystem_Operations()
     {
         // Group related mocks together
-        using var existsMock = Mock.Setup(() => File.Exists(It.IsAny<string>()))
+        using var existsMock = Mock.Setup(context => File.Exists(context.It.IsAny<string>()))
             .Returns(true);
-        using var readMock = Mock.Setup(() => File.ReadAllText(It.IsAny<string>()))
+        using var readMock = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
             .Returns("test content");
 
         // Test your logic
@@ -281,7 +281,7 @@ var result = MyClass.Method(); // Same static call
 Mock.Setup(() => MyClass.Process("exact_string")).Returns("result");
 
 // ✅ Better - Use parameter matching
-Mock.Setup(() => MyClass.Process(It.IsAny<string>())).Returns("result");
+Mock.Setup(context => MyClass.Process(context.It.IsAny<string>())).Returns("result");
 ```
 
 ### Getting Help

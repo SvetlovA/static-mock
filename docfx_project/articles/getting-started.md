@@ -474,7 +474,7 @@ public void Good_Mock_Scoping()
 public void Bad_Mock_Scoping()
 {
     // ❌ Bad: Don't create mocks you don't use in the test
-    using var unnecessaryMock = Mock.Setup(() => Console.WriteLine(It.IsAny<string>()));
+    using var unnecessaryMock = Mock.Setup(context => Console.WriteLine(context.It.IsAny<string>()));
 
     // Test that doesn't use Console.WriteLine
 }
@@ -513,7 +513,7 @@ public void Group_Related_Mocks()
         .Returns(true);
     using var readMock = Mock.Setup(() => File.ReadAllText("database.config"))
         .Returns("connection_string=test_db");
-    using var writeMock = Mock.Setup(() => File.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
+    using var writeMock = Mock.Setup(context => File.WriteAllText(context.It.IsAny<string>(), context.It.IsAny<string>()));
 
     // Test configuration management
     var configManager = new ConfigurationManager();
@@ -529,7 +529,7 @@ public void Verify_Mock_Usage()
 {
     var callCount = 0;
 
-    using var mock = Mock.Setup(() => AuditLogger.LogAction(It.IsAny<string>()))
+    using var mock = Mock.Setup(context => AuditLogger.LogAction(context.It.IsAny<string>()))
         .Callback<string>(action => callCount++);
 
     var service = new CriticalService();
@@ -555,8 +555,8 @@ public void Configuration_Pattern()
         ["EnableFeatureX"] = "true"
     };
 
-    using var mock = Mock.Setup(() =>
-        ConfigurationManager.AppSettings[It.IsAny<string>()])
+    using var mock = Mock.Setup(context =>
+        ConfigurationManager.AppSettings[context.It.IsAny<string>()])
         .Returns<string>(key => testConfig.GetValueOrDefault(key));
 
     var service = new ConfigurableService();
@@ -599,8 +599,8 @@ public void External_Dependency_Pattern()
         .Returns("{\"temperature\": 22, \"condition\": \"sunny\"}");
 
     // Mock file system for caching
-    using var fileMock = Mock.Setup(() =>
-        File.WriteAllText(It.IsAny<string>(), It.IsAny<string>()));
+    using var fileMock = Mock.Setup(context =>
+        File.WriteAllText(context.It.IsAny<string>(), context.It.IsAny<string>()));
 
     var weatherService = new WeatherService();
     var weather = weatherService.GetCurrentWeather();
@@ -628,7 +628,7 @@ var result = SomeClass.Method(); // Still calls original!
 
 ```csharp
 // ✅ Make sure parameter types match exactly
-Mock.Setup(() => SomeClass.Method(It.IsAny<string>())).Returns("mocked");
+Mock.Setup(context => SomeClass.Method(context.It.IsAny<string>())).Returns("mocked");
 var result = SomeClass.Method("any_parameter"); // Now mocked!
 ```
 
@@ -646,10 +646,10 @@ var result = Validator.Validate("different_string"); // Not mocked!
 
 ```csharp
 // ✅ Use IsAny for flexible matching
-Mock.Setup(() => Validator.Validate(It.IsAny<string>())).Returns(true);
+Mock.Setup(context => Validator.Validate(context.It.IsAny<string>())).Returns(true);
 
 // ✅ Or use Is with conditions
-Mock.Setup(() => Validator.Validate(It.Is<string>(s => s.Length > 0))).Returns(true);
+Mock.Setup(context => Validator.Validate(context.It.Is<string>(s => s.Length > 0))).Returns(true);
 ```
 
 #### Issue: Async Mocks Not Working
