@@ -128,7 +128,7 @@ public void TestDatabaseConnection()
 {
     var expectedConnectionString = "Server=localhost;Database=test;";
 
-    Mock.Setup(() => DatabaseConnection.Connect(It.IsAny<string>()), () =>
+    Mock.Setup(context => DatabaseConnection.Connect(It.IsAny<string>()), () =>
     {
         // This validation runs DURING the mock execution
         var actualCall = DatabaseConnection.Connect(expectedConnectionString);
