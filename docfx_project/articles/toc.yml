@@ -12,3 +12,5 @@
   href: migration-guide.md
 - name: Troubleshooting & FAQ
   href: troubleshooting.md
+- name: Claude Code Plugin
+  href: claude-code-plugin.md

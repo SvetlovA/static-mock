@@ -747,7 +747,7 @@ All examples in this documentation are based on actual working test cases. You c
 
 ### 📁 **Advanced Examples**
 - **[Complex Mock Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/AdvancedPatterns/ComplexMockScenarios.cs`
-- **[Performance Tests](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs)** - `src/StaticMock.Tests/Tests/Examples/PerformanceGuide/PerformanceTests.cs`
+- **[Benchmark Project](https://github.com/SvetlovA/static-mock/tree/master/src/StaticMock.Tests.Benchmark)** - `src/StaticMock.Tests.Benchmark/` — run with `dotnet run --project src/StaticMock.Tests.Benchmark --configuration Release`
 - **[Real-World Enterprise Scenarios](https://github.com/SvetlovA/static-mock/blob/master/src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs)** - `src/StaticMock.Tests/Tests/Examples/RealWorldExamples/EnterpriseScenarios.cs`
 
 ### 📁 **Migration & Integration**

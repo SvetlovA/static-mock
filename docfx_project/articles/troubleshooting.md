@@ -113,9 +113,9 @@ private string GetBuildConfiguration()
    dotnet test --configuration Debug
    ```
 
-2. **Disable compiler optimization in your test project** by adding this to your `.csproj`:
+2. **Disable compiler optimization in your test project** by adding this to your `.csproj` (apply unconditionally — do not scope to Release only):
    ```xml
-   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+   <PropertyGroup>
      <Optimize>false</Optimize>
    </PropertyGroup>
    ```
@@ -426,7 +426,7 @@ public async Task Debug_Async_Mocking()
 
 ### Hook Conflicts
 
-**Problem**: Multiple mocks interfering with each other.
+**Problem**: Multiple mocks set up for the same method — the last one wins and replaces earlier ones.
 
 ```csharp
 [Test]
@@ -434,43 +434,37 @@ public void Debug_Hook_Conflicts()
 {
     var calls = new List<string>();
 
-    // Create multiple mocks for the same method
-    using var mock1 = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
-        .Callback<string>(msg => calls.Add($"Mock1: {msg}"))
-        .Returns();
+    // First mock for Logger.Log (void method — use SetupAction)
+    using var mock1 = Mock.SetupAction(typeof(Logger), nameof(Logger.Log))
+        .Callback<string>(msg => calls.Add($"Mock1: {msg}"));
 
-    // This might conflict with mock1
-    using var mock2 = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
-        .Callback<string>(msg => calls.Add($"Mock2: {msg}"))
-        .Returns();
+    // Second mock replaces the first
+    using var mock2 = Mock.SetupAction(typeof(Logger), nameof(Logger.Log))
+        .Callback<string>(msg => calls.Add($"Mock2: {msg}"));
 
     Logger.Log("test_message");
 
-    Console.WriteLine("Captured calls:");
-    calls.ForEach(Console.WriteLine);
-
-    // Only the last mock should be active
+    // Only the last mock is active
     Assert.AreEqual(1, calls.Count);
     Assert.IsTrue(calls[0].Contains("Mock2"));
 }
 ```
 
-**Solution**: Use single mock with conditional logic:
+**Solution**: Use a single mock with conditional logic:
 ```csharp
 [Test]
 public void Resolved_Conditional_Mocking()
 {
     var calls = new List<string>();
 
-    using var mock = Mock.Setup(context => Logger.Log(context.It.IsAny<string>()))
+    using var mock = Mock.SetupAction(typeof(Logger), nameof(Logger.Log))
         .Callback<string>(msg =>
         {
             if (msg.StartsWith("error"))
                 calls.Add($"Error logged: {msg}");
             else
                 calls.Add($"Info logged: {msg}");
-        })
-        .Returns();
+        });
 
     Logger.Log("error: Something went wrong");
     Logger.Log("info: Everything is fine");
@@ -661,16 +655,16 @@ public void CI_Environment_Check()
 ## Frequently Asked Questions
 
 ### Q: Can SMock mock sealed classes?
-**A:** SMock mocks methods, not classes. It can mock static methods on sealed classes, but cannot mock instance methods on sealed classes that aren't virtual.
+**A:** Yes. SMock intercepts methods at the IL level using MonoMod runtime hooks — it does not rely on proxy generation or virtual dispatch. This means it can mock both static methods and instance methods on sealed classes, regardless of whether the methods are virtual.
 
 ```csharp
-// ✅ This works - static method on sealed class
+// ✅ Static method on sealed class
 using var mock = Mock.Setup(context => File.ReadAllText(context.It.IsAny<string>()))
     .Returns("mocked content");
 
-// ❌ This won't work - instance method on sealed class
-// var sealedInstance = new SealedClass();
-// Mock.Setup(() => sealedInstance.NonVirtualMethod()).Returns("value");
+// ✅ Instance method on sealed class - also works
+var sealedInstance = new SealedClass();
+using var mock = Mock.Setup(() => sealedInstance.AnyMethod()).Returns("value");
 ```
 
 ### Q: How does SMock compare performance-wise to other mocking frameworks?

@@ -232,12 +232,15 @@ claude --plugin-dir /path/to/static-mock/smock-plugin
 | `hierarchical` | `Mock.Setup(..., () => { ... }).Returns(value)` with inline validation |
 
 The skill will:
-1. Discover the existing test structure, or create `OriginalProject.Tests` / `OriginalClassNameTests` from scratch
-2. Write tests using the SMock API in the selected style
-3. Update the project's `CLAUDE.md` so Claude always uses SMock going forward
-4. Run `dotnet build` + `dotnet test` to verify generated code compiles and passes
+1. Check and update the SMock NuGet package to the latest version in all test `.csproj` files
+2. Scan source projects for public methods and apply a mocking decision framework — SMock is only used where it genuinely adds value (non-deterministic statics, I/O, external services)
+3. Discover the existing test structure, or create `OriginalProject.Tests` / `OriginalClassNameTests` from scratch
+4. When everything already uses SMock: run a correctness & coverage audit — checks for missing `using var`, wrong `It` usage, and methods that should be mocked but aren't
+5. Write or update tests in the selected API style
+6. Update the project's `CLAUDE.md` so Claude always uses SMock going forward
+7. Run `dotnet build` + `dotnet test` to verify all generated code compiles and passes
 
-The skill also activates automatically when you ask Claude to *"add tests for X"*, *"write unit tests using SMock"*, or *"update tests to use the mocking library"*.
+The skill also activates automatically when you ask Claude to *"add tests"*, *"check my tests"*, *"update SMock version"*, *"write unit tests using SMock"*, or *"update tests to use the mocking library"*.
 
 ---
 

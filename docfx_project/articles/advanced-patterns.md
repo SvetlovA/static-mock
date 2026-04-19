@@ -274,28 +274,20 @@ Create complex mock chains for hierarchical operations:
 [Test]
 public void Hierarchical_Mock_Chain()
 {
-    // Mock factory pattern
-    var mockConnection = new Mock<IDbConnection>();
-    var mockCommand = new Mock<IDbCommand>();
-    var mockReader = new Mock<IDataReader>();
+    var fakeRows = new[]
+    {
+        new Dictionary<string, object> { ["Id"] = 1, ["Name"] = "Test Item" },
+        new Dictionary<string, object> { ["Id"] = 2, ["Name"] = "Test Item" }
+    };
 
+    // Mock each layer of the call chain with SMock
     using var factoryMock = Mock.Setup(context =>
         DatabaseFactory.CreateConnection(context.It.IsAny<string>()))
-        .Returns(mockConnection.Object);
+        .Returns(new FakeDbConnection());
 
-    using var commandMock = Mock.Setup(() =>
-        mockConnection.Object.CreateCommand())
-        .Returns(mockCommand.Object);
-
-    using var readerMock = Mock.Setup(() =>
-        mockCommand.Object.ExecuteReader())
-        .Returns(mockReader.Object);
-
-    // Configure reader behavior
-    var hasDataCalls = 0;
-    mockReader.Setup(r => r.Read()).Returns(() => hasDataCalls++ < 2);
-    mockReader.Setup(r => r["Name"]).Returns("Test Item");
-    mockReader.Setup(r => r["Id"]).Returns(1);
+    using var queryMock = Mock.Setup(context =>
+        DatabaseFactory.ExecuteQuery(context.It.IsAny<string>()))
+        .Returns(fakeRows);
 
     var repository = new DatabaseRepository();
     var items = repository.GetItems();
@@ -311,7 +303,7 @@ Combine multiple mock types for complex scenarios:
 
 ```csharp
 [Test]
-public void Composite_Mock_Pattern()
+public async Task Composite_Mock_Pattern()
 {
     var fileSystemState = new Dictionary<string, string>();
     var networkResponses = new Queue<HttpResponseMessage>();
