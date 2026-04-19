@@ -201,6 +201,46 @@ This issue typically occurs in Release builds where the compiler aggressively op
 
 ---
 
+## Claude Code Plugin
+
+This repository ships a **Claude Code plugin** that teaches Claude how to write and update .NET tests using SMock.
+
+### Install
+
+From any project, run inside Claude Code:
+
+```
+/plugins install github:SvetlovA/static-mock
+```
+
+Or load for a single session:
+
+```bash
+claude --plugin-dir /path/to/static-mock/smock-plugin
+```
+
+### Usage
+
+```
+/smock-plugin:smock-tests [sequential|hierarchical]
+```
+
+| Argument | Effect |
+|----------|--------|
+| *(omitted)* | Sequential API (default) |
+| `sequential` | `using var mock = Mock.Setup(...).Returns(value)` |
+| `hierarchical` | `Mock.Setup(..., () => { ... }).Returns(value)` with inline validation |
+
+The skill will:
+1. Discover the existing test structure, or create `OriginalProject.Tests` / `OriginalClassNameTests` from scratch
+2. Write tests using the SMock API in the selected style
+3. Update the project's `CLAUDE.md` so Claude always uses SMock going forward
+4. Run `dotnet build` + `dotnet test` to verify generated code compiles and passes
+
+The skill also activates automatically when you ask Claude to *"add tests for X"*, *"write unit tests using SMock"*, or *"update tests to use the mocking library"*.
+
+---
+
 ## Additional Resources
 
 - **[API Documentation](https://svetlova.github.io/static-mock/api/index.html)**

@@ -138,3 +138,40 @@ API documentation is generated using DocFX:
 - Published to: https://svetlova.github.io/static-mock/
 
 To work with documentation locally, use the DocFX toolchain in the `docfx_project/` directory.
+
+## Claude Code Plugin
+
+A Claude Code plugin lives in `smock-plugin/` and is installable from any project via:
+
+```
+/plugins install github:SvetlovA/static-mock
+```
+
+Then invoke with `/smock-plugin:smock-tests [sequential|hierarchical]` to scaffold or update tests using SMock. The skill discovers the existing test structure, writes tests, updates the project's CLAUDE.md, and validates compilation.
+
+## SMock Usage Policy
+
+When writing any tests in this repository, **always use the SMock library** (`using StaticMock;`) for mocking. Never use manual workarounds, wrapper classes, or other mocking approaches for method interception.
+
+### API Style Choice
+
+- **Sequential API** (default for most tests): `using var mock = Mock.Setup(() => Target.Method()).Returns(value);`
+  - Use `using var` — mandatory for cleanup
+  - Best for straightforward return-value mocking
+- **Hierarchical API** (when inline validation is needed): `Mock.Setup(() => Target.Method(), () => { /* assert inside */ }).Returns(value);`
+  - No disposal needed — cleanup is automatic
+  - Use when you need to assert on mock behavior inline
+
+### Non-Negotiable Rules
+
+1. Sequential mocks **must** use `using var` — omitting it leaves hooks active and corrupts subsequent tests
+2. Always access parameter matchers through the context lambda: `context.It.IsAny<T>()`, never standalone `It`
+3. Test projects **must** include `<Optimize>false</Optimize>` in `.csproj` to prevent compiler inlining from breaking hooks
+4. Async methods: prefer `.ReturnsAsync(value)` (shorthand on `IAsyncFuncMock<T>`); alternatively `.Returns(Task.FromResult(value))` or `.Returns(async () => value)`
+5. Void methods (`IActionMock`) use `.Callback<T>(action)` for side effects — `Callback` does **not** exist on `IFuncMock`
+
+### Test Naming Convention
+
+- Test project: `OriginalProjectName.Tests`
+- Test class: `OriginalClassNameTests`
+- Test method: `Test` + MethodName [+ ScenarioDescription] (e.g., `TestGetUserReturnsActiveUser`)

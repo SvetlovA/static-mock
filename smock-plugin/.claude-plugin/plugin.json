@@ -1,0 +1,9 @@
+{
+  "name": "smock-plugin",
+  "version": "0.1.0",
+  "description": "Plugin for the SMock library repository — creates and updates .NET test projects using SMock for mocking static and instance methods.",
+  "author": {
+    "name": "SvetlovA",
+    "email": "svetlov.arte@gmail.com"
+  }
+}

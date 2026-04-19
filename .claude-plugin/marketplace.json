@@ -1,0 +1,13 @@
+{
+  "name": "SvetlovA-static-mock",
+  "owner": {
+    "name": "SvetlovA"
+  },
+  "plugins": [
+    {
+      "name": "smock-plugin",
+      "source": "./smock-plugin",
+      "description": "Creates and updates .NET test projects using the SMock library for mocking static and instance methods"
+    }
+  ]
+}
